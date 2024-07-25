@@ -19,13 +19,14 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .login-container, .image-container {
     flex: 1;
     padding: 40px;
     text-align: center;
 }
 .login-container h2 {
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     font-size: 2em;
     color: #333;
 }
@@ -53,7 +54,6 @@ body {
     background: #767af5;
 }
 .login-container p {
-    margin-top: 20px;
     font-size: 0.9em;
     color: #666;
 }
@@ -63,4 +63,7 @@ body {
 }
 .login-container p a:hover {
     text-decoration: underline;
+}
+.forgot-password {
+	text-align:left;
 }
