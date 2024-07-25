@@ -81,7 +81,7 @@
             <input type="password" id="newPassword" placeholder="Kata Laluan Baharu" required>
             <input type="password" id="confirmPassword" placeholder="Sahkan Kata Laluan" required>
             <button id="resetButton">Hantar</button>
-            <p><a href="login.html">Kembali ke Log masuk</a></p>
+            <p><a href="login.php">Kembali ke Log masuk</a></p>
         </div>
     </div>
     <script>
@@ -91,12 +91,12 @@
             
             if (newPassword === confirmPassword) {
                 // Passwords match; proceed with password reset
-                alert('Password reset successful!');
+                alert('Kata Laluan telah berjaya ditukar!');
                 // Optionally, redirect to login or other page
-                window.location.href = 'login.html';
+                window.location.href = 'login.php';
             } else {
                 // Passwords do not match; show error
-                alert('Passwords do not match. Please try again.');
+                alert('Kata laluan tidak sepadan. Sila cuba lagi.');
             }
         });
     </script>

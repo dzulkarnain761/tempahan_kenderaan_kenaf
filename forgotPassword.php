@@ -82,12 +82,12 @@
             <input type="noKp" id="noKp" placeholder="Masukkan No Kad Pengenalan" required>
 			</div>
             <button id="resetButton">Sahkan</button>
-            <p><a href="login.html">Kembali ke Log masuk</a></p>
+            <p><a href="login.php">Kembali ke Log masuk</a></p>
         </div>
     </div>
 	<script>
         document.getElementById('resetButton').addEventListener('click', function() {
-            window.location.href = 'enterNewPass.html';
+            window.location.href = 'enterNewPass.php';
         });
     </script>
 

@@ -9,27 +9,24 @@
 <body>
 
     <div class="container">
-        <div class="login-container">
+        <div class="signup-container">
             <h2>Daftar Masuk</h2>
-			<div style="text-align:left;">
-			<label for="nokp">No Kad Pengenalan:<label/>
-			</div>
-            <input type="text" id="nokp" placeholder="NoKp" required>
-			<div style="margin: 20px 0;">
-			</div>
-			<div style="text-align:left;">
+			<label for="nokp">No Kad Pengenalan:</label>
+            <input type="text" id="nokp" placeholder="No Kad Pengenalan" required><br><br>
+			<label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Username" required><br><br>
 			<label for="password">Kata Laluan:</label>
-			</div>
-            <input type="password" id="password" placeholder="Kata Laluan" required>
-			<div style="margin-top: 0; padding-top: 0">
+            <input type="password" id="password" placeholder="Kata Laluan" required><br><br>
+			<label for="confirmPass">Sahkan Kata Laluan:</label>
+            <input type="text" id="confirmPass" placeholder="Sahkan Kata Laluan" required>
 			<button id="signupButton">Daftar Masuk</button>
-
+			<p><a href="login.php">Kembali ke Log masuk</a></p>
         </div>
     </div>
 
     <script>
         document.getElementById('signupButton').addEventListener('click', function() {
-            window.location.href = 'login.html'; // Change 'homepage.html' to the URL of your main page
+            window.location.href = 'login.php'; 
         });
     </script>
 
