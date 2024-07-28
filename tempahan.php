@@ -20,39 +20,6 @@
     <link rel="stylesheet" href="assets/css/tempahan.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .header-area {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .content-wrapper {
-            margin-top: 100px; /* Adjust based on the height of your header */
-            padding: 20px;
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        label, select {
-            font-size: 1.2rem;
-        }
-        
-        select {
-            padding: 5px 10px;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 
 <body>
