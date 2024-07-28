@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
-    <link rel="stylesheet" href="assets/images/styles/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animated.css">
+
     <style>
         body {
             margin: 0;
@@ -16,7 +22,7 @@
             align-items: center;
             height: 100vh;
             background: linear-gradient(to right, #c9d9f5, #538ff5);
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             color: #333;
         }
         .main-banner {
@@ -57,7 +63,7 @@
         }
         .border-first-button a:hover {
             background-color: #4578ed;
-			text-decoration: none;
+            text-decoration: none;
         }
         .right-image img {
             max-width: 100%;
@@ -65,7 +71,18 @@
     </style>
 </head>
 <body>
-
+  
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  
 <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
     <div class="container">
         <div class="row">
@@ -89,7 +106,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                            <img src="assets/images/farm-tractor-concept-illustration.png" alt="Digital Media Agency">
+                            <img src="assets/images/farm-tractor-concept-illustration.png" alt="Farm Tractor">
                         </div>
                     </div>
                 </div>
@@ -98,10 +115,15 @@
     </div>
 </div>
 
+<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-<script>
-    new WOW().init();
-</script>
+<script>new WOW().init();</script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/owl-carousel.js"></script>
+<script src="assets/js/animation.js"></script>
+<script src="assets/js/imagesloaded.js"></script>
+<script src="assets/js/custom.js"></script>
 
 </body>
 </html>

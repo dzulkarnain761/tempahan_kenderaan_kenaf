@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -9,67 +9,119 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-   <title>Booking</title>
+
+    <title>Booking</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
- 
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-digimedia-v3.css">
+    <link rel="stylesheet" href="assets/css/tempahan.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-	
 
-  </head>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .header-area {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-wrapper {
+            margin-top: 100px; /* Adjust based on the height of your header */
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        label, select {
+            font-size: 1.2rem;
+        }
+        
+        select {
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
 <body>
-    <!-- Navigation Bar -->
-<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="tempahan.php" class="logo">
-              <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="tempahan.php" class="active">Laman Utama</a></li>
-              <li class="scroll-to-section"><a href="tempah.php">Tempah</a></li>
-              <li class="scroll-to-section"><a href="sewaan">Sewaan</a></li>
-              <li class="scroll-to-section"><a href="bayaran">Bayaran</a></li>
 
-              <li class="scroll-to-section"><div class="border-first-button"><a href="#contact">Logout</a></div></li> 
-            </ul>        
-            <a class='menu-trigger'>
-                <span>Menu</span>
-            </a>
-            <!-- ***** Menu End ***** -->
-          </nav>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
     </div>
+    <!-- ***** Preloader End ***** -->
 
-  </header>
-    <div class="container">
-    <div class="login-container">
-      <h2>Sila Pilih</h2>
-      <label for="sewa">Jenis Sewa:</label>
-      <select id="sewa" name="sewa" required>
-          <option value="" disabled selected>Sila Pilih Jenis Sewa</option>
-          <option value="jam/harian">Per Jam/Harian</option>
-          <option value="bulanan">Bulanan</option>
-      </select>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="homepage.php" class="logo">
+                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
+                            <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+                            <li class="scroll-to-section">
+                                <div class="border-first-button"><a href="login.php">Logout</a></div>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Content Start ***** -->
+    <div class="content-wrapper">
+        <h2>Sila Pilih</h2>
+        <label for="sewa">Jenis Sewa:</label>
+        <select id="sewa" name="sewa" required>
+            <option value="" disabled selected>Sila Pilih Jenis Sewa</option>
+            <option value="jam/harian">Per Jam/Harian</option>
+            <option value="bulanan">Bulanan</option>
+        </select>
     </div>
-  </div>
+    <!-- ***** Content End ***** -->
 
-  <script>
-      document.getElementById('loginButton').addEventListener('click', function() {
-          window.location.href = 'homepage.php'; // Change 'homepage.php' to the URL of your main page
-      });
-  </script>
+    <!-- Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/animation.js"></script>
+    <script src="assets/js/imagesloaded.js"></script>
+    <script src="assets/js/custom.js"></script>
+
 </body>
+
 </html>
