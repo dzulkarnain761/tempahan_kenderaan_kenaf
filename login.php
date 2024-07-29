@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
     <link rel="stylesheet" href="assets/images/styles/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
     <div class="container">
         <div class="login-container">
             <h2>Log Masuk</h2>
-			<label for="nokp">No Kad Pengenalan:<label/>
+			<label for="nokp">No Kad Pengenalan:</label>
             <input type="text" id="nokp" placeholder="No Kad Pengenalan" required><br><br>
 			<label for="password">Kata Laluan:</label>
             <input type="password" id="password" placeholder="Kata Laluan" required>
@@ -23,11 +25,7 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('loginButton').addEventListener('click', function() {
-            window.location.href = 'homepage.php'; // Change 'homepage.html' to the URL of your main page
-        });
-    </script>
+    
 
 </body>
 </html>
