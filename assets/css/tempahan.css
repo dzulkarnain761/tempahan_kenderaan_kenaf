@@ -17,6 +17,7 @@ figure, header, nav, section, article, aside, footer, figcaption {
   padding: 0;
   border: 0;
   outline: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* clear fix */
@@ -845,10 +846,6 @@ preloader
     background: #4da6e7;
     border-radius: 50%;
 }
-
-body {
-            font-family: 'Poppins', sans-serif;
-        }
         
         .header-area {
             position: sticky;

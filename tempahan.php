@@ -22,10 +22,6 @@
     <link rel="stylesheet" href="assets/css/owl.css">
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
         .header-area {
             position: sticky;
             top: 0;
