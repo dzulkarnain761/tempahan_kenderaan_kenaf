@@ -20,9 +20,15 @@
     <link rel="stylesheet" href="assets/css/tempahan.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
+	
+	<style>
+	/* 
+---------------------------------------------
+content-wrapper
+--------------------------------------------- 
+*/
 
-    <style>
-        .header-area {
+.header-area {
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -127,9 +133,7 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-		
-		
-    </style>
+		</style>
 </head>
 
 <body>
@@ -160,17 +164,14 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
-                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php" class="active">Tempah</a></li>
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
                             <li class="scroll-to-section">
                                 <div class="border-first-button"><a href="login.php">Logout</a></div>
                             </li>
                         </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
@@ -180,7 +181,7 @@
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Content Start ***** -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" data-wow-duration="0.75s" data-wow-delay="0s">
         <h2>Sila Pilih</h2>
         <label for="sewa">Jenis Sewa:</label>
         <select id="sewa" name="sewa" required onchange="showForm()">
@@ -329,7 +330,7 @@
             popup.style.display = "none";
         }
     </script>
-    
+
 </body>
 
 </html>

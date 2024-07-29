@@ -21,8 +21,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to right, #c9d9f5, #538ff5);
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #d5e1f5, #acc9fa);
+            font-family: 'Poppins', sans-serif;
             color: #333;
         }
         .main-banner {
@@ -38,18 +38,22 @@
             padding: 20px;
         }
         .left-content h6 {
-            font-size: 1.2rem;
-            color: #444;
             margin-bottom: 10px;
+			font-size: 20px;
+			font-weight: 700;
+  			color: #4da6e7;
+  			text-transform: uppercase;
+  			margin-bottom: 15px;
         }
         .left-content h2 {
             font-size: 2.5rem;
-            color: #222;
+            color: #111; 
             margin-bottom: 20px;
+			font-weight: bold;
         }
         .left-content p {
             font-size: 1rem;
-            color: #555;
+            color: #444; /* Change font color */
             margin-bottom: 30px;
         }
         .border-first-button a {
@@ -68,23 +72,11 @@
         .right-image img {
             max-width: 100%;
         }
+		
     </style>
 </head>
 <body>
-  
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  
-<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
-    <div class="container">
+  <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
@@ -113,7 +105,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
