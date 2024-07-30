@@ -101,38 +101,6 @@ content-wrapper
 		.form-group{
 			margin-top: 20px;
 		}
-		.form-popup {
-            display: none;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-        }
-
-        .form-popup-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .form-popup-content button.close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            border: none;
-            background: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
 		</style>
 </head>
 
@@ -192,7 +160,7 @@ content-wrapper
 	</div>
     <div id="form-jam-harian" class="form-section">
         <h3>Sewa Per Jam/Harian</h3>
-        <form onsubmit="showPopup('popup-jam-harian'); return false;">
+		<form action="sewaan.php" method="POST">
             <div class="form-group">
                 <label for="kerja">Jenis Kerja:</label>
                 <select id="kerja" name="kerja" style="margin-left: 8px" required>
@@ -219,6 +187,16 @@ content-wrapper
                 <label for="tarikh">Tarikh Mula:</label>
                 <input type="date" id="tarikh" name="tarikh" required>
             </div>
+			
+			<div class="form-group">
+                <label for="lokasiKerja">Lokasi Kerja:</label>
+                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" placeholder="Masukkan lokasi kerja" required>   
+            </div>
+			
+			<div class="form-group">
+                <label for="keluasanTanah">Keluasan Tanah(Hektar):</label>
+                <input type="number" id="keluasanTanah" name="keluasanTanah" min="1" placeholder="Masukkan keluasan tanah" required>   
+            </div>
             
             <button type="submit">Hantar</button>
         </form>
@@ -227,74 +205,32 @@ content-wrapper
     <!-- Form for Bulanan -->
     <div id="form-bulanan" class="form-section">
         <h3>Sewa Bulanan</h3>
-        <form onsubmit="showPopup('popup-bulanan'); return false;">
+		<form action="sewaan.php" method="POST">
             <div class="form-group">    
+
                 <label for="tarikh-mula">Tarikh Mula:</label>
                 <input type="date" id="tarikh-mula" name="tarikh-mula" style="margin-left: 27px" required>
             </div>
             
             <div class="form-group">
-                <label for="bulan">Tempoh Sewa:</label>
-                <input type="number" id="bulan" name="bulan" min="1" placeholder="Masukkan jumlah bulan" required>   
+                <label for="tempoh">Tempoh Sewa:</label>
+                <input type="number" id="tempoh" name="tempoh" min="1" placeholder="Masukkan tempoh sewaan" required>   
             </div>
             
+			<div class="form-group">
+                <label for="lokasiKerja">Lokasi Kerja:</label>
+                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" placeholder="Masukkan lokasi kerja" required>   
+            </div>
+			
+			<div class="form-group">
+                <label for="keluasanTanah">Keluasan Tanah(Hektar):</label>
+                <input type="number" id="keluasanTanah" name="keluasanTanah" min="1" placeholder="Masukkan keluasan tanah" required>   
+            </div>
+	
             <button type="submit">Hantar</button>
         </form>
     </div>
-    
-    <div id="popup-jam-harian" class="form-popup">
-        <div class="form-popup-content">
-            <button class="close" onclick="closePopup('popup-jam-harian')">&times;</button>
-            <h3>MAKLUMAT PENYEWA JAM/HARIAN</h3>
-            <h4>Sila isi maklumat anda</h4>
-            
-            <form>
-                <div class="form-group">
-                    <label for="nama">Nama:</label>
-                    <input type="text" id="nama" name="nama" style="margin-left: 52px" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="noTel">No Telefon:</label>
-                    <input type="text" id="noTel" name="noTel" style="margin-left: 11px" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="lokasi">Lokasi Kerja:</label>
-                    <input type="text" id="lokasi" name="lokasi" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="luasTanah">Luas Tanah:</label>
-                    <input type="text" id="luasTanah" name="luasTanah" style="margin-left: 3px" required>
-                </div>
-                
-                <button type="submit">Hantar</button>
-            </form>
-        </div>
-    </div>
-    
-    <div id="popup-bulanan" class="form-popup">
-        <div class="form-popup-content">
-            <button class="close" onclick="closePopup('popup-bulanan')">&times;</button>
-            <h3>MAKLUMAT PENYEWA BULANAN</h3>
-            <h4>Sila isi maklumat anda</h4>
-            
-            <form>
-                <div class="form-group">
-                    <label for="nama">Nama:</label>
-                    <input type="text" id="nama" name="nama" style="margin-left: 20px"required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="noTel">No Telefon:</label>
-                    <input type="text" id="noTel" name="noTel" required>
-                </div>
-
-                <button type="submit">Hantar</button>
-            </form>
-        </div>
-    </div>
+   
     <!-- ***** Content End ***** -->
 
     <!-- Scripts -->
@@ -318,16 +254,6 @@ content-wrapper
             } else if (sewa === "bulanan") {
                 formBulanan.style.display = "block";
             }
-        }
-
-        function showPopup(popupId) {
-            var popup = document.getElementById(popupId);
-            popup.style.display = "flex";
-        }
-
-        function closePopup(popupId) {
-            var popup = document.getElementById(popupId);
-            popup.style.display = "none";
         }
     </script>
 
