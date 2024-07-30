@@ -13,8 +13,10 @@
             <h2>Daftar Masuk</h2>
 			<label for="nokp">No Kad Pengenalan:</label>
             <input type="text" id="nokp" placeholder="No Kad Pengenalan" required><br><br>
-			<label for="username">Username:</label>
-            <input type="text" id="username" placeholder="Username" required><br><br>
+			<label for="name">Nama Penuh :</label>
+            <input type="text" id="name" placeholder="Nama Penuh" required><br><br>
+            <label for="name">No Telefon :</label>
+            <input type="text" id="contactno" placeholder="No Telefon" required><br><br>
 			<label for="password">Kata Laluan:</label>
             <input type="password" id="password" placeholder="Kata Laluan" required><br><br>
 			<label for="confirmPass">Sahkan Kata Laluan:</label>
