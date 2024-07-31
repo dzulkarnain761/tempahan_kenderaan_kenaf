@@ -43,18 +43,13 @@
 
     <script>
         
-        document.addEventListener('alpine:init', () => {
-            Alpine.plugin(Alpine.mask)
-        })
-
-        
-
+       
         $(document).ready(function() {
             $('#signupForm').on('submit', function(e) {
                 e.preventDefault();
 
                 $.ajax({
-                    url: 'controller/signup_proses.php',
+                    url: 'controller/signup_penyewa_proses.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

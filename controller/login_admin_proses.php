@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 	//encrypted password
 	$passw = md5($passw);
 
-	$sqlLogin = "SELECT * FROM pengguna WHERE uname = '$uname' AND passw = '$passw'";
+	$sqlLogin = "SELECT * FROM pengguna WHERE no_kp = '$uname' AND passw = '$passw'";
 	$resLogin = mysqli_query($conn, $sqlLogin);
 
 	$num_row = mysqli_num_rows($resLogin);

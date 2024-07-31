@@ -32,9 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Hash the password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insert the user into the database using prepared statement
-            $sql = $conn->prepare("INSERT INTO pengguna (no_kp, nama, contact_no, kumpulan, password) VALUES (?, ?, ?, ?,?)");
-            $sql->bind_param("sss", $nokp, $username,$contact, 'G', $hashed_password);
+             // Insert the user into the database using prepared statement
+             $sql = $conn->prepare("INSERT INTO pengguna (no_kp, nama, contact_no, kumpulan, password) VALUES (?, ?, ?, ?, ?)");
+             $group = 'G'; // Define the group value
+             $sql->bind_param("sssss", $nokp, $username, $contact, $group, $hashed_password);
 
             if ($sql->execute() === TRUE) {
                 echo json_encode(["success" => true]);

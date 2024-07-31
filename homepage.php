@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["pengguna_id"])) {
+    header("Location: login.php");
+    exit();
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +66,7 @@
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
                             <li class="scroll-to-section">
-                                <div class="border-first-button"><a href="login.php">Logout</a></div>
+                                <div class="border-first-button"><a href="controller/logout.php">Logout</a></div>
                             </li>
                         </ul>
                         <!-- ***** Menu End ***** -->

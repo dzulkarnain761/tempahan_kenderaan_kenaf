@@ -1,5 +1,3 @@
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <?php
 include 'connection.php';
@@ -8,66 +6,62 @@ session_start();
 // Dapatkan alamat IP pengguna
 $ip_address = $_SERVER['REMOTE_ADDR'];
 
-if (isset($_POST['submit'])) {
-	$uname = $_POST['uname'];
-	$passw = $_POST['passw'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['nokp']) && !empty($_POST['password'])) {
+        $nokp = $_POST['nokp'];
+        $password = $_POST['password'];
 
-	//encrypted password
-	$passw = md5($passw);
+		$nokplength = strlen($nokp);
 
-	$sqlLogin = "SELECT * FROM pengguna WHERE uname = '$uname' AND passw = '$passw'";
-	$resLogin = mysqli_query($conn, $sqlLogin);
+		 if (strlen($nokp) < 14) {
+            echo json_encode(["success" => false, "message" => "Sila Isi No Kad Pengenalan Yang Sah"]);
+            exit();
+        }
 
-	$num_row = mysqli_num_rows($resLogin);
+        // Fetch the user record based on nokp
+        $sqlLogin = "SELECT * FROM pengguna WHERE no_kp = ?";
+        $stmt = $conn->prepare($sqlLogin);
+        $stmt->bind_param('s', $nokp);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-	if ($num_row > 0) {
-		while ($rowLogin = mysqli_fetch_assoc($resLogin)) {
+        if ($result->num_rows > 0) {
+            while ($rowLogin = $result->fetch_assoc()) {
+                $hashed_password = $rowLogin['password'];
+                $kumpulan = $rowLogin['kumpulan'];
+                $pengguna_id = $rowLogin['no_kp']; 
+				$nama_pengguna = $rowLogin['nama'];
+				
+                // Verify the password
+                if (password_verify($password, $hashed_password)) {
+                    if ($kumpulan == 'G') {
+                        $_SESSION['kumpulan'] = $kumpulan;
+                        $_SESSION['pengguna_id'] = $pengguna_id;
+						$_SESSION['nama_pengguna'] = $nama_pengguna;
+						
+                        // Rekod audit trail
+                        $action = "Log masuk sebagai G";
+                        $date_created = date('Y-m-d H:i:s');
 
-			$refno  = $rowLogin['refno'];
-			$kumpulan = $rowLogin['kumpulan'];
+                        // Simpan alamat IP pengguna dalam rekod logs
+                        $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
+                        $stmtAudit = $conn->prepare($sqlAuditTrail);
+                        $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
+                        $stmtAudit->execute();
 
-			
-			if ($kumpulan == 'A') {
-				$_SESSION['refno'] = $refno;
-				$_SESSION['kumpulan'] = $kumpulan;
+						echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya']);
+                        exit();
+                    }
 
-				// Rekod audit trail
-				$pengguna_id = $refno;
-				$action = "Log masuk sebagai A";
-				$date_created = date('Y-m-d H:i:s');
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
+                }
+            }
 
-				// Simpan alamat IP pengguna dalam rekod logs
-				$sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES ('$pengguna_id', '$action', '$date_created', '$ip_address')";
-				mysqli_query($conn, $sqlAuditTrail);
-
-				header('location:index.php');
-			}
-
-		}
-	} else {
-		
-?>
-
-		<script>
-			$(document).ready(function() {
-				swal({
-						title: "Daftar Masuk",
-						text: "Daftar Masuk Tidak Berjaya! Sila Cuba Lagi.",
-						icon: "warning",
-						button: "Ok",
-						closeOnClickOutside: false
-					})
-					.then(function() {
-						window.location = "login.php";
-					})
-			});
-		</script>
-	<?php
-	}
-
-	?>
-
-<?php
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No Kad Pengenalan Belum Didaftar']);
+        }
+    } 
 }
 
 ?>
