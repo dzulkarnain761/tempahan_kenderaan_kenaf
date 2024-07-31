@@ -45,7 +45,7 @@ content-wrapper
             margin: 50px auto; /* Center the content */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #C0C0C0;        
-            background-color: ;
+            /* background-color: ; */
         }
 
         h2 {

@@ -91,7 +91,7 @@
                                 <div class="col-lg-12">
                                     <div class="border-first-button scroll-to-section">
                                         <a href="login.php">Log Masuk</a>
-                                    </div>
+                                    </div>                                  
                                 </div>
                             </div>
                         </div>
