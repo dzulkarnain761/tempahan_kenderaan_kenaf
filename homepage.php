@@ -54,6 +54,7 @@
                             <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+							<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
                             <li class="scroll-to-section">
                                 <div class="border-first-button"><a href="login.php">Logout</a></div>
                             </li>
@@ -76,7 +77,7 @@
                 <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                   <div class="row">
                     <div class="col-lg-12">
-						<h6>Selamat Datang!</h6>
+						<h6>Selamat Datang NAMA BINTI PENUH !</h6>
 						<h2>TEMPAHAN KENDERAAN LEMBAGA KENAF DAN TEMBAKAU</h2>
 						<p>Selamat datang ke laman tempahan kenderaan kami! Kami menawarkan pelbagai pilihan kenderaan untuk memenuhi keperluan anda. Terima kasih.</p>
 					</div>

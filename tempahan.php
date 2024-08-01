@@ -20,7 +20,11 @@
     <link rel="stylesheet" href="assets/css/tempahan.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-	
+	<style>
+	label {
+		font-size: 20px;
+	}
+	</style>
 </head>
 
 <body>
@@ -55,6 +59,7 @@
                             <li class="scroll-to-section"><a href="tempahan.php" class="active">Tempah</a></li>
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+							<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
                             <li class="scroll-to-section">
                                 <div class="border-first-button"><a href="login.php">Logout</a></div>
                             </li>
@@ -69,16 +74,16 @@
 
     <!-- ***** Content Start ***** -->
     <div class="content-wrapper" data-wow-duration="0.75s" data-wow-delay="0s">
-        <h4 style="font-weight: bold; margin-top:15px;">Sila Pilih</h4>
+        <h4 style="font-weight: bold; margin-top:15px; text-transform: uppercase;">Sila Pilih</h4>
         <label for="sewa">Jenis Sewa :</label>
-        <select id="sewa" name="sewa" required onchange="showForm()" style="margin-left: 150px" ">
+        <select id="sewa" name="sewa" required onchange="showForm()" style="margin-left: 150px">
             <option value="" disabled selected>Sila Pilih Jenis Sewa</option>
             <option value="jam/harian">Per Jam/Harian</option>
             <option value="bulanan">Bulanan</option>
         </select>
 	</div>
     <div id="form-jam-harian" class="form-section">
-        <h4 style="margin-top:15px; font-weight:bold;">Sewa Per Jam/Harian</h4>
+        <h4 style="margin-top:15px; font-weight:bold; text-transform: uppercase;">Sewa Per Jam/Harian</h4>
 		<form action="sewaan.php" method="POST">
             <div class="form-group">
                 <label for="kerja">Jenis Kerja :</label>
@@ -99,22 +104,22 @@
             
             <div class="form-group">
                 <label for="jam">Jam :</label>
-                <input type="number" id="jam" name="jam" style="margin-left: 200px" min="1" placeholder="Masukkan jumlah jam" required>
+                <input type="number" id="jam" name="jam" style="margin-left: 210px" min="1" placeholder="Masukkan jumlah jam" required>
             </div>
             
             <div class="form-group">
                 <label for="tarikh">Tarikh Mula :</label>
-                <input type="date" id="tarikh" name="tarikh" style="margin-left: 145px;" required>
+                <input type="date" id="tarikh" name="tarikh" style="margin-left: 140px;" required>
             </div>
 			
 			<div class="form-group">
                 <label for="lokasiKerja">Lokasi Kerja :</label>
-                <input type="text" id="lokasiKerja" name="lokasiKerja"  style="margin-left: 140px;" min="1" placeholder="Masukkan lokasi kerja" required>   
+                <input type="text" id="lokasiKerja" name="lokasiKerja"  style="margin-left: 138px;" min="1" placeholder="Masukkan lokasi kerja" required>   
             </div>
 			
 			<div class="form-group">
                 <label for="keluasanTanah">Keluasan Tanah (Hektar) :</label>
-                <input type="number" id="keluasanTanah" name="keluasanTanah"  style="margin-left: 30px;" min="1" placeholder="Masukkan keluasan tanah" required>   
+                <input type="number" id="keluasanTanah" name="keluasanTanah"  style="margin-left: 9px;" min="1" placeholder="Masukkan keluasan tanah" required>   
             </div>
             <div class="container">
 				<button type="submit" class="styled-button" style="margin-left: 650px;">Hantar</button>
@@ -124,7 +129,7 @@
 
     <!-- Form for Bulanan -->
     <div id="form-bulanan" class="form-section">
-        <h4 style="margin-top:15px; font-weight:bold;">Sewa Bulanan</h4>
+        <h4 style="margin-top:15px; font-weight:bold; text-transform: uppercase;">Sewa Bulanan</h4>
 		<form action="sewaan.php" method="POST">
             <div class="form-group">    
 
@@ -134,17 +139,17 @@
             
             <div class="form-group">
                 <label for="tempoh">Tempoh Sewa :</label>
-                <input type="number" id="tempoh" name="tempoh" min="1" style="margin-left: 130px" placeholder="Masukkan tempoh sewaan" required>   
+                <input type="number" id="tempoh" name="tempoh" min="1" style="margin-left: 120px" placeholder="Masukkan tempoh sewaan" required>   
             </div>
             
 			<div class="form-group">
                 <label for="lokasiKerja">Lokasi Kerja :</label>
-                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" style="margin-left: 150px" placeholder="Masukkan lokasi kerja" required>   
+                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" style="margin-left: 147px" placeholder="Masukkan lokasi kerja" required>   
             </div>
 			
 			<div class="form-group">
                 <label for="keluasanTanah">Keluasan Tanah (Hektar) :</label>
-                <input type="number" id="keluasanTanah" name="keluasanTanah" style="margin-left: 40px" min="1" placeholder="Masukkan keluasan tanah" required>   
+                <input type="number" id="keluasanTanah" name="keluasanTanah" style="margin-left: 10px" min="1" placeholder="Masukkan keluasan tanah" required>   
             </div>
 	
             <button type="submit" class="styled-button" style="margin-left: 650px;">Hantar</button>

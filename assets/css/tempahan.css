@@ -852,6 +852,8 @@ preloader
 content-wrapper
 --------------------------------------------- 
 */
+
+
 h2 {
             margin-bottom: 10px;
 			margin-top: 10px;
@@ -875,6 +877,7 @@ h2 {
             margin: 50px auto; /* Center the content */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #C0C0C0;  
+			text-transform: uppercase;
         }
 	
         .content-wrapper label, select {
@@ -952,7 +955,6 @@ button
 			margin-top: 20px;
 		}
 		
-		<!-- ***** Button ***** -->
 		.container {
             text-align: right; /* Aligns the button to the right */
             padding: 20px; /* Adds some padding around the container */
