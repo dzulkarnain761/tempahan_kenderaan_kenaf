@@ -21,87 +21,6 @@
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
 	
-	<style>
-	/* 
----------------------------------------------
-content-wrapper
---------------------------------------------- 
-*/
-
-.header-area {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .content-wrapper {
-            margin-top: 100px; /* Adjust based on the height of your header */
-            padding: 20px;
-            border: 1px solid ;
-            border-radius: 10px;
-            max-width: 800px; /* Adjust width */
-            margin: 50px auto; /* Center the content */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #C0C0C0;        
-            background-color: ;
-        }
-
-        h2 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-
-        h3 {
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-		
-		h4{
-			margin-bottom: 10px;
-            font-size: 1.0rem;
-		}
-	
-        label, select {
-            font-size: 1.2rem;
-        }
-
-        select {
-            padding: 10px 15px;
-            margin-top: 10px;
-            border: 2px solid ;
-            border-radius: 5px;
-            font-size: 1rem;
-            background-color: #fff;
-            width: 100%;
-            max-width: 300px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        select:focus {
-            border-color: #007bff;
-        }
-
-
-        .form-section {
-            display: none;
-            margin-top: 100px; /* Adjust based on the height of your header */
-            padding: 20px;
-            border: 1px solid ;
-            border-radius: 10px;
-            max-width: 600px; /* Adjust width */
-            margin: 50px auto; /* Center the content */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #C0C0C0;        
-        }
-		
-		.form-group{
-			margin-top: 20px;
-		}
-		</style>
 </head>
 
 <body>
@@ -126,7 +45,7 @@ content-wrapper
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="homepage.php" class="logo">
+                        <a href="tempahan.php" class="logo">
                             <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
                         </a>
                         <!-- ***** Logo End ***** -->
@@ -150,20 +69,20 @@ content-wrapper
 
     <!-- ***** Content Start ***** -->
     <div class="content-wrapper" data-wow-duration="0.75s" data-wow-delay="0s">
-        <h2>Sila Pilih</h2>
-        <label for="sewa">Jenis Sewa:</label>
-        <select id="sewa" name="sewa" required onchange="showForm()">
+        <h4 style="font-weight: bold; margin-top:15px;">Sila Pilih</h4>
+        <label for="sewa">Jenis Sewa :</label>
+        <select id="sewa" name="sewa" required onchange="showForm()" style="margin-left: 150px" ">
             <option value="" disabled selected>Sila Pilih Jenis Sewa</option>
             <option value="jam/harian">Per Jam/Harian</option>
             <option value="bulanan">Bulanan</option>
         </select>
 	</div>
     <div id="form-jam-harian" class="form-section">
-        <h3>Sewa Per Jam/Harian</h3>
+        <h4 style="margin-top:15px; font-weight:bold;">Sewa Per Jam/Harian</h4>
 		<form action="sewaan.php" method="POST">
             <div class="form-group">
-                <label for="kerja">Jenis Kerja:</label>
-                <select id="kerja" name="kerja" style="margin-left: 8px" required>
+                <label for="kerja">Jenis Kerja :</label>
+                <select id="kerja" name="kerja" style="margin-left: 150px; margin-bottom:10px;" required>
                     <option value="" disabled selected>Sila Pilih Jenis Kerja</option>
                     <option value="piring">Piring</option>
                     <option value="piringBatasBesar">Piring Batas Besar</option>
@@ -179,55 +98,56 @@ content-wrapper
             </div>
             
             <div class="form-group">
-                <label for="jam">Jam:</label>
-                <input type="number" id="jam" name="jam" style="margin-left: 67px" min="1" placeholder="Masukkan jumlah jam" required>
+                <label for="jam">Jam :</label>
+                <input type="number" id="jam" name="jam" style="margin-left: 200px" min="1" placeholder="Masukkan jumlah jam" required>
             </div>
             
             <div class="form-group">
-                <label for="tarikh">Tarikh Mula:</label>
-                <input type="date" id="tarikh" name="tarikh" required>
+                <label for="tarikh">Tarikh Mula :</label>
+                <input type="date" id="tarikh" name="tarikh" style="margin-left: 145px;" required>
             </div>
 			
 			<div class="form-group">
-                <label for="lokasiKerja">Lokasi Kerja:</label>
-                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" placeholder="Masukkan lokasi kerja" required>   
+                <label for="lokasiKerja">Lokasi Kerja :</label>
+                <input type="text" id="lokasiKerja" name="lokasiKerja"  style="margin-left: 140px;" min="1" placeholder="Masukkan lokasi kerja" required>   
             </div>
 			
 			<div class="form-group">
-                <label for="keluasanTanah">Keluasan Tanah(Hektar):</label>
-                <input type="number" id="keluasanTanah" name="keluasanTanah" min="1" placeholder="Masukkan keluasan tanah" required>   
+                <label for="keluasanTanah">Keluasan Tanah (Hektar) :</label>
+                <input type="number" id="keluasanTanah" name="keluasanTanah"  style="margin-left: 30px;" min="1" placeholder="Masukkan keluasan tanah" required>   
             </div>
-            
-            <button type="submit">Hantar</button>
+            <div class="container">
+				<button type="submit" class="styled-button" style="margin-left: 650px;">Hantar</button>
+			</div>
         </form>
     </div>
 
     <!-- Form for Bulanan -->
     <div id="form-bulanan" class="form-section">
-        <h3>Sewa Bulanan</h3>
+        <h4 style="margin-top:15px; font-weight:bold;">Sewa Bulanan</h4>
 		<form action="sewaan.php" method="POST">
             <div class="form-group">    
 
-                <label for="tarikh-mula">Tarikh Mula:</label>
-                <input type="date" id="tarikh-mula" name="tarikh-mula" style="margin-left: 27px" required>
+                <label for="tarikh-mula">Tarikh Mula :</label>
+                <input type="date" id="tarikh-mula" name="tarikh-mula" style="margin-left: 150px" required>
             </div>
             
             <div class="form-group">
-                <label for="tempoh">Tempoh Sewa:</label>
-                <input type="number" id="tempoh" name="tempoh" min="1" placeholder="Masukkan tempoh sewaan" required>   
+                <label for="tempoh">Tempoh Sewa :</label>
+                <input type="number" id="tempoh" name="tempoh" min="1" style="margin-left: 130px" placeholder="Masukkan tempoh sewaan" required>   
             </div>
             
 			<div class="form-group">
-                <label for="lokasiKerja">Lokasi Kerja:</label>
-                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" placeholder="Masukkan lokasi kerja" required>   
+                <label for="lokasiKerja">Lokasi Kerja :</label>
+                <input type="text" id="lokasiKerja" name="lokasiKerja" min="1" style="margin-left: 150px" placeholder="Masukkan lokasi kerja" required>   
             </div>
 			
 			<div class="form-group">
-                <label for="keluasanTanah">Keluasan Tanah(Hektar):</label>
-                <input type="number" id="keluasanTanah" name="keluasanTanah" min="1" placeholder="Masukkan keluasan tanah" required>   
+                <label for="keluasanTanah">Keluasan Tanah (Hektar) :</label>
+                <input type="number" id="keluasanTanah" name="keluasanTanah" style="margin-left: 40px" min="1" placeholder="Masukkan keluasan tanah" required>   
             </div>
 	
-            <button type="submit">Hantar</button>
+            <button type="submit" class="styled-button" style="margin-left: 650px;">Hantar</button>
         </form>
     </div>
    
