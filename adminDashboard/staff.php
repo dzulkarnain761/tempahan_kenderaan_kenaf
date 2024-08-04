@@ -114,7 +114,7 @@
 				</div>
 			</div>
 				
-				<!-- ================ Order Details List ================= -->
+			<!-- ================ Order Details List ================= -->
             <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">

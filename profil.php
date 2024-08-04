@@ -67,9 +67,9 @@
               <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
               <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
               <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
-              <li class="scroll-to-section"><a href="bayaran.php" class="active">Bayaran</a></li>
-			  <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-			  <li class="scroll-to-section">
+              <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+			  <li class="scroll-to-section"><a href="profil.php" class="active">Profil</a></li>
+              <li class="scroll-to-section">
                 <div class="border-first-button">
 					<button onclick="location.href='login.php'">Logout</button>
 				</div>
