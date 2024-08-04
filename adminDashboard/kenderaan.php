@@ -8,6 +8,7 @@
     <title>Booking</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
         .btn {
@@ -382,14 +383,20 @@
                         <input type="date" id="tamatCukaiJalan" name="tamatCukaiJalan" required>
                     </div>
 
+                    <!-- Include jQuery -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
                     <div class="form-group">
                         <label for="negeriPenempatan">NEGERI / PENEMPATAN:</label>
                         <select id="negeriPenempatan" name="negeriPenempatan" required>
                             <option value="" disabled selected>--Pilih Negeri--</option>
-                            <?php 
-                                include '../controller/connection.php';
-                                $sql = "SELECT nama_negeri FROM negeri";
-                                $result = mysqli_query($conn, $sql);
+                            <?php
+                            include '../controller/connection.php';
+                            $sqlnegeri = "SELECT * FROM negeri";
+                            $resultnegeri = mysqli_query($conn, $sqlnegeri);
+                            while ($row = mysqli_fetch_assoc($resultnegeri)) {
+                                echo '<option value="' . $row['id_negeri'] . '">' . $row['nama_negeri'] . '</option>';
+                            }
                             ?>
                         </select>
                     </div>
@@ -398,11 +405,29 @@
                         <label for="kawasan">KAWASAN:</label>
                         <select id="kawasan" name="kawasan" required>
                             <option value="" disabled selected>--Pilih Kawasan--</option>
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
                         </select>
                     </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#negeriPenempatan').change(function() {
+                                var negeriID = $(this).val();
+                                if (negeriID) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '../controller/get_kawasan.php',
+                                        data: 'id_negeri=' + negeriID,
+                                        success: function(html) {
+                                            $('#kawasan').html(html);
+                                        }
+                                    });
+                                } else {
+                                    $('#kawasan').html('<option value="" disabled selected>--Pilih Kawasan--</option>');
+                                }
+                            });
+                        });
+                    </script>
+
 
                     <div class="form-group">
                         <label for="statusKenderaan">STATUS KENDERAAN:</label>
