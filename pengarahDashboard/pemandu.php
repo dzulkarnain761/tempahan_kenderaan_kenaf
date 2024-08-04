@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <style>
+      <style>
         .btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 10px;
+            padding: 10px 50px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -24,9 +24,10 @@
         .btn:hover {
             background-color: #0056b3;
         }
-		h2, h3 {
-			margin-bottom: 15px;
-		}
+
+        h2, h3 {
+            margin-bottom: 15px;
+        }
 
         table {
             border: 1px solid #ddd;
@@ -37,8 +38,7 @@
             width: 100%;
         }
 
-        table th,
-        table td {
+        table th, table td {
             border: 1px solid #ddd;
             padding: 12px;
             font-size: 0.9em;
@@ -74,8 +74,7 @@
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
+        .close:hover, .close:focus {
             color: #000;
             text-decoration: none;
             cursor: pointer;
@@ -107,9 +106,10 @@
             color: #333;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="tel"],
+        .form-group input[type="text"], 
+        .form-group input[type="tel"], 
         .form-group input[type="date"],
+		.form-group input[type="password"],
         .form-group select {
             width: 100%;
             padding: 10px;
@@ -119,7 +119,7 @@
             box-sizing: border-box;
         }
 
-        .form-group input[type="submit"],
+        .form-group input[type="submit"], 
         .form-group input[type="button"] {
             background-color: #007bff;
             color: white;
@@ -133,62 +133,49 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .form-group input[type="submit"]:hover,
+        .form-group input[type="submit"]:hover, 
         .form-group input[type="button"]:hover {
             background-color: #0056b3;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-		.btn-edit{
-			background: none;
+        .btn-edit, .btn-delete {
+            background: none;
             border: none;
             cursor: pointer;
             padding: 0;
+            font-size: 1.2em;
+        }
+
+        .btn-edit {
             color: #28a745;
-            font-size: 1.2em;
-		}
-		
-		.btn-edit:hover {
-			color: #28a745;
-		}
-		.btn-delete{
-			background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
+        }
+
+        .btn-edit:hover {
+            color: #218838;
+        }
+
+        .btn-delete {
             color: #c82333;
-            font-size: 1.2em;
-		}
-		
-		.btn-delete:hover {
-			background-color: #c82333; /* Darker red on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-update {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        }
 
-		.btn-update:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-daftar {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        .btn-delete:hover {
+            color: #bd2130;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
 
-		.btn-daftar:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
+        .btn-update, .btn-daftar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1em;
+        }
+
+        .btn-update:hover, .btn-daftar:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
         @media (max-width: 768px) {
             .modal-content {
                 width: 90%;
@@ -298,17 +285,19 @@
             <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
-                        <h2>SENARAI KENDERAAN</h2>
-                        <a class="btn" onclick="openModal()">DAFTAR KENDERAAN</a>
+                        <h2>SENARAI PEMANDU</h2>
+                        <a class="btn" onclick="openModal()">DAFTAR PEMANDU</a>
                     </div>
 
                     <table>
                         <thead>
                             <tr>
                                 <td>Bil</td>
-                                <td>Nama Kenderaan</td>
-                                <td>No Pendaftaran</td>
-                                <td>Tarikh Tamat</td>
+                                <td>Nama Pemandu</td>
+                                <td>No Kad Pengenalan</td>
+                                <td>Kategori Lesen</td>
+                                <td>Tarikh Tamat Lesen</td>
+								<td>Status</td>
                                 <td>Kemaskini</td>
                             </tr>
                         </thead>
@@ -318,6 +307,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+								<td></td>
                                 <td>
                                     <button onclick="editItem(this)" class="btn btn-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>
@@ -339,86 +330,57 @@
 <div id="registerModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h3>DAFTAR KENDERAAN</h3>
+        <h3>DAFTAR PEMANDU</h3>
         <form id="registerForm">
             <div class="form-group">
-                <label for="adminKenderaan">ADMIN KENDERAAN:</label>
-                <input type="text" id="adminKenderaan" name="adminKenderaan" placeholder="Admin Kenderaan" required>
+                <label for="adminPemandu">ADMIN PEMANDU:</label>
+                <input type="text" id="adminPemandu" name="adminPemandu" placeholder="adminPemandu" required>
             </div>
             <div class="form-group">
-                <label for="namaJenisKenderaan">NAMA / JENIS KENDERAAN:</label>
-                <input type="text" id="namaJenisKenderaan" name="namaJenisKenderaan" placeholder="Masukkan nama kenderaan" required>  
+                <label for="namaPemandu">NAMA PEMANDU:</label>
+                <input type="text" id="namaPemandu" name="namaPemandu" placeholder="Masukkan nama pemandu" required>
             </div>
             <div class="form-group">
-                <label for="noDaftar">NO PENDAFTARAN KENDERAAN:</label>
-                <input type="text" id="noDaftar" name="noDaftar" placeholder="Masukkan no pendaftaran" required>
+                <label for="noKp">NO KAD PENGENALAN:</label>
+                <input type="text" id="noKp" name="noKp" maxlength="12" placeholder="Masukkan No Kad Pengenalan" required>
             </div>
-			
-			<div class="form-group">
-                <label for="tahunDaftar">TAHUN DAFTAR:</label>
-                <input type="text" id="tahunDaftar" name="tahunDaftar" placeholder="Masukkan tahun daftar kenderaan" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="tarikhDaftar">TARIKH DAFTAR:</label>
-                <input type="date" id="tarikhDaftar" name="tarikhDaftar" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="mulaCukaiJalan">MULA CUKAI JALAN:</label>
-                <input type="date" id="mulaCukaiJalan" name="mulaCukaiJalan" required>
-            </div>
-
-			<div class="form-group">
-                <label for="tamatCukaiJalan">TAMAT CUKAI JALAN:</label>
-                <input type="date" id="tamatCukaiJalan" name="tamatCukaiJalan" required>
-            </div>
-			
             <div class="form-group">
-                <label for="negeriPenempatan">NEGERI / PENEMPATAN:</label>
-				<select id="negeriPenempatan" name="negeriPenempatan" required>
-					<option value="" disabled selected>--Pilih Negeri--</option>
-					<option value="Kelantan">Kelantan</option>
-					<option value="Terengganu">Terengganu</option>
-					<option value="Pahang">Pahang</option>
-					<option value="Kedah">Kedah</option>
-					<option value="Perlis">Perlis</option>
-					<option value="Perak">Perak</option>
-					<option value="Selangor">Selangor</option>
-					<option value="Melaka">Melaka</option>
-					<option value="Johor">Johor</option>
-					<option value="Sabah">Sabah</option>
-					<option value="Sarawak">Sarawak</option>
-				</select>
-			</div>
-			
+                <label for="noTel">NO TELEFON:</label>
+                <input type="tel" id="noTel" name="noTel" maxlength="12" placeholder="Masukkan no telefon" required>
+            </div>
             <div class="form-group">
-                <label for="kawasan">KAWASAN:</label>
-                <select id="kawasan" name="kawasan" required>
-                    <option value="" disabled selected>--Pilih Kawasan--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                <label for="kategoriLesen">KATEGORI LESEN:</label>
+                <select id="kategoriLesen" name="kategoriLesen" required>
+                    <option value="" disabled selected>--Pilih Kategori Lesen--</option>
+                    <option value="GDL D">GDL</option>
+                    <option value="CDL">CDL</option>
+                    <option value="Lesen H">H</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tarikhTamatLesen">TARIKH TAMAT LESEN:</label>
+                <input type="date" id="tarikhTamatLesen" name="tarikhTamatLesen" required>
+            </div>
+            <div class="form-group">
+                <label for="status">STATUS:</label>
+                <select id="status" name="status" required>
+                    <option value="" disabled selected>--Pilih Status--</option>
+                    <option value="Aktif">Aktif</option>
+                    <option value="Tidak Aktif">Tidak Aktif</option>
                 </select>
             </div>
 			
 			<div class="form-group">
-                <label for="statusKenderaan">STATUS KENDERAAN:</label>
-                <select id="statusKenderaan" name="statusKenderaan" required>
-                    <option value="" disabled selected>--Pilih Status Kenderaan--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
+				<label for="password">KATA LALUAN:</label>
+				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
             </div>
-					
-            <div class="form-group">
-                <label for="kategoriKenderaan">KATEGORI KENDERAAN:</label>
-                <select id="kategoriKenderaan" name="kategoriKenderaan" required>
-                    <option value="" disabled selected>--Pilih Kategori Kenderaan--</option>
-                    <option value="Jentera">Jentera</option>
-                    <option value="Jengkaut">Jengkaut</option>
-                </select>
+			
+			<div class="form-group">
+				<label for="confirmPassword">KATA LALUAN:</label>
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
             </div>
+			
+			
             <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
         </form>
     </div>
@@ -428,75 +390,40 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h2>KEMASKINI KENDERAAN</h2>
+        <h2>KEMASKINI PEMANDU</h2>
         <form id="editForm">
             <div class="form-group">
-                <label for="adminKenderaanEdit">ADMIN KENDERAAN:</label>
-                <input type="text" id="adminKenderaanEdit" name="adminKenderaan" placeholder="adminKenderaan" readonly>
+                <label for="adminPemanduEdit">ADMIN PEMANDU:</label>
+                <input type="text" id="adminPemanduEdit" name="adminPemandu" placeholder="adminPemandu">
             </div>
-			
             <div class="form-group">
-                <label for="namaJenisKenderaanEdit">NAMA / JENIS KENDERAAB:</label>
-                <input type="text" id="namaJenisKenderaanEdit" name="namaJenisKenderaan" placeholder="Masukkan nama kenderaan" required>
+                <label for="namaPemanduEdit">NAMA PEMANDU:</label>
+                <input type="text" id="namaPemanduEdit" name="namaPemandu" placeholder="Masukkan nama pemandu" required>
             </div>
-			
             <div class="form-group">
-                <label for="noDaftarEdit">NO PENDAFTARAN KENDERAAN:</label>
-                <input type="text" id="noDaftarEdit" name="noDaftar" placeholder="Masukkan no pendaftaran kenderaan" >
+                <label for="noKpEdit">NO KAD PENGENALAN:</label>
+                <input type="text" id="noKpEdit" name="noKp" maxlength="12" placeholder="Masukkan no kad pengenalan" >
             </div>
-			
             <div class="form-group">
-                <label for="tahunDaftaredit">TAHUN DAFTAR:</label>
-                <input type="text" id="tahunDaftarEdit" name="tahunDaftar" placeholder="Masukkan tahun daftar kenderaan" >
+                <label for="noTelEdit">NO TELEFON:</label>
+                <input type="tel" id="noTelEdit" name="noTel" maxlength="12" placeholder="Masukkan no telefon" >
             </div>
-			
             <div class="form-group">
-                <label for="tarikhDaftarEdit">TARIKH DAFTAR:</label>
-                <input type="date" id="tarikhDaftarEdit" name="tarikhDaftar" required>
-                    
-            </div>
-			
-            <div class="form-group">
-                <label for="mulaCukaiJalanEdit">MULA CUKAI JALAN:</label>
-                <input type="date" id="mulaCukaiJalanEdit" name="mulaCukaiJalan" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="tamatCukaiJalanEdit">TAMAT CUKAI JALAN:</label>
-                <input type="date" id="tamatCukaiJalanEdit" name="tamatCukaiJalan" required>
-            </div>
-			
-			<div class="form-group">
-				<label for="negeriPenempatanEdit">NEGERI / PENEMPATAN:</label>
-				<select id="negeriPenempatanEdit" name="negeriPenempatan" required>
-					<option value="" disabled selected>--Pilih Negeri--</option>
-					<option value="Kelantan">Kelantan</option>
-					<option value="Terengganu">Terengganu</option>
-					<option value="Pahang">Pahang</option>
-					<option value="Kedah">Kedah</option>
-					<option value="Perlis">Perlis</option>
-					<option value="Perak">Perak</option>
-					<option value="Selangor">Selangor</option>
-					<option value="Melaka">Melaka</option>
-					<option value="Johor">Johor</option>
-					<option value="Sabah">Sabah</option>
-					<option value="Sarawak">Sarawak</option>
-				</select>
-			</div>
-			
-			<div class="form-group">
-                <label for="kawasanEdit">KAWASAN:</label>
-                <select id="kawasanEdit" name="kawasan" required>
-                    <option value="" disabled selected>--Pilih Kawasan--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                <label for="kategoriLesenEdit">KATEGORI LESEN:</label>
+                <select id="kategoriLesenEdit" name="kategoriLesen" required>
+                    <option value="" disabled selected>--Pilih Kategori Lesen--</option>
+                    <option value="GDL">GDL</option>
+                    <option value="CDL">CDL</option>
+                    <option value="H">H</option>
                 </select>
             </div>
-			
             <div class="form-group">
-                <label for="statusKenderaanEdit">STATUS:</label>
-                <select id="statusKenderaanEdit" name="statusKenderaan" required>
+                <label for="tarikhTamatLesenEdit">TARIKH TAMAT LESEN:</label>
+                <input type="date" id="tarikhTamatLesenEdit" name="tarikhTamatLesen" required>
+            </div>
+            <div class="form-group">
+                <label for="statusEdit">STATUS:</label>
+                <select id="statusEdit" name="status" required>
                     <option value="" disabled selected>--Pilih Status--</option>
                     <option value="Aktif">Aktif</option>
                     <option value="Tidak Aktif">Tidak Aktif</option>
@@ -504,12 +431,13 @@
             </div>
 			
 			<div class="form-group">
-                <label for="kategoriKenderaanEdit">KATEGORI KENDERAAN:</label>
-                <select id="kategoriKenderaanEdit" name="kategorikenderaan" required>
-                    <option value="" disabled selected>--Pilih Status--</option>
-                    <option value="Jentera">Jentera</option>
-                    <option value="Jengkaut">Jengkaut</option>
-                </select>
+				<label for="password">KATA LALUAN:</label>
+				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
+            </div>
+			
+			<div class="form-group">
+				<label for="confirmPassword">KATA LALUAN:</label>
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
             </div>
 			
             <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
@@ -526,7 +454,6 @@
     <script>
         function openModal() {
             document.getElementById('registerModal').style.display = "block";
-
         }
 
         function closeModal() {
@@ -536,19 +463,19 @@
 
         function editItem(button) {
             var row = button.parentNode.parentNode;
-            var namaJenisKenderaan = row.cells[0].innerText;
-            var noDaftar = row.cells[1].innerText;
-            var tahundaftar = row.cells[2].innerText;
-            var tarikhDaftar = row.cells[3].innerText;
-			var mulaCukaiJalan = row.cells[4].innerText;
-
+            var namaPemandu = row.cells[0].innerText;
+            var noKp = row.cells[1].innerText;
+            var noTel = row.cells[2].innerText;
+            var kategoriLesen = row.cells[3].innerText;
+			var tarikhTamatLesen = row.cells[4].innerText;
+			var status = row.cells[5].innerText;
 			
-            document.getElementById('namaJenisKenderaanEdit').value = namaJenisKenderaan;
-            document.getElementById('noDaftarEdit').value = noDaftar;
-            document.getElementById('tahunDaftarEdit').value = tahundaftar;
-			document.getElementById('tarikhDaftarEdit').value = tarikhDaftar;
-			document.getElementById('mulaCukaiJalanEdit').value = mulaCukaiJalan;
-
+            document.getElementById('namaPemanduEdit').value = namaPemandu;
+            document.getElementById('noKpEdit').value = noKp;
+            document.getElementById('noTelEdit').value = noTel;
+			document.getElementById('kategoriLesenEdit').value = kategoriLesen;
+			document.getElementById('tarikhTamatLesenEdit').value = tarikhTamatLesen;
+            document.getElementById('statusEdit').value = status;
 			
 			document.getElementById('editModal').style.display = "block";
 		}
