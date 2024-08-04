@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <style>
+      <style>
         .btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 10px;
+            padding: 10px 50px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -24,9 +24,10 @@
         .btn:hover {
             background-color: #0056b3;
         }
-		h2, h3 {
-			margin-bottom: 15px;
-		}
+
+        h2, h3 {
+            margin-bottom: 15px;
+        }
 
         table {
             border: 1px solid #ddd;
@@ -37,8 +38,7 @@
             width: 100%;
         }
 
-        table th,
-        table td {
+        table th, table td {
             border: 1px solid #ddd;
             padding: 12px;
             font-size: 0.9em;
@@ -74,8 +74,7 @@
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
+        .close:hover, .close:focus {
             color: #000;
             text-decoration: none;
             cursor: pointer;
@@ -107,9 +106,10 @@
             color: #333;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="tel"],
+        .form-group input[type="text"], 
+        .form-group input[type="tel"], 
         .form-group input[type="date"],
+		.form-group input[type="password"],
         .form-group select {
             width: 100%;
             padding: 10px;
@@ -119,7 +119,7 @@
             box-sizing: border-box;
         }
 
-        .form-group input[type="submit"],
+        .form-group input[type="submit"], 
         .form-group input[type="button"] {
             background-color: #007bff;
             color: white;
@@ -133,66 +133,54 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .form-group input[type="submit"]:hover,
+        .form-group input[type="submit"]:hover, 
         .form-group input[type="button"]:hover {
             background-color: #0056b3;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-		.btn-edit{
-			background: none;
+        .btn-edit, .btn-delete {
+            background: none;
             border: none;
             cursor: pointer;
             padding: 0;
+            font-size: 1.2em;
+        }
+
+        .btn-edit {
             color: #28a745;
-            font-size: 1.2em;
-		}
-		
-		.btn-edit:hover {
-			color: #28a745;
-		}
-		.btn-delete{
-			background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
+        }
+
+        .btn-edit:hover {
+            color: #218838;
+        }
+
+        .btn-delete {
             color: #c82333;
-            font-size: 1.2em;
-		}
-		
-		.btn-delete:hover {
-			background-color: #c82333; /* Darker red on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-update {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        }
 
-		.btn-update:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-daftar {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        .btn-delete:hover {
+            color: #bd2130;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
 
-		.btn-daftar:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
+        .btn-update, .btn-daftar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1em;
+        }
+
+        .btn-update:hover, .btn-daftar:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
         @media (max-width: 768px) {
             .modal-content {
                 width: 90%;
             }
+        }
     </style>
 </head>
 
@@ -350,10 +338,7 @@
             </div>
             <div class="form-group">
                 <label for="namaPemandu">NAMA PEMANDU:</label>
-                <select id="namaPemandu" name="namaPemandu" required>
-                    <option value="" disabled selected>--Pilih Nama Pemandu--</option>
-                    <!-- Add options here -->
-                </select>
+                <input type="text" id="namaPemandu" name="namaPemandu" placeholder="Masukkan nama pemandu" required>
             </div>
             <div class="form-group">
                 <label for="noKp">NO KAD PENGENALAN:</label>
@@ -384,6 +369,18 @@
                     <option value="Tidak Aktif">Tidak Aktif</option>
                 </select>
             </div>
+			
+			<div class="form-group">
+				<label for="password">KATA LALUAN:</label>
+				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
+            </div>
+			
+			<div class="form-group">
+				<label for="confirmPassword">KATA LALUAN:</label>
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
+            </div>
+			
+			
             <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
         </form>
     </div>
@@ -401,18 +398,15 @@
             </div>
             <div class="form-group">
                 <label for="namaPemanduEdit">NAMA PEMANDU:</label>
-                <select id="namaPemanduEdit" name="namaPemandu" required>
-                    <option value="" disabled selected>--Pilih Nama Pemandu--</option>
-                    <!-- Add options here -->
-                </select>
+                <input type="text" id="namaPemanduEdit" name="namaPemandu" placeholder="Masukkan nama pemandu" required>
             </div>
             <div class="form-group">
                 <label for="noKpEdit">NO KAD PENGENALAN:</label>
-                <input type="text" id="noKpEdit" name="noKp" maxlength="12" placeholder="noKp" >
+                <input type="text" id="noKpEdit" name="noKp" maxlength="12" placeholder="Masukkan no kad pengenalan" >
             </div>
             <div class="form-group">
                 <label for="noTelEdit">NO TELEFON:</label>
-                <input type="tel" id="noTelEdit" name="noTel" maxlength="12" placeholder="noTel" >
+                <input type="tel" id="noTelEdit" name="noTel" maxlength="12" placeholder="Masukkan no telefon" >
             </div>
             <div class="form-group">
                 <label for="kategoriLesenEdit">KATEGORI LESEN:</label>
@@ -435,6 +429,17 @@
                     <option value="Tidak Aktif">Tidak Aktif</option>
                 </select>
             </div>
+			
+			<div class="form-group">
+				<label for="password">KATA LALUAN:</label>
+				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
+            </div>
+			
+			<div class="form-group">
+				<label for="confirmPassword">KATA LALUAN:</label>
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
+            </div>
+			
             <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
         </form>
     </div>

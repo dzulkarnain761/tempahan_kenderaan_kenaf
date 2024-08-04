@@ -6,26 +6,211 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
-    <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-	<style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-</style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        h2, h3 {
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .cardHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"],
+        .form-group input[type="button"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input[type="submit"]:hover,
+        .form-group input[type="button"]:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-edit,
+        .btn-delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 1.2em;
+        }
+
+        .btn-edit {
+            color: #28a745;
+        }
+
+        .btn-edit:hover {
+            color: #218838;
+        }
+
+        .btn-delete {
+            color: #c82333;
+        }
+
+        .btn-delete:hover {
+            color: #bd2130;
+        }
+
+        .btn-update,
+        .btn-daftar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-update:hover,
+        .btn-daftar:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- =============== Navigation ================ -->
     <div class="container">
         <div class="navigation">
             <ul>
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
                     </a>
                 </li>
-
-                <li>
+<li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
@@ -99,7 +284,6 @@
             </ul>
         </div>
 
-        <!-- ========================= Main ==================== -->
         <div class="main">
             <div class="topbar">
                 <div class="toggle">
@@ -107,99 +291,181 @@
                 </div>
 
                 <div class="userName">
-					<div class="user-name">NAMA BINTI PENUH</div>
-					<div class="user">
-						<img src="assets/images/user.png" alt="User Image">
-					</div>
-				</div>
-			</div>
-				
-			<!-- ================ Order Details List ================= -->
+                    <div class="user-name">NAMA BINTI PENUH</div>
+                    <div class="user">
+                        <img src="assets/images/user.png" alt="User Image">
+                    </div>
+                </div>
+            </div>
+
             <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
-                        <h2>Senarai Staf</h2>
-                        <a href="#" class="btn">Daftar staf</a>
+                        <h2>SENARAI STAF</h2>
+                        <a class="btn" onclick="openModal()">DAFTAR STAF</a>
                     </div>
 
                     <table>
                         <thead>
                             <tr>
-                                <td>Name</td>
-                                <td>Price</td>
-                                <td>Payment</td>
-                                <td>Status</td>
+                                <td>Bil</td>
+								<td>Kumpulan</td>
+                                <td>Nama Staf</td>
+                                <td>No Kad Pengenalan</td>
+                                <td>No Telefon</td>
+                                <td>Kemaskini</td>
                             </tr>
                         </thead>
-
                         <tbody>
                             <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button onclick="editItem(this)" class="btn btn-edit">
+                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-delete">
+                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                    </button>
+                                </td>
                             </tr>
 
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-    <!-- =========== Scripts =========  -->
-    <script src="assets/js/main.js"></script>
+        <!-- Register Modal -->
+        <!-- Register Modal -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>DAFTAR STAF</h3>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="kumpulan">Kumpulan:</label>
+				<select id="kumpulan" name="kumpulan" required>
+					<option value="" disabled selected>--Pilih Kumpulan--</option>
+				</select>
+            </div>
+			
+            <div class="form-group">
+                <label for="namaStaf">NAMA STAF:</label>
+                <input type="text" id="namaStaf" name="namaStaf" placeholder="Masukkan nama staf" required>
+            </div>
+			
+            <div class="form-group">
+                <label for="noKp">NO KAD PENGENALAN:</label>
+                <input type="text" id="noKp" name="noKp" maxlength="12" placeholder="Masukkan No Kad Pengenalan" required>
+            </div>
+			
+            <div class="form-group">
+                <label for="noTel">NO TELEFON:</label>
+                <input type="tel" id="noTel" name="noTel" maxlength="12" placeholder="Masukkan no telefon" required>
+            </div>
+			
+			<div class="form-group">
+				<label for="password">KATA LALUAN:</label>
+				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
+            </div>
+			
+			<div class="form-group">
+				<label for="confirmPassword">KATA LALUAN:</label>
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
+            </div>
+			
+            <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
+        </form>
+    </div>
+</div>
 
-    <!-- ====== ionicons ======= -->
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>KEMASKINI STAF</h2>
+        <form id="editForm">
+            <div class="form-group">
+                <label for="kumpulanEdit">KUMPULAN:</label>
+				<select id="kumpulanEdit" name="kumpulan" >
+					<option value="" disabled selected>--Pilih Kumpulan--</option>
+				</select>
+            </div>
+			
+            <div class="form-group">
+                <label for="namaStafEdit">NAMA STAF:</label>
+                <input type="text" id="namaStafEdit" name="namaStaf" placeholder="Masukkan nama staf" required>
+            </div>
+            <div class="form-group">
+                <label for="noKpEdit">NO KAD PENGENALAN:</label>
+                <input type="text" id="noKpEdit" name="noKp" maxlength="12" placeholder="Masukkan no kad pengenalan" >
+            </div>
+            <div class="form-group">
+                <label for="noTelEdit">NO TELEFON:</label>
+                <input type="tel" id="noTelEdit" name="noTel" maxlength="12" placeholder="Masukkan no telefon" >
+            </div>
+
+            <div class="form-group">
+                <label for="passwordEdit">KATA LALUAN:</label>
+                <input type="text" id="passwordEdit" name="password" placeholder="Masukkan kata laluan" required>
+            </div>
+			
+			<div class="form-group">
+                <label for="confirmPasswordEdit">SAHKAN KATA LALUAN:</label>
+                <input type="text" id="confirmPasswordEdit" name="confirmPassword" placeholder="Sahkan kata laluan" required>
+            </div>
+
+            <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
+        </form>
+    </div>
+</div>
+
+    </div>
+
+    <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function openModal() {
+            document.getElementById('registerModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('registerModal').style.display = "none";
+            document.getElementById('editModal').style.display = "none";
+        }
+
+        function editItem(button) {
+            var row = button.parentNode.parentNode;
+            var namaStaf = row.cells[0].innerText;
+            var noKp = row.cells[1].innerText;
+            var noTel = row.cells[2].innerText;
+            var password = row.cells[3].innerText;
+			var confirmPassword = row.cells[4].innerText;
+			
+            document.getElementById('namaStafEdit').value = namaStaf;
+            document.getElementById('noKpEdit').value = noKp;
+            document.getElementById('noTelEdit').value = noTel;
+			document.getElementById('passwordEdit').value = password;
+			document.getElementById('confirmPasswordEdit').value = confirmPassword;
+			
+			document.getElementById('editModal').style.display = "block";
+		}
+		
+        function deleteItem(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function saveChanges() {
+            closeModal();
+        }
+    </script>
 </body>
 
 </html>
