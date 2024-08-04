@@ -15,6 +15,25 @@
 	<link rel="stylesheet" href="assets/css/homepage.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
+	<style>
+	
+.border-first-button button {
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  color: #4da6e7 !important;
+  border: 1px solid #4da6e7 !important;
+  border-radius: 23px;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  transition: all .5s;
+  background-color: #fff;
+}
+
+.border-first-button button:hover {
+  background-color: #4da6e7;
+  color: #fff !important;
+}
+</style>
   </head>
 
 <body>
@@ -50,7 +69,11 @@
               <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
               <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
 			  <li class="scroll-to-section"><a href="profil.php" class="active">Profil</a></li>
-              <li class="scroll-to-section"><div class="border-first-button"><a href="login.php">Logout</a></div></li> 
+              <li class="scroll-to-section">
+                <div class="border-first-button">
+					<button onclick="location.href='login.php'">Logout</button>
+				</div>
+              </li>
             </ul>    
             <!-- ***** Menu End ***** -->
           </nav>

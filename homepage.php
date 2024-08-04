@@ -9,17 +9,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <title>Booking</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/homepage.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
+	<style>
+	.border-first-button button {
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  color: #4da6e7 !important;
+  border: 1px solid #4da6e7 !important;
+  border-radius: 23px;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  transition: all .5s;
+  background-color: #fff;
+}
+
+.border-first-button button:hover {
+  background-color: #4da6e7;
+  color: #fff !important;
+}
+</style>
 </head>
 
 <body>
@@ -56,7 +69,9 @@
                             <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
 							<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
                             <li class="scroll-to-section">
-                                <div class="border-first-button"><a href="login.php">Logout</a></div>
+                                <div class="border-first-button">
+									<button onclick="location.href='login.php'">Logout</button>
+								</div>
                             </li>
                         </ul>
                         <!-- ***** Menu End ***** -->

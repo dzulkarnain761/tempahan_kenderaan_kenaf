@@ -264,7 +264,7 @@ body {
   background-color: #4da6e7;
 }
 
-.border-first-button a {
+.border-first-button button {
   display: inline-block !important;
   padding: 10px 20px !important;
   color: #4da6e7 !important;
@@ -273,9 +273,10 @@ body {
   font-weight: 500 !important;
   letter-spacing: 0.3px !important;
   transition: all .5s;
+  background-color: #fff;
 }
 
-.border-first-button a:hover {
+.border-first-button button:hover {
   background-color: #4da6e7;
   color: #fff !important;
 }
