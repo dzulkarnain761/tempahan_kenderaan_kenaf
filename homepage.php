@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if ($_SESSION["pengguna_id"] !== 'G') {
-  header("Location: login.php");
+if (!isset($_SESSION["kumpulan"]) || $_SESSION === 'G') {
+  header("Location: ../login.php");
   exit();
 }
 

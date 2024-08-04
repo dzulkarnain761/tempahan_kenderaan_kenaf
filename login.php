@@ -1,9 +1,11 @@
 <?php
 session_start();
 
-if (isset($_SESSION["pengguna_id"])) {
-    header("Location: homepage.php");
-    exit();
+if (isset($_SESSION["kumpulan"])) {
+    if($_SESSION['kumpulan'] === 'G'){
+        header("Location: homepage.php");
+        exit();
+    } 
 }
 
 ?>

@@ -24,9 +24,11 @@
         .btn:hover {
             background-color: #0056b3;
         }
-		h2, h3 {
-			margin-bottom: 15px;
-		}
+
+        h2,
+        h3 {
+            margin-bottom: 15px;
+        }
 
         table {
             border: 1px solid #ddd;
@@ -139,60 +141,67 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-		.btn-edit{
-			background: none;
+        .btn-edit {
+            background: none;
             border: none;
             cursor: pointer;
             padding: 0;
             color: #28a745;
             font-size: 1.2em;
-		}
-		
-		.btn-edit:hover {
-			color: #28a745;
-		}
-		.btn-delete{
-			background: none;
+        }
+
+        .btn-edit:hover {
+            color: #28a745;
+        }
+
+        .btn-delete {
+            background: none;
             border: none;
             cursor: pointer;
             padding: 0;
             color: #c82333;
             font-size: 1.2em;
-		}
-		
-		.btn-delete:hover {
-			background-color: #c82333; /* Darker red on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-update {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        }
 
-		.btn-update:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-daftar {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        .btn-delete:hover {
+            background-color: #c82333;
+            /* Darker red on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
 
-		.btn-daftar:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
+        .btn-update {
+            background-color: #28a745;
+            /* Green color */
+            color: white;
+            border: none;
+            font-size: 1em;
+        }
+
+        .btn-update:hover {
+            background-color: #218838;
+            /* Darker green on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-daftar {
+            background-color: #28a745;
+            /* Green color */
+            color: white;
+            border: none;
+            font-size: 1em;
+        }
+
+        .btn-daftar:hover {
+            background-color: #218838;
+            /* Darker green on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
         @media (max-width: 768px) {
             .modal-content {
                 width: 90%;
             }
+        }
     </style>
 </head>
 
@@ -206,7 +215,7 @@
                         <span class="title" style="margin-top: 10px;">LKTNBooking</span>
                     </a>
                 </li>
-<li>
+                <li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
@@ -259,8 +268,8 @@
                         <span class="title">Tetapan</span>
                     </a>
                 </li>
-				
-				<li>
+
+                <li>
                     <a href="profile.php">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
@@ -333,188 +342,182 @@
             </div>
         </div>
 
-        <!-- Register Modal -->
-        <!-- Register Modal -->
-<div id="registerModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h3>DAFTAR KENDERAAN</h3>
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="adminKenderaan">ADMIN KENDERAAN:</label>
-                <input type="text" id="adminKenderaan" name="adminKenderaan" placeholder="Admin Kenderaan" required>
-            </div>
-            <div class="form-group">
-                <label for="namaJenisKenderaan">NAMA / JENIS KENDERAAN:</label>
-                <input type="text" id="namaJenisKenderaan" name="namaJenisKenderaan" placeholder="Masukkan nama kenderaan" required>  
-            </div>
-            <div class="form-group">
-                <label for="noDaftar">NO PENDAFTARAN KENDERAAN:</label>
-                <input type="text" id="noDaftar" name="noDaftar" placeholder="Masukkan no pendaftaran" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="tahunDaftar">TAHUN DAFTAR:</label>
-                <input type="text" id="tahunDaftar" name="tahunDaftar" placeholder="Masukkan tahun daftar kenderaan" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="tarikhDaftar">TARIKH DAFTAR:</label>
-                <input type="date" id="tarikhDaftar" name="tarikhDaftar" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="mulaCukaiJalan">MULA CUKAI JALAN:</label>
-                <input type="date" id="mulaCukaiJalan" name="mulaCukaiJalan" required>
-            </div>
 
-			<div class="form-group">
-                <label for="tamatCukaiJalan">TAMAT CUKAI JALAN:</label>
-                <input type="date" id="tamatCukaiJalan" name="tamatCukaiJalan" required>
-            </div>
-			
-            <div class="form-group">
-                <label for="negeriPenempatan">NEGERI / PENEMPATAN:</label>
-				<select id="negeriPenempatan" name="negeriPenempatan" required>
-					<option value="" disabled selected>--Pilih Negeri--</option>
-					<option value="Kelantan">Kelantan</option>
-					<option value="Terengganu">Terengganu</option>
-					<option value="Pahang">Pahang</option>
-					<option value="Kedah">Kedah</option>
-					<option value="Perlis">Perlis</option>
-					<option value="Perak">Perak</option>
-					<option value="Selangor">Selangor</option>
-					<option value="Melaka">Melaka</option>
-					<option value="Johor">Johor</option>
-					<option value="Sabah">Sabah</option>
-					<option value="Sarawak">Sarawak</option>
-				</select>
-			</div>
-			
-            <div class="form-group">
-                <label for="kawasan">KAWASAN:</label>
-                <select id="kawasan" name="kawasan" required>
-                    <option value="" disabled selected>--Pilih Kawasan--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
-            </div>
-			
-			<div class="form-group">
-                <label for="statusKenderaan">STATUS KENDERAAN:</label>
-                <select id="statusKenderaan" name="statusKenderaan" required>
-                    <option value="" disabled selected>--Pilih Status Kenderaan--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
-            </div>
-					
-            <div class="form-group">
-                <label for="kategoriKenderaan">KATEGORI KENDERAAN:</label>
-                <select id="kategoriKenderaan" name="kategoriKenderaan" required>
-                    <option value="" disabled selected>--Pilih Kategori Kenderaan--</option>
-                    <option value="Jentera">Jentera</option>
-                    <option value="Jengkaut">Jengkaut</option>
-                </select>
-            </div>
-            <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
-        </form>
-    </div>
-</div>
+        <!-- Register Modal -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3>DAFTAR KENDERAAN</h3>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="adminKenderaan">ADMIN KENDERAAN:</label>
+                        <input type="text" id="adminKenderaan" name="adminKenderaan" placeholder="Admin Kenderaan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaJenisKenderaan">NAMA / JENIS KENDERAAN:</label>
+                        <input type="text" id="namaJenisKenderaan" name="namaJenisKenderaan" placeholder="Masukkan nama kenderaan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="noDaftar">NO PENDAFTARAN KENDERAAN:</label>
+                        <input type="text" id="noDaftar" name="noDaftar" placeholder="Masukkan no pendaftaran" required>
+                    </div>
 
-<!-- Edit Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>KEMASKINI KENDERAAN</h2>
-        <form id="editForm">
-            <div class="form-group">
-                <label for="adminKenderaanEdit">ADMIN KENDERAAN:</label>
-                <input type="text" id="adminKenderaanEdit" name="adminKenderaan" placeholder="adminKenderaan" readonly>
+                    <div class="form-group">
+                        <label for="tahunDaftar">TAHUN DAFTAR:</label>
+                        <input type="text" id="tahunDaftar" name="tahunDaftar" placeholder="Masukkan tahun daftar kenderaan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tarikhDaftar">TARIKH DAFTAR:</label>
+                        <input type="date" id="tarikhDaftar" name="tarikhDaftar" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mulaCukaiJalan">MULA CUKAI JALAN:</label>
+                        <input type="date" id="mulaCukaiJalan" name="mulaCukaiJalan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tamatCukaiJalan">TAMAT CUKAI JALAN:</label>
+                        <input type="date" id="tamatCukaiJalan" name="tamatCukaiJalan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="negeriPenempatan">NEGERI / PENEMPATAN:</label>
+                        <select id="negeriPenempatan" name="negeriPenempatan" required>
+                            <option value="" disabled selected>--Pilih Negeri--</option>
+                            <?php 
+                                include '../controller/connection.php';
+                                $sql = "SELECT nama_negeri FROM negeri";
+                                $result = mysqli_query($conn, $sql);
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kawasan">KAWASAN:</label>
+                        <select id="kawasan" name="kawasan" required>
+                            <option value="" disabled selected>--Pilih Kawasan--</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="statusKenderaan">STATUS KENDERAAN:</label>
+                        <select id="statusKenderaan" name="statusKenderaan" required>
+                            <option value="" disabled selected>--Pilih Status Kenderaan--</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kategoriKenderaan">KATEGORI KENDERAAN:</label>
+                        <select id="kategoriKenderaan" name="kategoriKenderaan" required>
+                            <option value="" disabled selected>--Pilih Kategori Kenderaan--</option>
+                            <option value="Jentera">Jentera</option>
+                            <option value="Jengkaut">Jengkaut</option>
+                        </select>
+                    </div>
+                    <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
+                </form>
             </div>
-			
-            <div class="form-group">
-                <label for="namaJenisKenderaanEdit">NAMA / JENIS KENDERAAB:</label>
-                <input type="text" id="namaJenisKenderaanEdit" name="namaJenisKenderaan" placeholder="Masukkan nama kenderaan" required>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>KEMASKINI KENDERAAN</h2>
+                <form id="editForm">
+                    <div class="form-group">
+                        <label for="adminKenderaanEdit">ADMIN KENDERAAN:</label>
+                        <input type="text" id="adminKenderaanEdit" name="adminKenderaan" placeholder="adminKenderaan" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="namaJenisKenderaanEdit">NAMA / JENIS KENDERAAB:</label>
+                        <input type="text" id="namaJenisKenderaanEdit" name="namaJenisKenderaan" placeholder="Masukkan nama kenderaan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="noDaftarEdit">NO PENDAFTARAN KENDERAAN:</label>
+                        <input type="text" id="noDaftarEdit" name="noDaftar" placeholder="Masukkan no pendaftaran kenderaan">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tahunDaftaredit">TAHUN DAFTAR:</label>
+                        <input type="text" id="tahunDaftarEdit" name="tahunDaftar" placeholder="Masukkan tahun daftar kenderaan">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tarikhDaftarEdit">TARIKH DAFTAR:</label>
+                        <input type="date" id="tarikhDaftarEdit" name="tarikhDaftar" required>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mulaCukaiJalanEdit">MULA CUKAI JALAN:</label>
+                        <input type="date" id="mulaCukaiJalanEdit" name="mulaCukaiJalan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tamatCukaiJalanEdit">TAMAT CUKAI JALAN:</label>
+                        <input type="date" id="tamatCukaiJalanEdit" name="tamatCukaiJalan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="negeriPenempatanEdit">NEGERI / PENEMPATAN:</label>
+                        <select id="negeriPenempatanEdit" name="negeriPenempatan" required>
+                            <option value="" disabled selected>--Pilih Negeri--</option>
+                            <option value="Kelantan">Kelantan</option>
+                            <option value="Terengganu">Terengganu</option>
+                            <option value="Pahang">Pahang</option>
+                            <option value="Kedah">Kedah</option>
+                            <option value="Perlis">Perlis</option>
+                            <option value="Perak">Perak</option>
+                            <option value="Selangor">Selangor</option>
+                            <option value="Melaka">Melaka</option>
+                            <option value="Johor">Johor</option>
+                            <option value="Sabah">Sabah</option>
+                            <option value="Sarawak">Sarawak</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kawasanEdit">KAWASAN:</label>
+                        <select id="kawasanEdit" name="kawasan" required>
+                            <option value="" disabled selected>--Pilih Kawasan--</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="statusKenderaanEdit">STATUS:</label>
+                        <select id="statusKenderaanEdit" name="statusKenderaan" required>
+                            <option value="" disabled selected>--Pilih Status--</option>
+                            <option value="Aktif">Aktif</option>
+                            <option value="Tidak Aktif">Tidak Aktif</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kategoriKenderaanEdit">KATEGORI KENDERAAN:</label>
+                        <select id="kategoriKenderaanEdit" name="kategorikenderaan" required>
+                            <option value="" disabled selected>--Pilih Status--</option>
+                            <option value="Jentera">Jentera</option>
+                            <option value="Jengkaut">Jengkaut</option>
+                        </select>
+                    </div>
+
+                    <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
+                </form>
             </div>
-			
-            <div class="form-group">
-                <label for="noDaftarEdit">NO PENDAFTARAN KENDERAAN:</label>
-                <input type="text" id="noDaftarEdit" name="noDaftar" placeholder="Masukkan no pendaftaran kenderaan" >
-            </div>
-			
-            <div class="form-group">
-                <label for="tahunDaftaredit">TAHUN DAFTAR:</label>
-                <input type="text" id="tahunDaftarEdit" name="tahunDaftar" placeholder="Masukkan tahun daftar kenderaan" >
-            </div>
-			
-            <div class="form-group">
-                <label for="tarikhDaftarEdit">TARIKH DAFTAR:</label>
-                <input type="date" id="tarikhDaftarEdit" name="tarikhDaftar" required>
-                    
-            </div>
-			
-            <div class="form-group">
-                <label for="mulaCukaiJalanEdit">MULA CUKAI JALAN:</label>
-                <input type="date" id="mulaCukaiJalanEdit" name="mulaCukaiJalan" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="tamatCukaiJalanEdit">TAMAT CUKAI JALAN:</label>
-                <input type="date" id="tamatCukaiJalanEdit" name="tamatCukaiJalan" required>
-            </div>
-			
-			<div class="form-group">
-				<label for="negeriPenempatanEdit">NEGERI / PENEMPATAN:</label>
-				<select id="negeriPenempatanEdit" name="negeriPenempatan" required>
-					<option value="" disabled selected>--Pilih Negeri--</option>
-					<option value="Kelantan">Kelantan</option>
-					<option value="Terengganu">Terengganu</option>
-					<option value="Pahang">Pahang</option>
-					<option value="Kedah">Kedah</option>
-					<option value="Perlis">Perlis</option>
-					<option value="Perak">Perak</option>
-					<option value="Selangor">Selangor</option>
-					<option value="Melaka">Melaka</option>
-					<option value="Johor">Johor</option>
-					<option value="Sabah">Sabah</option>
-					<option value="Sarawak">Sarawak</option>
-				</select>
-			</div>
-			
-			<div class="form-group">
-                <label for="kawasanEdit">KAWASAN:</label>
-                <select id="kawasanEdit" name="kawasan" required>
-                    <option value="" disabled selected>--Pilih Kawasan--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
-            </div>
-			
-            <div class="form-group">
-                <label for="statusKenderaanEdit">STATUS:</label>
-                <select id="statusKenderaanEdit" name="statusKenderaan" required>
-                    <option value="" disabled selected>--Pilih Status--</option>
-                    <option value="Aktif">Aktif</option>
-                    <option value="Tidak Aktif">Tidak Aktif</option>
-                </select>
-            </div>
-			
-			<div class="form-group">
-                <label for="kategoriKenderaanEdit">KATEGORI KENDERAAN:</label>
-                <select id="kategoriKenderaanEdit" name="kategorikenderaan" required>
-                    <option value="" disabled selected>--Pilih Status--</option>
-                    <option value="Jentera">Jentera</option>
-                    <option value="Jengkaut">Jengkaut</option>
-                </select>
-            </div>
-			
-            <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
-        </form>
-    </div>
-</div>
+        </div>
 
     </div>
 
@@ -539,19 +542,19 @@
             var noDaftar = row.cells[1].innerText;
             var tahundaftar = row.cells[2].innerText;
             var tarikhDaftar = row.cells[3].innerText;
-			var mulaCukaiJalan = row.cells[4].innerText;
+            var mulaCukaiJalan = row.cells[4].innerText;
 
-			
+
             document.getElementById('namaJenisKenderaanEdit').value = namaJenisKenderaan;
             document.getElementById('noDaftarEdit').value = noDaftar;
             document.getElementById('tahunDaftarEdit').value = tahundaftar;
-			document.getElementById('tarikhDaftarEdit').value = tarikhDaftar;
-			document.getElementById('mulaCukaiJalanEdit').value = mulaCukaiJalan;
+            document.getElementById('tarikhDaftarEdit').value = tarikhDaftar;
+            document.getElementById('mulaCukaiJalanEdit').value = mulaCukaiJalan;
 
-			
-			document.getElementById('editModal').style.display = "block";
-		}
-		
+
+            document.getElementById('editModal').style.display = "block";
+        }
+
         function deleteItem(button) {
             var row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
