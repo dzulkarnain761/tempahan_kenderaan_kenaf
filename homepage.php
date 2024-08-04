@@ -110,7 +110,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION === 'G') {
 					</div>
                     <div class="col-lg-12">
                       <div class="border-first-button scroll-to-section">
-                        <a href="tempahan.php">Tempah</a>
+						<button onclick="location.href='tempahan.php'">Tempah</button>
                       </div>
                     </div>
                   </div>
