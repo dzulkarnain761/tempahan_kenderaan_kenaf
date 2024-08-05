@@ -58,6 +58,7 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="homepage.php" class="logo">
+							<img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
                             <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
                         </a>
                         <!-- ***** Logo End ***** -->
