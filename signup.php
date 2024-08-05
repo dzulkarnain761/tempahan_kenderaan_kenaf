@@ -15,8 +15,14 @@
     <!-- Alpine Core -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-
     <link rel="stylesheet" href="assets/css/login.css">
+
+    <style>
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,16 +31,19 @@
             <form id="signupForm" x-data>
                 <h2>Daftar Masuk</h2>
                 <label for="nokp">No Kad Pengenalan :</label>
-                <input x-mask="999999-99-9999" type="text" id="nokp" name="nokp" placeholder="No Kad Pengenalan" required oninvalid="this.setCustomValidity('Isi No Kad Pengenalan')" oninput="this.setCustomValidity('')"><br><br>
+                <input x-mask="999999-99-9999" type="text" id="nokp" name="nokp" placeholder="No Kad Pengenalan" required oninvalid="this.setCustomValidity('Isi No Kad Pengenalan')" oninput="this.setCustomValidity('')"><br>
                 <label for="fullname">Nama Penuh :</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Nama Penuh" required oninvalid="this.setCustomValidity('Isi Name Penuh')" oninput="this.setCustomValidity('')"><br><br>
+                <input type="text" id="fullname" name="fullname" placeholder="Nama Penuh" required oninvalid="this.setCustomValidity('Isi Name Penuh')" oninput="this.setCustomValidity('')"><br>
                 <label for="contactno">No Telefon :</label>
-                <input x-mask="999-99999999" type="text" id="contactno" name="contactno" placeholder="No Telefon" required oninvalid="this.setCustomValidity('Isi No Telefon')" oninput="this.setCustomValidity('')"><br><br>
+                <input x-mask="999-99999999" type="text" id="contactno" name="contactno" placeholder="No Telefon" required oninvalid="this.setCustomValidity('Isi No Telefon')" oninput="this.setCustomValidity('')"><br>
                 <label for="password">Kata Laluan:</label>
-                <input type="password" id="password" name="password" placeholder="Kata Laluan" required oninvalid="this.setCustomValidity('Isi Kata Laluan')" oninput="this.setCustomValidity('')"><br><br>
+                <input type="password" id="password" name="password" placeholder="Kata Laluan" required oninvalid="this.setCustomValidity('Isi Kata Laluan')" oninput="this.setCustomValidity('')"><br>
                 <label for="confirmPass">Sahkan Kata Laluan :</label>
-                <input type="password" id="confirmPass" name="confirmPass" placeholder="Sahkan Kata Laluan" required oninvalid="this.setCustomValidity('Sahkan Kata Laluan')" oninput="this.setCustomValidity('')"><br><br>
-
+                <input type="password" id="confirmPass" name="confirmPass" placeholder="Sahkan Kata Laluan" required oninvalid="this.setCustomValidity('Sahkan Kata Laluan')" oninput="this.setCustomValidity('')">
+                <div>
+                    <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
+                    <label for="showPassword">Tunjuk Kata Laluan</label>
+                </div>
                 <button type="submit">Daftar Masuk</button>
             </form>
             <p><a href="login.php">Kembali ke Log masuk</a></p>
@@ -42,8 +51,18 @@
     </div>
 
     <script>
-        
-       
+        function togglePasswordVisibility() {
+            var password = document.getElementById("password");
+            var confirmPass = document.getElementById("confirmPass");
+            if (password.type === "password") {
+                password.type = "text";
+                confirmPass.type = "text";
+            } else {
+                password.type = "password";
+                confirmPass.type = "password";
+            }
+        }
+
         $(document).ready(function() {
             $('#signupForm').on('submit', function(e) {
                 e.preventDefault();

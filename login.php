@@ -5,7 +5,10 @@ if (isset($_SESSION["kumpulan"])) {
     if($_SESSION['kumpulan'] === 'G'){
         header("Location: homepage.php");
         exit();
-    } 
+    }elseif($_SESSION['kumpulan'] === 'A'){
+        header("Location: adminDashboard/dashboard.php");
+        exit();
+    }
 }
 
 ?>
@@ -33,7 +36,7 @@ if (isset($_SESSION["kumpulan"])) {
 
     <div class="container">
         <div class="login-container">
-            <form id="loginForm" method="POST"x-data>
+            <form id="loginForm" method="POST" x-data>
                 <h2>Log Masuk</h2>
                 <label for="nokp">No Kad Pengenalan:</label>
                 <input x-mask="999999-99-9999" type="text" id="nokp" name="nokp" placeholder="No Kad Pengenalan" required><br><br>
@@ -52,20 +55,21 @@ if (isset($_SESSION["kumpulan"])) {
         $(document).ready(function() {
             $('#loginForm').on('submit', function(e) {
                 e.preventDefault();
-
                 $.ajax({
                     url: 'controller/login_proses.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
+                        
                         let res = JSON.parse(response);
                         if (res.success) {
+                            
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Log Masuk',
                                 text: res.message,
                             }).then(() => {
-                                window.location.href = 'homepage.php';
+                                window.location.href = res.location;
                             });
                         } else {
                             Swal.fire({

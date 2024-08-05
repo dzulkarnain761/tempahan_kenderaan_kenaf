@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'A') {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +18,8 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-	<style>
-</style>
+    <style>
+    </style>
 </head>
 
 <body>
@@ -20,7 +30,7 @@
                 <li>
                     <a href="dashboard.php">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
 
@@ -77,8 +87,8 @@
                         <span class="title">Tetapan</span>
                     </a>
                 </li>
-				
-				<li>
+
+                <li>
                     <a href="profile.php">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
@@ -88,7 +98,7 @@
                 </li>
 
                 <li>
-                    <a href="../login.php">
+                    <a href="#" id="logoutButton">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
@@ -106,11 +116,11 @@
                 </div>
 
                 <div class="userName">
-					<div class="user-name">NAMA BINTI PENUH</div>
-					<div class="user">
-						<img src="assets/images/user.png" alt="User Image">
-					</div>
-				</div>
+                    <div class="user-name">NAMA BINTI PENUH</div>
+                    <div class="user">
+                        <img src="assets/images/user.png" alt="User Image">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -121,6 +131,41 @@
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+    <script>
+        const logoutButton = document.getElementById('logoutButton');
+
+        // Add a click event listener to the logout button
+        logoutButton.addEventListener('click', function() {
+            // Show the confirmation dialog
+            Swal.fire({
+                title: "Log Keluar",
+                // text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "Batal",
+                confirmButtonText: "Log Keluar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Handle the logout logic here (e.g., redirecting to a logout route)
+                    // Example: window.location.href = '/logout';
+
+                    // Show the success dialog
+                    Swal.fire({
+                        title: "Logged out!",
+                        text: "You have been successfully logged out.",
+                        icon: "success"
+                    }).then(() => {
+                        // Optionally, redirect the user after the success dialog
+                        window.location.href = 'controller/logout.php'; // Update with your actual logout URL
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

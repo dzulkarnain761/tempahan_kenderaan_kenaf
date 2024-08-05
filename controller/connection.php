@@ -12,3 +12,5 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 ?>
+
+ <!-- echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]); -->

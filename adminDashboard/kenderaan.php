@@ -1,3 +1,22 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+$sqlnegeri = "SELECT * FROM negeri";
+$resultnegeri = mysqli_query($conn, $sqlnegeri);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +25,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
@@ -383,17 +403,13 @@
                         <input type="date" id="tamatCukaiJalan" name="tamatCukaiJalan" required>
                     </div>
 
-                    <!-- Include jQuery -->
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
                     <div class="form-group">
                         <label for="negeriPenempatan">NEGERI / PENEMPATAN:</label>
                         <select id="negeriPenempatan" name="negeriPenempatan" required>
                             <option value="" disabled selected>--Pilih Negeri--</option>
                             <?php
-                            include '../controller/connection.php';
-                            $sqlnegeri = "SELECT * FROM negeri";
-                            $resultnegeri = mysqli_query($conn, $sqlnegeri);
                             while ($row = mysqli_fetch_assoc($resultnegeri)) {
                                 echo '<option value="' . $row['id_negeri'] . '">' . $row['nama_negeri'] . '</option>';
                             }
@@ -408,25 +424,9 @@
                         </select>
                     </div>
 
-                    <script>
-                        $(document).ready(function() {
-                            $('#negeriPenempatan').change(function() {
-                                var negeriID = $(this).val();
-                                if (negeriID) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '../controller/get_kawasan.php',
-                                        data: 'id_negeri=' + negeriID,
-                                        success: function(html) {
-                                            $('#kawasan').html(html);
-                                        }
-                                    });
-                                } else {
-                                    $('#kawasan').html('<option value="" disabled selected>--Pilih Kawasan--</option>');
-                                }
-                            });
-                        });
-                    </script>
+
+
+
 
 
                     <div class="form-group">
@@ -576,7 +576,6 @@
             document.getElementById('tarikhDaftarEdit').value = tarikhDaftar;
             document.getElementById('mulaCukaiJalanEdit').value = mulaCukaiJalan;
 
-
             document.getElementById('editModal').style.display = "block";
         }
 
@@ -588,6 +587,24 @@
         function saveChanges() {
             closeModal();
         }
+
+        $(document).ready(function() {
+            $('#negeriPenempatan').change(function() {
+                var negeriID = $(this).val();
+                if (negeriID) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../controller/get_kawasan.php',
+                        data: 'id_negeri=' + negeriID,
+                        success: function(html) {
+                            $('#kawasan').html(html);
+                        }
+                    });
+                } else {
+                    $('#kawasan').html('<option value="" disabled selected>--Pilih Kawasan--</option>');
+                }
+            });
+        });
     </script>
 </body>
 
