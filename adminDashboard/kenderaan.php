@@ -10,38 +10,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
         .btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 10px;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 1em;
+            transition: background-color 0.3s;
         }
 
         .btn:hover {
             background-color: #0056b3;
         }
-		h2, h3 {
-			margin-bottom: 15px;
-		}
 
-        table {
-            border: 1px solid #ddd;
-            padding: 8px;
-            border-collapse: collapse;
-            text-align: center;
-            background-color: #f2f2f2;
-            width: 100%;
-        }
-
-        table th,
-        table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            font-size: 0.9em;
+        h2, h3 {
+            margin-bottom: 15px;
         }
 
         .modal {
@@ -60,9 +54,10 @@
         .modal-content {
             background-color: #fff;
             margin: 5% auto;
-            padding: 15px;
+            padding: 20px;
             border: 1px solid #888;
-            width: 30%;
+            width: 80%;
+            max-width: 500px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -70,7 +65,7 @@
         .close {
             color: #aaa;
             float: right;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
         }
 
@@ -79,10 +74,6 @@
             color: #000;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        .details {
-            margin-top: 20px;
         }
 
         .cardHeader {
@@ -109,7 +100,7 @@
 
         .form-group input[type="text"],
         .form-group input[type="tel"],
-        .form-group input[type="date"],
+        .form-group input[type="password"],
         .form-group select {
             width: 100%;
             padding: 10px;
@@ -139,61 +130,72 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-		.btn-edit{
-			background: none;
+        .btn-edit,
+        .btn-delete {
+            background: none;
             border: none;
             cursor: pointer;
             padding: 0;
+            font-size: 1.2em;
+        }
+
+        .btn-edit {
             color: #28a745;
-            font-size: 1.2em;
-		}
-		
-		.btn-edit:hover {
-			color: #28a745;
-		}
-		.btn-delete{
-			background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
+        }
+
+        .btn-edit:hover {
+            color: #218838;
+        }
+
+        .btn-delete {
             color: #c82333;
-            font-size: 1.2em;
-		}
-		
-		.btn-delete:hover {
-			background-color: #c82333; /* Darker red on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-update {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        }
 
-		.btn-update:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		.btn-daftar {
-			background-color: #28a745; /* Green color */
-			color: white;			
-			border: none;
-			font-size: 1em;
-		}
+        .btn-delete:hover {
+            color: #bd2130;
+        }
 
-		.btn-daftar:hover {
-			background-color: #218838; /* Darker green on hover */
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		}
-		
+        .btn-update,
+        .btn-daftar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-update:hover,
+        .btn-daftar:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
         @media (max-width: 768px) {
             .modal-content {
                 width: 90%;
             }
         }
+		
+		:root {
+			--skyblue: #d0e5f5;
+		}
+
+		.details .recentOrders table tbody tr:hover {
+			background: var(--white);
+			color: var(--black);
+		}
+	
+		.details table thead td {
+			background: var(--blue);
+			color: var(--white);
+			font-size: 18px;
+		}
+
+		.details table tbody {
+			font-size: 18px;
+		}
     </style>
 </head>
 
@@ -204,10 +206,10 @@
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
-<li>
+				<li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
@@ -258,15 +260,6 @@
                             <ion-icon name="settings-outline"></ion-icon>
                         </span>
                         <span class="title">Tetapan</span>
-                    </a>
-                </li>
-				
-				<li>
-                    <a href="profile.php">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                        </span>
-                        <span class="title">Profil</span>
                     </a>
                 </li>
 

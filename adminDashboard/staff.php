@@ -38,26 +38,6 @@
             margin-bottom: 15px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        table th, table td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 0.9em;
-        }
-
-        table th {
-            background-color: #007bff;
-            color: white;
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -197,6 +177,169 @@
                 width: 90%;
             }
         }
+		
+		:root {
+			--skyblue: #d0e5f5;
+		}
+
+		.details .recentOrders table tbody tr:hover {
+			background: var(--white);
+			color: var(--black);
+		}
+	
+		.details table thead td {
+			background: var(--blue);
+			color: var(--white);
+			font-size: 18px;
+		}
+
+		.details table tbody {
+			font-size: 18px;
+		}
+		
+		/* ================== Table details ============== */
+.recentOrders {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cardHeader h2 {
+  font-weight: 600;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.cardHeader .btn {
+  position: relative;
+  padding: 5px 10px;
+  background: var(--blue);
+  text-decoration: none;
+  color: var(--white);
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+table thead td {
+	background: var(--blue);
+	color: var(--white);
+	font-size: 18px;
+}
+table tbody {
+		font-size: 18px;
+}
+.recentOrders table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.recentOrders table tr:last-child {
+  border-bottom: none;
+}
+.recentOrders table tbody tr:hover {
+  background: var(--white);
+  color: var(--black);
+}
+.recentOrders table tr td {
+  padding: 10px;
+}
+.recentOrders table tr td:last-child {
+  text-align: center;
+}
+.recentOrders table tr td:nth-child(2) {
+  text-align: center;
+}
+.recentOrders table tr td:nth-child(3) {
+  text-align: center;
+}
+.status.delivered {
+  padding: 2px 4px;
+  background: #8de02c;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.status.pending {
+  padding: 2px 4px;
+  background: #e9b10a;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.status.return {
+  padding: 2px 4px;
+  background: #f00;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.status.inProgress {
+  padding: 2px 4px;
+  background: #1795ce;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.recentCustomers {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  padding: 20px;
+  background: var(--white);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.recentCustomers .imgBx {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  overflow: hidden;
+}
+.recentCustomers .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.recentCustomers table tr td {
+  padding: 12px 10px;
+}
+.recentCustomers table tr td h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2rem;
+}
+.recentCustomers table tr td h4 span {
+  font-size: 14px;
+  color: var(--black2);
+}
+.recentCustomers table tr:hover {
+  background: var(--blue);
+  color: var(--white);
+}
+.recentCustomers table tr:hover td h4 span {
+  color: var(--white);
+}
+
     </style>
 </head>
 
@@ -207,10 +350,10 @@
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
-<li>
+				<li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
@@ -263,15 +406,6 @@
                         <span class="title">Tetapan</span>
                     </a>
                 </li>
-				
-				<li>
-                    <a href="profile.php">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                        </span>
-                        <span class="title">Profil</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="../login.php">
@@ -298,7 +432,6 @@
                 </div>
             </div>
 
-            <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
                         <h2>SENARAI STAF</h2>
@@ -336,10 +469,8 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
         </div>
 
-        <!-- Register Modal -->
         <!-- Register Modal -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
@@ -461,6 +592,7 @@
             var row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
+
 
         function saveChanges() {
             closeModal();
