@@ -1,3 +1,29 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
+FROM `kumpulan` 
+WHERE `kump_kod` != 'F' AND `kump_kod` != 'H' AND `kump_kod` != 'Z'";
+
+$sqlStaff = "SELECT `id`, `nama`, `no_kp`, `email`, `contact_no`, `kumpulan` FROM `pengguna` WHERE 'kumpulan' != 'F' AND `kumpulan` != 'H' AND `kumpulan` != 'Z'";
+
+$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
+
+$resultStaff = mysqli_query($conn, $sqlStaff);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +34,15 @@
     <title>Booking</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Alpine Plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Alpine Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
         body {
@@ -34,7 +69,8 @@
             background-color: #0056b3;
         }
 
-        h2, h3 {
+        h2,
+        h3 {
             margin-bottom: 15px;
         }
 
@@ -46,7 +82,8 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        table th, table td {
+        table th,
+        table td {
             padding: 12px;
             border: 1px solid #ddd;
             text-align: center;
@@ -210,7 +247,7 @@
                         <span class="title" style="margin-top: 10px;">LKTNBooking</span>
                     </a>
                 </li>
-<li>
+                <li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
@@ -263,8 +300,8 @@
                         <span class="title">Tetapan</span>
                     </a>
                 </li>
-				
-				<li>
+
+                <li>
                     <a href="profile.php">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
@@ -309,7 +346,7 @@
                         <thead>
                             <tr>
                                 <td>Bil</td>
-								<td>Kumpulan</td>
+                                <td>Kumpulan</td>
                                 <td>Nama Staf</td>
                                 <td>No Kad Pengenalan</td>
                                 <td>No Telefon</td>
@@ -317,12 +354,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+
+
+                            <?php
+                            $counter = 1;
+                            while ($row = mysqli_fetch_assoc($resultStaff)) {
+                                echo
+                                '<tr data-id="' . $row['id'] . '">
+                                <td>' . $counter . '</td>
+                                <td>' . $row['kumpulan'] .  '</td>
+                                <td>' . $row['nama'] . '</td>
+                                <td>' . $row['no_kp'] . ' </td>
+                                <td>' . $row['contact_no'] .  ' </td>
                                 <td>
                                     <button onclick="editItem(this)" class="btn btn-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>
@@ -331,7 +374,11 @@
                                         <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
                                     </button>
                                 </td>
-                            </tr>
+                            </tr>';
+
+                                $counter++;
+                            }
+                            ?>
 
                         </tbody>
                     </table>
@@ -339,90 +386,81 @@
             </div>
         </div>
 
+
         <!-- Register Modal -->
-        <!-- Register Modal -->
-<div id="registerModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h3>DAFTAR STAF</h3>
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="kumpulan">Kumpulan:</label>
-				<select id="kumpulan" name="kumpulan" required>
-					<option value="" disabled selected>--Pilih Kumpulan--</option>
-				</select>
-            </div>
-			
-            <div class="form-group">
-                <label for="namaStaf">NAMA STAF:</label>
-                <input type="text" id="namaStaf" name="namaStaf" placeholder="Masukkan nama staf" required>
-            </div>
-			
-            <div class="form-group">
-                <label for="noKp">NO KAD PENGENALAN:</label>
-                <input type="text" id="noKp" name="noKp" maxlength="12" placeholder="Masukkan No Kad Pengenalan" required>
-            </div>
-			
-            <div class="form-group">
-                <label for="noTel">NO TELEFON:</label>
-                <input type="tel" id="noTel" name="noTel" maxlength="12" placeholder="Masukkan no telefon" required>
-            </div>
-			
-			<div class="form-group">
-				<label for="password">KATA LALUAN:</label>
-				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
-            </div>
-			
-			<div class="form-group">
-				<label for="confirmPassword">KATA LALUAN:</label>
-				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
-            </div>
-			
-            <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
-        </form>
-    </div>
-</div>
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3>DAFTAR STAF</h3>
+                <form id="registerForm" x-data>
+                    <div class="form-group">
+                        <label for="kumpulan">Kumpulan:</label>
+                        <select id="kumpulan" name="kumpulan" required>
+                            <option value="" disabled selected>--Pilih Kumpulan--</option>
+                            <?php
+                            while ($row = mysqli_fetch_assoc($resultKumpulan)) {
+                                echo '<option value="' . $row['kump_kod'] . '">' . $row['kump_kod']  . ' - ' . $row['kump_desc'] . '</option>';
+                            }
 
-<!-- Edit Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>KEMASKINI STAF</h2>
-        <form id="editForm">
-            <div class="form-group">
-                <label for="kumpulanEdit">KUMPULAN:</label>
-				<select id="kumpulanEdit" name="kumpulan" >
-					<option value="" disabled selected>--Pilih Kumpulan--</option>
-				</select>
-            </div>
-			
-            <div class="form-group">
-                <label for="namaStafEdit">NAMA STAF:</label>
-                <input type="text" id="namaStafEdit" name="namaStaf" placeholder="Masukkan nama staf" required>
-            </div>
-            <div class="form-group">
-                <label for="noKpEdit">NO KAD PENGENALAN:</label>
-                <input type="text" id="noKpEdit" name="noKp" maxlength="12" placeholder="Masukkan no kad pengenalan" >
-            </div>
-            <div class="form-group">
-                <label for="noTelEdit">NO TELEFON:</label>
-                <input type="tel" id="noTelEdit" name="noTel" maxlength="12" placeholder="Masukkan no telefon" >
-            </div>
+                            ?>
+                        </select>
+                    </div>
 
-            <div class="form-group">
-                <label for="passwordEdit">KATA LALUAN:</label>
-                <input type="text" id="passwordEdit" name="password" placeholder="Masukkan kata laluan" required>
-            </div>
-			
-			<div class="form-group">
-                <label for="confirmPasswordEdit">SAHKAN KATA LALUAN:</label>
-                <input type="text" id="confirmPasswordEdit" name="confirmPassword" placeholder="Sahkan kata laluan" required>
-            </div>
+                    <div class="form-group">
+                        <label for="fullname">NAMA STAF:</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Masukkan nama staf" required>
+                    </div>
 
-            <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
-        </form>
-    </div>
-</div>
+                    <div class="form-group">
+                        <label for="nokp">NO KAD PENGENALAN:</label>
+                        <input type="text" id="nokp" name="nokp" x-mask="999999-99-9999" placeholder="Masukkan No Kad Pengenalan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactno">NO TELEFON:</label>
+                        <input type="tel" id="contactno" name="contactno" x-mask="999-99999999" placeholder="Masukkan no telefon" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">KATA LALUAN:</label>
+                        <input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPass">KATA LALUAN:</label>
+                        <input type="password" id="confirmPass" name="confirmPass" placeholder="Sahkan kata laluan" required>
+                    </div>
+
+                    <input type="submit" value="DAFTAR" class="btn btn-daftar">
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>KEMASKINI STAF</h2>
+                <form id="editForm" x-data>
+
+                    <input type="hidden" id="staffIdEdit" name="staffIdEdit">
+                    <div class="form-group">
+                        <label for="fullnameEdit">NAMA STAF:</label>
+                        <input type="text" id="fullnameEdit" name="fullnameEdit" placeholder="Masukkan nama staf" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nokpEdit">NO KAD PENGENALAN:</label>
+                        <input type="text" id="nokpEdit" name="nokpEdit" x-mask="999999-99-9999" placeholder="Masukkan no kad pengenalan">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactnoEdit">NO TELEFON:</label>
+                        <input type="tel" id="contactnoEdit" name="contactnoEdit" x-mask="999-99999999" placeholder="Masukkan no telefon">
+                    </div>
+
+                    <input type="submit" value="KEMASKINI" class="btn btn-update">
+                </form>
+            </div>
+        </div>
 
     </div>
 
@@ -440,30 +478,120 @@
             document.getElementById('editModal').style.display = "none";
         }
 
-        function editItem(button) {
-            var row = button.parentNode.parentNode;
-            var namaStaf = row.cells[0].innerText;
-            var noKp = row.cells[1].innerText;
-            var noTel = row.cells[2].innerText;
-            var password = row.cells[3].innerText;
-			var confirmPassword = row.cells[4].innerText;
-			
-            document.getElementById('namaStafEdit').value = namaStaf;
-            document.getElementById('noKpEdit').value = noKp;
-            document.getElementById('noTelEdit').value = noTel;
-			document.getElementById('passwordEdit').value = password;
-			document.getElementById('confirmPasswordEdit').value = confirmPassword;
-			
-			document.getElementById('editModal').style.display = "block";
-		}
-		
+
         function deleteItem(button) {
             var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
+            var staffId = row.getAttribute('data-id');
+            
+
+            console.log(staffId);
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '../controller/delete_staff.php',
+                        type: 'POST',
+                        data: {
+                            id: staffId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "An error occurred while deleting the staff member.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
         }
 
-        function saveChanges() {
-            closeModal();
+        $('#registerForm').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '../controller/signup_staff.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Pendaftaran Berjaya',
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        });
+                    }
+                }
+            });
+        });
+
+
+
+        $('#editForm').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '../controller/edit_staff.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Kemaskini Berjaya',
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        });
+                    }
+                }
+            });
+        });
+
+        function editItem(button) {
+            document.getElementById('editModal').style.display = "block";
+            var row = button.parentNode.parentNode;
+            var staffId = row.getAttribute('data-id');
+            var namaStaf = row.cells[2].innerText;
+            var noKp = row.cells[3].innerText;
+            var noTel = row.cells[4].innerText;
+
+            document.getElementById('staffIdEdit').value = staffId;
+            document.getElementById('fullnameEdit').value = namaStaf;
+            document.getElementById('nokpEdit').value = noKp;
+            document.getElementById('contactnoEdit').value = noTel;
         }
     </script>
 </body>

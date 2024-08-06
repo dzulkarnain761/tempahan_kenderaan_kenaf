@@ -131,38 +131,42 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'A') {
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <script>
-        const logoutButton = document.getElementById('logoutButton');
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutButton = document.getElementById('logoutButton');
 
-        // Add a click event listener to the logout button
-        logoutButton.addEventListener('click', function() {
-            // Show the confirmation dialog
-            Swal.fire({
-                title: "Log Keluar",
-                // text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                cancelButtonText: "Batal",
-                confirmButtonText: "Log Keluar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Handle the logout logic here (e.g., redirecting to a logout route)
-                    // Example: window.location.href = '/logout';
+            // Add a click event listener to the logout button
+            logoutButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default anchor behavior
 
-                    // Show the success dialog
-                    Swal.fire({
-                        title: "Logged out!",
-                        text: "You have been successfully logged out.",
-                        icon: "success"
-                    }).then(() => {
-                        // Optionally, redirect the user after the success dialog
-                        window.location.href = 'controller/logout.php'; // Update with your actual logout URL
-                    });
-                }
+                // Show the confirmation dialog
+                Swal.fire({
+                    title: "Log Keluar",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    cancelButtonText: "Batal",
+                    confirmButtonText: "Log Keluar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Handle the logout logic here (e.g., redirecting to a logout route)
+                        // Example: window.location.href = '/logout';
+
+                        // Show the success dialog
+                        Swal.fire({
+                            title: "Logged out!",
+                            text: "You have been successfully logged out.",
+                            icon: "success"
+                        }).then(() => {
+                            // Optionally, redirect the user after the success dialog
+                            window.location.href = '../controller/logout.php'; // Update with your actual logout URL
+                        });
+                    }
+                });
             });
         });
     </script>

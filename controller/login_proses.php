@@ -45,13 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
-                    if ($kumpulan == 'G') {
+
+                    //PENYEWA
+                    if ($kumpulan == 'H') {
                         $_SESSION['kumpulan'] = $kumpulan;
                         $_SESSION['pengguna_id'] = $pengguna_id;
 						$_SESSION['nama_pengguna'] = $nama_pengguna;
 						
                         // Rekod audit trail
-                        $action = "Log masuk sebagai G";
+                        $action = "Log masuk sebagai H";
                         $date_created = date('Y-m-d H:i:s');
 
                         // Simpan alamat IP pengguna dalam rekod logs
@@ -64,13 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         exit();
                     }
 
-                    if ($kumpulan == 'A') {
+                    //SUPER ADMIN 
+                    if ($kumpulan == 'Z') {
                         $_SESSION['kumpulan'] = $kumpulan;
                         $_SESSION['pengguna_id'] = $pengguna_id;
 						$_SESSION['nama_pengguna'] = $nama_pengguna;
 						
                         // Rekod audit trail
-                        $action = "Log masuk sebagai A";
+                        $action = "Log masuk sebagai Z";
                         $date_created = date('Y-m-d H:i:s');
 
                         // Simpan alamat IP pengguna dalam rekod logs

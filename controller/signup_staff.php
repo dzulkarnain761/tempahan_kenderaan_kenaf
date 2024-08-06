@@ -15,6 +15,7 @@ if (!$conn) {
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $kumpulan = $_POST['kumpulan'];
     $nokp = $_POST['nokp'];
     $fullname = $_POST['fullname'];
     $contact = $_POST['contactno'];
@@ -25,13 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contactlength = strlen($contact);
 
 
-    if ($password !== $confirmPass) {
+    if (empty($nokp) || empty($fullname) || empty($contact) || empty($password) || empty($confirmPass)) {
+        echo json_encode(["success" => false, "message" => "Sila Isi Semua Maklumat."]);
+    } elseif ($password !== $confirmPass) {
         echo json_encode(["success" => false, "message" => "Sila pastikan Kata Laluan Anda."]);
     } elseif ($nokplength < 14) {
-
         echo json_encode(["success" => false, "message" => "Sila Pastikan No Kad Pengenalan"]);
     } elseif ($contactlength < 11) {
-
         echo json_encode(["success" => false, "message" => "Sila Pastikan No Telefon Anda"]);
     } else {
         // Check if nokp already exists in the database using prepared statement
@@ -49,8 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = '';
             // Insert the user into the database using prepared statement
             $sql = $conn->prepare("INSERT INTO pengguna (nama, no_kp, email, contact_no, kumpulan, password) VALUES (?, ?, ?, ?, ?, ?)");
-            $group = 'H'; // Define the group value
-            $sql->bind_param("ssssss", $fullname, $nokp, $email, $contact, $group, $hashed_password);
+            $sql->bind_param("ssssss", $fullname, $nokp, $email, $contact, $kumpulan, $hashed_password);
 
             if ($sql->execute() === TRUE) {
                 echo json_encode(["success" => true]);
@@ -61,4 +61,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 $conn->close();
-?>
