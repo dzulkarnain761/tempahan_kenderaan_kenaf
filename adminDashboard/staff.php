@@ -781,6 +781,7 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
             function saveChanges() {
                 closeModal();
             }
+        }
     </script>
 </body>
 
