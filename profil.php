@@ -12,27 +12,10 @@
     <title>Booking</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
-	<link rel="stylesheet" href="assets/css/homepage.css">
+	<link rel="stylesheet" href="assets/css/profile.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
 	<style>
-	
-.border-first-button button {
-  display: inline-block !important;
-  padding: 10px 20px !important;
-  color: #4da6e7 !important;
-  border: 1px solid #4da6e7 !important;
-  border-radius: 23px;
-  font-weight: 500 !important;
-  letter-spacing: 0.3px !important;
-  transition: all .5s;
-  background-color: #fff;
-}
-
-.border-first-button button:hover {
-  background-color: #4da6e7;
-  color: #fff !important;
-}
 </style>
   </head>
 
@@ -58,8 +41,9 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="bayaran.php" class="logo">
-              <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+            <a href="profil.php" class="logo">
+              <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+			  <img src="assets/images/logo.jpeg" alt="logoLKTN" style="width: 120px; height: auto;">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -80,17 +64,122 @@
         </div>
       </div>
     </div>
-
   </header>
   <!-- ***** Header Area End ***** -->
+  
+  <!-- ***** Profile ***** -->
+<div class="page-content page-container d-flex justify-content-center align-items-center" id="page-content" style="min-height: 100vh;">
+    <div class="row container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-xl-8 col-md-12">
+            <div class="card user-card-full">
+                <div class="row m-l-0 m-r-0">
+                    <div class="col-sm-4 bg-c-lite-green user-profile">
+                        <div class="card-block text-center text-white d-flex justify-content-center align-items-center" style="height: 100%;">
+                            <div class="m-b-25">
+                                <img src="assets/images/profil.png" class="img-radius" alt="User-Profile-Image" style="width: 170px; height: 170px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="card-block">
+                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="font-size: 1.5rem;">Maklumat</h6>
+                            <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nama Penuh</p>
+                            <h6 class="text-muted f-w-400" style="font-size: 1.2rem;">NAMA PENUH BINTI NAMA PENUH</h6>
+                            <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nombor Kad Pengenalan</p>
+                            <h6 class="text-muted f-w-400" style="font-size: 1.2rem;">000000-00-0000</h6>
+                            <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nombor Telefon</p>
+                            <h6 class="text-muted f-w-400" style="font-size: 1.2rem;">000-0000000</h6>
+                            <div class="text-end border-first-button">
+                                <!-- Button to trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                    Tukar Kata Laluan
+                                </button>
+								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeEditModal">
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tukar Kata Laluan -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Tukar Kata Laluan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Kata Laluan Semasa</label>
+                        <input type="password" class="form-control" id="currentPassword" placeholder="Masukkan kata laluan semasa">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Kata Laluan Baru</label>
+                        <input type="password" class="form-control" id="newPassword" placeholder="Masukkan kata laluan baru">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Sahkan Kata Laluan Baru</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Sahkan kata laluan baru">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit -->
+<div class="modal fade" id="changeEditModal" tabindex="-1" aria-labelledby="changeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeEditModalLabel">Edit Maklumat</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="currentName" class="form-label">Nama Penuh</label>
+                        <input type="text" class="form-control" id="currentName" value="NAMA PENUH BINTI NAMA PENUH">
+                    </div>
+                    <div class="mb-3">
+                        <label for="currentNoKp" class="form-label">Nombor Kad Pengenalan</label>
+                        <input type="text" class="form-control" id="currentNoKp" value="000000-00-0000">
+                    </div>
+                    <div class="mb-3">
+                        <label for="currentNoTel" class="form-label">Nombor Telefon</label>
+                        <input type="text" class="form-control" id="currentNoTel" value="000-0000000">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+</div>
 
   <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/owl-carousel.js"></script>
   <script src="assets/js/animation.js"></script>
   <script src="assets/js/imagesloaded.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 </html>

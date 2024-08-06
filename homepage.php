@@ -63,26 +63,32 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'G') {
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="homepage.php" class="logo">
-              <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
-              <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-              <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
-              <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
-              <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-              <li class="scroll-to-section">
-                <div class="border-first-button">
-                  <button type="button" id="logoutButton">Logout</button>
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="homepage.php" class="logo">
+							<img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
+                            <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+							<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+                            <li class="scroll-to-section">
+                                <div class="border-first-button">
+									<button onclick="location.href='login.php'">Logout</button>
+								</div>
+                            </li>
+                        </ul>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
                 </div>
               </li>
             </ul>

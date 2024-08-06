@@ -31,40 +31,32 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
         .btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 10px;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 1em;
+            transition: background-color 0.3s;
         }
 
         .btn:hover {
             background-color: #0056b3;
         }
 
-        h2,
-        h3 {
+        h2, h3 {
             margin-bottom: 15px;
-        }
-
-        table {
-            border: 1px solid #ddd;
-            padding: 8px;
-            border-collapse: collapse;
-            text-align: center;
-            background-color: #f2f2f2;
-            width: 100%;
-        }
-
-        table th,
-        table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            font-size: 0.9em;
         }
 
         .modal {
@@ -83,9 +75,10 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
         .modal-content {
             background-color: #fff;
             margin: 5% auto;
-            padding: 15px;
+            padding: 20px;
             border: 1px solid #888;
-            width: 30%;
+            width: 80%;
+            max-width: 500px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -93,7 +86,7 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
         .close {
             color: #aaa;
             float: right;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
         }
 
@@ -102,10 +95,6 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
             color: #000;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        .details {
-            margin-top: 20px;
         }
 
         .cardHeader {
@@ -132,7 +121,7 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
 
         .form-group input[type="text"],
         .form-group input[type="tel"],
-        .form-group input[type="date"],
+        .form-group input[type="password"],
         .form-group select {
             width: 100%;
             padding: 10px;
@@ -162,11 +151,17 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-edit {
+        
+        .btn-edit,
+        .btn-delete {
             background: none;
             border: none;
             cursor: pointer;
             padding: 0;
+            font-size: 1.2em;
+        }
+
+        .btn-edit {
             color: #28a745;
             font-size: 1.2em;
         }
@@ -215,6 +210,34 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
         .btn-daftar:hover {
             background-color: #218838;
             /* Darker green on hover */
+        }
+
+        .btn-edit:hover {
+            color: #218838;
+        }
+
+        .btn-delete {
+            color: #c82333;
+        }
+
+        .btn-delete:hover {
+            color: #bd2130;
+        }
+
+        .btn-update,
+        .btn-daftar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-update:hover,
+        .btn-daftar:hover {
+            background-color: #218838;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
@@ -223,6 +246,25 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
                 width: 90%;
             }
         }
+		
+		:root {
+			--skyblue: #d0e5f5;
+		}
+
+		.details .recentOrders table tbody tr:hover {
+			background: var(--white);
+			color: var(--black);
+		}
+	
+		.details table thead td {
+			background: var(--blue);
+			color: var(--white);
+			font-size: 18px;
+		}
+
+		.details table tbody {
+			font-size: 18px;
+		}
     </style>
 </head>
 
@@ -233,10 +275,11 @@ $resultnegeri = mysqli_query($conn, $sqlnegeri);
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
-                <li>
+                
+				<li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>

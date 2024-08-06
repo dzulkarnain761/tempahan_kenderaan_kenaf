@@ -234,6 +234,190 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                 width: 90%;
             }
         }
+
+        :root {
+            --skyblue: #d0e5f5;
+        }
+
+        .details .recentOrders table tbody tr:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .details table thead td {
+            background: var(--blue);
+            color: var(--white);
+            font-size: 18px;
+        }
+
+        .details table tbody {
+            font-size: 18px;
+        }
+
+        /* ================== Table details ============== */
+        .recentOrders {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+        }
+
+        .cardHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .cardHeader h2 {
+            font-weight: 600;
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .cardHeader .btn {
+            position: relative;
+            padding: 5px 10px;
+            background: var(--blue);
+            text-decoration: none;
+            color: var(--white);
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table thead td {
+            background: var(--blue);
+            color: var(--white);
+            font-size: 18px;
+        }
+
+        table tbody {
+            font-size: 18px;
+        }
+
+        .recentOrders table tr {
+            color: var(--black1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .recentOrders table tr:last-child {
+            border-bottom: none;
+        }
+
+        .recentOrders table tbody tr:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .recentOrders table tr td {
+            padding: 10px;
+        }
+
+        .recentOrders table tr td:last-child {
+            text-align: center;
+        }
+
+        .recentOrders table tr td:nth-child(2) {
+            text-align: center;
+        }
+
+        .recentOrders table tr td:nth-child(3) {
+            text-align: center;
+        }
+
+        .status.delivered {
+            padding: 2px 4px;
+            background: #8de02c;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            padding: 2px 4px;
+            background: #e9b10a;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.return {
+            padding: 2px 4px;
+            background: #f00;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.inProgress {
+            padding: 2px 4px;
+            background: #1795ce;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .recentCustomers {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            padding: 20px;
+            background: var(--white);
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+        }
+
+        .recentCustomers .imgBx {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .recentCustomers .imgBx img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .recentCustomers table tr td {
+            padding: 12px 10px;
+        }
+
+        .recentCustomers table tr td h4 {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.2rem;
+        }
+
+        .recentCustomers table tr td h4 span {
+            font-size: 14px;
+            color: var(--black2);
+        }
+
+        .recentCustomers table tr:hover {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        .recentCustomers table tr:hover td h4 span {
+            color: var(--white);
+        }
     </style>
 </head>
 
@@ -244,9 +428,11 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
+
+
                 <li>
                     <a href="dashboard.php">
                         <span class="icon">
@@ -335,32 +521,31 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                 </div>
             </div>
 
-            <div class="details">
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>SENARAI STAF</h2>
-                        <a class="btn" onclick="openModal()">DAFTAR STAF</a>
-                    </div>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>SENARAI STAF</h2>
+                    <a class="btn" onclick="openModal()">DAFTAR STAF</a>
+                </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Bil</td>
-                                <td>Kumpulan</td>
-                                <td>Nama Staf</td>
-                                <td>No Kad Pengenalan</td>
-                                <td>No Telefon</td>
-                                <td>Kemaskini</td>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Bil</td>
+                            <td>Kumpulan</td>
+                            <td>Nama Staf</td>
+                            <td>No Kad Pengenalan</td>
+                            <td>No Telefon</td>
+                            <td>Kemaskini</td>
+                        </tr>
+                    </thead>
+                    <tbody>
 
 
-                            <?php
-                            $counter = 1;
-                            while ($row = mysqli_fetch_assoc($resultStaff)) {
-                                echo
-                                '<tr data-id="' . $row['id'] . '">
+                        <?php
+                        $counter = 1;
+                        while ($row = mysqli_fetch_assoc($resultStaff)) {
+                            echo
+                            '<tr data-id="' . $row['id'] . '">
                                 <td>' . $counter . '</td>
                                 <td>' . $row['kumpulan'] .  '</td>
                                 <td>' . $row['nama'] . '</td>
@@ -376,13 +561,12 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                                 </td>
                             </tr>';
 
-                                $counter++;
-                            }
-                            ?>
+                            $counter++;
+                        }
+                        ?>
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -401,6 +585,7 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                             while ($row = mysqli_fetch_assoc($resultKumpulan)) {
                                 echo '<option value="' . $row['kump_kod'] . '">' . $row['kump_kod']  . ' - ' . $row['kump_desc'] . '</option>';
                             }
+
 
                             ?>
                         </select>
@@ -482,7 +667,7 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
         function deleteItem(button) {
             var row = button.parentNode.parentNode;
             var staffId = row.getAttribute('data-id');
-            
+
 
             console.log(staffId);
             Swal.fire({
@@ -592,7 +777,10 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
             document.getElementById('fullnameEdit').value = namaStaf;
             document.getElementById('nokpEdit').value = noKp;
             document.getElementById('contactnoEdit').value = noTel;
-        }
+
+            function saveChanges() {
+                closeModal();
+            }
     </script>
 </body>
 
