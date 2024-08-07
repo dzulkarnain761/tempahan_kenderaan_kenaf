@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'G') {
+if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
   header("Location: login.php");
   exit();
 }

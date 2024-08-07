@@ -2,7 +2,7 @@
 
 session_start();
 
-if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'A') {
+if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
     header("Location: login.php");
     exit();
 }
@@ -39,6 +39,55 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'A') {
 
         .details table tbody {
             font-size: 18px;
+        }
+
+        /* ======================= Cards ====================== */
+        .cardBox {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 30px;
+        }
+
+        .cardBox .card {
+            position: relative;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .cardBox .card .numbers {
+            position: relative;
+            font-weight: 500;
+            font-size: 2.5rem;
+            color: var(--blue);
+        }
+
+        .cardBox .card .cardName {
+            color: var(--black2);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .cardBox .card .iconBx {
+            font-size: 3.5rem;
+            color: var(--black2);
+        }
+
+        .cardBox .card:hover {
+            background: var(--blue);
+        }
+
+        .cardBox .card:hover .numbers,
+        .cardBox .card:hover .cardName,
+        .cardBox .card:hover .iconBx {
+            color: var(--white);
         }
     </style>
 </head>
@@ -328,12 +377,12 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'A') {
                 });
             });
         </script>
-        
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        
+
 </body>
 
 </html>
