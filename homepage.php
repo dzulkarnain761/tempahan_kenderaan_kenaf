@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
+if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'X') {
   header("Location: login.php");
   exit();
 }
@@ -26,8 +26,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
   <link rel="stylesheet" href="assets/css/homepage.css">
   <link rel="stylesheet" href="assets/css/animated.css">
   <link rel="stylesheet" href="assets/css/owl.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     .border-first-button button {
       display: inline-block !important;
@@ -63,39 +62,39 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="homepage.php" class="logo">
-							<img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
-                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
-                            <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
-							<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-                            <li class="scroll-to-section">
-                                <div class="border-first-button">
-									<button onclick="location.href='login.php'">Logout</button>
-								</div>
-                            </li>
-                        </ul>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="homepage.php" class="logo">
+              <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+              <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
+              <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+              <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
+              <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+              <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+              <li class="scroll-to-section">
+                <div class="border-first-button">
+                  <button id="logoutButton">Logout</button>
                 </div>
               </li>
             </ul>
             <!-- ***** Menu End ***** -->
           </nav>
         </div>
+        </li>
+        </ul>
+        <!-- ***** Menu End ***** -->
+        </nav>
       </div>
+    </div>
     </div>
     </div>
     </div>
@@ -138,12 +137,14 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
   <!-- ***** Main Banner End ***** -->
 
   <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+  <script src="vendor/jquery/jquery-3.7.1.min.js" defer></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
   <script src="assets/js/owl-carousel.js" defer></script>
   <script src="assets/js/animation.js" defer></script>
   <script src="assets/js/imagesloaded.js" defer></script>
   <script src="assets/js/custom.js" defer></script>
+  
 
 
   <script>
@@ -158,7 +159,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33", 
+        cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Log Keluar"
       }).then((result) => {
@@ -173,7 +174,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'H') {
             icon: "success"
           }).then(() => {
             // Optionally, redirect the user after the success dialog
-            window.location.href = 'controller/logout.php'; // Update with your actual logout URL
+            window.location.href = 'controller/auth/logout.php'; // Update with your actual logout URL
           });
         }
       });

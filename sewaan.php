@@ -56,7 +56,7 @@
 				<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
 				<li class="scroll-to-section">
 					<div class="border-first-button">
-						<button onclick="location.href='login.php'">Logout</button>
+          <button id="logoutButton">Logout</button>
 					</div>
 				</li>
             </ul>        

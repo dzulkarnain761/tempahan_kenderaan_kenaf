@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>Booking</title>
-	<style>
+    <style>
         html,
         body {
             height: 100%;
@@ -56,30 +57,34 @@
             max-width: 500px;
             margin: 1.75rem auto;
         }
-		.intro {
-			font-weight: 600;
-			margin-bottom: 30px;
-		}
+
+        .intro {
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
+
 <body>
 
-	<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Lupa Kata Laluan</h5>
                 <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
             </div>
             <div class="modal-body">
-                <form>
-					<p class="intro">Sila masukkan nombor kad pengenalan anda untuk menukar kata laluan baharu.</p>
+                <form class="resetForm" novalidate>
+                    <p class="intro">Sila masukkan nombor kad pengenalan anda untuk menukar kata laluan baharu.</p>
                     <div class="mb-3">
-                        <label for="noKp" class="form-label">Nombor Kad Pengenalan:</label>
-                        <input type="text" class="form-control" id="noKp" placeholder="Masukkan Nombor Kad Pengenalan"
-                            required>
+                        <label for="nokp" class="form-label">Nombor Kad Pengenalan:</label>
+                        <input type="text" class="form-control" id="nokp" name="nokp" placeholder="Masukkan Nombor Kad Pengenalan" inputmode="numeric" minlength="12" maxlength="12" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nombor kad pengenalan yang sah.
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="resetButton" type="button" class="btn btn-primary">Sahkan</button>
+                        <button id="resetButton" type="submit" class="btn btn-primary">Sahkan</button>
                     </div>
                     <div style="text-align:center; margin-top: 10px;">
                         <p><a href="login.php">Kembali ke Log masuk</a></p>
@@ -88,11 +93,77 @@
             </div>
         </div>
     </div>
-	<script>
-        document.getElementById('resetButton').addEventListener('click', function() {
-            window.location.href = 'enterNewPass.php';
+    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.resetForm')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            });
+
+            // function restrictToNumbers(inputId) {
+            //     document.getElementById(inputId).addEventListener('input', function(e) {
+            //         this.value = this.value.replace(/\D/g, '');
+            //     });
+            // }
+
+            // restrictToNumbers('nokp');
+        })()
+
+
+        $(document).ready(function() {
+            $('.resetForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/auth/reset_password.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: res.message,
+                            }).then(() => {
+                                var encodedValue = encodeURIComponent(res.nokp);
+                                window.location.href = 'enterNewPass.php?nokp=' + encodedValue;
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
         });
     </script>
 
 </body>
+
 </html>

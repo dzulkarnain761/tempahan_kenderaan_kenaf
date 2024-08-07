@@ -18,14 +18,15 @@ session_start();
 $ip_address = $_SERVER['REMOTE_ADDR'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['nokp']) && !empty($_POST['password'])) {
+    if (!empty($_POST['nokp']) && !empty($_POST['kataLaluan'])) {
+        
         $nokp = $_POST['nokp'];
-        $password = $_POST['password'];
+        $password = $_POST['kataLaluan'];
 
-		$nokplength = strlen($nokp);
+        $nokplength = strlen($nokp);
 
-		 if (strlen($nokp) < 14) {
-            echo json_encode(["success" => false, "message" => "Sila Isi No Kad Pengenalan Yang Sah"]);
+        if (empty($nokp) || !ctype_digit($nokp)) {
+            echo json_encode(["success" => false, "message" => "Sila pastikan No Kad Pengenalan Anda."]);
             exit();
         }
 
@@ -40,18 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             while ($rowLogin = $result->fetch_assoc()) {
                 $hashed_password = $rowLogin['password'];
                 $kumpulan = $rowLogin['kumpulan'];
-                $pengguna_id = $rowLogin['no_kp']; 
-				$nama_pengguna = $rowLogin['nama'];
-				
+                $pengguna_id = $rowLogin['no_kp'];
+                $nama_pengguna = $rowLogin['nama'];
+
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
 
                     //PENYEWA
-                    if ($kumpulan == 'H') {
+                    if ($kumpulan == 'X') {
                         $_SESSION['kumpulan'] = $kumpulan;
                         $_SESSION['pengguna_id'] = $pengguna_id;
-						$_SESSION['nama_pengguna'] = $nama_pengguna;
-						
+                        $_SESSION['nama_pengguna'] = $nama_pengguna;
+
                         // Rekod audit trail
                         $action = "Log masuk sebagai H";
                         $date_created = date('Y-m-d H:i:s');
@@ -62,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
                         $stmtAudit->execute();
 
-						echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'homepage.php']);
+                        echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'homepage.php']);
                         exit();
                     }
 
@@ -70,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($kumpulan == 'Z') {
                         $_SESSION['kumpulan'] = $kumpulan;
                         $_SESSION['pengguna_id'] = $pengguna_id;
-						$_SESSION['nama_pengguna'] = $nama_pengguna;
-						
+                        $_SESSION['nama_pengguna'] = $nama_pengguna;
+
                         // Rekod audit trail
                         $action = "Log masuk sebagai Z";
                         $date_created = date('Y-m-d H:i:s');
@@ -82,19 +83,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
                         $stmtAudit->execute();
 
-						echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'adminDashboard/dashboard.php']);
+                        echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'adminDashboard/dashboard.php']);
                         exit();
                     }
-
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
                 }
             }
-
         } else {
             echo json_encode(['success' => false, 'message' => 'No Kad Pengenalan Belum Didaftar']);
         }
-    } 
+    }
 }
 
 ?>

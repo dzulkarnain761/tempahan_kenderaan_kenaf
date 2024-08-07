@@ -7,8 +7,7 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>Booking</title>
     <style>
         html,
@@ -75,20 +74,33 @@
                 <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
             </div>
             <div class="modal-body">
-                <form>
+                <form class="updatePassForm" novalidate>
                     <p class="intro">Sila masukkan kata laluan baharu anda.</p>
+                    <?php
+                    $nokp = htmlspecialchars($_GET['nokp']);
+                    ?>
+                    <input type="hidden" name="nokp" value="<?php echo $nokp; ?>">
+
                     <div class="mb-3">
-                        <label for="newPassword" class="form-label">Kata Laluan Baharu:</label>
-                        <input type="password" class="form-control" id="newPassword"
-                            placeholder="Masukkan Kata Laluan Baharu" required>
+                        <label for="kataLaluan" class="form-label">Kata Laluan :</label>
+                        <input type="password" class="form-control" id="kataLaluan" name="kataLaluan" placeholder="Masukkan Kata Laluan" minlength="5" required>
+                        <div class="invalid-feedback">
+                            Sila Pastikan Kata Laluan Melebihi 5 Aksara.
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Sahkan Kata Laluan Baharu:</label>
-                        <input type="password" class="form-control" id="confirmPassword"
-                            placeholder="Sahkan Kata Laluan Baharu" required>
+                        <label for="confirmPass" class="form-label">Sahkan Kata Laluan :</label>
+                        <input type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="Sahkan Kata Laluan" minlength="5" required>
+                        <div class="invalid-feedback">
+                            Sila sahkan kata laluan.
+                        </div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="showPassword">
+                        <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
                     </div>
                     <div class="modal-footer">
-                        <button id="resetButton" type="button" class="btn btn-primary">Hantar</button>
+                        <button id="resetButton" type="submit" class="btn btn-primary">Hantar</button>
                     </div>
                     <div style="text-align:center; margin-top: 10px;">
                         <p><a href="login.php">Kembali ke Log masuk</a></p>
@@ -98,20 +110,78 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('resetButton').addEventListener('click', function () {
-            var newPassword = document.getElementById('newPassword').value;
-            var confirmPassword = document.getElementById('confirmPassword').value;
+    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            if (newPassword === confirmPassword) {
-                // Passwords match; proceed with password reset
-                alert('Kata Laluan telah berjaya ditukar!');
-                // Optionally, redirect to login or other page
-                window.location.href = 'login.php';
-            } else {
-                // Passwords do not match; show error
-                alert('Kata laluan tidak sepadan. Sila cuba lagi.');
-            }
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.updatePassForm')
+
+            // Loop over them and prevent submission if validation fails
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+            // Toggle password visibility
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.getElementById('kataLaluan');
+            const confirmPasswordInput = document.getElementById('confirmPass');
+
+            showPasswordCheckbox.addEventListener('change', () => {
+                const type = showPasswordCheckbox.checked ? 'text' : 'password';
+                passwordInput.type = type;
+                confirmPasswordInput.type = type;
+            });
+
+            
+        })()
+
+        $(document).ready(function() {
+            $('.updatePassForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/auth/update_password.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: res.message,
+                            }).then(() => {
+                                window.location.href = 'login.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
         });
     </script>
 

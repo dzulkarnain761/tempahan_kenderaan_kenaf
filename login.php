@@ -76,7 +76,6 @@ if (isset($_SESSION["kumpulan"])) {
 </head>
 
 <body>
-
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -84,18 +83,28 @@ if (isset($_SESSION["kumpulan"])) {
                 <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
             </div>
             <div class="modal-body">
-                <form>
+                <form class="loginForm" novalidate>
                     <div class="mb-3">
                         <label for="nokp" class="form-label">Nombor Kad Pengenalan:</label>
-                        <input type="text" class="form-control" id="nokp" placeholder="Masukkan Nombor Kad Pengenalan" required>
+                        <input type="text" class="form-control" id="nokp" name="nokp" placeholder="Masukkan Nombor Kad Pengenalan" minlength="12" maxlength="12" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nombor kad pengenalan yang sah.
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="kataLaluan" class="form-label">Kata Laluan</label>
-                        <input type="password" class="form-control" id="kataLaluan" placeholder="Masukkan Kata Laluan" required>
+                        <input type="password" class="form-control" id="kataLaluan" name="kataLaluan"  placeholder="Masukkan Kata Laluan" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan kata laluan yang sah.
+                        </div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="showPassword">
+                        <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
                     </div>
                     <p class="forgot-password"><a href="forgotPassword.php">Lupa Kata Laluan</a></p>
                     <div class="modal-footer">
-                        <button id="loginButton" type="button" class="btn btn-primary">Log Masuk</button>
+                        <button id="loginButton" type="submit" class="btn btn-primary">Log Masuk</button>
                     </div>
                     <div style="text-align:center; margin-top: 10px;">
                         <p>Belum daftar? <a href="signup.php">Daftar</a></p>
@@ -105,43 +114,88 @@ if (isset($_SESSION["kumpulan"])) {
         </div>
     </div>
 
+    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.loginForm')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.getElementById('kataLaluan');
+            const confirmPasswordInput = document.getElementById('confirmPass');
+
+            showPasswordCheckbox.addEventListener('change', () => {
+                const type = showPasswordCheckbox.checked ? 'text' : 'password';
+                passwordInput.type = type;
+                confirmPasswordInput.type = type;
+            });
+
+            // function restrictToNumbers(inputId) {
+            //     document.getElementById(inputId).addEventListener('input', function(e) {
+            //         this.value = this.value.replace(/\D/g, '');
+            //     });
+            // }
+
+            // restrictToNumbers('nokp');
+
+        })()
+
+
+
+
         $(document).ready(function() {
-                    $('#loginForm').on('submit', function(e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: 'controller/login_proses.php',
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function(response) {
+            $('.loginForm').on('submit', function(e) {
+                e.preventDefault();
 
-                                let res = JSON.parse(response);
-                                if (res.success) {
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
 
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Log Masuk',
-                                        text: res.message,
-                                    }).then(() => {
-                                        window.location.href = res.location;
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Log Masuk',
-                                        text: res.message,
-                                    });
-                                }
-                            },
-
-                        });
-                    });
-                    document.getElementById('loginButton').addEventListener('click', function() {
-                        window.location.href = 'homepage.php';
-                    });
-
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/auth/login_proses.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: res.message,
+                            }).then(() => {
+                                window.location.href = res.location;
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
                 });
+            });
+        });
     </script>
 
 </body>
