@@ -2,8 +2,8 @@
 session_start();
 
 if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'X') {
-  header("Location: login.php");
-  exit();
+    header("Location: login.php");
+    exit();
 }
 
 ?>
@@ -17,8 +17,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'X') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>Booking</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
@@ -65,20 +64,20 @@ Banner Style
             padding: 200px 0px 120px 0px;
             position: relative;
             overflow: hidden;
-			position: relative;
+            position: relative;
         }
 
-		.main-banner:after {
-			content: '';
-			background-image: url(assets/images/slider-left-dec.jpg);
-			background-repeat: no-repeat;
-			position: absolute;
-			left: 0;
-			top: 60px;
-			width: 262px;
-			height: 625px;
-			z-index: -1; 
-			}
+        .main-banner:after {
+            content: '';
+            background-image: url(assets/images/slider-left-dec.jpg);
+            background-repeat: no-repeat;
+            position: absolute;
+            left: 0;
+            top: 60px;
+            width: 262px;
+            height: 625px;
+            z-index: -1;
+        }
 
         .main-banner:before {
             content: '';
@@ -822,38 +821,38 @@ header
     </div>
     <!-- ***** Preloader End ***** -->
 
- <!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="homepage.php" class="logo">
-                        <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-                        <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
-                        <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-                        <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
-                        <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
-                        <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-                        <li class="scroll-to-section">
-                            <div class="border-first-button">
-                                <button onclick="location.href='login.php'">Logout</button>
-                            </div>
-                        </li>
-                    </ul>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="homepage.php" class="logo">
+                            <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
+                            <li class="scroll-to-section"><a href="bayaran.php">Bayaran</a></li>
+                            <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+                            <li class="scroll-to-section">
+                                <div class="border-first-button">
+                                    <button id="logoutButton">Logout</button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
-</header>
-<!-- ***** Header Area End ***** -->
+    </header>
+    <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Start ***** -->
     <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -862,8 +861,7 @@ header
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-6 align-self-center">
-                            <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
-                                data-wow-delay="1s">
+                            <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <h6>Selamat Datang NAMA BINTI PENUH !</h6>
@@ -892,6 +890,7 @@ header
     <!-- ***** Main Banner End ***** -->
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js" defer></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
     <script src="assets/js/owl-carousel.js" defer></script>
@@ -900,39 +899,39 @@ header
     <script src="assets/js/custom.js" defer></script>
 
 
-  <script>
-    const logoutButton = document.getElementById('logoutButton');
+    <script>
+        const logoutButton = document.getElementById('logoutButton');
 
-    // Add a click event listener to the logout button
-    logoutButton.addEventListener('click', function() {
-      // Show the confirmation dialog
-      Swal.fire({
-        title: "Log Keluar",
-        // text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Log Keluar"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Handle the logout logic here (e.g., redirecting to a logout route)
-          // Example: window.location.href = '/logout';
+        // Add a click event listener to the logout button
+        logoutButton.addEventListener('click', function() {
+            // Show the confirmation dialog
+            Swal.fire({
+                title: "Log Keluar",
+                // text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "Batal",
+                confirmButtonText: "Log Keluar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Handle the logout logic here (e.g., redirecting to a logout route)
+                    // Example: window.location.href = '/logout';
 
-          // Show the success dialog
-          Swal.fire({
-            title: "Logged out!",
-            text: "You have been successfully logged out.",
-            icon: "success"
-          }).then(() => {
-            // Optionally, redirect the user after the success dialog
-            window.location.href = 'controller/auth/logout.php'; // Update with your actual logout URL
-          });
-        }
-      });
-    });
-  </script>
+                    // Show the success dialog
+                    Swal.fire({
+                        title: "Logged out!",
+                        text: "You have been successfully logged out.",
+                        icon: "success"
+                    }).then(() => {
+                        // Optionally, redirect the user after the success dialog
+                        window.location.href = 'controller/auth/logout.php'; // Update with your actual logout URL
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

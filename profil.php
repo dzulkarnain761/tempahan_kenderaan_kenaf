@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'X') {
+    header("Location: login.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -921,7 +931,7 @@
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <!-- <div id="js-preloader" class="js-preloader">
+    <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -930,7 +940,7 @@
                 <span></span>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <!-- ***** Header Area Start ***** -->
@@ -954,7 +964,7 @@
                             <li class="scroll-to-section"><a href="profil.php" class="active">Profil</a></li>
                             <li class="scroll-to-section">
                                 <div class="border-first-button">
-                                    <button onclick="location.href='login.php'">Logout</button>
+                                    <button id="logoutButton">Logout</button>
                                 </div>
                             </li>
                         </ul>
@@ -1082,7 +1092,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="vendor/jquery/jquery-3.7.1.min.js" defer></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/animation.js"></script>

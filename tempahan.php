@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'X') {
+    header("Location: login.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>Booking</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
@@ -896,7 +905,7 @@ header
                             <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
                             <li class="scroll-to-section">
                                 <div class="border-first-button">
-                                    <button onclick="location.href='login.php'">Logout</button>
+                                    <button id="logoutButton">Logout</button>
                                 </div>
                             </li>
                         </ul>
@@ -956,8 +965,7 @@ header
 
                     <div class="mb-3">
                         <label for="jam" class="form-label">Jam :</label>
-                        <input type="number" class="form-control" id="jam" min="1" placeholder="Masukkan Jumlah Jam"
-                            required>
+                        <input type="number" class="form-control" id="jam" min="1" placeholder="Masukkan Jumlah Jam" required>
                     </div>
                     <div class="mb-3">
                         <label for="tarikh" class="form-label">Tarikh Mula :</label>
@@ -965,13 +973,11 @@ header
                     </div>
                     <div class="mb-3">
                         <label for="lokasiKerja" class="form-label">Lokasi Kerja :</label>
-                        <input type="text" class="form-control" id="lokasiKerja" placeholder="Masukkan Lokasi Kerja"
-                            required>
+                        <input type="text" class="form-control" id="lokasiKerja" placeholder="Masukkan Lokasi Kerja" required>
                     </div>
                     <div class="mb-3">
                         <label for="keluasanTanah" class="form-label">Keluasan Tanah (Hektar) :</label>
-                        <input type="number" class="form-control" id="keluasanTanah" min="1"
-                            placeholder="Masukkan Keluasan Tanah" required>
+                        <input type="number" class="form-control" id="keluasanTanah" min="1" placeholder="Masukkan Keluasan Tanah" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Hantar</button>
@@ -995,18 +1001,15 @@ header
                     </div>
                     <div class="mb-3">
                         <label for="tempoh" class="form-label">Tempoh Sewa :</label>
-                        <input type="number" class="form-control" id="tempoh" min="1" placeholder="Masukkan Tempoh Sewa"
-                            required>
+                        <input type="number" class="form-control" id="tempoh" min="1" placeholder="Masukkan Tempoh Sewa" required>
                     </div>
                     <div class="mb-3">
                         <label for="lokasiKerja" class="form-label">Lokasi Kerja :</label>
-                        <input type="text" class="form-control" id="lokasiKerja" placeholder="Masukkan Lokasi Kerja"
-                            required>
+                        <input type="text" class="form-control" id="lokasiKerja" placeholder="Masukkan Lokasi Kerja" required>
                     </div>
                     <div class="mb-3">
                         <label for="keluasanTanah" class="form-label">Keluasan Tanah (Hektar) :</label>
-                        <input type="number" class="form-control" id="keluasanTanah" min="1"
-                            placeholder="Masukkan Keluasan Tanah" required>
+                        <input type="number" class="form-control" id="keluasanTanah" min="1" placeholder="Masukkan Keluasan Tanah" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Hantar</button>
@@ -1018,6 +1021,7 @@ header
     <!-- ***** Content End ***** -->
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
@@ -1039,6 +1043,38 @@ header
                 formBulanan.style.display = "block";
             }
         }
+
+        const logoutButton = document.getElementById('logoutButton');
+
+        // Add a click event listener to the logout button
+        logoutButton.addEventListener('click', function() {
+            // Show the confirmation dialog
+            Swal.fire({
+                title: "Log Keluar",
+                // text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "Batal",
+                confirmButtonText: "Log Keluar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Handle the logout logic here (e.g., redirecting to a logout route)
+                    // Example: window.location.href = '/logout';
+
+                    // Show the success dialog
+                    Swal.fire({
+                        title: "Logged out!",
+                        text: "You have been successfully logged out.",
+                        icon: "success"
+                    }).then(() => {
+                        // Optionally, redirect the user after the success dialog
+                        window.location.href = 'controller/auth/logout.php'; // Update with your actual logout URL
+                    });
+                }
+            });
+        });
     </script>
 
 </body>
