@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-	<style>
-	 /* 
+    <style>
+        /* 
 	---------------------------------------------
 	global styles
 	--------------------------------------------- 
@@ -670,8 +670,8 @@
                 display: flex !important;
             }
         }
-	
-	 /* 
+
+        /* 
 	---------------------------------------------
 	preloader
 	--------------------------------------------- 
@@ -770,65 +770,101 @@
             background: #4da6e7;
             border-radius: 50%;
         }
-</style>
-  </head>
+    </style>
+</head>
 
 <body>
 
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
-
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="bayaran.php" class="logo">
-				<img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-				<img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
-              <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-              <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
-              <li class="scroll-to-section"><a href="bayaran.php" class="active">Bayaran</a></li>
-			  <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-			  <li class="scroll-to-section">
-                <div class="border-first-button">
-					<button onclick="location.href='login.php'">Logout</button>
-				</div>
-              </li>
-            </ul>    
-            <!-- ***** Menu End ***** -->
-          </nav>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
     </div>
+    <!-- ***** Preloader End ***** -->
 
-  </header>
-  <!-- ***** Header Area End ***** -->
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="bayaran.php" class="logo">
+                            <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
+                            <li class="scroll-to-section"><a href="bayaran.php" class="active">Bayaran</a></li>
+                            <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+                            <li class="scroll-to-section">
+                                <div class="border-first-button">
+                                    <button id="logoutButton">Logout</button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
 
-  <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/animation.js"></script>
-  <script src="assets/js/imagesloaded.js"></script>
-  <script src="assets/js/custom.js"></script>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/animation.js"></script>
+    <script src="assets/js/imagesloaded.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+    <script>
+        const logoutButton = document.getElementById('logoutButton');
+
+        // Add a click event listener to the logout button
+        logoutButton.addEventListener('click', function() {
+            // Show the confirmation dialog
+            Swal.fire({
+                title: "Log Keluar",
+                // text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "Batal",
+                confirmButtonText: "Log Keluar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Handle the logout logic here (e.g., redirecting to a logout route)
+                    // Example: window.location.href = '/logout';
+
+                    // Show the success dialog
+                    Swal.fire({
+                        title: "Logged out!",
+                        text: "You have been successfully logged out.",
+                        icon: "success"
+                    }).then(() => {
+                        // Optionally, redirect the user after the success dialog
+                        window.location.href = 'controller/auth/logout.php'; // Update with your actual logout URL
+                    });
+                }
+            });
+        });
+    </script>
 
 </body>
+
 </html>
