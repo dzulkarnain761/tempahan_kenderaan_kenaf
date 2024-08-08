@@ -16,10 +16,9 @@ $sqlKumpulan = "SELECT `kump_kod`, `kump_desc`
 FROM `kumpulan` 
 WHERE `kump_kod` != 'X' AND `kump_kod` != 'Y' AND `kump_kod` != 'Z'";
 
-$sqlStaff = "SELECT `id`, `nama`, `no_kp`, `email`, `contact_no`, `kumpulan` FROM `pengguna` WHERE 'kumpulan' != 'X' AND `kumpulan` != 'Y' AND `kumpulan` != 'Z'";
+$sqlStaff = "SELECT * FROM `pengguna` WHERE `kumpulan` != 'X' AND `kumpulan` != 'Y' AND `kumpulan` != 'Z'";
 
 $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
-
 $resultStaff = mysqli_query($conn, $sqlStaff);
 ?>
 
@@ -540,7 +539,6 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                     </thead>
                     <tbody>
 
-
                         <?php
                         $counter = 1;
                         while ($row = mysqli_fetch_assoc($resultStaff)) {
@@ -585,7 +583,6 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                             while ($row = mysqli_fetch_assoc($resultKumpulan)) {
                                 echo '<option value="' . $row['kump_kod'] . '">' . $row['kump_kod']  . ' - ' . $row['kump_desc'] . '</option>';
                             }
-
 
                             ?>
                         </select>
