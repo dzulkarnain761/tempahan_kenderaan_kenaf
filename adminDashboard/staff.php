@@ -14,9 +14,9 @@ if (!$conn) {
 
 $sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
 FROM `kumpulan` 
-WHERE `kump_kod` != 'F' AND `kump_kod` != 'H' AND `kump_kod` != 'Z'";
+WHERE `kump_kod` != 'X' AND `kump_kod` != 'Y' AND `kump_kod` != 'Z'";
 
-$sqlStaff = "SELECT `id`, `nama`, `no_kp`, `email`, `contact_no`, `kumpulan` FROM `pengguna` WHERE 'kumpulan' != 'F' AND `kumpulan` != 'H' AND `kumpulan` != 'Z'";
+$sqlStaff = "SELECT `id`, `nama`, `no_kp`, `email`, `contact_no`, `kumpulan` FROM `pengguna` WHERE 'kumpulan' != 'X' AND `kumpulan` != 'Y' AND `kumpulan` != 'Z'";
 
 $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
 
