@@ -17,7 +17,7 @@
   --black2: #999;
   --skyblue: #d0e5f5;
 }
-}
+
 
 body {
   min-height: 100vh;
@@ -40,6 +40,7 @@ body {
   transition: 0.5s;
   overflow: hidden;
 }
+
 .navigation.active {
   width: 80px;
 }
@@ -228,7 +229,7 @@ body {
 }
 .cardHeader .btn {
   position: relative;
-  padding: 5px 10px;
+  padding: 12px 12px;;
   background: var(--blue);
   text-decoration: none;
   color: var(--white);
@@ -645,3 +646,4 @@ body {
             .modal-content {
                 width: 90%;
             }
+          }
