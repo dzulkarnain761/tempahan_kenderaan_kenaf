@@ -104,12 +104,21 @@
                 <li>
                     <a href="laporanSerahPulang.php">
                         <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>
                         <span class="title">Laporan</span>
                     </a>
                 </li>
-
+				
+				<li>
+                    <a href="profile.php">
+                        <span class="icon">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">Profil</span>
+                    </a>
+                </li>
+				
                 <li>
                     <a href="../login.php">
                         <span class="icon">
