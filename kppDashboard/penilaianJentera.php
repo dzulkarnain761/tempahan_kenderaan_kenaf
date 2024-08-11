@@ -23,57 +23,22 @@
                     </a>
                 </li>
 
+                
                 <li>
-                    <a href="dashboard.php">
+                    <a href="penilaianJentera.php">
                         <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
+                            <ion-icon name="star-outline"></ion-icon>
                         </span>
-                        <span class="title">Dashboard</span>
+                        <span class="title">Penilaian</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="staff.php">
+				
+				<li>
+                    <a href="pengesahanTolakTerima.php">
                         <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
                         </span>
-                        <span class="title">Staff</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="kenderaan.php">
-                        <span class="icon">
-                            <ion-icon name="car-outline"></ion-icon>
-                        </span>
-                        <span class="title">Kenderaan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="pemandu.php">
-                        <span class="icon">
-                            <ion-icon name="person-outline"></ion-icon>
-                        </span>
-                        <span class="title">Pemandu</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tempahan.php">
-                        <span class="icon">
-                            <ion-icon name="book-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tempahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tetapan.php">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tetapan</span>
+                        <span class="title">Pengesahan</span>
                     </a>
                 </li>
 				
