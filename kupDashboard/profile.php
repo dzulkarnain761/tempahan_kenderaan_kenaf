@@ -8,7 +8,7 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -23,12 +23,13 @@
                     </a>
                 </li>
 
-               <li>
-                    <a href="pengesahanTolakTerima.php">
+                
+                <li>
+                    <a href="penilaianJentera.php">
                         <span class="icon">
-                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                            <ion-icon name="star-outline"></ion-icon>
                         </span>
-                        <span class="title">Pengesahan</span>
+                        <span class="title">Penilaian</span>
                     </a>
                 </li>
 				

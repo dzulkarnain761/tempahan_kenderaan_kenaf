@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 ?>
@@ -95,88 +95,10 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="dashboard.php">
-                        <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="dashboard.php">
-                        <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
-                        </span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="staff.php">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Staff</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="kenderaan.php">
-                        <span class="icon">
-                            <ion-icon name="car-outline"></ion-icon>
-                        </span>
-                        <span class="title">Kenderaan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="pemandu.php">
-                        <span class="icon">
-                            <ion-icon name="person-outline"></ion-icon>
-                        </span>
-                        <span class="title">Pemandu</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tempahan.php">
-                        <span class="icon">
-                            <ion-icon name="book-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tempahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tetapan.php">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tetapan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="profile.php">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                        </span>
-                        <span class="title">Profil</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" id="logoutButton">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sign Out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        
+    <?php 
+        include 'partials/navigation.php';
+    ?>
 
         <!-- ========================= Main ==================== -->
         <div class="main">

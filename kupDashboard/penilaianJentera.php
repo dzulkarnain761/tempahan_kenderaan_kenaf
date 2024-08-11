@@ -8,8 +8,7 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-	<style>
-</style>
+
 </head>
 
 <body>
@@ -18,63 +17,19 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="dashboard.php">
+                    <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px; font-size: 18px;">pemandu</span>
+						<span class="title" style="margin-top: 10px;">LKTNBooking</span>
                     </a>
                 </li>
 
+                
                 <li>
-                    <a href="dashboard.php">
+                    <a href="penilaianJentera.php">
                         <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
+                            <ion-icon name="star-outline"></ion-icon>
                         </span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="staff.php">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Staff</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="kenderaan.php">
-                        <span class="icon">
-                            <ion-icon name="car-outline"></ion-icon>
-                        </span>
-                        <span class="title">Kenderaan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="pemandu.php">
-                        <span class="icon">
-                            <ion-icon name="person-outline"></ion-icon>
-                        </span>
-                        <span class="title">Pemandu</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tempahan.php">
-                        <span class="icon">
-                            <ion-icon name="book-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tempahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tetapan.php">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tetapan</span>
+                        <span class="title">Penilaian</span>
                     </a>
                 </li>
 				
@@ -111,9 +66,8 @@
 						<img src="assets/images/user.png" alt="User Image">
 					</div>
 				</div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
 
     <!-- =========== Scripts =========  -->
     <script src="assets/js/main.js"></script>
