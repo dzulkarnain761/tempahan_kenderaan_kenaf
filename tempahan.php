@@ -498,6 +498,7 @@ preloader
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Hantar</button>
                     </div>
+                    
                 </form>
             </div>
         </div>
