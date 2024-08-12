@@ -14,13 +14,13 @@
         rel="stylesheet">
 
     <style>
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-	
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #f4f4f4;
             margin: 0;
@@ -44,7 +44,8 @@
             background-color: #0056b3;
         }
 
-        h2, h3 {
+        h2,
+        h3 {
             margin-bottom: 15px;
         }
 
@@ -187,8 +188,8 @@
                 width: 90%;
             }
         }
-		
-		
+
+
         :root {
             --skyblue: #d0e5f5;
         }
@@ -309,14 +310,44 @@
             font-size: 14px;
             font-weight: 500;
         }
+
+        .btn-outline-edit {
+            border: 2px solid #007bff;
+            /* Choose the color you prefer */
+            color: #007bff;
+            background-color: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-edit:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-outline-delete {
+            border: 2px solid #dc3545;
+            /* Choose the color you prefer */
+            color: #dc3545;
+            background-color: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-delete:hover {
+            background-color: #dc3545;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <?php 
-			include 'partials/navigation.php';
-		?>
+        <?php
+        include 'partials/navigation.php';
+        ?>
 
         <div class="main">
             <div class="topbar">
@@ -332,41 +363,42 @@
                 </div>
             </div>
 
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>SENARAI KENDERAAN</h2>
-                        <a class="btn" onclick="window.location.href = 'daftar_kenderaan.php'">DAFTAR KENDERAAN</a>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Bil</td>
-                                <td>Nama Kenderaan</td>
-                                <td>No Pendaftaran</td>
-                                <td>Tarikh Tamat</td>
-                                <td>Kemaskini</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button onclick="window.location.href = 'kemaskini_kenderaan.php'" class="btn btn-edit">
-                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                    </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-delete">
-                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>SENARAI KENDERAAN</h2>
+                    <a class="btn" onclick="window.location.href = 'daftar_kenderaan.php'">DAFTAR KENDERAAN</a>
                 </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Bil</td>
+                            <td>Nama Kenderaan</td>
+                            <td>No Pendaftaran</td>
+                            <td>Tarikh Tamat</td>
+                            <td>Kemaskini</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button onclick="window.location.href = 'kemaskini_kenderaan.php'" class="btn btn-outline-edit">
+                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

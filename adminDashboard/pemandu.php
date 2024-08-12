@@ -12,14 +12,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-	<style>
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-	
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #f4f4f4;
             margin: 0;
@@ -43,7 +43,8 @@
             background-color: #0056b3;
         }
 
-        h2, h3 {
+        h2,
+        h3 {
             margin-bottom: 15px;
         }
 
@@ -186,8 +187,8 @@
                 width: 90%;
             }
         }
-		
-		
+
+
         :root {
             --skyblue: #d0e5f5;
         }
@@ -308,14 +309,44 @@
             font-size: 14px;
             font-weight: 500;
         }
+
+        .btn-outline-edit {
+            border: 2px solid #007bff;
+            /* Choose the color you prefer */
+            color: #007bff;
+            background-color: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-edit:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-outline-delete {
+            border: 2px solid #dc3545;
+            /* Choose the color you prefer */
+            color: #dc3545;
+            background-color: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-delete:hover {
+            background-color: #dc3545;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <?php 
-			include 'partials/navigation.php';
-		?>
+        <?php
+        include 'partials/navigation.php';
+        ?>
 
         <div class="main">
             <div class="topbar">
@@ -331,165 +362,50 @@
                 </div>
             </div>
 
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>SENARAI PEMANDU</h2>
-                        <a class="btn" onclick="window.location.href = 'daftar_pemandu.php'">DAFTAR PEMANDU</a>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Bil</td>
-                                <td>Nama Pemandu</td>
-                                <td>No Kad Pengenalan</td>
-                                <td>Kategori Lesen</td>
-                                <td>Tarikh Tamat Lesen</td>
-								<td>Status</td>
-                                <td>Kemaskini</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-								<td></td>
-                                <td>
-                                    <button onclick="window.location.href = 'kemaskini_pemandu.php'" class="btn btn-edit">
-                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                    </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-delete">
-                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>SENARAI PEMANDU</h2>
+                    <a class="btn" onclick="window.location.href = 'daftar_pemandu.php'">DAFTAR PEMANDU</a>
                 </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Bil</td>
+                            <td>Nama Pemandu</td>
+                            <td>No Kad Pengenalan</td>
+                            <td>Kategori Lesen</td>
+                            <td>Tarikh Tamat Lesen</td>
+                            <td>Status</td>
+                            <td>Kemaskini</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button onclick="window.location.href = 'kemaskini_pemandu.php'" class="btn btn-outline-edit">
+                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Register Modal -->
-<div id="registerModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h3>DAFTAR PEMANDU</h3>
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="adminPemandu">ADMIN PEMANDU:</label>
-                <input type="text" id="adminPemandu" name="adminPemandu" placeholder="adminPemandu" required>
-            </div>
-            <div class="form-group">
-                <label for="namaPemandu">NAMA PEMANDU:</label>
-                <input type="text" id="namaPemandu" name="namaPemandu" placeholder="Masukkan nama pemandu" required>
-            </div>
-            <div class="form-group">
-                <label for="noKp">NO KAD PENGENALAN:</label>
-                <input type="text" id="noKp" name="noKp" maxlength="12" placeholder="Masukkan No Kad Pengenalan" required>
-            </div>
-            <div class="form-group">
-                <label for="noTel">NO TELEFON:</label>
-                <input type="tel" id="noTel" name="noTel" maxlength="12" placeholder="Masukkan no telefon" required>
-            </div>
-            <div class="form-group">
-                <label for="kategoriLesen">KATEGORI LESEN:</label>
-                <select id="kategoriLesen" name="kategoriLesen" required>
-                    <option value="" disabled selected>--Pilih Kategori Lesen--</option>
-                    <option value="GDL D">GDL</option>
-                    <option value="CDL">CDL</option>
-                    <option value="Lesen H">H</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="tarikhTamatLesen">TARIKH TAMAT LESEN:</label>
-                <input type="date" id="tarikhTamatLesen" name="tarikhTamatLesen" required>
-            </div>
-            <div class="form-group">
-                <label for="status">STATUS:</label>
-                <select id="status" name="status" required>
-                    <option value="" disabled selected>--Pilih Status--</option>
-                    <option value="Aktif">Aktif</option>
-                    <option value="Tidak Aktif">Tidak Aktif</option>
-                </select>
-            </div>
-			
-			<div class="form-group">
-				<label for="password">KATA LALUAN:</label>
-				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
-            </div>
-			
-			<div class="form-group">
-				<label for="confirmPassword">KATA LALUAN:</label>
-				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
-            </div>
-			
-			
-            <input type="button" value="DAFTAR" class="btn btn-daftar" onclick="saveChanges()">
-        </form>
-    </div>
-</div>
 
-<!-- Edit Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>KEMASKINI PEMANDU</h2>
-        <form id="editForm">
-            <div class="form-group">
-                <label for="adminPemanduEdit">ADMIN PEMANDU:</label>
-                <input type="text" id="adminPemanduEdit" name="adminPemandu" placeholder="adminPemandu">
-            </div>
-            <div class="form-group">
-                <label for="namaPemanduEdit">NAMA PEMANDU:</label>
-                <input type="text" id="namaPemanduEdit" name="namaPemandu" placeholder="Masukkan nama pemandu" required>
-            </div>
-            <div class="form-group">
-                <label for="noKpEdit">NO KAD PENGENALAN:</label>
-                <input type="text" id="noKpEdit" name="noKp" maxlength="12" placeholder="Masukkan no kad pengenalan" >
-            </div>
-            <div class="form-group">
-                <label for="noTelEdit">NO TELEFON:</label>
-                <input type="tel" id="noTelEdit" name="noTel" maxlength="12" placeholder="Masukkan no telefon" >
-            </div>
-            <div class="form-group">
-                <label for="kategoriLesenEdit">KATEGORI LESEN:</label>
-                <select id="kategoriLesenEdit" name="kategoriLesen" required>
-                    <option value="" disabled selected>--Pilih Kategori Lesen--</option>
-                    <option value="GDL">GDL</option>
-                    <option value="CDL">CDL</option>
-                    <option value="H">H</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="tarikhTamatLesenEdit">TARIKH TAMAT LESEN:</label>
-                <input type="date" id="tarikhTamatLesenEdit" name="tarikhTamatLesen" required>
-            </div>
-            <div class="form-group">
-                <label for="statusEdit">STATUS:</label>
-                <select id="statusEdit" name="status" required>
-                    <option value="" disabled selected>--Pilih Status--</option>
-                    <option value="Aktif">Aktif</option>
-                    <option value="Tidak Aktif">Tidak Aktif</option>
-                </select>
-            </div>
-			
-			<div class="form-group">
-				<label for="password">KATA LALUAN:</label>
-				<input type="password" id="password" name="password" placeholder="Masukkan kata laluan" required>
-            </div>
-			
-			<div class="form-group">
-				<label for="confirmPassword">KATA LALUAN:</label>
-				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Sahkan kata laluan" required>
-            </div>
-			
-            <input type="button" value="KEMASKINI" class="btn btn-update" onclick="saveChanges()">
-        </form>
-    </div>
-</div>
+
+
 
     </div>
 
@@ -513,19 +429,19 @@
             var noKp = row.cells[1].innerText;
             var noTel = row.cells[2].innerText;
             var kategoriLesen = row.cells[3].innerText;
-			var tarikhTamatLesen = row.cells[4].innerText;
-			var status = row.cells[5].innerText;
-			
+            var tarikhTamatLesen = row.cells[4].innerText;
+            var status = row.cells[5].innerText;
+
             document.getElementById('namaPemanduEdit').value = namaPemandu;
             document.getElementById('noKpEdit').value = noKp;
             document.getElementById('noTelEdit').value = noTel;
-			document.getElementById('kategoriLesenEdit').value = kategoriLesen;
-			document.getElementById('tarikhTamatLesenEdit').value = tarikhTamatLesen;
+            document.getElementById('kategoriLesenEdit').value = kategoriLesen;
+            document.getElementById('tarikhTamatLesenEdit').value = tarikhTamatLesen;
             document.getElementById('statusEdit').value = status;
-			
-			document.getElementById('editModal').style.display = "block";
-		}
-		
+
+            document.getElementById('editModal').style.display = "block";
+        }
+
         function deleteItem(button) {
             var row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);

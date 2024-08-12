@@ -14,13 +14,13 @@
         rel="stylesheet">
 
     <style>
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-	
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #f4f4f4;
             margin: 0;
@@ -44,7 +44,8 @@
             background-color: #0056b3;
         }
 
-        h2, h3 {
+        h2,
+        h3 {
             margin-bottom: 15px;
         }
 
@@ -187,88 +188,128 @@
                 width: 90%;
             }
         }
-		
-		:root {
-			--skyblue: #d0e5f5;
-		}
-		
-		/* ================== Table details ============== */
-		.recentOrders {
-		  position: relative;
-		  display: grid;
-		  min-height: 500px;
-		  background: var(--white);
-		  padding: 20px;
-		  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-		  border-radius: 20px;
-		  margin-top: 20px;
-		  margin-left: 20px;
-		  margin-right: 20px;
-		}
 
-		.cardHeader {
-		  display: flex;
-		  justify-content: space-between;
-		  align-items: flex-start;
-		}
-		.cardHeader h2 {
-		  color: var(--blue);
-		  text-transform: uppercase;
-		}
-		.cardHeader .btn {
-		  position: relative;
-		  padding: 5px 10px;
-		  background: var(--blue);
-		  text-decoration: none;
-		  color: var(--white);
-		  border-radius: 6px;
-		}
+        :root {
+            --skyblue: #d0e5f5;
+        }
 
-		table {
-		  width: 100%;
-		  border-collapse: collapse;
-		  margin-top: 10px;
-		}
-		table thead td {
-			background: var(--blue);
-			color: var(--white);
-			font-size: 18px;
-		}
-		table tbody {
-				font-size: 18px;
-		}
-		.recentOrders table tr {
-		  color: var(--black1);
-		  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		}
-		.recentOrders table tr:last-child {
-		  border-bottom: none;
-		}
-		.recentOrders table tbody tr:hover {
-		  background: var(--white);
-		  color: var(--black);
-		}
-		.recentOrders table tr td {
-		  padding: 10px;
-		}
-		.recentOrders table tr td:last-child {
-		  text-align: center;
-		}
-		.recentOrders table tr td:nth-child(2) {
-		  text-align: center;
-		}
-		.recentOrders table tr td:nth-child(3) {
-		  text-align: center;
-		}
+        /* ================== Table details ============== */
+        .recentOrders {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
 
+        .cardHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .cardHeader h2 {
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .cardHeader .btn {
+            position: relative;
+            padding: 5px 10px;
+            background: var(--blue);
+            text-decoration: none;
+            color: var(--white);
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table thead td {
+            background: var(--blue);
+            color: var(--white);
+            font-size: 18px;
+        }
+
+        table tbody {
+            font-size: 18px;
+        }
+
+        .recentOrders table tr {
+            color: var(--black1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .recentOrders table tr:last-child {
+            border-bottom: none;
+        }
+
+        .recentOrders table tbody tr:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .recentOrders table tr td {
+            padding: 10px;
+        }
+
+        .recentOrders table tr td:last-child {
+            text-align: center;
+        }
+
+        .recentOrders table tr td:nth-child(2) {
+            text-align: center;
+        }
+
+        .recentOrders table tr td:nth-child(3) {
+            text-align: center;
+        }
+
+        .btn-outline-edit {
+            border: 2px solid #007bff;
+            /* Choose the color you prefer */
+            color: #007bff;
+            background-color: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-edit:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-outline-delete {
+            border: 2px solid #dc3545;
+            /* Choose the color you prefer */
+            color: #dc3545;
+            background-color: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-delete:hover {
+            background-color: #dc3545;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-       <?php 
-			include 'partials/navigation.php';
-		?>
+        <?php
+        include 'partials/navigation.php';
+        ?>
 
         <div class="main">
             <div class="topbar">
@@ -294,7 +335,7 @@
                     <thead>
                         <tr>
                             <td>Bil</td>
-							<td>Kumpulan</td>
+                            <td>Kumpulan</td>
                             <td>Nama Staf</td>
                             <td>No Kad Pengenalan</td>
                             <td>No Telefon</td>
@@ -306,15 +347,16 @@
                             <td></td>
                             <td></td>
                             <td></td>
-							<td></td>
-							<td></td>
-							<td>
-								<button onclick="window.location.href = 'kemaskini_staff.php'" class="btn btn-edit">
-									<i class="fas fa-edit" style="font-size: 1.5em;"></i>
-								</button>
-								<button onclick="deleteItem(this)" class="btn btn-delete">
-									<i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-								</button>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button onclick="window.location.href = 'kemaskini_staff.php'" class="btn btn-outline-edit">
+                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                </button>
+
                             </td>
                         </tr>
                     </tbody>

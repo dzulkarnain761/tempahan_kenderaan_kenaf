@@ -17,7 +17,7 @@
   --black2: #999;
   --skyblue: #d0e5f5;
 }
-}
+
 
 body {
   min-height: 100vh;
@@ -632,3 +632,4 @@ body {
             .modal-content {
                 width: 90%;
             }
+          }
