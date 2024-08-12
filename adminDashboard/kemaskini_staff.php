@@ -8,10 +8,21 @@
     <title>Booking</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
 
     <style>
+	
+	* {
+		  font-family: 'Poppins', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
         .custom-container {
             position: relative;
             width: 100%;
@@ -26,6 +37,27 @@
 
         nav .breadcrumb {
             margin-left: 24px;
+        }
+		
+		 .cardHeader h3 {
+            font-weight: 600;
+            color: var(--blue);
+            text-transform: uppercase;
+			margin-bottom: 25px;
+        }
+		
+		/* ================== Table details ============== */
+        .recentOrders {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
         }
     </style>
 
@@ -53,53 +85,52 @@
 
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="staff.php">STAFF</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">KEMASKINI</li>
+                    <li class="breadcrumb-item"><a href="staff.php">Staf</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Staf</li>
                 </ol>
             </nav>
 
-            <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
-                        <h2>KEMASKINI STAFF</h2>
+                        <h3>Kemaskini Staf</h3>
                     </div>
 
                     <form>
                         <div class="mb-3">
-                            <label for="sewa" class="form-label">JAWATAN STAFF :</label>
+                            <label for="sewa" class="form-label">Kumpulan</label>
                             <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>Sila Pilih Kategori Lesen</option>
-                                <option value="jam/harian">Per Jam atau Harian</option>
-                                <option value="bulanan">Bulanan</option>
+                                <option disabled selected>--Pilih Kumpulan--</option>
+                                <option value="...">...</option>
+                                <option value="...">...</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">NAMA STAFF</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama Pemandu">
+                            <label for="exampleFormControlInput1" class="form-label">Nama Staf:</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama Staf">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">NO KAD PENGENALAN</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan No Kad Pengenalan">
+                            <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Kad Pengenalan">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">NO TELEFON</label>
-                            <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan No Telefon">
+                            <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
+                            <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Telefon">
                         </div>
 
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Kata Laluan</label>
+                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Kata Laluan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Sahkan Kata Laluan</label>
+                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Sahkan Kata Laluan">
+                        </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">KEMASKINI STAFF</button>
+                            <button type="submit" class="btn btn-primary">Kemaskini Staf</button>
                         </div>
                     </form>
-
-
-
                 </div>
-            </div>
         </div>
-
-
-
-
     </div>
 
     <script src="assets/js/main.js"></script>

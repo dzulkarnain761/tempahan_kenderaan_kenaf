@@ -7,38 +7,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <title>Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-	<style>
-	:root {
-		--skyblue: #d0e5f5;
-}
+    <style>
+        :root {
+            --skyblue: #d0e5f5;
+        }
+		
+		* {
+		  font-family: 'Poppins', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
 
-.details .recentOrders table tbody tr:hover {
-  background: var(--white);
-  color: var(--black);
-}
-	
-	.details table thead td {
-		background: var(--blue);
-		color: var(--white);
-		font-size: 18px;
-}
+        /* ================== Table details ============== */
+        .recentOrders {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
 
-.details table tbody {
-		font-size: 18px;
-}
+        .cardHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
 
-</style>
+        .cardHeader h2 {
+            font-weight: 600;
+            color: var(--blue);
+            text-transform: uppercase;
+        }
+
+        .cardHeader .btn {
+            position: relative;
+            padding: 5px 10px;
+            background: var(--blue);
+            text-decoration: none;
+            color: var(--white);
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table thead td {
+            background: var(--blue);
+            color: var(--white);
+            font-size: 18px;
+        }
+
+        table tbody {
+            font-size: 18px;
+        }
+
+        .recentOrders table tr {
+            color: var(--black1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .recentOrders table tr:last-child {
+            border-bottom: none;
+        }
+
+        .recentOrders table tbody tr:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .recentOrders table tr td {
+            padding: 10px;
+        }
+
+        .recentOrders table tr td:last-child {
+            text-align: center;
+        }
+
+        .recentOrders table tr td:nth-child(2) {
+            text-align: center;
+        }
+
+        .recentOrders table tr td:nth-child(3) {
+            text-align: center;
+        }
+
+        .status.delivered {
+            padding: 2px 4px;
+            background: #8de02c;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            padding: 2px 4px;
+            background: #e9b10a;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.return {
+            padding: 2px 4px;
+            background: #f00;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.inProgress {
+            padding: 2px 4px;
+            background: #1795ce;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
 </head>
 
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-        
-    <?php 
-        include 'partials/navigation.php';
-    ?>
+        <?php 
+			include 'partials/navigation.php';
+		?>
 
         <!-- ========================= Main ==================== -->
         <div class="main">
@@ -48,14 +159,14 @@
                 </div>
 
                 <div class="userName">
-					<div class="user-name">NAMA BINTI PENUH</div>
-					<div class="user">
-						<img src="assets/images/user.png" alt="User Image">
-					</div>
-				</div>
+                    <div class="user-name">NAMA BINTI PENUH</div>
+                    <div class="user">
+                        <img src="assets/images/user.png" alt="User Image">
+                    </div>
+                </div>
             </div>
-			
-			<!-- ======================= Cards ================== -->
+
+            <!-- ======================= Cards ================== -->
             <div class="cardBox">
                 <div class="card">
                     <div>
@@ -101,97 +212,95 @@
                     </div>
                 </div>
             </div>
-			
-			<!-- ================ Order Details List ================= -->
-            <div class="details">
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Kerja Berjalan</h2>
-                    </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-								<td>Bil</td>
-                                <td>Name</td>
-                                <td>Price</td>
-                                <td>Payment</td>
-                                <td>Status</td>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-								<td>1</td>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-								<td>2</td>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-								<td>3</td>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-								<td>4</td>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-								<td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>6</td>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>7</td>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>8</td>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- ================ Order Details List ================= -->
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Kerja Berjalan</h2>
                 </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Bil</td>
+                            <td>Name</td>
+                            <td>Price</td>
+                            <td>Payment</td>
+                            <td>Status</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Star Refrigerator</td>
+                            <td>$1200</td>
+                            <td>Paid</td>
+                            <td><span class="status delivered">Delivered</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Dell Laptop</td>
+                            <td>$110</td>
+                            <td>Due</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>Apple Watch</td>
+                            <td>$1200</td>
+                            <td>Paid</td>
+                            <td><span class="status return">Return</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>Addidas Shoes</td>
+                            <td>$620</td>
+                            <td>Due</td>
+                            <td><span class="status inProgress">In Progress</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td>Star Refrigerator</td>
+                            <td>$1200</td>
+                            <td>Paid</td>
+                            <td><span class="status delivered">Delivered</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>6</td>
+                            <td>Dell Laptop</td>
+                            <td>$110</td>
+                            <td>Due</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>7</td>
+                            <td>Apple Watch</td>
+                            <td>$1200</td>
+                            <td>Paid</td>
+                            <td><span class="status return">Return</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>8</td>
+                            <td>Addidas Shoes</td>
+                            <td>$620</td>
+                            <td>Due</td>
+                            <td><span class="status inProgress">In Progress</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-	
-	
+
+
 
     <!-- =========== Scripts =========  -->
     <script src="assets/js/main.js"></script>
@@ -199,7 +308,7 @@
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
