@@ -326,77 +326,45 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'X') {
             </div>
         </div>
     </div>
-    <!-- ***** Preloader End ***** -->
-
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="sewaan.php" class="logo">
-                            <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
-                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-                            <li class="scroll-to-section"><a href="sewaan.php" class="active">Sewaan</a></li>
-                            <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-                            <li class="scroll-to-section">
-                                <div class="border-first-button">
-                                    <button onclick="location.href='login.php'">Logout</button>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-            </div>
-    </header>
-    <!-- ***** Header Area End ***** -->
-    <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
-        <div class="kotak">
-            <h3 class="text-center fw-bold" style="margin-top: 30px; margin-below: 30px;">MAKLUMAT SEWAAN</h3>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama Penyewa</th>
-                            <th>Item Disewa</th>
-                            <th>Tarikh Mula</th>
-                            <th>Tarikh Akhir</th>
-                            <th>Harga</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ali Bin Abu</td>
-                            <td>Projekor</td>
-                            <td>01/08/2024</td>
-                            <td>05/08/2024</td>
-                            <td>RM 200.00</td>
-                            <td>Disahkan</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Fatimah Binti Ali</td>
-                            <td>Kerusi</td>
-                            <td>03/08/2024</td>
-                            <td>06/08/2024</td>
-                            <td>RM 150.00</td>
-                            <td>Dalam Proses</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+  <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
+  <div class="kotak">
+   <h3 class="text-center fw-bold" style="margin-top: 30px; margin-below: 30px;">MAKLUMAT SEWAAN</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>No.</th>
+                    <th>Nama Penyewa</th>
+                    <th>Kategori Kenderaan</th>
+                    <th>Tarikh Mula</th>
+                    <th>Tarikh Akhir</th>
+                    <th>Harga</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Ali Bin Abu</td>
+                    <td>Jengkaut</td>
+                    <td>01/08/2024</td>
+                    <td>05/08/2024</td>
+                    <td>RM 200.00</td>
+                    <td>Disahkan</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Fatimah Binti Ali</td>
+                    <td>Jentera</td>
+                    <td>03/08/2024</td>
+                    <td>06/08/2024</td>
+                    <td>RM 150.00</td>
+                    <td>Dalam Proses</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

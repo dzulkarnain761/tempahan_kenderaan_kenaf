@@ -478,7 +478,7 @@ preloader
     <div class="modal-dialog modal-dialog-centered" id="form-bulanan" style="display: none;">
         <div class="modal-content" style="margin-top: 20px;">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Sewa Per Jam atau Harian</h5>
+                <h5 class="modal-title fw-bold">Sewa Bulanan</h5>
             </div>
             <div class="modal-body">
                 <form action="sewaan.php" method="POST">

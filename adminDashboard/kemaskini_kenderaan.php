@@ -8,10 +8,19 @@
     <title>Booking</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <style>
+		* {
+		  font-family: 'Poppins', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
         .custom-container {
             position: relative;
             width: 100%;
@@ -27,6 +36,19 @@
         nav .breadcrumb {
             margin-left: 24px;
         }
+
+		.recentOrders {
+			position: relative;
+			display: grid;
+			min-height: 500px;
+			background: var(--white);
+			padding: 20px;
+			box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+			border-radius: 20px;
+			margin-top: 20px;
+			margin-left: 20px;
+			margin-right: 20px;
+		}	
     </style>
 
 </head>
@@ -53,83 +75,69 @@
 
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="kenderaan.php">KENDERAAN</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">KEMASKINI</li>
+                    <li class="breadcrumb-item"><a href="kenderaan.php">Kenderaan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Kenderaan</li>
                 </ol>
             </nav>
-
-            <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
-                        <h2>KEMASKINI KENDERAAN</h2>
+                        <h2>Kemaskini Kenderaan</h2>
                     </div>
-
                     <form>
                         <div class="mb-3">
-                            <label for="sewa" class="form-label">KATEGORI KENDERAAN :</label>
+                            <label for="sewa" class="form-label">Kategori Kenderaan</label>
                             <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>Sila Pilih Kategori Kenderaan</option>
-                                <option value="jam/harian">Per Jam atau Harian</option>
-                                <option value="bulanan">Bulanan</option>
+                                <option disabled selected>--Pilih Kategori Kenderaan--</option>
+                                <option value="Jentera">Jentera</option>
+                                <option value="Jengkaut">Jengkaut</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">NO PENDAFTARAN KENDERAAN</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama Pemandu">
+                            <label for="exampleFormControlInput1" class="form-label">Nombor Pendaftaran Kenderaan</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Pendaftaran Kenderaan">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">TAHUN DAFTAR</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan No Kad Pengenalan">
+                            <label for="exampleFormControlInput1" class="form-label">Tahun Daftar</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Tahun Daftar">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">MULA CUKAI JALAN</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Tarikh Tamat Lesen">
+                            <label for="exampleFormControlInput1" class="form-label">Mula Cukai Jalan</label>
+                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Mula Cukai Jalan">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">TARIKH CUKAI JALAN</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Tarikh Tamat Lesen">
+                            <label for="exampleFormControlInput1" class="form-label">Tamat Cukai Jalan</label>
+                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Tamat Cukai Jalan">
                         </div>
                         <div class="mb-3">
-                            <label for="sewa" class="form-label">NEGERI PENEMPATAN :</label>
+                            <label for="sewa" class="form-label">Negeri Penempatan</label>
                             <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>Sila Pilih Kategori KENDERAAN</option>
-                                <option value="jam/harian">Per Jam atau Harian</option>
-                                <option value="bulanan">Bulanan</option>
+                                <option disabled selected>--Pilih Negeri--</option>
+                                <option value="...">...</option>
+                                <option value="...">...</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="sewa" class="form-label">KAWASAN :</label>
+                            <label for="sewa" class="form-label">Kawasan</label>
                             <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>Sila Pilih Kategori KENDERAAN</option>
-                                <option value="jam/harian">Per Jam atau Harian</option>
-                                <option value="bulanan">Bulanan</option>
+                                <option disabled selected>--Pilih Kawasan--</option>
+                                <option value="...">...</option>
+                                <option value="...">...</option>
                             </select>
                         </div>
-
                         <div class="mb-3">
-                            <label for="sewa" class="form-label">STATUS :</label>
+                            <label for="sewa" class="form-label">Status</label>
                             <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>Sila Pilih Kategori Lesen</option>
-                                <option value="jam/harian">Per Jam atau Harian</option>
-                                <option value="bulanan">Bulanan</option>
+                                <option disabled selected>--Pilih Status Kenderaan--</option>
+                                <option value="...">Aktif</option>
+                                <option value="...">Tidak Aktif</option>
                             </select>
                         </div>
-                        
-
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">KEMASKINI KENDERAAN</button>
+                            <button type="submit" class="btn btn-primary">Kemaskini Kenderaan</button>
                         </div>
                     </form>
-
-
-
                 </div>
-            </div>
         </div>
-
-
-
-
     </div>
 
     <script src="assets/js/main.js"></script>

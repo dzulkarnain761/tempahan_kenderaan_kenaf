@@ -20,7 +20,7 @@
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title">Staff</span>
+                        <span class="title">Staf</span>
                     </a>
                 </li>
 
@@ -39,15 +39,6 @@
                             <ion-icon name="person-outline"></ion-icon>
                         </span>
                         <span class="title">Pemandu</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tempahan.php">
-                        <span class="icon">
-                            <ion-icon name="book-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tempahan</span>
                     </a>
                 </li>
 
