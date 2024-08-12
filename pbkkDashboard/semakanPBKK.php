@@ -131,15 +131,6 @@
                 </li>
 
                 <li>
-                    <a href="penilaianJentera.php">
-                        <span class="icon">
-                            <ion-icon name="star-outline"></ion-icon>
-                        </span>
-                        <span class="title">Penilaian</span>
-                    </a>
-                </li>
-				
-				<li>
                     <a href="pengesahanTolakTerima.php">
                         <span class="icon">
                             <ion-icon name="document-text-outline"></ion-icon>
@@ -149,11 +140,20 @@
                 </li>
 				
 				<li>
+                    <a href="semakanPBKK.php">
+                        <span class="icon">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">Semakan</span>
+                    </a>
+                </li>
+				
+                <li>
                     <a href="profile.php">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title">Profil</span>
+                        <span class="title">Profile</span>
                     </a>
                 </li>
 
@@ -183,38 +183,6 @@
 				</div>
 			</div>
 			
-			<!-- ======================= Pengesahan ================== -->
-			<div class="recentOrders">
-				<div class="cardHeader">
-					<h2>Pengesahan Tempahan Sewaan per Jam atau Harian </h2>
-				</div>
-				<table>
-					<thead>
-						<tr>
-							<td>Bil</td>
-							<td>Nama Pemohon</td>
-							<td>Keluasan Tanah (Hektar)</td>
-							<td>Maklumat</td>
-							<td>Tindakan</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Ahmad Bin Ali</td>
-							<td>5.5</td>
-							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-							<td>
-								<form method="POST" action="sahkan.php">
-									<input type="hidden" name="id_permohonan" value="1">
-									<button type="submit" name="tindakan" value="terima" class="btn btn-success">Terima</button>
-									<button type="submit" name="tindakan" value="tolak" class="btn btn-danger">Tolak</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 		</div>
 	</div>
 

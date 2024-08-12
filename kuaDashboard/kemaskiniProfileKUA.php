@@ -70,7 +70,7 @@
                 <li>
                     <a href="laporanSerahPulang.php">
                         <span class="icon">
-                            <ion-icon name="document-text-outline"></ion-icon>
+                            <ion-icon name="newspaper-outline"></ion-icon>
                         </span>
                         <span class="title">Laporan</span>
                     </a>

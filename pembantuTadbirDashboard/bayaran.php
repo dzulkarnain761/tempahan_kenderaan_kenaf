@@ -8,7 +8,49 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+	<style>
+	* {
+		  font-family: 'Poppins', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600; /* Bold for h2 */
+        }
+        .table thead th {
+            background-color: #2a2185;
+            color: #fff;
+            font-weight: 400; /* Normal weight for th */
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .table td, .table th {
+            text-align: center;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+	</style>
 </head>
 
 <body>
@@ -19,11 +61,10 @@
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px;">LKTNBooking</span>
+						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
 
-                
                 <li>
                     <a href="bayaran.php">
                         <span class="icon">
@@ -68,6 +109,9 @@
 				</div>
 			</div>
 		</div>
+		
+		
+	</div>
 
     <!-- =========== Scripts =========  -->
     <script src="assets/js/main.js"></script>

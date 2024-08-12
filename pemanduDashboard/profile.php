@@ -8,6 +8,18 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+	<style>
+	* {
+		  font-family: 'Poppins', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
+	</style>
 
 </head>
 
@@ -17,63 +29,18 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="profile.php">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px;">LKTNBooking</span>
+						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="dashboard.php">
-                        <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
-                        </span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="staff.php">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Staff</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="kenderaan.php">
-                        <span class="icon">
-                            <ion-icon name="car-outline"></ion-icon>
-                        </span>
-                        <span class="title">Kenderaan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="pemandu.php">
-                        <span class="icon">
-                            <ion-icon name="person-outline"></ion-icon>
-                        </span>
-                        <span class="title">Pemandu</span>
-                    </a>
-                </li>
-
-                <li>
+				
+				<li>
                     <a href="tempahan.php">
                         <span class="icon">
                             <ion-icon name="book-outline"></ion-icon>
                         </span>
                         <span class="title">Tempahan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tetapan.php">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tetapan</span>
                     </a>
                 </li>
 				

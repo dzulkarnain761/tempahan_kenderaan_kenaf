@@ -133,7 +133,7 @@
                 <li>
                     <a href="pengesahanTolakTerima.php">
                         <span class="icon">
-                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                         </span>
                         <span class="title">Pengesahan</span>
                     </a>

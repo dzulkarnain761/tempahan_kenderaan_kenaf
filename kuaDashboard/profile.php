@@ -106,15 +106,15 @@
             <ul>
                 <li>
                     <a href="profile.php">
-                        <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width: 60px; height: 60px;">
-                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
+                        <img src="../assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
+						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="laporanSerahPulang.php">
                         <span class="icon">
-                            <ion-icon name="document-text-outline"></ion-icon>
+                            <ion-icon name="newspaper-outline"></ion-icon>
                         </span>
                         <span class="title">Laporan</span>
                     </a>
