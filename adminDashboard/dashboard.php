@@ -106,27 +106,9 @@
             text-align: center;
         }
 
-        .status.delivered {
-            padding: 2px 4px;
-            background: #8de02c;
-            color: var(--white);
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
         .status.pending {
             padding: 2px 4px;
             background: #e9b10a;
-            color: var(--white);
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .status.return {
-            padding: 2px 4px;
-            background: #f00;
             color: var(--white);
             border-radius: 4px;
             font-size: 14px;
@@ -223,9 +205,10 @@
                     <thead>
                         <tr>
                             <td>Bil</td>
-                            <td>Name</td>
-                            <td>Price</td>
-                            <td>Payment</td>
+                            <td>Nama Penyewa</td>
+                            <td>Tarikh Tempah</td>
+                            <td>Tarikh Kerja</td>
+							<td>Maklumat</td>
                             <td>Status</td>
                         </tr>
                     </thead>
@@ -233,65 +216,37 @@
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>Star Refrigerator</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td><span class="status delivered">Delivered</span></td>
+                            <td>Nurul</td>
+                            <td>21 Jun 2024</td>
+                            <td>21 Jun 2024</td>
+                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
+                            <td><span class="status pending">Pending</span></td>
                         </tr>
 
                         <tr>
                             <td>2</td>
-                            <td>Dell Laptop</td>
-                            <td>$110</td>
-                            <td>Due</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>Apple Watch</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td><span class="status return">Return</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>4</td>
-                            <td>Addidas Shoes</td>
-                            <td>$620</td>
-                            <td>Due</td>
+                            <td>Mohd</td>
+                            <td>21 Jun 2024</td>
+                            <td>21 Jun 2024</td>
+                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
                             <td><span class="status inProgress">In Progress</span></td>
                         </tr>
 
                         <tr>
-                            <td>5</td>
-                            <td>Star Refrigerator</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td><span class="status delivered">Delivered</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>6</td>
-                            <td>Dell Laptop</td>
-                            <td>$110</td>
-                            <td>Due</td>
+                            <td>3</td>
+                            <td>Nik</td>
+                            <td>21 Jun 2024</td>
+                            <td>21 Jun 2024</td>
+                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
                             <td><span class="status pending">Pending</span></td>
                         </tr>
 
                         <tr>
-                            <td>7</td>
-                            <td>Apple Watch</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td><span class="status return">Return</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>8</td>
-                            <td>Addidas Shoes</td>
-                            <td>$620</td>
-                            <td>Due</td>
+                            <td>4</td>
+                            <td>Nur</td>
+                            <td>21 Jun 2024</td>
+                            <td>21 Jun 2024</td>
+                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
                             <td><span class="status inProgress">In Progress</span></td>
                         </tr>
                     </tbody>
