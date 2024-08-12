@@ -355,7 +355,7 @@
                 <tr>
                     <th>No.</th>
                     <th>Nama Penyewa</th>
-                    <th>Item Disewa</th>
+                    <th>Kategori Kenderaan</th>
                     <th>Tarikh Mula</th>
                     <th>Tarikh Akhir</th>
                     <th>Harga</th>
@@ -366,7 +366,7 @@
                 <tr>
                     <td>1</td>
                     <td>Ali Bin Abu</td>
-                    <td>Projekor</td>
+                    <td>Jengkaut</td>
                     <td>01/08/2024</td>
                     <td>05/08/2024</td>
                     <td>RM 200.00</td>
@@ -375,7 +375,7 @@
                 <tr>
                     <td>2</td>
                     <td>Fatimah Binti Ali</td>
-                    <td>Kerusi</td>
+                    <td>Jentera</td>
                     <td>03/08/2024</td>
                     <td>06/08/2024</td>
                     <td>RM 150.00</td>
