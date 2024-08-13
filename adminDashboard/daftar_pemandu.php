@@ -13,13 +13,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-	<style>
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         .custom-container {
             position: relative;
@@ -37,7 +37,7 @@
             margin-left: 24px;
         }
 
-		/* ================== Table details ============== */
+        /* ================== Table details ============== */
         .recentOrders {
             position: relative;
             display: grid;
@@ -56,9 +56,9 @@
 
 <body>
     <div class="custom-container">
-    <?php 
+        <?php
         include 'partials/navigation.php';
-    ?>
+        ?>
 
         <div class="main">
             <div class="topbar">
@@ -80,57 +80,79 @@
                     <li class="breadcrumb-item active" aria-current="page">Daftar Pemandu</li>
                 </ol>
             </nav>
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Daftar Pemandu</h2>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Daftar Pemandu</h2>
+                </div>
+
+                <form class="registerDriver" novalidate>
+                    <div class="mb-3">
+                        <label for="namaPemandu" class="form-label">Nama Pemandu</label>
+                        <input type="text" class="form-control" id="namaPemandu" name="namaPemandu" placeholder="Masukkan Nama Pemandu" required>
+                        <div class="invalid-feedback">Sila masukkan nama pemandu.</div>
                     </div>
 
-                    <form>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nama Pemandu</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama Pemandu">
+                    <div class="mb-3">
+                        <label for="kadPengenalan" class="form-label">Nombor Kad Pengenalan</label>
+                        <input type="text" class="form-control" id="kadPengenalan" name="kadPengenalan" placeholder="Masukkan Nombor Kad Pengenalan" required>
+                        <div class="invalid-feedback">Sila masukkan nombor kad pengenalan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nomborTelefon" class="form-label">Nombor Telefon</label>
+                        <input type="tel" class="form-control" id="nomborTelefon" name="nomborTelefon" placeholder="Masukkan Nombor Telefon" required>
+                        <div class="invalid-feedback">Sila masukkan nombor telefon.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kategoriLesen" class="form-label">Kategori Lesen</label>
+                        <select id="kategoriLesen" class="form-control" name="kategoriLesen" required>
+                            <option disabled selected value="">Pilih Kategori Lesen</option>
+                            <option value="B2">B2</option>
+                            <option value="D">D</option>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih kategori lesen.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tarikhTamatLesen" class="form-label">Tarikh Tamat Lesen</label>
+                        <input type="date" class="form-control" id="tarikhTamatLesen" name="tarikhTamatLesen" placeholder="Pilih Tarikh Tamat Lesen" required>
+                        <div class="invalid-feedback">Sila pilih tarikh tamat lesen.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="statusPemandu" class="form-label">Status</label>
+                        <select id="statusPemandu" class="form-control" name="statusPemandu" required>
+                            <option selected disabled value="">--Pilih Status--</option>
+                            <option value="aktif">Aktif</option>
+                            <option value="tidak aktif">Tidak Aktif</option>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih status.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kataLaluan" class="form-label">Kata Laluan</label>
+                        <input type="password" class="form-control" id="kataLaluan" name="kataLaluan" placeholder="Masukkan Kata Laluan" required>
+                        <div class="invalid-feedback">Sila masukkan kata laluan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sahkanKataLaluan" class="form-label">Sahkan Kata Laluan</label>
+                        <input type="password" class="form-control" id="sahkanKataLaluan" name="sahkanKataLaluan" placeholder="Sahkan Kata Laluan" required>
+                        <div class="invalid-feedback">Sila sahkan kata laluan.</div>
+                    </div>
+
+                    <div class="modal-footer" style="display:flex; justify-content: space-between;">
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="showPassword">
+                            <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Kad Pengenalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
-                            <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Telefon">
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kategori Lesen</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>Pilih Kategori Lesen</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Tarikh Tamat Lesen</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Tarikh Tamat Lesen">
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Status</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Status--</option>
-                                <option value="aktif">Aktif</option>
-                                <option value="tidak aktif">Tidak Aktif</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Kata Laluan</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Kata Laluan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Sahkan Kata Laluan</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Sahkan Kata Laluan">
-                        </div>
-                        <div class="modal-footer">
+                        <div>
                             <button type="submit" class="btn btn-primary">Daftar Pemandu</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -138,6 +160,76 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.registerDriver')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.getElementById('kataLaluan');
+            const confirmPasswordInput = document.getElementById('sahkanKataLaluan');
+
+            showPasswordCheckbox.addEventListener('change', () => {
+                const type = showPasswordCheckbox.checked ? 'text' : 'password';
+                passwordInput.type = type;
+                confirmPasswordInput.type = type;
+            });
+
+
+        })()
+
+
+        $(document).ready(function() {
+            $('.registerDriver').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/signup_pemandu.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Pendaftaran Berjaya',
+                            }).then(() => {
+                                window.location.href = 'pemandu.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

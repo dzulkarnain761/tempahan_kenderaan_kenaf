@@ -1,11 +1,16 @@
 <?php
 
+include 'controller/connection.php';
+
 session_start();
 
-if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
-    header("Location: ../login.php");
-    exit();
-}
+// if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
+//     header("Location: ../login.php");
+//     exit();
+// }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -27,13 +32,13 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
         :root {
             --skyblue: #d0e5f5;
         }
-		
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         /* ================== Table details ============== */
         .recentOrders {
@@ -139,9 +144,9 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
 <body>
     <!-- =============== Navigation ================ -->
     <div class="container">
-        <?php 
-			include 'partials/navigation.php';
-		?>
+        <?php
+        include 'partials/navigation.php';
+        ?>
 
         <!-- ========================= Main ==================== -->
         <div class="main">
@@ -171,9 +176,15 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
                     </div>
                 </div>
 
+                <?php
+                $sqlTotalUser = "SELECT COUNT(*) AS total_users FROM pengguna WHERE kumpulan NOT IN ('X', 'Z')";
+                $resultTotalUser = mysqli_query($conn, $sqlTotalUser);
+                $rowTotalUser = mysqli_fetch_assoc($resultTotalUser);
+                ?>
+
                 <div class="card">
                     <div>
-                        <div class="numbers">10</div>
+                        <div class="numbers"><?php echo $rowTotalUser['total_users']; ?></div>
                         <div class="cardName">Staf</div>
                     </div>
 
@@ -181,6 +192,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
                         <ion-icon name="people-outline"></ion-icon>
                     </div>
                 </div>
+
 
                 <div class="card">
                     <div>
@@ -218,7 +230,7 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
                             <td>Nama Penyewa</td>
                             <td>Tarikh Tempah</td>
                             <td>Tarikh Kerja</td>
-							<td>Maklumat</td>
+                            <td>Maklumat</td>
                             <td>Status</td>
                         </tr>
                     </thead>
@@ -273,51 +285,51 @@ if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <<<<<<< HEAD <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    </script>
 
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const logoutButton = document.getElementById('logoutButton');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutButton = document.getElementById('logoutButton');
 
-                // Add a click event listener to the logout button
-                logoutButton.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent the default anchor behavior
+            // Add a click event listener to the logout button
+            logoutButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default anchor behavior
 
-                    // Show the confirmation dialog
-                    Swal.fire({
-                        title: "Log Keluar",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        cancelButtonText: "Batal",
-                        confirmButtonText: "Log Keluar"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Handle the logout logic here (e.g., redirecting to a logout route)
-                            // Example: window.location.href = '/logout';
+                // Show the confirmation dialog
+                Swal.fire({
+                    title: "Log Keluar",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    cancelButtonText: "Batal",
+                    confirmButtonText: "Log Keluar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Handle the logout logic here (e.g., redirecting to a logout route)
+                        // Example: window.location.href = '/logout';
 
-                            // Show the success dialog
-                            Swal.fire({
-                                title: "Logged out!",
-                                text: "You have been successfully logged out.",
-                                icon: "success"
-                            }).then(() => {
-                                // Optionally, redirect the user after the success dialog
-                                window.location.href = '../controller/logout.php'; // Update with your actual logout URL
-                            });
-                        }
-                    });
+                        // Show the success dialog
+                        Swal.fire({
+                            title: "Logged out!",
+                            text: "You have been successfully logged out.",
+                            icon: "success"
+                        }).then(() => {
+                            // Optionally, redirect the user after the success dialog
+                            window.location.href = '../controller/logout.php'; // Update with your actual logout URL
+                        });
+                    }
                 });
             });
-        </script>
+        });
+    </script>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 </body>
 

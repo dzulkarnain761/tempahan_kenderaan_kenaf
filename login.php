@@ -147,14 +147,6 @@ if (isset($_SESSION["kumpulan"])) {
                 confirmPasswordInput.type = type;
             });
 
-            // function restrictToNumbers(inputId) {
-            //     document.getElementById(inputId).addEventListener('input', function(e) {
-            //         this.value = this.value.replace(/\D/g, '');
-            //     });
-            // }
-
-            // restrictToNumbers('nokp');
-
         })()
 
 

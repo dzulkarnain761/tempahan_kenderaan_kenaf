@@ -8,7 +8,7 @@ if(isset($_POST['id_negeri']) && !empty($_POST['id_negeri'])) {
     $resultkawasan = mysqli_query($conn, $sqlkawasan);
     
     if(mysqli_num_rows($resultkawasan) > 0) {
-        echo '<option value="" disabled selected>--Pilih Kawasan--</option>';
+        echo '<option disabled selected>--Pilih Kawasan--</option>';
         while($row = mysqli_fetch_assoc($resultkawasan)) {
             echo '<option value="' . $row['id_kaw'] . '">' . $row['nama_kaw'] . '</option>';
         }

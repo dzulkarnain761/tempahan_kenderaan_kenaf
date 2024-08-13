@@ -12,14 +12,6 @@ if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
 }
 
-$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
-FROM `kumpulan` 
-WHERE `kump_kod` != 'X' AND `kump_kod` != 'Y' AND `kump_kod` != 'Z'";
-
-$sqlStaff = "SELECT * FROM `pengguna` WHERE `kumpulan` != 'X' AND `kumpulan` != 'Y' AND `kumpulan` != 'Z'";
-
-$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
-$resultStaff = mysqli_query($conn, $sqlStaff);
 ?>
 
 
@@ -377,23 +369,41 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button onclick="window.location.href = 'kemaskini_staff.php'" class="btn btn-outline-edit">
-                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
-                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                </button>
+                        <?php
+                        // SQL query to select all staff excluding specific groups
+                        $sqlStaff = "SELECT p.*, k.kump_desc 
+                                    FROM `pengguna` p
+                                    INNER JOIN `kumpulan` k ON p.kumpulan = k.kump_kod
+                                    WHERE p.kumpulan NOT IN ('X', 'Y', 'Z')";
 
-                            </td>
-                        </tr>
+                        $resultStaff = mysqli_query($conn, $sqlStaff);
+                        $count = 1;
+
+                        // Loop through the result set
+                        while ($row = mysqli_fetch_assoc($resultStaff)) {
+                        ?>
+                            <tr data-id="<?php echo $row['id']; ?>">
+                                <td><?php echo $count; ?></td>
+                                <td><?php echo $row['kump_desc']; ?></td>
+                                <td><?php echo $row['nama']; ?></td>
+                                <td><?php echo $row['no_kp']; ?></td>
+                                <td><?php echo $row['contact_no']; ?></td>
+                                <td>
+                                    <button onclick="window.location.href = 'kemaskini_staff.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
+                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        <?php
+                            $count++;
+                        }
+                        ?>
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -404,22 +414,10 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
-        function openModal() {
-            document.getElementById('registerModal').style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('registerModal').style.display = "none";
-            document.getElementById('editModal').style.display = "none";
-        }
-
-
         function deleteItem(button) {
-            var row = button.parentNode.parentNode;
-            var staffId = row.getAttribute('data-id');
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var staffId = row.getAttribute('data-id'); // Get the data-id from <tr>
 
-
-            console.log(staffId);
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -431,7 +429,7 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '../controller/delete_staff.php',
+                        url: 'controller/delete_staff.php',
                         type: 'POST',
                         data: {
                             id: staffId
@@ -455,82 +453,6 @@ $resultStaff = mysqli_query($conn, $sqlStaff);
                     });
                 }
             });
-        }
-
-        $('#registerForm').on('submit', function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: '../controller/signup_staff.php',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Pendaftaran Berjaya',
-                        }).then(() => {
-                            window.location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: res.message,
-                        });
-                    }
-                }
-            });
-        });
-
-
-
-        $('#editForm').on('submit', function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: '../controller/edit_staff.php',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Kemaskini Berjaya',
-                        }).then(() => {
-                            window.location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: res.message,
-                        });
-                    }
-                }
-            });
-        });
-
-        function editItem(button) {
-            document.getElementById('editModal').style.display = "block";
-            var row = button.parentNode.parentNode;
-            var staffId = row.getAttribute('data-id');
-            var namaStaf = row.cells[2].innerText;
-            var noKp = row.cells[3].innerText;
-            var noTel = row.cells[4].innerText;
-
-            document.getElementById('staffIdEdit').value = staffId;
-            document.getElementById('fullnameEdit').value = namaStaf;
-            document.getElementById('nokpEdit').value = noKp;
-            document.getElementById('contactnoEdit').value = noTel;
-
-            function saveChanges() {
-                closeModal();
-            }
         }
     </script>
 </body>

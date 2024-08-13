@@ -1,3 +1,21 @@
+<?php
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -414,14 +432,7 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
-        function openModal() {
-            document.getElementById('registerModal').style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('registerModal').style.display = "none";
-            document.getElementById('editModal').style.display = "none";
-        }
+        
 
         function editItem(button) {
             var row = button.parentNode.parentNode;

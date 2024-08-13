@@ -1,3 +1,28 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
+FROM `kumpulan` 
+WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
+
+$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,13 +41,13 @@
 
 
     <style>
-	
-	* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         .custom-container {
             position: relative;
             width: 100%;
@@ -38,15 +63,15 @@
         nav .breadcrumb {
             margin-left: 24px;
         }
-		
-		 .cardHeader h3 {
+
+        .cardHeader h3 {
             font-weight: 600;
             color: var(--blue);
             text-transform: uppercase;
-			margin-bottom: 25px;
+            margin-bottom: 25px;
         }
-		
-		/* ================== Table details ============== */
+
+        /* ================== Table details ============== */
         .recentOrders {
             position: relative;
             display: grid;
@@ -90,53 +115,151 @@
                 </ol>
             </nav>
 
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h3>Kemaskini Staf</h3>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h3>Kemaskini Staf</h3>
+                </div>
+                <?php
+                $id = $_GET['id'];
+
+                // Ensure you escape the ID to prevent SQL injection
+                $id = mysqli_real_escape_string($conn, $id);
+
+                $sqlStaff = "SELECT * FROM `pengguna` WHERE id = $id";
+                $resultEditStaff = mysqli_query($conn, $sqlStaff);
+
+                // Fetch the staff member's data
+                if ($resultEditStaff && mysqli_num_rows($resultEditStaff) > 0) {
+                    $staff = mysqli_fetch_assoc($resultEditStaff);
+                } else {
+                    // Handle the case where no staff member is found
+                    echo "No staff member found.";
+                    exit;
+                }
+
+                ?>
+
+                <form class="updateStaff" method="POST" novalidate>
+
+                    <div class="mb-3">
+                        <label for="kumpulan" class="form-label">Kumpulan</label>
+                        <select id="kumpulan" class="form-control" name="kumpulan" required>
+                            <?php
+                            // Fetch the current `kump_kod` value from the database
+                            $currentKumpKod = $staff['kumpulan']; // Assuming you already have this value from a previous query
+
+                            while ($row = mysqli_fetch_assoc($resultKumpulan)) {
+                                // Check if the current `kump_kod` matches the one in the loop
+                                $selected = ($row['kump_kod'] == $currentKumpKod) ? 'selected' : '';
+                                echo '<option value="' . $row['kump_kod'] . '" ' . $selected . '>' . $row['kump_kod'] . ' - ' . $row['kump_desc'] . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
 
-                    <form>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kumpulan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Kumpulan--</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nama Staf:</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama Staf">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Kad Pengenalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
-                            <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Telefon">
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Kata Laluan</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Kata Laluan">
+                    <div class="mb-3">
+                        <label for="nama_staf" class="form-label">Nama Staf:</label>
+                        <input type="text" class="form-control" id="nama_staf" name="nama_staf" placeholder="Masukkan Nama Staf" value="<?php echo htmlspecialchars($staff['nama']); ?>" minlength="15" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nama staf yang sah.
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Sahkan Kata Laluan</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Sahkan Kata Laluan">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="no_kp" class="form-label">Nombor Kad Pengenalan</label>
+                        <input type="text" class="form-control" id="no_kp" name="no_kp" placeholder="Masukkan Nombor Kad Pengenalan" value="<?php echo htmlspecialchars($staff['no_kp']); ?>" minlength="12" maxlength="12" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nombor kad pengenalan yang sah.
                         </div>
-                        <div class="modal-footer">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="no_telefon" class="form-label">Nombor Telefon</label>
+                        <input type="tel" class="form-control" id="no_telefon" name="no_telefon" placeholder="Masukkan Nombor Telefon" value="<?php echo htmlspecialchars($staff['contact_no']); ?>" minlength="10" maxlength="11" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nombor telefon yang sah.
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($staff['id']); ?>">
+
+                    <div class="modal-footer">
+
+                        <div>
                             <button type="submit" class="btn btn-primary">Kemaskini Staf</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.updateStaff')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+        })()
+
+
+        $(document).ready(function() {
+            $('.updateStaff').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/edit_staff.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Kemaskini Berjaya',
+                            }).then(() => {
+                                window.location.href = 'staff.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

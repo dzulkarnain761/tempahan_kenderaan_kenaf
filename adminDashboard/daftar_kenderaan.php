@@ -1,3 +1,21 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,17 +27,18 @@
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         .custom-container {
             position: relative;
             width: 100%;
@@ -36,19 +55,19 @@
             margin-left: 24px;
         }
 
-		/* ================== Table details ============== */
-		.recentOrders {
-		  position: relative;
-		  display: grid;
-		  min-height: 500px;
-		  background: var(--white);
-		  padding: 20px;
-		  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-		  border-radius: 20px;
-		  margin-top: 20px;
-		  margin-left: 20px;
-		  margin-right: 20px;
-		}
+        /* ================== Table details ============== */
+        .recentOrders {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
     </style>
 
 </head>
@@ -79,75 +98,185 @@
                     <li class="breadcrumb-item active" aria-current="page">Daftar Kenderaan</li>
                 </ol>
             </nav>
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Daftar Kenderaan</h2>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Daftar Kenderaan</h2>
+                </div>
+
+                <form class="registerKenderaan" novalidate>
+                    <div class="mb-3">
+                        <label for="kategoriKenderaan" class="form-label">Kategori Kenderaan</label>
+                        <select id="kategoriKenderaan" class="form-control" name="kategoriKenderaan" required>
+                            <option disabled selected value="">--Pilih Kategori Kenderaan--</option>
+                            <option value="Jentera">Jentera</option>
+                            <option value="Jengkaut">Jengkaut</option>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih kategori kenderaan.</div>
                     </div>
 
-                    <form>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kategori Kenderaan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Kategori Kenderaan--</option>
-                                <option value="Jentera">Jentera</option>
-                                <option value="Jengkaut">Jengkaut</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Pendaftaran Kenderaan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Pendaftaran Kenderaan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Tahun Daftar</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Tahun Daftar">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Mula Cukai Jalan</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Mula Cukai Jalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Tamat Cukai Jalan</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Tamat Cukai Jalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Negeri Penempatan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Negeri--</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kawasan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Kawasan--</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label for="noPendaftaranKenderaan" class="form-label">Nombor Pendaftaran Kenderaan</label>
+                        <input type="text" class="form-control" id="noPendaftaranKenderaan" name="noPendaftaranKenderaan" placeholder="Masukkan Nombor Pendaftaran Kenderaan" required>
+                        <div class="invalid-feedback">Sila masukkan nombor pendaftaran kenderaan.</div>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Status</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Status Kenderaan--</option>
-                                <option value="...">Aktif</option>
-                                <option value="...">Tidak Aktif</option>
-                            </select>
-                        </div>
-                        
+                    <div class="mb-3">
+                        <label for="tahunDaftar" class="form-label">Tahun Daftar</label>
+                        <input type="text" class="form-control" id="tahunDaftar" name="tahunDaftar" placeholder="Masukkan Tahun Daftar" required>
+                        <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
+                    </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Daftar Kenderaan</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="mb-3">
+                        <label for="mulaCukaiJalan" class="form-label">Mula Cukai Jalan</label>
+                        <input type="date" class="form-control" id="mulaCukaiJalan" name="mulaCukaiJalan" placeholder="Pilih Mula Cukai Jalan" required>
+                        <div class="invalid-feedback">Sila pilih tarikh mula cukai jalan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tamatCukaiJalan" class="form-label">Tamat Cukai Jalan</label>
+                        <input type="date" class="form-control" id="tamatCukaiJalan" name="tamatCukaiJalan" placeholder="Pilih Tamat Cukai Jalan" required>
+                        <div class="invalid-feedback">Sila pilih tarikh tamat cukai jalan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="negeriPenempatan" class="form-label">Negeri Penempatan</label>
+                        <select id="negeriPenempatan" class="form-control" name="negeriPenempatan" required>
+                            <option disabled selected value="">--Pilih Negeri--</option>
+                            <?php
+                            $sqlNegeri = "SELECT * FROM negeri";
+                            $resultNegeri = mysqli_query($conn, $sqlNegeri);
+
+                            while ($row = mysqli_fetch_assoc($resultNegeri)) {
+                                echo '<option value="' . $row['id_negeri'] . '">' . $row['nama_negeri'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kawasanPenempatan" class="form-label">Kawasan</label>
+                        <select id="kawasanPenempatan" class="form-control" name="kawasanPenempatan" required>
+                            <option disabled selected value="">--Pilih Kawasan--</option>
+                            <!-- Options will be populated by AJAX -->
+                        </select>
+                        <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="statusKenderaan" class="form-label">Status</label>
+                        <select id="statusKenderaan" class="form-control" name="statusKenderaan" required>
+                            <option disabled selected value="">--Pilih Status Kenderaan--</option>
+                            <option value="AKTIF">Aktif</option>
+                            <option value="TIDAK AKTIF">Tidak Aktif</option>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih status kenderaan.</div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Daftar Kenderaan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        (() => {
+            'use strict'
 
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.registerKenderaan')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const passwordInput = document.getElementById('kataLaluan');
+            const confirmPasswordInput = document.getElementById('sahkanKataLaluan');
+
+            showPasswordCheckbox.addEventListener('change', () => {
+                const type = showPasswordCheckbox.checked ? 'text' : 'password';
+                passwordInput.type = type;
+                confirmPasswordInput.type = type;
+            });
+
+
+        })()
+
+
+        $(document).ready(function() {
+
+            $('#negeriPenempatan').change(function() {
+                var id_negeri = $(this).val();
+
+                if (id_negeri) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'controller/get_kawasan.php',
+                        data: {
+                            id_negeri: id_negeri
+                        },
+                        success: function(response) {
+                            $('#kawasanPenempatan').html(response);
+                        }
+                    });
+                } else {
+                    $('#kawasanPenempatan').html('<option disabled selected>--Pilih Kawasan--</option>');
+                }
+            });
+
+            $('.registerKenderaan').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/signup_pemandu.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Pendaftaran Berjaya',
+                            }).then(() => {
+                                window.location.href = 'pemandu.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        
+    </script>
 
 </body>
 

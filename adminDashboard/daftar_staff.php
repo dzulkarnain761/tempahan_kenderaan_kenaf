@@ -1,3 +1,26 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
+FROM `kumpulan` 
+WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
+
+$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,13 +39,13 @@
 
 
     <style>
-	
-	* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         .custom-container {
             position: relative;
             width: 100%;
@@ -38,8 +61,8 @@
         nav .breadcrumb {
             margin-left: 24px;
         }
-		
-		/* ================== Table details ============== */
+
+        /* ================== Table details ============== */
         .recentOrders {
             position: relative;
             display: grid;
@@ -83,53 +106,159 @@
                 </ol>
             </nav>
 
-                <div class="recentOrders" style="padding: 20px 28px;">
-                    <div class="cardHeader">
-                        <h2>Daftar Staf</h2>
+            <div class="recentOrders" style="padding: 20px 28px;">
+                <div class="cardHeader">
+                    <h2>Daftar Staf</h2>
+                </div>
+
+                <form class="registerStaff" novalidate>
+                    <div class="mb-3">
+                        <label for="kumpulan" class="form-label">Kumpulan</label>
+                        <select id="kumpulan" class="form-control" name="kumpulan" required>
+                            <option selected disabled value="">--Pilih Kumpulan--</option>
+                            <?php
+                            while ($row = mysqli_fetch_assoc($resultKumpulan)) {
+                                echo '<option value="' . $row['kump_kod'] . '">' . $row['kump_kod'] . ' - ' . $row['kump_desc'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">
+                            Sila pilih kumpulan yang sah.
+                        </div>
                     </div>
 
-                    <form>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kumpulan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Kumpulan--</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
+                    <div class="mb-3">
+                        <label for="nama_staf" class="form-label">Nama Staf:</label>
+                        <input type="text" class="form-control" id="nama_staf" name="nama_staf" placeholder="Masukkan Nama Staf" minlength="15" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nama staf yang sah.
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nama Staf:</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nama Staf">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Kad Pengenalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
-                            <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Telefon">
-                        </div>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Kata Laluan</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Kata Laluan">
+                    <div class="mb-3">
+                        <label for="no_kp" class="form-label">Nombor Kad Pengenalan</label>
+                        <input type="text" class="form-control" id="no_kp" name="no_kp" placeholder="Masukkan Nombor Kad Pengenalan" minlength="12" maxlength="12" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nombor kad pengenalan yang sah.
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Sahkan Kata Laluan</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Sahkan Kata Laluan">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="no_telefon" class="form-label">Nombor Telefon</label>
+                        <input type="tel" class="form-control" id="no_telefon" name="no_telefon" placeholder="Masukkan Nombor Telefon" minlength="10" maxlength="11" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan nombor telefon yang sah.
                         </div>
-                        <div class="modal-footer">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kata_laluan" class="form-label">Kata Laluan</label>
+                        <input type="password" class="form-control" id="kata_laluan" name="kata_laluan" placeholder="Masukkan Kata Laluan" minlength="5" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan kata laluan yang sah.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sahkan_kata_laluan" class="form-label">Sahkan Kata Laluan</label>
+                        <input type="password" class="form-control" id="sahkan_kata_laluan" name="sahkan_kata_laluan" placeholder="Sahkan Kata Laluan" minlength="5" required>
+                        <div class="invalid-feedback">
+                            Sila sahkan kata laluan yang sah.
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style="display:flex; justify-content: space-between;">
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="show_password" name="show_password">
+                            <label class="form-check-label" for="show_password">Lihat Kata Laluan</label>
+                        </div>
+                        <div>
                             <button type="submit" class="btn btn-primary">Daftar Staf</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
-
+    
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.registerStaff')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+            const showPasswordCheckbox = document.getElementById('show_password');
+            const passwordInput = document.getElementById('kata_laluan');
+            const confirmPasswordInput = document.getElementById('sahkan_kata_laluan');
+
+            showPasswordCheckbox.addEventListener('change', () => {
+                const type = showPasswordCheckbox.checked ? 'text' : 'password';
+                passwordInput.type = type;
+                confirmPasswordInput.type = type;
+            });
+
+
+        })()
+
+
+        $(document).ready(function() {
+            $('.registerStaff').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/signup_staff.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Pendaftaran Berjaya',
+                            }).then(() => {
+                                window.location.href = 'staff.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
