@@ -127,7 +127,7 @@ if (!$conn) {
 
                     <div class="mb-3">
                         <label for="tahun_daftar" class="form-label">Tahun Daftar</label>
-                        <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" placeholder="Masukkan Tahun Daftar" required>
+                        <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" placeholder="Masukkan Tahun Daftar" minlength="4" maxlength="4" required>
                         <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
                     </div>
 
@@ -185,11 +185,12 @@ if (!$conn) {
             </div>
         </div>
     </div>
-
+    
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
         (() => {
             'use strict'

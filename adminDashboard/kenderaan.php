@@ -398,8 +398,8 @@ if (!$conn) {
                     </thead>
                     <tbody>
 
-                    <?php
-                        
+                        <?php
+
                         $sqlKenderaan = "SELECT * FROM `kenderaan`";
 
                         $resultKenderaan = mysqli_query($conn, $sqlKenderaan);
@@ -427,15 +427,16 @@ if (!$conn) {
                             $count++;
                         }
                         ?>
-                        
+
 
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -447,25 +448,25 @@ if (!$conn) {
             var kenderaanId = row.getAttribute('data-id'); // Get the data-id from <tr>
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Ya, padamkannya!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
                         url: 'controller/delete_kenderaan.php',
                         type: 'POST',
                         data: {
-                            id: kenderaanId
+                            id: pemanduId
                         },
                         success: function(response) {
                             Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
+                                title: "Berjaya dipadam!",
+                                text: "Kenderaan telah dipadam.",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -473,14 +474,15 @@ if (!$conn) {
                         },
                         error: function(xhr, status, error) {
                             Swal.fire({
-                                title: "Error!",
-                                text: "An error occurred while deleting the Vehicle.",
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa memadam kenderaan.",
                                 icon: "error"
                             });
                         }
                     });
                 }
             });
+
         }
     </script>
 </body>

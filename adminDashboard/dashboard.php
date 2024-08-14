@@ -281,11 +281,15 @@ session_start();
 
     <!-- =========== Scripts =========  -->
     <script src="assets/js/main.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
     </script>
 
 
@@ -326,10 +330,8 @@ session_start();
         });
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    
+    
 
 </body>
 

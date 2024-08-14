@@ -47,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the user into the database using prepared statement
-    $sql = $conn->prepare("INSERT INTO pengguna (nama, no_kp, contact_no, email, kumpulan, password) VALUES (?, ?, ?, ?, ?)");
+    $sql = $conn->prepare("INSERT INTO pengguna (nama, no_kp, contact_no, email, kumpulan, password) VALUES (?, ?, ?, ?, ?, ?)");
 
-    $sql->bind_param("sssss", $fullname, $nokp, $contact,$email, $kumpulan, $hashed_password);
+    $sql->bind_param("ssssss", $fullname, $nokp, $contact, $email, $kumpulan, $hashed_password);
 
     if ($sql->execute() === TRUE) {
         echo json_encode(["success" => true]);
