@@ -399,67 +399,94 @@ if (!$conn) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button onclick="window.location.href = 'kemaskini_pemandu.php'" class="btn btn-outline-edit">
-                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
-                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                </button>
-                            </td>
-                        </tr>
+
+
+                        <?php
+                        // SQL query to select all staff excluding specific groups
+                        $sqlPemandu = "SELECT * FROM `pemandu`";
+
+                        $resultPemandu = mysqli_query($conn, $sqlPemandu);
+                        $count = 1;
+
+                        // Loop through the result set
+                        while ($row = mysqli_fetch_assoc($resultPemandu)) {
+                        ?>
+                            <tr data-id="<?php echo $row['id_pemandu']; ?>">
+                                <td><?php echo $count; ?></td>
+                                <td><?php echo $row['nama']; ?></td>
+                                <td><?php echo $row['no_kp']; ?></td>
+                                <td><?php echo $row['kategori_lesen']; ?></td>
+                                <td><?php echo $row['tarikh_tamat_lesen']; ?></td>
+                                <td><?php echo $row['status']; ?></td>
+                                <td>
+                                    <button onclick="window.location.href = 'kemaskini_pemandu.php?id=<?php echo $row['id_pemandu']; ?>'" class="btn btn-outline-edit">
+                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
+                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        <?php
+                            $count++;
+                        }
+                        ?>
+
 
                     </tbody>
                 </table>
             </div>
         </div>
 
-
-
-
-
     </div>
 
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
-        
-
-        function editItem(button) {
-            var row = button.parentNode.parentNode;
-            var namaPemandu = row.cells[0].innerText;
-            var noKp = row.cells[1].innerText;
-            var noTel = row.cells[2].innerText;
-            var kategoriLesen = row.cells[3].innerText;
-            var tarikhTamatLesen = row.cells[4].innerText;
-            var status = row.cells[5].innerText;
-
-            document.getElementById('namaPemanduEdit').value = namaPemandu;
-            document.getElementById('noKpEdit').value = noKp;
-            document.getElementById('noTelEdit').value = noTel;
-            document.getElementById('kategoriLesenEdit').value = kategoriLesen;
-            document.getElementById('tarikhTamatLesenEdit').value = tarikhTamatLesen;
-            document.getElementById('statusEdit').value = status;
-
-            document.getElementById('editModal').style.display = "block";
-        }
-
         function deleteItem(button) {
-            var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var pemanduId = row.getAttribute('data-id'); // Get the data-id from <tr>
 
-        function saveChanges() {
-            closeModal();
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/delete_pemandu.php',
+                        type: 'POST',
+                        data: {
+                            id: pemanduId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "An error occurred while deleting the staff member.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
         }
     </script>
 </body>

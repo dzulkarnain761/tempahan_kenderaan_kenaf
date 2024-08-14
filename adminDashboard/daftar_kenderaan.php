@@ -12,8 +12,6 @@ if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -105,42 +103,49 @@ if (!$conn) {
 
                 <form class="registerKenderaan" novalidate>
                     <div class="mb-3">
-                        <label for="kategoriKenderaan" class="form-label">Kategori Kenderaan</label>
-                        <select id="kategoriKenderaan" class="form-control" name="kategoriKenderaan" required>
+                        <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
+                        <select id="kategori_kenderaan" class="form-control" name="kategori_kenderaan" required>
                             <option disabled selected value="">--Pilih Kategori Kenderaan--</option>
-                            <option value="Jentera">Jentera</option>
-                            <option value="Jengkaut">Jengkaut</option>
+                            <?php
+                            $sqlKategoriKenderaan = "SELECT * FROM kategori_kenderaan";
+                            $resultKategoriKenderaan= mysqli_query($conn, $sqlKategoriKenderaan);
+
+                            while ($row = mysqli_fetch_assoc($resultKategoriKenderaan)) {
+                                echo '<option value="' . $row['kategori'] . '">' . $row['kategori'] . '</option>';
+                            }
+                            
+                            ?>
                         </select>
                         <div class="invalid-feedback">Sila pilih kategori kenderaan.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="noPendaftaranKenderaan" class="form-label">Nombor Pendaftaran Kenderaan</label>
-                        <input type="text" class="form-control" id="noPendaftaranKenderaan" name="noPendaftaranKenderaan" placeholder="Masukkan Nombor Pendaftaran Kenderaan" required>
+                        <label for="no_pendaftaran_kenderaan" class="form-label">Nombor Pendaftaran Kenderaan</label>
+                        <input type="text" class="form-control" id="no_pendaftaran_kenderaan" name="no_pendaftaran_kenderaan" placeholder="Masukkan Nombor Pendaftaran Kenderaan" required>
                         <div class="invalid-feedback">Sila masukkan nombor pendaftaran kenderaan.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="tahunDaftar" class="form-label">Tahun Daftar</label>
-                        <input type="text" class="form-control" id="tahunDaftar" name="tahunDaftar" placeholder="Masukkan Tahun Daftar" required>
+                        <label for="tahun_daftar" class="form-label">Tahun Daftar</label>
+                        <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" placeholder="Masukkan Tahun Daftar" required>
                         <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="mulaCukaiJalan" class="form-label">Mula Cukai Jalan</label>
-                        <input type="date" class="form-control" id="mulaCukaiJalan" name="mulaCukaiJalan" placeholder="Pilih Mula Cukai Jalan" required>
+                        <label for="mula_cukai_jalan" class="form-label">Mula Cukai Jalan</label>
+                        <input type="date" class="form-control" id="mula_cukai_jalan" name="mula_cukai_jalan" placeholder="Pilih Mula Cukai Jalan" required>
                         <div class="invalid-feedback">Sila pilih tarikh mula cukai jalan.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="tamatCukaiJalan" class="form-label">Tamat Cukai Jalan</label>
-                        <input type="date" class="form-control" id="tamatCukaiJalan" name="tamatCukaiJalan" placeholder="Pilih Tamat Cukai Jalan" required>
+                        <label for="tamat_cukai_jalan" class="form-label">Tamat Cukai Jalan</label>
+                        <input type="date" class="form-control" id="tamat_cukai_jalan" name="tamat_cukai_jalan" placeholder="Pilih Tamat Cukai Jalan" required>
                         <div class="invalid-feedback">Sila pilih tarikh tamat cukai jalan.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="negeriPenempatan" class="form-label">Negeri Penempatan</label>
-                        <select id="negeriPenempatan" class="form-control" name="negeriPenempatan" required>
+                        <label for="negeri_penempatan" class="form-label">Negeri Penempatan</label>
+                        <select id="negeri_penempatan" class="form-control" name="negeri_penempatan" required>
                             <option disabled selected value="">--Pilih Negeri--</option>
                             <?php
                             $sqlNegeri = "SELECT * FROM negeri";
@@ -155,8 +160,8 @@ if (!$conn) {
                     </div>
 
                     <div class="mb-3">
-                        <label for="kawasanPenempatan" class="form-label">Kawasan</label>
-                        <select id="kawasanPenempatan" class="form-control" name="kawasanPenempatan" required>
+                        <label for="kawasan_penempatan" class="form-label">Kawasan</label>
+                        <select id="kawasan_penempatan" class="form-control" name="kawasan_penempatan" required>
                             <option disabled selected value="">--Pilih Kawasan--</option>
                             <!-- Options will be populated by AJAX -->
                         </select>
@@ -164,11 +169,11 @@ if (!$conn) {
                     </div>
 
                     <div class="mb-3">
-                        <label for="statusKenderaan" class="form-label">Status</label>
-                        <select id="statusKenderaan" class="form-control" name="statusKenderaan" required>
+                        <label for="status_kenderaan" class="form-label">Status</label>
+                        <select id="status_kenderaan" class="form-control" name="status_kenderaan" required>
                             <option disabled selected value="">--Pilih Status Kenderaan--</option>
-                            <option value="AKTIF">Aktif</option>
-                            <option value="TIDAK AKTIF">Tidak Aktif</option>
+                            <option value="Aktif">Aktif</option>
+                            <option value="Tidak Aktif">Tidak Aktif</option>
                         </select>
                         <div class="invalid-feedback">Sila pilih status kenderaan.</div>
                     </div>
@@ -204,23 +209,13 @@ if (!$conn) {
                 }, false)
             })
 
-            const showPasswordCheckbox = document.getElementById('showPassword');
-            const passwordInput = document.getElementById('kataLaluan');
-            const confirmPasswordInput = document.getElementById('sahkanKataLaluan');
-
-            showPasswordCheckbox.addEventListener('change', () => {
-                const type = showPasswordCheckbox.checked ? 'text' : 'password';
-                passwordInput.type = type;
-                confirmPasswordInput.type = type;
-            });
-
 
         })()
 
 
         $(document).ready(function() {
 
-            $('#negeriPenempatan').change(function() {
+            $('#negeri_penempatan').change(function() {
                 var id_negeri = $(this).val();
 
                 if (id_negeri) {
@@ -231,11 +226,11 @@ if (!$conn) {
                             id_negeri: id_negeri
                         },
                         success: function(response) {
-                            $('#kawasanPenempatan').html(response);
+                            $('#kawasan_penempatan').html(response);
                         }
                     });
                 } else {
-                    $('#kawasanPenempatan').html('<option disabled selected>--Pilih Kawasan--</option>');
+                    $('#kawasan_penempatan').html('<option disabled selected>--Pilih Kawasan--</option>');
                 }
             });
 
@@ -250,7 +245,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/signup_pemandu.php',
+                    url: 'controller/signup_kenderaan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -261,7 +256,7 @@ if (!$conn) {
                                 title: 'Success',
                                 text: 'Pendaftaran Berjaya',
                             }).then(() => {
-                                window.location.href = 'pemandu.php';
+                                window.location.href = 'kenderaan.php';
                             });
                         } else {
                             Swal.fire({

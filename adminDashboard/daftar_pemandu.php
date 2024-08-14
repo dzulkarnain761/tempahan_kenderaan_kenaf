@@ -1,3 +1,20 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,58 +104,72 @@
 
                 <form class="registerDriver" novalidate>
                     <div class="mb-3">
-                        <label for="namaPemandu" class="form-label">Nama Pemandu</label>
-                        <input type="text" class="form-control" id="namaPemandu" name="namaPemandu" placeholder="Masukkan Nama Pemandu" required>
+                        <label for="nama_pemandu" class="form-label">Nama Pemandu</label>
+                        <input type="text" class="form-control" id="nama_pemandu" name="nama_pemandu" placeholder="Masukkan Nama Pemandu" minlength="10" required>
                         <div class="invalid-feedback">Sila masukkan nama pemandu.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="kadPengenalan" class="form-label">Nombor Kad Pengenalan</label>
-                        <input type="text" class="form-control" id="kadPengenalan" name="kadPengenalan" placeholder="Masukkan Nombor Kad Pengenalan" required>
+                        <label for="no_kp" class="form-label">Nombor Kad Pengenalan</label>
+                        <input type="text" class="form-control" id="no_kp" name="no_kp" minlength="12" maxlength="12" placeholder="Masukkan Nombor Kad Pengenalan" required>
                         <div class="invalid-feedback">Sila masukkan nombor kad pengenalan.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="nomborTelefon" class="form-label">Nombor Telefon</label>
-                        <input type="tel" class="form-control" id="nomborTelefon" name="nomborTelefon" placeholder="Masukkan Nombor Telefon" required>
+                        <label for="no_tel" class="form-label">Nombor Telefon</label>
+                        <input type="tel" class="form-control" id="no_tel" name="no_tel" placeholder="Masukkan Nombor Telefon" minlength="10" maxlength="11" required>
                         <div class="invalid-feedback">Sila masukkan nombor telefon.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="kategoriLesen" class="form-label">Kategori Lesen</label>
-                        <select id="kategoriLesen" class="form-control" name="kategoriLesen" required>
+                        <label for="email_pemandu" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email_pemandu" name="email_pemandu" placeholder="Masukkan Email">
+                        <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kategori_lesen" class="form-label">Kategori Lesen</label>
+                        <select id="kategori_lesen" class="form-control" name="kategori_lesen" required>
                             <option disabled selected value="">Pilih Kategori Lesen</option>
-                            <option value="B2">B2</option>
-                            <option value="D">D</option>
+                            <?php
+
+                            $sqlKategori = "SELECT * FROM `kategori_lesen`";
+
+                            $resultKategori = mysqli_query($conn, $sqlKategori);
+
+                            while ($row = mysqli_fetch_assoc($resultKategori)) {
+                                echo '<option value="' . $row['kategori'] . '">' . $row['kategori'] . ' - ' . $row['description'] . '</option>';
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback">Sila pilih kategori lesen.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="tarikhTamatLesen" class="form-label">Tarikh Tamat Lesen</label>
-                        <input type="date" class="form-control" id="tarikhTamatLesen" name="tarikhTamatLesen" placeholder="Pilih Tarikh Tamat Lesen" required>
+                        <label for="tarikh_tamat_lesen" class="form-label">Tarikh Tamat Lesen</label>
+                        <input type="date" class="form-control" id="tarikh_tamat_lesen" name="tarikh_tamat_lesen" placeholder="Pilih Tarikh Tamat Lesen" required>
                         <div class="invalid-feedback">Sila pilih tarikh tamat lesen.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="statusPemandu" class="form-label">Status</label>
-                        <select id="statusPemandu" class="form-control" name="statusPemandu" required>
+                        <label for="status_pemandu" class="form-label">Status</label>
+                        <select id="status_pemandu" class="form-control" name="status_pemandu" required>
                             <option selected disabled value="">--Pilih Status--</option>
-                            <option value="aktif">Aktif</option>
-                            <option value="tidak aktif">Tidak Aktif</option>
+                            <option value="Aktif">Aktif</option>
+                            <option value="Tidak Aktif">Tidak Aktif</option>
                         </select>
                         <div class="invalid-feedback">Sila pilih status.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="kataLaluan" class="form-label">Kata Laluan</label>
-                        <input type="password" class="form-control" id="kataLaluan" name="kataLaluan" placeholder="Masukkan Kata Laluan" required>
+                        <label for="kata_laluan" class="form-label">Kata Laluan</label>
+                        <input type="password" class="form-control" id="kata_laluan" name="kata_laluan" placeholder="Masukkan Kata Laluan" required>
                         <div class="invalid-feedback">Sila masukkan kata laluan.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="sahkanKataLaluan" class="form-label">Sahkan Kata Laluan</label>
-                        <input type="password" class="form-control" id="sahkanKataLaluan" name="sahkanKataLaluan" placeholder="Sahkan Kata Laluan" required>
+                        <label for="sahkan_kata_laluan" class="form-label">Sahkan Kata Laluan</label>
+                        <input type="password" class="form-control" id="sahkan_kata_laluan" name="sahkan_kata_laluan" placeholder="Sahkan Kata Laluan" required>
                         <div class="invalid-feedback">Sila sahkan kata laluan.</div>
                     </div>
 
@@ -156,6 +187,9 @@
         </div>
     </div>
 
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -180,8 +214,8 @@
             })
 
             const showPasswordCheckbox = document.getElementById('showPassword');
-            const passwordInput = document.getElementById('kataLaluan');
-            const confirmPasswordInput = document.getElementById('sahkanKataLaluan');
+            const passwordInput = document.getElementById('kata_laluan');
+            const confirmPasswordInput = document.getElementById('sahkan_kata_laluan');
 
             showPasswordCheckbox.addEventListener('change', () => {
                 const type = showPasswordCheckbox.checked ? 'text' : 'password';

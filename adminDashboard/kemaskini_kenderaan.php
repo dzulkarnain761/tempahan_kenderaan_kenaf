@@ -1,4 +1,18 @@
+<?php
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,18 +25,19 @@
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
     <style>
-		* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         .custom-container {
             position: relative;
             width: 100%;
@@ -39,18 +54,18 @@
             margin-left: 24px;
         }
 
-		.recentOrders {
-			position: relative;
-			display: grid;
-			min-height: 500px;
-			background: var(--white);
-			padding: 20px;
-			box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-			border-radius: 20px;
-			margin-top: 20px;
-			margin-left: 20px;
-			margin-right: 20px;
-		}	
+        .recentOrders {
+            position: relative;
+            display: grid;
+            min-height: 500px;
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
     </style>
 
 </head>
@@ -81,71 +96,218 @@
                     <li class="breadcrumb-item active" aria-current="page">Kemaskini Kenderaan</li>
                 </ol>
             </nav>
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Kemaskini Kenderaan</h2>
-                    </div>
-                    <form>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kategori Kenderaan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Kategori Kenderaan--</option>
-                                <option value="Jentera">Jentera</option>
-                                <option value="Jengkaut">Jengkaut</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Pendaftaran Kenderaan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Nombor Pendaftaran Kenderaan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Tahun Daftar</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Tahun Daftar">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Mula Cukai Jalan</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Mula Cukai Jalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Tamat Cukai Jalan</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Pilih Tamat Cukai Jalan">
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Negeri Penempatan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Negeri--</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Kawasan</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Kawasan--</option>
-                                <option value="...">...</option>
-                                <option value="...">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="sewa" class="form-label">Status</label>
-                            <select id="sewa" class="form-control" name="sewa">
-                                <option disabled selected>--Pilih Status Kenderaan--</option>
-                                <option value="...">Aktif</option>
-                                <option value="...">Tidak Aktif</option>
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Kemaskini Kenderaan</button>
-                        </div>
-                    </form>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Kemaskini Kenderaan</h2>
                 </div>
+                <?php
+                $id = $_GET['id'];
+
+                // Ensure you escape the ID to prevent SQL injection
+                $id = mysqli_real_escape_string($conn, $id);
+
+                $sqlKenderaan = "SELECT * FROM `kenderaan` WHERE id = $id";
+                $resultEditKenderaan = mysqli_query($conn, $sqlKenderaan);
+
+                // Fetch the Pemandu member's data
+                if ($resultEditKenderaan && mysqli_num_rows($resultEditKenderaan) > 0) {
+                    $kenderaan = mysqli_fetch_assoc($resultEditKenderaan);
+                } else {
+                    // Handle the case where no Pemandu member is found
+                    echo "Tiada Kenderaan Dijumpai";
+                    exit;
+                }
+
+                ?>
+
+                <form class="editKenderaan" novalidate>
+                    <div class="mb-3">
+                        <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
+                        <select id="kategori_kenderaan" class="form-control" name="kategori_kenderaan">
+
+                            <?php
+
+                            $sqlKategori = "SELECT * FROM `kategori_kenderaan`";
+
+                            $resultKategori = mysqli_query($conn, $sqlKategori);
+                            // Fetch the current `kump_kod` value from the database
+                            $currentKategori = $kenderaan['kategori']; // Assuming you already have this value from a previous query
+
+                            while ($row = mysqli_fetch_assoc($resultKategori)) {
+                                // Check if the current `kump_kod` matches the one in the loop
+                                $selected = ($row['kategori'] == $currentKategori) ? 'selected' : '';
+                                echo '<option value="' . $row['kategori'] . '" ' . $selected . '>' . $row['kategori'] .  '</option>';
+                            }
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="no_pendaftaran_kenderaan" class="form-label">Nombor Pendaftaran Kenderaan</label>
+                        <input type="text" class="form-control" id="no_pendaftaran_kenderaan" name="no_pendaftaran_kenderaan" value="<?php echo htmlspecialchars($kenderaan['no_pendaftaran']); ?>" placeholder="Masukkan Nombor Pendaftaran Kenderaan" required>
+                        <div class="invalid-feedback">Sila masukkan nombor pendaftaran kenderaan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tahun_daftar" class="form-label">Tahun Daftar</label>
+                        <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" value="<?php echo htmlspecialchars($kenderaan['tahun_daftar']); ?>" placeholder="Masukkan Tahun Daftar" required>
+                        <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mula_cukai_jalan" class="form-label">Mula Cukai Jalan</label>
+                        <input type="date" class="form-control" id="mula_cukai_jalan" name="mula_cukai_jalan" value="<?php echo htmlspecialchars($kenderaan['mula_cukai_jalan']); ?>" placeholder="Pilih Mula Cukai Jalan" required>
+                        <div class="invalid-feedback">Sila pilih tarikh mula cukai jalan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tamat_cukai_jalan" class="form-label">Tamat Cukai Jalan</label>
+                        <input type="date" class="form-control" id="tamat_cukai_jalan" name="tamat_cukai_jalan" value="<?php echo htmlspecialchars($kenderaan['tamat_cukai_jalan']); ?>" placeholder="Pilih Tamat Cukai Jalan" required>
+                        <div class="invalid-feedback">Sila pilih tarikh tamat cukai jalan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="negeri_penempatan" class="form-label">Negeri Penempatan</label>
+                        <select id="negeri_penempatan" class="form-control" name="negeri_penempatan" required>
+
+                            <?php
+                            $sqlNegeri = "SELECT * FROM negeri";
+                            $resultNegeri = mysqli_query($conn, $sqlNegeri);
+
+                            $currentNegeri = $kenderaan['negeri_penempatan'];
+
+                            while ($row = mysqli_fetch_assoc($resultNegeri)) {
+                                $selected = ($row['nama_negeri'] == $currentNegeri) ? 'selected' : '';
+                                echo '<option value="' . $row['id_negeri'] . '" ' . $selected . '>' . $row['nama_negeri'] .  '</option>';
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kawasan_penempatan" class="form-label">Kawasan</label>
+                        <select id="kawasan_penempatan" class="form-control" name="kawasan_penempatan" required>
+                            <?php
+                            // Populate kawasan_penempatan based on the current negeri_penempatan
+                            $sqlKawasan = "SELECT * FROM kawasan WHERE id_negeri = (SELECT id_negeri FROM negeri WHERE nama_negeri = '$currentNegeri')";
+                            $resultKawasan = mysqli_query($conn, $sqlKawasan);
+
+                            while ($row = mysqli_fetch_assoc($resultKawasan)) {
+                                $selected = ($row['nama_kaw'] == $currentKawasan) ? 'selected' : '';
+                                echo '<option value="' . $row['id_kaw'] . '" ' . $selected . '>' . $row['nama_kaw'] . '</option>';
+                            }
+                            ?>
+                            <!-- Options will be populated by AJAX -->
+                        </select>
+                        <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status_kenderaan" class="form-label">Status</label>
+                        <select id="status_kenderaan" class="form-control" name="status_kenderaan" required>
+                            <option value="Aktif" <?php echo ($kenderaan['status'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                            <option value="Tidak Aktif" <?php echo ($kenderaan['status'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih status kenderaan.</div>
+                    </div>
+
+                    <input type="hidden" name="id" value="<?php echo $id ?>">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Kemaskini Kenderaan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.editKenderaan')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+
+        })()
+
+
+        $(document).ready(function() {
+
+            $('#negeri_penempatan').change(function() {
+                var id_negeri = $(this).val();
+
+                if (id_negeri) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'controller/get_kawasan.php',
+                        data: {
+                            id_negeri: id_negeri
+                        },
+                        success: function(response) {
+                            $('#kawasan_penempatan').html(response);
+                        }
+                    });
+                } else {
+                    $('#kawasan_penempatan').html('<option disabled selected>--Pilih Kawasan--</option>');
+                }
+            });
+
+            $('.editKenderaan').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/edit_kenderaan.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Kemaskini Berjaya',
+                            }).then(() => {
+                                window.location.href = 'kenderaan.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

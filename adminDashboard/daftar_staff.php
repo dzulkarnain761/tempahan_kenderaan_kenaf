@@ -12,11 +12,6 @@ if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
 }
 
-$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
-FROM `kumpulan` 
-WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
-
-$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
 
 ?>
 
@@ -117,6 +112,12 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                         <select id="kumpulan" class="form-control" name="kumpulan" required>
                             <option selected disabled value="">--Pilih Kumpulan--</option>
                             <?php
+
+                            $sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
+                                            FROM `kumpulan` 
+                                            WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
+
+                            $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                             while ($row = mysqli_fetch_assoc($resultKumpulan)) {
                                 echo '<option value="' . $row['kump_kod'] . '">' . $row['kump_kod'] . ' - ' . $row['kump_desc'] . '</option>';
                             }
@@ -152,6 +153,12 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                     </div>
 
                     <div class="mb-3">
+                        <label for="email_staff" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email_staff" name="email_staff" placeholder="Masukkan Email">
+                        <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="kata_laluan" class="form-label">Kata Laluan</label>
                         <input type="password" class="form-control" id="kata_laluan" name="kata_laluan" placeholder="Masukkan Kata Laluan" minlength="5" required>
                         <div class="invalid-feedback">
@@ -181,7 +188,7 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
             </div>
         </div>
     </div>
-    
+
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

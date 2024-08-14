@@ -12,13 +12,6 @@ if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
 }
 
-$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
-FROM `kumpulan` 
-WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
-
-$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
-
-
 
 ?>
 
@@ -145,6 +138,12 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                         <label for="kumpulan" class="form-label">Kumpulan</label>
                         <select id="kumpulan" class="form-control" name="kumpulan" required>
                             <?php
+
+                            $sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
+                                            FROM `kumpulan` 
+                                            WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
+
+                            $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                             // Fetch the current `kump_kod` value from the database
                             $currentKumpKod = $staff['kumpulan']; // Assuming you already have this value from a previous query
 

@@ -1,3 +1,20 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +25,6 @@
     <title>Booking</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -382,31 +397,92 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button onclick="window.location.href = 'kemaskini_kenderaan.php'" class="btn btn-outline-edit">
-                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
-                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                </button>
 
-                            </td>
-                        </tr>
+                    <?php
+                        
+                        $sqlKenderaan = "SELECT * FROM `kenderaan`";
+
+                        $resultKenderaan = mysqli_query($conn, $sqlKenderaan);
+                        $count = 1;
+
+                        // Loop through the result set
+                        while ($row = mysqli_fetch_assoc($resultKenderaan)) {
+                        ?>
+                            <tr data-id="<?php echo $row['id']; ?>">
+                                <td><?php echo $count; ?></td>
+                                <td><?php echo $row['kategori']; ?></td>
+                                <td><?php echo $row['no_pendaftaran']; ?></td>
+                                <td><?php echo $row['tamat_cukai_jalan']; ?></td>
+                                <td>
+                                    <button onclick="window.location.href = 'kemaskini_kenderaan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
+                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        <?php
+                            $count++;
+                        }
+                        ?>
+                        
 
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function deleteItem(button) {
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var kenderaanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/delete_kenderaan.php',
+                        type: 'POST',
+                        data: {
+                            id: kenderaanId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "An error occurred while deleting the Vehicle.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

@@ -19,7 +19,7 @@ $ip_address = $_SERVER['REMOTE_ADDR'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['nokp']) && !empty($_POST['kataLaluan'])) {
-        
+
         $nokp = $_POST['nokp'];
         $password = $_POST['kataLaluan'];
 
@@ -35,10 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare($sqlLogin);
         $stmt->bind_param('s', $nokp);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $resultLogin = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            while ($rowLogin = $result->fetch_assoc()) {
+
+        $sqlLogin = "SELECT * FROM pemandu WHERE no_kp = ?";
+        $stmt = $conn->prepare($sqlLogin);
+        $stmt->bind_param('s', $nokp);
+        $stmt->execute();
+
+        $pemanduLogin = $stmt->get_result();
+
+        if ($resultLogin->num_rows > 0) {
+            while ($rowLogin = $resultLogin->fetch_assoc()) {
                 $hashed_password = $rowLogin['password'];
                 $kumpulan = $rowLogin['kumpulan'];
                 $pengguna_id = $rowLogin['no_kp'];
@@ -54,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $_SESSION['nama_pengguna'] = $nama_pengguna;
 
                         // Rekod audit trail
-                        $action = "Log masuk sebagai H";
+                        $action = "Log masuk sebagai PENYEWA (X)";
                         $date_created = date('Y-m-d H:i:s');
 
                         // Simpan alamat IP pengguna dalam rekod logs
@@ -74,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $_SESSION['nama_pengguna'] = $nama_pengguna;
 
                         // Rekod audit trail
-                        $action = "Log masuk sebagai Z";
+                        $action = "Log masuk sebagai SUPER ADMIN (Z)";
                         $date_created = date('Y-m-d H:i:s');
 
                         // Simpan alamat IP pengguna dalam rekod logs
@@ -86,6 +94,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'adminDashboard/dashboard.php']);
                         exit();
                     }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
+                }
+            }
+
+            //PEMANDU
+        } elseif ($pemanduLogin->num_rows > 0) {
+
+            while ($rowLogin = $resultLogin->fetch_assoc()) {
+                $hashed_password = $rowLogin['password'];
+                $pengguna_id = $rowLogin['no_kp'];
+                $nama_pengguna = $rowLogin['nama'];
+
+                // Verify the password
+                if (password_verify($password, $hashed_password)) {
+                    $_SESSION['kumpulan'] = 'Y';
+                    $_SESSION['pengguna_id'] = $pengguna_id;
+                    $_SESSION['nama_pengguna'] = $nama_pengguna;
+
+                    // Rekod audit trail
+                    $action = "Log masuk sebagai PEMANDU (Y)";
+                    $date_created = date('Y-m-d H:i:s');
+
+                    // Simpan alamat IP pengguna dalam rekod logs
+                    $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
+                    $stmtAudit = $conn->prepare($sqlAuditTrail);
+                    $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
+                    $stmtAudit->execute();
+
+                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'homepage.php']);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
                 }
