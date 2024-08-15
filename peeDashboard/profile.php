@@ -8,18 +8,7 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-	<style>
-	* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-	</style>
+
 </head>
 
 <body>
@@ -30,17 +19,17 @@
                 <li>
                     <a href="#">
                         <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
+						<span class="title" style="margin-top: 10px;">LKTNBooking</span>
                     </a>
                 </li>
 
                 
                 <li>
-                    <a href="penilaianJentera.php">
+                    <a href="tempahan.php">
                         <span class="icon">
-                            <ion-icon name="star-outline"></ion-icon>
+                            <ion-icon name="book-outline"></ion-icon>
                         </span>
-                        <span class="title">Penilaian</span>
+                        <span class="title">Tempahan</span>
                     </a>
                 </li>
 				
