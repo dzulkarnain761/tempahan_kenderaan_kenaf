@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,12 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
 
     <style>
         * {
@@ -20,7 +25,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             background-color: #f4f4f4;
             margin: 0;
@@ -28,6 +32,30 @@
             color: #333;
         }
 
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
+            margin: 0;
+        }
+
+        nav .breadcrumb {
+            margin-left: 24px;
+        }
+
+        .cardHeader h3 {
+            font-weight: 600;
+            color: var(--blue);
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        
         .btn {
             background-color: #007bff;
             color: white;
@@ -165,10 +193,11 @@
             color: white;
         }
     </style>
+
 </head>
 
 <body>
-    <div class="container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -177,6 +206,7 @@
             <div class="topbar">
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon>
+                    
                 </div>
 
                 <div class="userName">
@@ -187,27 +217,31 @@
                 </div>
             </div>
 
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Jawatan </li>
+                </ol>
+            </nav>
+
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>SENARAI STAF</h2>
-                    <a class="btn" onclick="window.location.href = 'daftar_staff.php'">DAFTAR STAF</a>
+                    <h3>Jawatan</h3>
+                    <a class="btn" onclick="window.location.href = 'tambah_jawatan.php'">TAMBAH JAWATAN</a>
                 </div>
+
 
                 <table>
                     <thead>
                         <tr>
                             <td>Bil</td>
-                            <td>Kumpulan</td>
-                            <td>Nama Staf</td>
-                            <td>No Kad Pengenalan</td>
-                            <td>No Telefon</td>
-                            <td>Kemaskini</td>
+                            <td>Kod</td>
+                            <td>Nama Jawatan</td> 
+                            <td>Tindakan</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -223,6 +257,7 @@
                         </tr>
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
@@ -230,6 +265,8 @@
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
 </body>
 
 </html>
