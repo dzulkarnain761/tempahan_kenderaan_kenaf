@@ -19,6 +19,37 @@
 		  padding: 0;
 		  box-sizing: border-box;
 		}
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600; /* Bold for h2 */
+        }
+        .table thead th {
+            background-color: #2a2185;
+            color: #fff;
+            font-weight: 400; /* Normal weight for th */
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .table td, .table th {
+            text-align: center;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
 	</style>
 </head>
 
@@ -35,11 +66,11 @@
                 </li>
 
                 <li>
-                    <a href="penilaianJentera.php">
+                    <a href="tempahan.php">
                         <span class="icon">
-                            <ion-icon name="star-outline"></ion-icon>
+                            <ion-icon name="book-outline"></ion-icon>
                         </span>
-                        <span class="title">Penilaian</span>
+                        <span class="title">Tempahan</span>
                     </a>
                 </li>
 				
@@ -77,7 +108,10 @@
 					</div>
 				</div>
 			</div>
+			
+			
 		</div>
+	</div>
 
     <!-- =========== Scripts =========  -->
     <script src="assets/js/main.js"></script>
