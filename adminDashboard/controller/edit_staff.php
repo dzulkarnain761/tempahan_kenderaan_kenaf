@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Insert the user into the database using prepared statement
     $sql = $conn->prepare("UPDATE pengguna SET nama = ?, no_kp = ?, contact_no = ?,email = ?, kumpulan = ? WHERE id = ?");
-    $sql->bind_param("sssss", $fullname, $nokp, $contact, $email, $kumpulan, $id);
+    $sql->bind_param("ssssss", $fullname, $nokp, $contact, $email, $kumpulan, $id);
 
     if ($sql->execute() === TRUE) {
         echo json_encode(["success" => true]);

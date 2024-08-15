@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "tempahan_kenderaan";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    //   die("Connection failed: " . mysqli_connect_error());
-    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
-}
+include 'connection.php';
 
 if (isset($_POST['id_negeri']) && !empty($_POST['id_negeri'])) {
     $id_negeri = $_POST['id_negeri'];

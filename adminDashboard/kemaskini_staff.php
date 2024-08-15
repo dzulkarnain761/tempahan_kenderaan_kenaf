@@ -180,6 +180,12 @@ if (!$conn) {
                             Sila masukkan nombor telefon yang sah.
                         </div>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="email_staff" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email_staff" name="email_staff" value="<?php echo htmlspecialchars($staff['email']); ?>" placeholder="Masukkan Email">
+                        <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
+                    </div>
                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($staff['id']); ?>">
 
                     <div class="modal-footer">

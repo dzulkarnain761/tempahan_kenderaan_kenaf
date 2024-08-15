@@ -165,6 +165,8 @@ session_start();
 
             <!-- ======================= Cards ================== -->
             <div class="cardBox">
+
+            
                 <div class="card">
                     <div>
                         <div class="numbers">100</div>
@@ -193,10 +195,16 @@ session_start();
                     </div>
                 </div>
 
+                <?php
+                $sqlTotalVehicle = "SELECT COUNT(*) AS total_vehicles FROM kenderaan";
+                $resultTotalvehicle = mysqli_query($conn, $sqlTotalVehicle);
+                $rowTotalVehicle = mysqli_fetch_assoc($resultTotalvehicle);
+                ?>
+
 
                 <div class="card">
                     <div>
-                        <div class="numbers">15</div>
+                        <div class="numbers"><?php echo $rowTotalVehicle['total_vehicles']; ?></div>
                         <div class="cardName">Kenderaan</div>
                     </div>
 
@@ -205,9 +213,15 @@ session_start();
                     </div>
                 </div>
 
+                <?php
+                $sqlTotalDriver = "SELECT COUNT(*) AS total_drivers FROM pemandu";
+                $resultTotalDriver = mysqli_query($conn, $sqlTotalDriver);
+                $rowTotalDriver = mysqli_fetch_assoc($resultTotalDriver);
+                ?>
+
                 <div class="card">
                     <div>
-                        <div class="numbers">10</div>
+                        <div class="numbers"><?php echo $rowTotalDriver['total_drivers']; ?></div>
                         <div class="cardName">Pemandu</div>
                     </div>
 

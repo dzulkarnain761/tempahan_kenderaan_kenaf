@@ -161,7 +161,7 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
 
                     <div class="mb-3">
                         <label for="email_pemandu" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email_pemandu" name="email_pemandu" value="<?php echo htmlspecialchars($pemandu['email']); ?>" placeholder="Masukkan Nombor Kad Pengenalan">
+                        <input type="email" class="form-control" id="email_pemandu" name="email_pemandu" value="<?php echo htmlspecialchars($pemandu['email']); ?>" placeholder="Masukkan Email">
                         <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
                     </div>
 
