@@ -8,15 +8,17 @@
     <title>Booking</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             font-family: 'Poppins', sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
         }
 
         .close {
@@ -73,28 +75,35 @@
             background-color: #0056b3;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
-
-
-        .btn-accept,
-        .btn-reject {
-            background: none;
+		
+		
+		.btn {
+			display: inline-block;
+			font-weight: 400;
+			text-align: center;
+			vertical-align: middle;
+			border: 1px solid transparent;
+			padding: .375rem .75rem;
+			font-size: 1rem;
+			border-radius: .25rem;
+			transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+		}
+		
+		.btn-success {
+            background-color: #28a745;
             border: none;
-            cursor: pointer;
-            padding: 0;
-            font-size: 1.2em;
-            text-align: center;
         }
-
-        .btn-accept {
-            color: #28a745;
+        .btn-success:hover {
+            background-color: #218838;
         }
-
-
-        .btn-reject {
-            color: #c82333;
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
         }
-
-
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+		
         .btn-update,
         .btn-daftar {
             background-color: #28a745;
@@ -282,12 +291,11 @@
                             <td></td>
                             <td></td>
                             <td>
-
-                                <button onclick="window.location.href = 'terimaTempahan.php'" class="btn btn-accept">
-                                    <i class="fas fa-check" style="font-size: 1.5em;"></i>
+                                <button onclick="window.location.href = 'terimaTempahan.php'" class="btn btn-success">
+                                    Terima
                                 </button>
-                                <button onclick="deleteItem(this)" class="btn btn-reject">
-                                    <i class="fas fa-times" style="font-size: 1.5em;"></i>
+                                <button onclick="deleteItem(this)" class="btn btn-danger">
+                                    Tolak
                                 </button>
                             </td>
                         </tr>
