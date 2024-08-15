@@ -135,11 +135,11 @@
                 </li>
 
                 <li>
-                    <a href="bayaran.php">
+                    <a href="tempahan.php">
                         <span class="icon">
-                            <ion-icon name="card-outline"></ion-icon>
+                            <ion-icon name="book-outline"></ion-icon>
                         </span>
-                        <span class="title">Bayaran</span>
+                        <span class="title">Tempahan</span>
                     </a>
                 </li>
 				
