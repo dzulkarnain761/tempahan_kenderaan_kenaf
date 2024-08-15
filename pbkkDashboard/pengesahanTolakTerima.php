@@ -139,6 +139,15 @@
                     </a>
                 </li>
 				
+				<li>
+                    <a href="semakanPBKK.php">
+                        <span class="icon">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">Semakan</span>
+                    </a>
+                </li>
+				
                 <li>
                     <a href="profile.php">
                         <span class="icon">

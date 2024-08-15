@@ -139,6 +139,15 @@
                     </a>
                 </li>
 				
+				<li>
+                    <a href="semakanPBKK.php">
+                        <span class="icon">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">Semakan</span>
+                    </a>
+                </li>
+				
                 <li>
                     <a href="profile.php">
                         <span class="icon">
@@ -174,64 +183,6 @@
 				</div>
 			</div>
 			
-			<!-- ======================= Pengesahan ================== -->
-			<div class="recentOrders">
-				<div class="cardHeader">
-					<h2>Pengesahan Permohonan</h2>
-				</div>
-				<table>
-					<thead>
-						<tr>
-							<td>Bil</td>
-							<td>Nama Pemohon</td>
-							<td>Keluasan Tanah (Hektar)</td>
-							<td>Maklumat</td>
-							<td>Tindakan</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Ahmad Bin Ali</td>
-							<td>5.5</td>
-							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-							<td>
-								<form method="POST" action="sahkan.php">
-									<input type="hidden" name="id_permohonan" value="1">
-									<button type="submit" name="tindakan" value="terima" class="btn btn-success">Terima</button>
-									<button type="submit" name="tindakan" value="tolak" class="btn btn-danger">Tolak</button>
-								</form>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Siti Binti Amin</td>
-							<td>3.2</td>
-							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-							<td>
-								<form method="POST" action="sahkan.php">
-									<input type="hidden" name="id_permohonan" value="2">
-									<button type="submit" name="tindakan" value="terima" class="btn btn-success">Terima</button>
-									<button type="submit" name="tindakan" value="tolak" class="btn btn-danger">Tolak</button>
-								</form>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Rahman Bin Salim</td>
-							<td>8.0</td>
-							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-							<td>
-								<form method="POST" action="sahkan.php">
-									<input type="hidden" name="id_permohonan" value="3">
-									<button type="submit" name="tindakan" value="terima" class="btn btn-success">Terima</button>
-									<button type="submit" name="tindakan" value="tolak" class="btn btn-danger">Tolak</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 		</div>
 	</div>
 

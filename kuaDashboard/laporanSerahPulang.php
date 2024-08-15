@@ -13,7 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 	<style>
-		
+		* {
+		  font-family: 'Poppins', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
 		
 		.recentOrders {
             position: relative;
@@ -26,6 +31,8 @@
             margin-top: 20px;
             margin-left: 20px;
             margin-right: 20px;
+			font-size: 18px;
+			padding: 30px 30px;
         }
 		
 		table {
@@ -40,38 +47,9 @@
             font-size: 18px;
         }
 
-        table tbody {
-            font-size: 18px;
-        }
-
-        .recentOrders form table tr {
-            color: var(--black1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .recentOrders form table tr:last-child {
-            border-bottom: none;
-        }
-
         .recentOrders form table tbody tr:hover {
             background: var(--white);
             color: var(--black);
-        }
-
-        .recentOrders form table tr td {
-            padding: 10px;
-        }
-
-        .recentOrders form table tr td:last-child {
-            text-align: center;
-        }
-
-        .recentOrders form table tr td:nth-child(2) {
-            text-align: center;
-        }
-
-        .recentOrders form table tr td:nth-child(3) {
-            text-align: center;
         }
 		
 		textarea {
@@ -79,7 +57,6 @@
 			height: 70px; 
 			resize: vertical; 
 		}
-		
 		
 </style>
 </head>
@@ -99,7 +76,7 @@
                 <li>
                     <a href="laporanSerahPulang.php">
                         <span class="icon">
-                            <ion-icon name="document-text-outline"></ion-icon>
+                            <ion-icon name="newspaper-outline"></ion-icon>
                         </span>
                         <span class="title">Laporan</span>
                     </a>
@@ -378,9 +355,9 @@
 					</tr>
 				   
 				</table>
-				<button type="submit" class="btn btn-primary" style="margin-top: 30px;">
-                   Hantar
-                </button>
+					<button type="submit" class="btn btn-primary" style="margin-top: 30px;">
+					Hantar
+					</button>
 			</form>
 		 </div>
 		
