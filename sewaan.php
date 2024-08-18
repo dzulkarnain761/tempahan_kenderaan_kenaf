@@ -370,9 +370,9 @@
                     <td>01/08/2024</td>
                     <td>05/08/2024</td>
                     <td>RM 200.00</td>
-                    <td>Disahkan</td>
+                    <td>Belum Dibayar</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>2</td>
                     <td>Fatimah Binti Ali</td>
                     <td>Jentera</td>
@@ -380,7 +380,7 @@
                     <td>06/08/2024</td>
                     <td>RM 150.00</td>
                     <td>Dalam Proses</td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </div>
