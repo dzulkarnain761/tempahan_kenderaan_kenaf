@@ -88,7 +88,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Nama Penuh :</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Masukkan Nama Penuh" minlength="15" required>
+                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Masukkan Nama Penuh" minlength="10" required>
                         <div class="invalid-feedback">
                             Sila masukkan nama penuh yang sah.
                         </div>

@@ -130,7 +130,7 @@ if (!$conn) {
 
                     <div class="mb-3">
                         <label for="nama_staf" class="form-label">Nama Staf:</label>
-                        <input type="text" class="form-control" id="nama_staf" name="nama_staf" placeholder="Masukkan Nama Staf" minlength="15" required>
+                        <input type="text" class="form-control" id="nama_staf" name="nama_staf" placeholder="Masukkan Nama Staf" minlength="10" required>
                         <div class="invalid-feedback">
                             Sila masukkan nama staf yang sah.
                         </div>
