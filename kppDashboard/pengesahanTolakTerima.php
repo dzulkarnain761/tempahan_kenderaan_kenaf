@@ -204,10 +204,10 @@
 						<tr>
 							<td>1</td>
 							<td>Ahmad Bin Ali</td>
-							<td>perkhidmatan</td>
+							<td>Jengkaut</td>
 							<td>5.5</td>
-							<td>lokasi kerja</td>
-							<td>jenis kerja</td>
+							<td>Pasir Puteh</td>
+							<td>Membersih Kawasan</td>
 							<td>
 								<form method="POST" action="pengesahanTolakTerima.php" id="confirmationForm">
 									<input type="hidden" name="id_permohonan" value="1">

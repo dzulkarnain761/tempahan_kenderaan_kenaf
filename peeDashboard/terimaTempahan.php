@@ -124,8 +124,9 @@
                     <form>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Nama Penyewa:</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="Nama bin Penyewa" readonly>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" value="Atan bin Ali" readonly>
                         </div>
+						
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Tarikh Tempahan:</label>
                             <input type="date" class="form-control" id="exampleFormControlInput1" value="" readonly>
@@ -134,6 +135,16 @@
                             <label for="exampleFormControlInput1" class="form-label">Jenis Kerja:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" value="Meracun" readonly>
                         </div>
+						<div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Lokasi:</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" value="Pasir Puteh" readonly>
+                        </div>
+						
+						<div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" value="3" readonly>
+                        </div>
+						
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Tarikh Kerja Dilakukan:</label>
                             <input type="date" class="form-control" id="exampleFormControlInput1" value="" readonly>
@@ -165,6 +176,11 @@
                                 <option value="...">...</option>
                             </select>
                         </div>
+						<div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Jumlah Bayaran:</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Jumlah Bayaran">
+                        </div>
+						
 						
 						<div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Hantar</button>

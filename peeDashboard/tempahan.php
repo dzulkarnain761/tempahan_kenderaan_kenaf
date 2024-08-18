@@ -280,16 +280,31 @@
                             <td>Bil</td>
                             <td>Nama Penyewa</td>
                             <td>Tarikh Tempahan</td>
-                            <td>Tugasan</td>
+                            <td>Tugas</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>1</td>
+                            <td>Ali Bin Atan</td>
+                            <td>10/10/2024</td>
+                            <td>Menanam Kenaf</td>
+                            <td>
+                                <button onclick="window.location.href = 'terimaTempahan.php'" class="btn btn-success">
+                                    Terima
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-danger">
+                                    Tolak
+                                </button>
+                            </td>
+                        </tr>
+						
+						<tr>
+                            <td>2</td>
+                            <td>Hassan Bin Abdul</td>
+                            <td>10/12/2024</td>
+                            <td>Menebang Kenaf</td>
                             <td>
                                 <button onclick="window.location.href = 'terimaTempahan.php'" class="btn btn-success">
                                     Terima
