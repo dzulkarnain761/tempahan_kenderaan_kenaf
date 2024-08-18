@@ -288,7 +288,7 @@ if (!$conn) {
                         url: 'controller/delete_staff.php',
                         type: 'POST',
                         data: {
-                            id: pemanduId
+                            id: staffId
                         },
                         success: function(response) {
                             Swal.fire({

@@ -1,4 +1,19 @@
+<?php
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,21 +113,44 @@
                     <h3>Tambah Lesen</h3>
                 </div>
 
-                <form class="addLesen" novalidate>
+                <?php
+
+                $id = $_GET['id'];
+
+
+                // Ensure you escape the ID to prevent SQL injection
+                $id = mysqli_real_escape_string($conn, $id);
+
+                $sqlLesen = "SELECT * FROM kategori_lesen WHERE id = $id";
+                $resultLesen = mysqli_query($conn, $sqlLesen);
+
+                // Fetch the Pemandu member's data
+                if ($resultLesen && mysqli_num_rows($resultLesen) > 0) {
+                    $lesen = mysqli_fetch_assoc($resultLesen);
+                } else {
+                    // Handle the case where no Pemandu member is found
+                    echo "No Pemandu member found.";
+                    exit;
+                }
+                ?>
+
+
+                <form class="editLesen" novalidate>
                     <div class="mb-3">
                         <label for="kategori_input" class="form-label">Kategori</label>
-                        <input type="text" class="form-control" id="kategori_input" name="kategori" placeholder="Masukkan Kategori" required>
+                        <input type="text" class="form-control" id="kategori_input" name="kategori" value="<?php echo htmlspecialchars($lesen['kategori']); ?>" placeholder="Masukkan Kategori" required>
                         <div class="invalid-feedback">
                             Sila masukkan kategori.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="penerangan_input" class="form-label">Penerangan</label>
-                        <input type="text" class="form-control" id="penerangan_input" name="penerangan" placeholder="Masukkan Penerangan" required>
+                        <input type="text" class="form-control" id="penerangan_input" name="penerangan" value="<?php echo htmlspecialchars($lesen['description']); ?>" placeholder="Masukkan Penerangan" required>
                         <div class="invalid-feedback">
                             Sila masukkan penerangan.
                         </div>
                     </div>
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($lesen['id']); ?>">
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Tambah Kategori Lesen</button>
@@ -135,7 +173,7 @@
             'use strict'
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.addLesen')
+            const forms = document.querySelectorAll('.editLesen')
 
             // Loop over them and prevent submission
             Array.from(forms).forEach(form => {
@@ -153,7 +191,7 @@
 
 
         $(document).ready(function() {
-            $('.addLesen').on('submit', function(e) {
+            $('.editLesen').on('submit', function(e) {
                 e.preventDefault();
 
                 // Check if form is valid before making AJAX request
@@ -164,7 +202,7 @@
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/add_lesen.php',
+                    url: 'controller/edit_lesen.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -173,7 +211,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success',
-                                text: 'Pendaftaran Berjaya',
+                                text: 'Kemaskini Berjaya',
                             }).then(() => {
                                 window.location.href = 'crud_lesen.php';
                             });

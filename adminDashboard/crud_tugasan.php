@@ -1,3 +1,20 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -154,7 +171,7 @@
         }
 
         .recentOrders table tr td:nth-child(2) {
-            text-align: center;
+            text-align: start;
         }
 
         .recentOrders table tr td:nth-child(3) {
@@ -238,20 +255,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button onclick="window.location.href = 'kemaskini_staff.php'" class="btn btn-outline-edit">
-                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
-                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                </button>
+                    <?php
+                        // SQL query to select all staff excluding specific groups
+                        $sqlLesen = "SELECT * FROM `tugasan`";
 
-                            </td>
-                        </tr>
+                        $resultLesen = mysqli_query($conn, $sqlLesen);
+                        $count = 1;
+
+                        // Loop through the result set
+                        while ($row = mysqli_fetch_assoc($resultLesen)) {
+                        ?>
+                            <tr data-id="<?php echo $row['id']; ?>">
+                                <td><?php echo $count; ?></td>
+                                <td><?php echo $row['kerja']; ?></td>
+                                <td><?php echo $row['harga_per_jam']; ?></td>
+                                <td>
+                                    <button onclick="window.location.href = 'kemaskini_tugasan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
+                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        <?php
+                            $count++;
+                        }
+                        ?>
                     </tbody>
                 </table>
 

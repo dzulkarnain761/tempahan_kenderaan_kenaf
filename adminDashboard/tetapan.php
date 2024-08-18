@@ -137,11 +137,11 @@
                 </div>
 
                 <div class="buttonSettings">
-                    <div>
+                    <!-- <div>
                         <button onclick="window.location.href='crud_jawatan.php'">
                             Jawatan <span class="icon"><i class="fas fa-arrow-right"></i></span>
                         </button>
-                    </div>
+                    </div> -->
                     <div>
                         <button onclick="window.location.href='crud_lesen.php'">
                             Lesen <span class="icon"><i class="fas fa-arrow-right"></i></span>

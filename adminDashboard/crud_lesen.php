@@ -1,3 +1,19 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,13 +31,14 @@
         rel="stylesheet">
 
 
-        <style>
+    <style>
         * {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             background-color: #f4f4f4;
             margin: 0;
@@ -52,7 +69,7 @@
             margin-bottom: 25px;
         }
 
-        
+
         .btn {
             background-color: #007bff;
             color: white;
@@ -227,30 +244,48 @@
                 </div>
 
 
+
+
                 <table>
                     <thead>
                         <tr>
                             <td>Bil</td>
                             <td>Kategori</td>
-                            <td>Penerangan</td> 
+                            <td>Penerangan</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button onclick="window.location.href = 'kemaskini_staff.php'" class="btn btn-outline-edit">
-                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
-                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                </button>
 
-                            </td>
-                        </tr>
+                        <?php
+                        // SQL query to select all staff excluding specific groups
+                        $sqlLesen = "SELECT * FROM `kategori_lesen`";
+
+                        $resultLesen = mysqli_query($conn, $sqlLesen);
+                        $count = 1;
+
+                        // Loop through the result set
+                        while ($row = mysqli_fetch_assoc($resultLesen)) {
+                        ?>
+                            <tr data-id="<?php echo $row['id']; ?>">
+                                <td><?php echo $count; ?></td>
+                                <td><?php echo $row['kategori']; ?></td>
+                                <td><?php echo $row['description']; ?></td>
+                                <td>
+                                    <button onclick="window.location.href = 'kemaskini_lesen.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
+                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        <?php
+                            $count++;
+                        }
+                        ?>
+
                     </tbody>
                 </table>
 
@@ -258,9 +293,56 @@
         </div>
     </div>
 
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function deleteItem(button) {
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var lesenId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, padamkannya!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/delete_lesen.php',
+                        type: 'POST',
+                        data: {
+                            id: lesenId,
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Berjaya dipadam!",
+                                text: "Kategori Lesen dipadam.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa memadam Ahli Staff.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
 
 
 </body>
