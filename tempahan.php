@@ -244,6 +244,7 @@ preloader
             padding-left: 20px;
             padding-right: 20px;
         }
+
         .header-area .main-nav .nav li a {
             display: block;
             font-weight: 500;
@@ -424,6 +425,16 @@ preloader
             </div>
             <div class="modal-body">
                 <form action="sewaan.php" method="POST">
+
+                    <div class="mb-3">
+                        <label for="kerja" class="form-label">Kenderaan :</label>
+                        <select id="kerja" class="form-control" name="kerja" required>
+                            <option disabled selected value="">Sila Pilih Kenderaan</option>
+                            <option value="piring">Traktor</option>
+                            <option value="piringBatasBesar">Jengkaut</option>
+                            
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="kerja" class="form-label">Jenis Kerja :</label>
                         <select id="kerja" class="form-control" name="kerja" required>
@@ -441,11 +452,7 @@ preloader
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="jam" class="form-label">Jam :</label>
-                        <input type="number" class="form-control" id="jam" min="1" placeholder="Masukkan Jumlah Jam"
-                            required>
-                    </div>
+
                     <div class="mb-3">
                         <label for="tarikh" class="form-label">Tarikh Mula :</label>
                         <input type="date" class="form-control" id="tarikh" required>
@@ -498,7 +505,7 @@ preloader
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Hantar</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
