@@ -257,7 +257,7 @@ if (!$conn) {
                     <tbody>
                     <?php
                         // SQL query to select all staff excluding specific groups
-                        $sqlLesen = "SELECT * FROM `tugasan`";
+                        $sqlLesen = "SELECT * FROM `tugasan_traktor`";
 
                         $resultLesen = mysqli_query($conn, $sqlLesen);
                         $count = 1;

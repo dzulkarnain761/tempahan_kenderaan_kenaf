@@ -148,8 +148,13 @@
                         </button>
                     </div>
                     <div>
-                        <button onclick="window.location.href='crud_tugasan.php'">
-                            Tugasan <span class="icon"><i class="fas fa-arrow-right"></i></span>
+                        <button onclick="window.location.href='crud_tugasan_traktor.php'">
+                            Tugasan Traktor<span class="icon"><i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button onclick="window.location.href='crud_tugasan_jengkaut.php'">
+                            Tugasan Jengkaut<span class="icon"><i class="fas fa-arrow-right"></i></span>
                         </button>
                     </div>
                     <div>
