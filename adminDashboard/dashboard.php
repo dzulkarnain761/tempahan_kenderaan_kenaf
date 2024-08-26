@@ -166,7 +166,7 @@ session_start();
             <!-- ======================= Cards ================== -->
             <div class="cardBox">
 
-            
+
                 <div class="card">
                     <div>
                         <div class="numbers">100</div>
@@ -196,7 +196,14 @@ session_start();
                 </div>
 
                 <?php
-                $sqlTotalVehicle = "SELECT COUNT(*) AS total_vehicles FROM kenderaan";
+
+                $sqlTotalVehicle = "
+                                    SELECT SUM(total_vehicles) AS total_vehicles FROM (
+                                        SELECT COUNT(*) AS total_vehicles FROM kenderaan_jengkaut
+                                        UNION ALL
+                                        SELECT COUNT(*) AS total_vehicles FROM kenderaan_traktor
+                                    ) AS combined_counts
+                                ";
                 $resultTotalvehicle = mysqli_query($conn, $sqlTotalVehicle);
                 $rowTotalVehicle = mysqli_fetch_assoc($resultTotalvehicle);
                 ?>
@@ -303,7 +310,7 @@ session_start();
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    
+
     </script>
 
 
@@ -344,8 +351,8 @@ session_start();
         });
     </script>
 
-    
-    
+
+
 
 </body>
 

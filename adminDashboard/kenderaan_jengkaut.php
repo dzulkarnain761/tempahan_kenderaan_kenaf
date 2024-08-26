@@ -390,9 +390,10 @@ if (!$conn) {
                     <thead>
                         <tr>
                             <td>Bil</td>
-                            <td>Nama Kenderaan</td>
+                            <td>No Aset</td>
                             <td>No Pendaftaran</td>
-                            <td>Tarikh Tamat</td>
+                            <td>Tahun Daftar</td>
+                            <td>Catatan</td>
                             <td>Kemaskini</td>
                         </tr>
                     </thead>
@@ -400,7 +401,7 @@ if (!$conn) {
 
                         <?php
 
-                        $sqlKenderaan = "SELECT * FROM `kenderaan`";
+                        $sqlKenderaan = "SELECT * FROM `kenderaan_jengkaut`";
 
                         $resultKenderaan = mysqli_query($conn, $sqlKenderaan);
                         $count = 1;
@@ -410,9 +411,10 @@ if (!$conn) {
                         ?>
                             <tr data-id="<?php echo $row['id']; ?>">
                                 <td><?php echo $count; ?></td>
-                                <td><?php echo $row['kategori']; ?></td>
+                                <td><?php echo $row['no_aset']; ?></td>
                                 <td><?php echo $row['no_pendaftaran']; ?></td>
-                                <td><?php echo $row['tamat_cukai_jalan']; ?></td>
+                                <td><?php echo $row['tahun_daftar']; ?></td>
+                                <td><?php echo $row['catatan']; ?></td>
                                 <td>
                                     <button onclick="window.location.href = 'kemaskini_kenderaan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>

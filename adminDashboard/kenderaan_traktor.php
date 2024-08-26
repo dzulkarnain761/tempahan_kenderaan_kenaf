@@ -23,14 +23,12 @@ if (!$conn) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-
 
     <style>
         * {
@@ -46,30 +44,6 @@ if (!$conn) {
             padding: 0;
             color: #333;
         }
-
-        .custom-container {
-            position: relative;
-            width: 100%;
-        }
-
-        ul {
-            all: unset;
-            list-style: disc;
-            /* padding-left: 20px; */
-            margin: 0;
-        }
-
-        nav .breadcrumb {
-            margin-left: 24px;
-        }
-
-        .cardHeader h3 {
-            font-weight: 600;
-            color: var(--blue);
-            text-transform: uppercase;
-            margin-bottom: 25px;
-        }
-
 
         .btn {
             background-color: #007bff;
@@ -92,10 +66,149 @@ if (!$conn) {
             margin-bottom: 15px;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         .cardHeader {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"],
+        .form-group input[type="button"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input[type="submit"]:hover,
+        .form-group input[type="button"]:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-edit,
+        .btn-delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 1.2em;
+        }
+
+        .btn-edit {
+            color: #28a745;
+        }
+
+        .btn-edit:hover {
+            color: #218838;
+        }
+
+        .btn-delete {
+            color: #c82333;
+        }
+
+        .btn-delete:hover {
+            color: #bd2130;
+        }
+
+        .btn-update,
+        .btn-daftar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-update:hover,
+        .btn-daftar:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 90%;
+            }
+        }
+
+
+        :root {
+            --skyblue: #d0e5f5;
         }
 
         /* ================== Table details ============== */
@@ -119,6 +232,7 @@ if (!$conn) {
         }
 
         .cardHeader h2 {
+            font-weight: 600;
             color: var(--blue);
             text-transform: uppercase;
         }
@@ -171,11 +285,47 @@ if (!$conn) {
         }
 
         .recentOrders table tr td:nth-child(2) {
-            text-align: start;
+            text-align: center;
         }
 
         .recentOrders table tr td:nth-child(3) {
             text-align: center;
+        }
+
+        .status.delivered {
+            padding: 2px 4px;
+            background: #8de02c;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            padding: 2px 4px;
+            background: #e9b10a;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.return {
+            padding: 2px 4px;
+            background: #f00;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status.inProgress {
+            padding: 2px 4px;
+            background: #1795ce;
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .btn-outline-edit {
@@ -208,11 +358,10 @@ if (!$conn) {
             color: white;
         }
     </style>
-
 </head>
 
 <body>
-    <div class="custom-container">
+    <div class="container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -231,46 +380,43 @@ if (!$conn) {
                 </div>
             </div>
 
-            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tugasan Traktor</li>
-                </ol>
-            </nav>
-
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h3>Tugasan Traktor</h3>
-                    <a class="btn" onclick="window.location.href = 'tambah_tugasan_traktor.php'">TAMBAH TUGASAN</a>
+                    <h2>SENARAI KENDERAAN</h2>
+                    <a class="btn" onclick="window.location.href = 'daftar_kenderaan.php'">DAFTAR KENDERAAN</a>
                 </div>
-
 
                 <table>
                     <thead>
                         <tr>
                             <td>Bil</td>
-                            <td>Nama Kerja</td>
-                            <td>Harga Per Jam</td>
-                            <td>Tindakan</td>
+                            <td>No Aset</td>
+                            <td>No Pendaftaran</td>
+                            <td>Tahun Daftar</td>
+                            <td>Catatan</td>
+                            <td>Kemaskini</td>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
-                        // SQL query to select all staff excluding specific groups
-                        $sqlLesen = "SELECT * FROM `tugasan_traktor`";
 
-                        $resultLesen = mysqli_query($conn, $sqlLesen);
+                        <?php
+
+                        $sqlKenderaan = "SELECT * FROM `kenderaan_traktor`";
+
+                        $resultKenderaan = mysqli_query($conn, $sqlKenderaan);
                         $count = 1;
 
                         // Loop through the result set
-                        while ($row = mysqli_fetch_assoc($resultLesen)) {
+                        while ($row = mysqli_fetch_assoc($resultKenderaan)) {
                         ?>
                             <tr data-id="<?php echo $row['id']; ?>">
                                 <td><?php echo $count; ?></td>
-                                <td><?php echo $row['kerja']; ?></td>
-                                <td><?php echo $row['harga_per_jam']; ?></td>
+                                <td><?php echo $row['no_aset']; ?></td>
+                                <td><?php echo $row['no_pendaftaran']; ?></td>
+                                <td><?php echo $row['tahun_daftar']; ?></td>
+                                <td><?php echo $row['catatan']; ?></td>
                                 <td>
-                                    <button onclick="window.location.href = 'kemaskini_tugasan_traktor.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                    <button onclick="window.location.href = 'kemaskini_kenderaan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>
                                     </button>
                                     <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
@@ -283,16 +429,17 @@ if (!$conn) {
                             $count++;
                         }
                         ?>
+
+
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
-
     <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -300,7 +447,7 @@ if (!$conn) {
     <script>
         function deleteItem(button) {
             var row = button.closest('tr'); // Find the closest <tr> element
-            var tugasanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+            var kenderaanId = row.getAttribute('data-id'); // Get the data-id from <tr>
 
             Swal.fire({
                 title: "Adakah anda pasti?",
@@ -309,20 +456,19 @@ if (!$conn) {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, padamkannya!",
-                cancelButtonText: "Batal",
+                confirmButtonText: "Ya, padamkannya!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_tugasan_traktor.php',
+                        url: 'controller/delete_kenderaan.php',
                         type: 'POST',
                         data: {
-                            id: tugasanId
+                            id: pemanduId
                         },
                         success: function(response) {
                             Swal.fire({
                                 title: "Berjaya dipadam!",
-                                text: "Fail anda telah dipadam.",
+                                text: "Kenderaan telah dipadam.",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -331,7 +477,7 @@ if (!$conn) {
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: "Ralat!",
-                                text: "Ralat berlaku semasa memadam.",
+                                text: "Ralat berlaku semasa memadam kenderaan.",
                                 icon: "error"
                             });
                         }
@@ -341,8 +487,6 @@ if (!$conn) {
 
         }
     </script>
-
-
 </body>
 
 </html>

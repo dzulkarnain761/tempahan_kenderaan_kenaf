@@ -234,14 +234,14 @@ if (!$conn) {
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tugasan </li>
+                    <li class="breadcrumb-item active" aria-current="page">Tugasan Jengkaut </li>
                 </ol>
             </nav>
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h3>Tugasan</h3>
-                    <a class="btn" onclick="window.location.href = 'tambah_tugasan.php'">TAMBAH TUGASAN</a>
+                    <h3>Tugasan Jengkaut</h3>
+                    <a class="btn" onclick="window.location.href = 'tambah_tugasan_jengkaut.php'">TAMBAH TUGASAN</a>
                 </div>
 
 
@@ -255,10 +255,9 @@ if (!$conn) {
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
+                        <?php
                         // SQL query to select all staff excluding specific groups
                         $sqlLesen = "SELECT * FROM `tugasan_jengkaut`";
-
                         $resultLesen = mysqli_query($conn, $sqlLesen);
                         $count = 1;
 
@@ -270,10 +269,10 @@ if (!$conn) {
                                 <td><?php echo $row['kerja']; ?></td>
                                 <td><?php echo $row['harga_per_jam']; ?></td>
                                 <td>
-                                    <button onclick="window.location.href = 'kemaskini_tugasan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                    <button onclick="window.location.href = 'kemaskini_tugasan_jengkaut.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>
                                     </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
+                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete">
                                         <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
                                     </button>
 
@@ -290,9 +289,57 @@ if (!$conn) {
         </div>
     </div>
 
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function deleteItem(button) {
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var tugasanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, padamkannya!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/delete_tugasan_jengkaut.php',
+                        type: 'POST',
+                        data: {
+                            id: tugasanId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Berjaya dipadam!",
+                                text: "Fail anda telah dipadam.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa memadam.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
 
 
 </body>
