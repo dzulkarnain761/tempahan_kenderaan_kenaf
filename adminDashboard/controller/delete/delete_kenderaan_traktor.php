@@ -1,6 +1,6 @@
 <?php
 
-include 'connection.php';
+include '../connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the staff ID from the POST request
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare the SQL statement
-    $sql = "DELETE FROM kenderaan WHERE id = ?";
+    $sql = "DELETE FROM kenderaan_traktor WHERE id = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
         http_response_code(500);

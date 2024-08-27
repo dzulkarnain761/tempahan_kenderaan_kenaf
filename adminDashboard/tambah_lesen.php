@@ -164,7 +164,7 @@
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/add_lesen.php',
+                    url: 'controller/add/add_lesen.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

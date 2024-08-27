@@ -314,7 +314,7 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_tugasan_traktor.php',
+                        url: 'controller/delete/delete_tugasan_traktor.php',
                         type: 'POST',
                         data: {
                             id: tugasanId

@@ -313,7 +313,7 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_tugasan_jengkaut.php',
+                        url: 'controller/delete/delete_tugasan_jengkaut.php',
                         type: 'POST',
                         data: {
                             id: tugasanId

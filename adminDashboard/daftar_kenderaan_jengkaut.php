@@ -92,33 +92,22 @@ if (!$conn) {
 
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="kenderaan.php">Kenderaan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Daftar Kenderaan</li>
+                    <li class="breadcrumb-item"><a href="kenderaan_jengkaut.php">Senarai Jengkaut</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Daftar Jengkaut</li>
                 </ol>
             </nav>
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Daftar Kenderaan</h2>
+                    <h2>Daftar Jengkaut</h2>
                 </div>
 
                 <form class="registerKenderaan" novalidate>
+
                     <div class="mb-3">
-                        <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
-                        <select id="kategori_kenderaan" class="form-control" name="kategori_kenderaan" required>
-                            <option disabled selected value="">--Pilih Kategori Kenderaan--</option>
-                            <?php
-                            $sqlKategoriKenderaan = "SELECT * FROM kategori_kenderaan";
-                            $resultKategoriKenderaan= mysqli_query($conn, $sqlKategoriKenderaan);
-
-                            while ($row = mysqli_fetch_assoc($resultKategoriKenderaan)) {
-                                echo '<option value="' . $row['kategori'] . '">' . $row['kategori'] . '</option>';
-                            }
-                            
-                            ?>
-                        </select>
-                        <div class="invalid-feedback">Sila pilih kategori kenderaan.</div>
+                        <label for="no_aset" class="form-label">Nombor Aset</label>
+                        <input type="text" class="form-control" id="no_aset" name="no_aset" placeholder="Masukkan Nombor Aset " required>
+                        <div class="invalid-feedback">Sila masukkan nombor aset.</div>
                     </div>
-
                     <div class="mb-3">
                         <label for="no_pendaftaran_kenderaan" class="form-label">Nombor Pendaftaran Kenderaan</label>
                         <input type="text" class="form-control" id="no_pendaftaran_kenderaan" name="no_pendaftaran_kenderaan" placeholder="Masukkan Nombor Pendaftaran Kenderaan" required>
@@ -130,18 +119,7 @@ if (!$conn) {
                         <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" placeholder="Masukkan Tahun Daftar" minlength="4" maxlength="4" required>
                         <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="mula_cukai_jalan" class="form-label">Mula Cukai Jalan</label>
-                        <input type="date" class="form-control" id="mula_cukai_jalan" name="mula_cukai_jalan" placeholder="Pilih Mula Cukai Jalan" required>
-                        <div class="invalid-feedback">Sila pilih tarikh mula cukai jalan.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="tamat_cukai_jalan" class="form-label">Tamat Cukai Jalan</label>
-                        <input type="date" class="form-control" id="tamat_cukai_jalan" name="tamat_cukai_jalan" placeholder="Pilih Tamat Cukai Jalan" required>
-                        <div class="invalid-feedback">Sila pilih tarikh tamat cukai jalan.</div>
-                    </div>
+                    
 
                     <div class="mb-3">
                         <label for="negeri_penempatan" class="form-label">Negeri Penempatan</label>
@@ -167,6 +145,16 @@ if (!$conn) {
                         </select>
                         <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
                     </div>
+                    <div class="mb-3">
+                        <label for="harga_belian" class="form-label">Harga Belian</label>
+                        <input type="text" class="form-control" id="harga_belian" name="harga_belian" placeholder="Masukkan Harga Belian" required>
+                        <div class="invalid-feedback">Sila masukkan harga belian.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="catatan" class="form-label">Catatan</label>
+                        <input type="text" class="form-control" id="catatan" name="catatan" >
+                        <!-- <div class="invalid-feedback">Sila masukkan tahun daftar.</div> -->
+                    </div>
 
                     <div class="mb-3">
                         <label for="status_kenderaan" class="form-label">Status</label>
@@ -185,12 +173,12 @@ if (!$conn) {
             </div>
         </div>
     </div>
-    
+
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    
+
     <script>
         (() => {
             'use strict'
@@ -246,7 +234,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/signup_kenderaan.php',
+                    url: 'controller/add/signup_kenderaan_jengkaut.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -257,7 +245,7 @@ if (!$conn) {
                                 title: 'Success',
                                 text: 'Pendaftaran Berjaya',
                             }).then(() => {
-                                window.location.href = 'kenderaan.php';
+                                window.location.href = 'kenderaan_jengkaut.php';
                             });
                         } else {
                             Swal.fire({
@@ -270,8 +258,6 @@ if (!$conn) {
                 });
             });
         });
-
-        
     </script>
 
 </body>

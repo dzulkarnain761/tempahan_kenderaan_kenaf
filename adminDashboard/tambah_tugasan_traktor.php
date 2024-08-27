@@ -160,7 +160,7 @@
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/add_tugasan_traktor.php',
+                    url: 'controller/add/add_tugasan_traktor.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

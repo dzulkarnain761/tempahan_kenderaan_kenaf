@@ -186,7 +186,7 @@ include 'controller/connection.php';
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/edit_tugasan_jengkaut.php',
+                    url: 'controller/edit/edit_tugasan_jengkaut.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

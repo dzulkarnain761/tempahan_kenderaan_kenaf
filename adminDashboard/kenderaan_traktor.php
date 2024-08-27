@@ -382,8 +382,8 @@ if (!$conn) {
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>SENARAI KENDERAAN</h2>
-                    <a class="btn" onclick="window.location.href = 'daftar_kenderaan.php'">DAFTAR KENDERAAN</a>
+                    <h2>SENARAI TRAKTOR</h2>
+                    <a class="btn" onclick="window.location.href = 'daftar_kenderaan_traktor.php'">DAFTAR TRAKTOR</a>
                 </div>
 
                 <table>
@@ -416,7 +416,7 @@ if (!$conn) {
                                 <td><?php echo $row['tahun_daftar']; ?></td>
                                 <td><?php echo $row['catatan']; ?></td>
                                 <td>
-                                    <button onclick="window.location.href = 'kemaskini_kenderaan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                    <button onclick="window.location.href = 'kemaskini_kenderaan_traktor.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>
                                     </button>
                                     <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
@@ -460,10 +460,10 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_kenderaan.php',
+                        url: 'controller/delete/delete_kenderaan_traktor.php',
                         type: 'POST',
                         data: {
-                            id: pemanduId
+                            id: kenderaanId
                         },
                         success: function(response) {
                             Swal.fire({

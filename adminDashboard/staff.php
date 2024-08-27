@@ -285,7 +285,7 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_staff.php',
+                        url: 'controller/delete/delete_staff.php',
                         type: 'POST',
                         data: {
                             id: staffId

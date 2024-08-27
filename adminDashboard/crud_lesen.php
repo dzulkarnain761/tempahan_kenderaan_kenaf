@@ -316,7 +316,7 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_lesen.php',
+                        url: 'controller/delete/delete_lesen.php',
                         type: 'POST',
                         data: {
                             id: lesenId,

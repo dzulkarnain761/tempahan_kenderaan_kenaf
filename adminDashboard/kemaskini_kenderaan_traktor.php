@@ -29,7 +29,7 @@ if (!$conn) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css">
 
     <style>
         * {
@@ -93,13 +93,13 @@ if (!$conn) {
 
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="kenderaan.php">Kenderaan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Kenderaan</li>
+                    <li class="breadcrumb-item"><a href="kenderaan_traktor.php">Senarai Traktor</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Traktor</li>
                 </ol>
             </nav>
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Kemaskini Kenderaan</h2>
+                    <h2>Kemaskini Traktor</h2>
                 </div>
                 <?php
                 $id = $_GET['id'];
@@ -107,7 +107,7 @@ if (!$conn) {
                 // Ensure you escape the ID to prevent SQL injection
                 $id = mysqli_real_escape_string($conn, $id);
 
-                $sqlKenderaan = "SELECT * FROM `kenderaan` WHERE id = $id";
+                $sqlKenderaan = "SELECT * FROM `kenderaan_traktor` WHERE id = $id";
                 $resultEditKenderaan = mysqli_query($conn, $sqlKenderaan);
 
                 // Fetch the Pemandu member's data
@@ -122,26 +122,32 @@ if (!$conn) {
                 ?>
 
                 <form class="editKenderaan" novalidate>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
                         <select id="kategori_kenderaan" class="form-control" name="kategori_kenderaan">
 
                             <?php
 
-                            $sqlKategori = "SELECT * FROM `kategori_kenderaan`";
+                            // $sqlKategori = "SELECT * FROM `kategori_kenderaan`";
 
-                            $resultKategori = mysqli_query($conn, $sqlKategori);
-                            // Fetch the current `kump_kod` value from the database
-                            $currentKategori = $kenderaan['kategori']; // Assuming you already have this value from a previous query
+                            // $resultKategori = mysqli_query($conn, $sqlKategori);
+                            // // Fetch the current `kump_kod` value from the database
+                            // $currentKategori = $kenderaan['kategori']; // Assuming you already have this value from a previous query
 
-                            while ($row = mysqli_fetch_assoc($resultKategori)) {
-                                // Check if the current `kump_kod` matches the one in the loop
-                                $selected = ($row['kategori'] == $currentKategori) ? 'selected' : '';
-                                echo '<option value="' . $row['kategori'] . '" ' . $selected . '>' . $row['kategori'] .  '</option>';
-                            }
+                            // while ($row = mysqli_fetch_assoc($resultKategori)) {
+                            //     // Check if the current `kump_kod` matches the one in the loop
+                            //     $selected = ($row['kategori'] == $currentKategori) ? 'selected' : '';
+                            //     echo '<option value="' . $row['kategori'] . '" ' . $selected . '>' . $row['kategori'] .  '</option>';
+                            // }
 
                             ?>
                         </select>
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label for="no_aset" class="form-label">Nombor Aset</label>
+                        <input type="text" class="form-control" id="no_aset" name="no_aset" placeholder="Masukkan Nombor Aset" value="<?php echo htmlspecialchars($kenderaan['no_aset']); ?>" required>
+                        <div class="invalid-feedback">Sila masukkan nombor aset.</div>
                     </div>
                     <div class="mb-3">
                         <label for="no_pendaftaran_kenderaan" class="form-label">Nombor Pendaftaran Kenderaan</label>
@@ -153,18 +159,6 @@ if (!$conn) {
                         <label for="tahun_daftar" class="form-label">Tahun Daftar</label>
                         <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" value="<?php echo htmlspecialchars($kenderaan['tahun_daftar']); ?>" placeholder="Masukkan Tahun Daftar" required>
                         <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="mula_cukai_jalan" class="form-label">Mula Cukai Jalan</label>
-                        <input type="date" class="form-control" id="mula_cukai_jalan" name="mula_cukai_jalan" value="<?php echo htmlspecialchars($kenderaan['mula_cukai_jalan']); ?>" placeholder="Pilih Mula Cukai Jalan" required>
-                        <div class="invalid-feedback">Sila pilih tarikh mula cukai jalan.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="tamat_cukai_jalan" class="form-label">Tamat Cukai Jalan</label>
-                        <input type="date" class="form-control" id="tamat_cukai_jalan" name="tamat_cukai_jalan" value="<?php echo htmlspecialchars($kenderaan['tamat_cukai_jalan']); ?>" placeholder="Pilih Tamat Cukai Jalan" required>
-                        <div class="invalid-feedback">Sila pilih tarikh tamat cukai jalan.</div>
                     </div>
 
                     <div class="mb-3">
@@ -205,6 +199,17 @@ if (!$conn) {
                     </div>
 
                     <div class="mb-3">
+                        <label for="harga_belian" class="form-label">Harga Belian</label>
+                        <input type="text" class="form-control" id="harga_belian" name="harga_belian" value="<?php echo htmlspecialchars($kenderaan['harga_belian']); ?>" placeholder="Masukkan Harga Belian" required>
+                        <div class="invalid-feedback">Sila masukkan harga belian.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="catatan" class="form-label">Catatan</label>
+                        <input type="text" class="form-control" id="catatan" name="catatan" value="<?php echo htmlspecialchars($kenderaan['catatan']); ?>">
+                        <!-- <div class="invalid-feedback">Sila masukkan tahun daftar.</div> -->
+                    </div>
+
+                    <div class="mb-3">
                         <label for="status_kenderaan" class="form-label">Status</label>
                         <select id="status_kenderaan" class="form-control" name="status_kenderaan" required>
                             <option value="Aktif" <?php echo ($kenderaan['status'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
@@ -215,14 +220,14 @@ if (!$conn) {
 
                     <input type="hidden" name="id" value="<?php echo $id ?>">
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Kemaskini Kenderaan</button>
+                        <button type="submit" class="btn btn-primary">Kemaskini Traktor</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    
+
     <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
@@ -286,7 +291,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/edit_kenderaan.php',
+                    url: 'controller/edit/edit_kenderaan_traktor.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -297,7 +302,7 @@ if (!$conn) {
                                 title: 'Success',
                                 text: 'Kemaskini Berjaya',
                             }).then(() => {
-                                window.location.href = 'kenderaan.php';
+                                window.location.href = 'kenderaan_traktor.php';
                             });
                         } else {
                             Swal.fire({

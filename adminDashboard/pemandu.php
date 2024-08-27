@@ -463,7 +463,7 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete_pemandu.php',
+                        url: 'controller/delete/delete_pemandu.php',
                         type: 'POST',
                         data: {
                             id: pemanduId

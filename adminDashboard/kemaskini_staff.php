@@ -241,7 +241,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/edit_staff.php',
+                    url: 'controller/edit/edit_staff.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

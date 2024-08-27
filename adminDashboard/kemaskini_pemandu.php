@@ -256,7 +256,7 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/edit_pemandu.php',
+                    url: 'controller/edit/edit_pemandu.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

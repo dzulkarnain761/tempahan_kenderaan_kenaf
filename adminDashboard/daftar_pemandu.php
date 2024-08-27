@@ -239,7 +239,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/signup_pemandu.php',
+                    url: 'controller/add/signup_pemandu.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
