@@ -161,7 +161,7 @@ if (!$conn) {
                         <div class="invalid-feedback">Sila pilih status.</div>
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="kata_laluan" class="form-label">Kata Laluan</label>
                         <input type="password" class="form-control" id="kata_laluan" name="kata_laluan" placeholder="Masukkan Kata Laluan" required>
                         <div class="invalid-feedback">Sila masukkan kata laluan.</div>
@@ -171,13 +171,13 @@ if (!$conn) {
                         <label for="sahkan_kata_laluan" class="form-label">Sahkan Kata Laluan</label>
                         <input type="password" class="form-control" id="sahkan_kata_laluan" name="sahkan_kata_laluan" placeholder="Sahkan Kata Laluan" required>
                         <div class="invalid-feedback">Sila sahkan kata laluan.</div>
-                    </div>
+                    </div> -->
 
-                    <div class="modal-footer" style="display:flex; justify-content: space-between;">
-                        <div class="mb-3 form-check">
+                    <div class="modal-footer" >
+                        <!-- <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="showPassword">
                             <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
-                        </div>
+                        </div> -->
                         <div>
                             <button type="submit" class="btn btn-primary">Daftar Pemandu</button>
                         </div>

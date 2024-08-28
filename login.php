@@ -21,6 +21,7 @@ if (isset($_SESSION["kumpulan"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -114,9 +115,9 @@ if (isset($_SESSION["kumpulan"])) {
         </div>
     </div>
 
-    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
 
     <script>
         (() => {
@@ -137,15 +138,15 @@ if (isset($_SESSION["kumpulan"])) {
                 }, false)
             })
 
-            const showPasswordCheckbox = document.getElementById('showPassword');
-            const passwordInput = document.getElementById('kataLaluan');
-            const confirmPasswordInput = document.getElementById('confirmPass');
+            // const showPasswordCheckbox = document.getElementById('showPassword');
+            // const passwordInput = document.getElementById('kataLaluan');
+            // const confirmPasswordInput = document.getElementById('confirmPass');
 
-            showPasswordCheckbox.addEventListener('change', () => {
-                const type = showPasswordCheckbox.checked ? 'text' : 'password';
-                passwordInput.type = type;
-                confirmPasswordInput.type = type;
-            });
+            // showPasswordCheckbox.addEventListener('change', () => {
+            //     const type = showPasswordCheckbox.checked ? 'text' : 'password';
+            //     passwordInput.type = type;
+            //     confirmPasswordInput.type = type;
+            // });
 
         })()
 

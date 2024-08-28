@@ -12,8 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kategori_lesen = $_POST['kategori_lesen'];
     $tarikh_tamat_lesen = $_POST['tarikh_tamat_lesen'];
     $status_pemandu = $_POST['status_pemandu'];
-    $password = $_POST['kata_laluan'];
-    $confirmPass = $_POST['sahkan_kata_laluan'];
 
 
     $fullname = strtoupper($fullname);
@@ -28,10 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    if ($password !== $confirmPass) {
-        echo json_encode(["success" => false, "message" => "Sila pastikan Kata Laluan Anda."]);
-        exit();
-    }
+    // if ($password !== $confirmPass) {
+    //     echo json_encode(["success" => false, "message" => "Sila pastikan Kata Laluan Anda."]);
+    //     exit();
+    // }
 
     // Check if nokp already exists in the database using prepared statement
     $checkSql = $conn->prepare("SELECT * FROM pemandu WHERE no_kp = ?");
@@ -47,11 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $checkSql->close();
 
+    $password = substr($nokp, -4);
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Prepare an SQL statement for execution
     $sql = $conn->prepare("INSERT INTO pemandu (nama, no_kp, contact_no, email, kategori_lesen, tarikh_tamat_lesen, status, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    
+
     // Bind variables to the prepared statement as parameters
     $sql->bind_param("ssssssss", $fullname, $nokp, $contact, $email, $kategori_lesen, $tarikh_tamat_lesen, $status_pemandu, $hashed_password);
 

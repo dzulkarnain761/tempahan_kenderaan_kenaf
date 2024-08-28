@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST['nama_staf'];
     $email = $_POST['email_staff'];
     $contact = $_POST['no_telefon'];
-    $password = $_POST['kata_laluan'];
-    $confirmPass = $_POST['sahkan_kata_laluan'];
+    // $password = $_POST['kata_laluan'];
+    // $confirmPass = $_POST['sahkan_kata_laluan'];
 
     $fullname = strtoupper($fullname);
 
@@ -25,10 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    if ($password !== $confirmPass) {
-        echo json_encode(["success" => false, "message" => "Sila pastikan Kata Laluan Anda."]);
-        exit();
-    }
 
     // Check if nokp already exists in the database using prepared statement
     $checkSql = $conn->prepare("SELECT * FROM pengguna WHERE no_kp = ?");
@@ -43,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $checkSql->close();
+
+    $password = substr($nokp, -4);
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 

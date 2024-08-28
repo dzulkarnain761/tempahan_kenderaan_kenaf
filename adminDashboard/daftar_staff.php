@@ -158,7 +158,7 @@ if (!$conn) {
                         <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="kata_laluan" class="form-label">Kata Laluan</label>
                         <input type="password" class="form-control" id="kata_laluan" name="kata_laluan" placeholder="Masukkan Kata Laluan" minlength="5" required>
                         <div class="invalid-feedback">
@@ -172,13 +172,13 @@ if (!$conn) {
                         <div class="invalid-feedback">
                             Sila sahkan kata laluan yang sah.
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="modal-footer" style="display:flex; justify-content: space-between;">
-                        <div class="mb-3 form-check">
+                    <div class="modal-footer" >
+                        <!-- <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="show_password" name="show_password">
                             <label class="form-check-label" for="show_password">Lihat Kata Laluan</label>
-                        </div>
+                        </div> -->
                         <div>
                             <button type="submit" class="btn btn-primary">Daftar Staf</button>
                         </div>
@@ -216,15 +216,15 @@ if (!$conn) {
                 }, false)
             })
 
-            const showPasswordCheckbox = document.getElementById('show_password');
-            const passwordInput = document.getElementById('kata_laluan');
-            const confirmPasswordInput = document.getElementById('sahkan_kata_laluan');
+            // const showPasswordCheckbox = document.getElementById('show_password');
+            // const passwordInput = document.getElementById('kata_laluan');
+            // const confirmPasswordInput = document.getElementById('sahkan_kata_laluan');
 
-            showPasswordCheckbox.addEventListener('change', () => {
-                const type = showPasswordCheckbox.checked ? 'text' : 'password';
-                passwordInput.type = type;
-                confirmPasswordInput.type = type;
-            });
+            // showPasswordCheckbox.addEventListener('change', () => {
+            //     const type = showPasswordCheckbox.checked ? 'text' : 'password';
+            //     passwordInput.type = type;
+            //     confirmPasswordInput.type = type;
+            // });
 
 
         })()

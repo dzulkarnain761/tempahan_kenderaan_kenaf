@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nokp = $_POST['nokp'];
     $fullname = $_POST['fullname'];
     $contact = $_POST['contactno'];
-    $password = $_POST['kataLaluan'];
-    $confirmPass = $_POST['confirmPass'];
+    // $password = $_POST['kataLaluan'];
+    // $confirmPass = $_POST['confirmPass'];
 
     $fullname = strtoupper($fullname);
 
@@ -28,10 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     
-    if ($password !== $confirmPass) {
-        echo json_encode(["success" => false, "message" => "Sila pastikan Kata Laluan Anda."]);
-        exit();
-    }
+    // if ($password !== $confirmPass) {
+    //     echo json_encode(["success" => false, "message" => "Sila pastikan Kata Laluan Anda."]);
+    //     exit();
+    // }
 
     // Check if nokp already exists in the database using prepared statement
     $checkSql = $conn->prepare("SELECT * FROM pengguna WHERE no_kp = ?");
@@ -47,6 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $checkSql->close();
 
+    $password = substr($nokp, -4);
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the user into the database using prepared statement
@@ -55,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql->bind_param("sssss", $fullname, $nokp, $contact, $group, $hashed_password);
 
     if ($sql->execute() === TRUE) {
-        echo json_encode(["success" => true]);
+        echo json_encode(["success" => true, "password" => $password ]);
     } else {
         echo json_encode(["success" => false, "message" => "Pendaftaran gagal."]);
     }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -100,7 +101,7 @@
                             Sila masukkan nombor telefon yang sah.
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="kataLaluan" class="form-label">Kata Laluan :</label>
                         <input type="password" class="form-control" id="kataLaluan" name="kataLaluan" placeholder="Masukkan Kata Laluan" minlength="5" required>
                         <div class="invalid-feedback">
@@ -113,11 +114,11 @@
                         <div class="invalid-feedback">
                             Sila sahkan kata laluan.
                         </div>
-                    </div>
-                    <div class="mb-3 form-check">
+                    </div> -->
+                    <!-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="showPassword">
                         <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
-                    </div>
+                    </div> -->
                     <div class="modal-footer">
                         <button id="signupButton" type="submit" class="btn btn-primary">Daftar Masuk</button>
                     </div>
@@ -128,9 +129,14 @@
             </div>
         </div>
     </div>
-    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <!-- <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
+
 
     <script>
         (() => {
@@ -152,15 +158,15 @@
             })
 
             // Toggle password visibility
-            const showPasswordCheckbox = document.getElementById('showPassword');
-            const passwordInput = document.getElementById('kataLaluan');
-            const confirmPasswordInput = document.getElementById('confirmPass');
+            // const showPasswordCheckbox = document.getElementById('showPassword');
+            // const passwordInput = document.getElementById('kataLaluan');
+            // const confirmPasswordInput = document.getElementById('confirmPass');
 
-            showPasswordCheckbox.addEventListener('change', () => {
-                const type = showPasswordCheckbox.checked ? 'text' : 'password';
-                passwordInput.type = type;
-                confirmPasswordInput.type = type;
-            });
+            // showPasswordCheckbox.addEventListener('change', () => {
+            //     const type = showPasswordCheckbox.checked ? 'text' : 'password';
+            //     passwordInput.type = type;
+            //     confirmPasswordInput.type = type;
+            // });
 
             // function restrictToNumbers(inputId) {
             //     document.getElementById(inputId).addEventListener('input', function(e) {
@@ -195,8 +201,16 @@
                                 title: 'Success',
                                 text: 'Pendaftaran Berjaya',
                             }).then(() => {
-                                window.location.href = 'login.php';
+                                // window.location.href = 'login.php';
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Kata Laluan Anda : ',
+                                    text: res.password,
+                                }).then(() => {
+                                    window.location.href = 'login.php';
+                                })
                             });
+
                         } else {
                             Swal.fire({
                                 icon: 'error',
