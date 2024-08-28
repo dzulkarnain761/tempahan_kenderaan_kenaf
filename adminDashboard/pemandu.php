@@ -26,6 +26,7 @@ if (!$conn) {
     <title>Booking</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -38,11 +39,16 @@ if (!$conn) {
             box-sizing: border-box;
         }
 
-        body {
-            background-color: #f4f4f4;
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
             margin: 0;
-            padding: 0;
-            color: #333;
         }
 
         .btn {
@@ -361,7 +367,7 @@ if (!$conn) {
 </head>
 
 <body>
-    <div class="container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -386,56 +392,29 @@ if (!$conn) {
                     <a class="btn" onclick="window.location.href = 'daftar_pemandu.php'">DAFTAR PEMANDU</a>
                 </div>
 
-                <table>
+                <table id="pemanduTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemandu</td>
                             <td>No Kad Pengenalan</td>
-                            <td>Kategori Lesen</td>
-                            <td>Tarikh Tamat Lesen</td>
+                            <!-- <td>Kategori Lesen</td>
+                            <td>Tarikh Tamat Lesen</td> -->
                             <td>Status</td>
                             <td>Kemaskini</td>
                         </tr>
                     </thead>
                     <tbody>
 
-
-                        <?php
-                        // SQL query to select all staff excluding specific groups
-                        $sqlPemandu = "SELECT * FROM `pemandu`";
-
-                        $resultPemandu = mysqli_query($conn, $sqlPemandu);
-                        $count = 1;
-
-                        // Loop through the result set
-                        while ($row = mysqli_fetch_assoc($resultPemandu)) {
-                        ?>
-                            <tr data-id="<?php echo $row['id_pemandu']; ?>">
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row['nama']; ?></td>
-                                <td><?php echo $row['no_kp']; ?></td>
-                                <td><?php echo $row['kategori_lesen']; ?></td>
-                                <td><?php echo $row['tarikh_tamat_lesen']; ?></td>
-                                <td><?php echo $row['status']; ?></td>
-                                <td>
-                                    <button onclick="window.location.href = 'kemaskini_pemandu.php?id=<?php echo $row['id_pemandu']; ?>'" class="btn btn-outline-edit">
-                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                    </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
-                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                    </button>
-
-                                </td>
-                            </tr>
-                        <?php
-                            $count++;
-                        }
-                        ?>
-
-
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start mt-4" id="pagination">
+                        <!-- Pagination links will be injected here by JavaScript -->
+                    </ul>
+                </nav>
             </div>
         </div>
 
@@ -448,6 +427,72 @@ if (!$conn) {
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
+        function loadPage(page) {
+            $.ajax({
+                url: 'controller/get_pemandu.php', // The PHP file that handles the database query
+                type: 'GET',
+                data: {
+                    page: page
+                },
+                dataType: 'json',
+                success: function(response) {
+                    var tbody = $('#pemanduTable tbody');
+                    tbody.empty();
+
+                    // Populate table
+                    response.data.forEach(function(item, index) {
+                        tbody.append(`
+                        <tr data-id="${item.id_pemandu}">
+                            <td>${(response.currentPage - 1) * 10 + index + 1}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.no_kp}</td>
+                            <td>${item.status}</td>
+                            <td>
+                                <button onclick="window.location.href = 'kemaskini_pemandu.php?id=${item.id_pemandu}'" class="btn btn-outline-edit">
+                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+                    });
+
+                    // Populate pagination
+                    var pagination = $('#pagination');
+                    pagination.empty();
+
+                    // Previous button
+                    pagination.append(`
+                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                    </li>
+                `);
+
+                    // Page numbers
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        pagination.append(`
+                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    // Next button
+                    pagination.append(`
+                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                    </li>
+                `);
+                }
+            });
+        }
+
+        // Load the first page by default
+        loadPage(1);
+
+
         function deleteItem(button) {
             var row = button.closest('tr'); // Find the closest <tr> element
             var pemanduId = row.getAttribute('data-id'); // Get the data-id from <tr>
