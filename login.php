@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-if (isset($_SESSION["kumpulan"])) {
-    if ($_SESSION['kumpulan'] === 'G') {
-        header("Location: homepage.php");
-        exit();
-    } elseif ($_SESSION['kumpulan'] === 'A') {
-        header("Location: adminDashboard/dashboard.php");
-        exit();
-    }
-}
+// if (isset($_SESSION["kumpulan"])) {
+//     if ($_SESSION['kumpulan'] === 'G') {
+//         header("Location: homepage.php");
+//         exit();
+//     } elseif ($_SESSION['kumpulan'] === 'A') {
+//         header("Location: adminDashboard/dashboard.php");
+//         exit();
+//     }
+// }
 
 ?>
 

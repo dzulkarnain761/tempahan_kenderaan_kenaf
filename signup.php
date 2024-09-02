@@ -101,6 +101,16 @@
                             Sila masukkan nombor telefon yang sah.
                         </div>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="alamat" class="form-label">Alamat Rumah :</label>
+                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Rumah" minlength="10" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan alamat yang sah.
+                        </div>
+                    </div>
+
+                    
                     <!-- <div class="mb-3">
                         <label for="kataLaluan" class="form-label">Kata Laluan :</label>
                         <input type="password" class="form-control" id="kataLaluan" name="kataLaluan" placeholder="Masukkan Kata Laluan" minlength="5" required>

@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nokp = $_POST['nokp'];
     $fullname = $_POST['fullname'];
     $contact = $_POST['contactno'];
+    $alamat = $_POST['alamat'];
     // $password = $_POST['kataLaluan'];
     // $confirmPass = $_POST['confirmPass'];
 
@@ -34,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // }
 
     // Check if nokp already exists in the database using prepared statement
-    $checkSql = $conn->prepare("SELECT * FROM pengguna WHERE no_kp = ?");
+    $checkSql = $conn->prepare("SELECT * FROM penyewa WHERE no_kp = ?");
     $checkSql->bind_param("s", $nokp);
     $checkSql->execute();
     $result = $checkSql->get_result();
@@ -52,9 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the user into the database using prepared statement
-    $sql = $conn->prepare("INSERT INTO pengguna (nama, no_kp, contact_no, kumpulan, password) VALUES (?, ?, ?, ?, ?)");
-    $group = 'X'; // Define the group value
-    $sql->bind_param("sssss", $fullname, $nokp, $contact, $group, $hashed_password);
+    $sql = $conn->prepare("INSERT INTO penyewa (nama, no_kp, contact_no,alamat, password) VALUES (?, ?, ?, ?, ?)");
+    $sql->bind_param("sssss", $fullname, $nokp, $contact,$alamat, $hashed_password);
 
     if ($sql->execute() === TRUE) {
         echo json_encode(["success" => true, "password" => $password ]);

@@ -1,4 +1,3 @@
-
 <?php
 $servername = "localhost";
 $username = "root";
@@ -10,6 +9,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+    exit();
 }
 
 session_start();
@@ -23,98 +23,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nokp = $_POST['nokp'];
         $password = $_POST['kataLaluan'];
 
-        $nokplength = strlen($nokp);
-
-        if (empty($nokp) || !ctype_digit($nokp)) {
+        if (!ctype_digit($nokp)) {
             echo json_encode(["success" => false, "message" => "Sila pastikan No Kad Pengenalan Anda."]);
             exit();
         }
 
         // Fetch the user record based on nokp
-        $sqlLogin = "SELECT * FROM pengguna WHERE no_kp = ?";
+        $sqlLogin = "SELECT * FROM penyewa WHERE no_kp = ?";
         $stmt = $conn->prepare($sqlLogin);
         $stmt->bind_param('s', $nokp);
         $stmt->execute();
         $resultLogin = $stmt->get_result();
 
-
-        $sqlLogin = "SELECT * FROM pemandu WHERE no_kp = ?";
-        $stmt = $conn->prepare($sqlLogin);
-        $stmt->bind_param('s', $nokp);
-        $stmt->execute();
-
-        $pemanduLogin = $stmt->get_result();
+        // Fetch the admin record based on nokp
+        $sqlAdminLogin = "SELECT * FROM admin WHERE no_kp = ?";
+        $stmtAdmin = $conn->prepare($sqlAdminLogin);
+        $stmtAdmin->bind_param('s', $nokp);
+        $stmtAdmin->execute();
+        $adminLogin = $stmtAdmin->get_result();
 
         if ($resultLogin->num_rows > 0) {
             while ($rowLogin = $resultLogin->fetch_assoc()) {
                 $hashed_password = $rowLogin['password'];
-                $kumpulan = $rowLogin['kumpulan'];
                 $pengguna_id = $rowLogin['no_kp'];
                 $nama_pengguna = $rowLogin['nama'];
-
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
-
-                    //PENYEWA
-                    if ($kumpulan == 'X') {
-                        $_SESSION['kumpulan'] = $kumpulan;
-                        $_SESSION['pengguna_id'] = $pengguna_id;
-                        $_SESSION['nama_pengguna'] = $nama_pengguna;
-
-                        // Rekod audit trail
-                        $action = "Log masuk sebagai PENYEWA (X)";
-                        $date_created = date('Y-m-d H:i:s');
-
-                        // Simpan alamat IP pengguna dalam rekod logs
-                        $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
-                        $stmtAudit = $conn->prepare($sqlAuditTrail);
-                        $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
-                        $stmtAudit->execute();
-
-                        echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'homepage.php']);
-                        exit();
-                    }
-
-                    //SUPER ADMIN 
-                    if ($kumpulan == 'Z') {
-                        $_SESSION['kumpulan'] = $kumpulan;
-                        $_SESSION['pengguna_id'] = $pengguna_id;
-                        $_SESSION['nama_pengguna'] = $nama_pengguna;
-
-                        // Rekod audit trail
-                        $action = "Log masuk sebagai SUPER ADMIN (Z)";
-                        $date_created = date('Y-m-d H:i:s');
-
-                        // Simpan alamat IP pengguna dalam rekod logs
-                        $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
-                        $stmtAudit = $conn->prepare($sqlAuditTrail);
-                        $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
-                        $stmtAudit->execute();
-
-                        echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'adminDashboard/dashboard.php']);
-                        exit();
-                    }
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
-                }
-            }
-
-            //PEMANDU
-        } elseif ($pemanduLogin->num_rows > 0) {
-
-            while ($rowLogin = $resultLogin->fetch_assoc()) {
-                $hashed_password = $rowLogin['password'];
-                $pengguna_id = $rowLogin['no_kp'];
-                $nama_pengguna = $rowLogin['nama'];
-
-                // Verify the password
-                if (password_verify($password, $hashed_password)) {
-                    $_SESSION['kumpulan'] = 'Y';
+                    // PENYEWA
                     $_SESSION['pengguna_id'] = $pengguna_id;
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
 
                     // Rekod audit trail
-                    $action = "Log masuk sebagai PEMANDU (Y)";
+                    $action = "Log masuk sebagai PENYEWA";
                     $date_created = date('Y-m-d H:i:s');
 
                     // Simpan alamat IP pengguna dalam rekod logs
@@ -124,13 +64,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmtAudit->execute();
 
                     echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'homepage.php']);
+                    exit();
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
+                    exit();
+                }
+            }
+        } elseif ($adminLogin->num_rows > 0) {
+            while ($rowAdmin = $adminLogin->fetch_assoc()) {
+                $hashed_password = $rowAdmin['password'];
+                $pengguna_id = $rowAdmin['no_kp'];
+                $nama_pengguna = $rowAdmin['nama'];
+                $kumpulan = $rowAdmin['kumpulan'];
+
+                // Verify the password
+                if (password_verify($password, $hashed_password)) {
+                    // ADMIN
+                    $_SESSION['kumpulan'] = $kumpulan;
+                    $_SESSION['pengguna_id'] = $pengguna_id;
+                    $_SESSION['nama_pengguna'] = $nama_pengguna;
+
+                    // Rekod audit trail
+                    $action = "Log masuk sebagai ADMIN ($kumpulan)";
+                    $date_created = date('Y-m-d H:i:s');
+
+                    // Simpan alamat IP pengguna dalam rekod logs
+                    $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
+                    $stmtAudit = $conn->prepare($sqlAuditTrail);
+                    $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
+                    $stmtAudit->execute();
+
+                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'controller/auth/routeAdmin.php']);
+                    exit();
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
+                    exit();
                 }
             }
         } else {
             echo json_encode(['success' => false, 'message' => 'No Kad Pengenalan Belum Didaftar']);
+            exit();
         }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'No Kad Pengenalan dan Kata Laluan diperlukan.']);
+        exit();
     }
 }
 

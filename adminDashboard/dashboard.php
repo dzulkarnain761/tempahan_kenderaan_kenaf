@@ -306,48 +306,6 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const logoutButton = document.getElementById('logoutButton');
-
-            // Add a click event listener to the logout button
-            logoutButton.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent the default anchor behavior
-
-                // Show the confirmation dialog
-                Swal.fire({
-                    title: "Log Keluar",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    cancelButtonText: "Batal",
-                    confirmButtonText: "Log Keluar"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Handle the logout logic here (e.g., redirecting to a logout route)
-                        // Example: window.location.href = '/logout';
-
-                        // Show the success dialog
-                        Swal.fire({
-                            title: "Logged out!",
-                            text: "You have been successfully logged out.",
-                            icon: "success"
-                        }).then(() => {
-                            // Optionally, redirect the user after the success dialog
-                            window.location.href = '../controller/logout.php'; // Update with your actual logout URL
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
 
 </body>
 
