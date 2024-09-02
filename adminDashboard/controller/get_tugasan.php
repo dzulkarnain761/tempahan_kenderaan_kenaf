@@ -6,24 +6,24 @@ $limit = 5; // Number of entries to show per page
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
 
-// SQL query to select pemandu with pagination
-$sqlPemandu = "SELECT * FROM `admin` WHERE kumpulan = 'Y' LIMIT $limit OFFSET $offset";
-$resultPemandu = mysqli_query($conn, $sqlPemandu);
+// SQL query to select tugasan_traktor with pagination
+$sqltugasan = "SELECT * FROM `tugasan` LIMIT $limit OFFSET $offset";
+$resulttugasan = mysqli_query($conn, $sqltugasan);
 
 // Fetch total number of records
-$sqlTotal = "SELECT COUNT(*) as total FROM `admin` WHERE kumpulan = 'Y'";
+$sqlTotal = "SELECT COUNT(*) as total FROM `tugasan`";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];
 $totalPages = ceil($total / $limit);
 
-$pemanduData = [];
-while ($row = mysqli_fetch_assoc($resultPemandu)) {
-    $pemanduData[] = $row;
+$tugasanData = [];
+while ($row = mysqli_fetch_assoc($resulttugasan)) {
+    $tugasanData[] = $row;
 }
 
 $response = [
-    'data' => $pemanduData,
+    'data' => $tugasanData,
     'totalPages' => $totalPages,
     'currentPage' => $page
 ];

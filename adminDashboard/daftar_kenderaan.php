@@ -92,16 +92,31 @@ if (!$conn) {
 
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="kenderaan_jengkaut.php">Senarai Jengkaut</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Daftar Jengkaut</li>
+                    <li class="breadcrumb-item"><a href="kenderaan.php">Senarai Kenderaan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Daftar Kenderaan</li>
                 </ol>
             </nav>
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Daftar Jengkaut</h2>
+                    <h2>Daftar Kenderaan</h2>
                 </div>
 
                 <form class="registerKenderaan" novalidate>
+                    <div class="mb-3">
+                        <label for="kategori_kenderaan" class="form-label">Pilih Kategori Kenderaan</label>
+                        <select id="kategori_kenderaan" class="form-control" name="kategori_kenderaan" required>
+                            <option disabled selected value="">--Pilih Kategori Kenderaan--</option>
+                            <?php
+                            $sqlNegeri = "SELECT * FROM kategori_kenderaan";
+                            $resultNegeri = mysqli_query($conn, $sqlNegeri);
+
+                            while ($row = mysqli_fetch_assoc($resultNegeri)) {
+                                echo '<option value="' . $row['kategori'] . '">' . $row['kategori'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
+                    </div>
 
                     <div class="mb-3">
                         <label for="no_aset" class="form-label">Nombor Aset</label>
@@ -119,7 +134,7 @@ if (!$conn) {
                         <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" placeholder="Masukkan Tahun Daftar" minlength="4" maxlength="4" required>
                         <div class="invalid-feedback">Sila masukkan tahun daftar.</div>
                     </div>
-                    
+
 
                     <div class="mb-3">
                         <label for="negeri_penempatan" class="form-label">Negeri Penempatan</label>
@@ -145,26 +160,18 @@ if (!$conn) {
                         </select>
                         <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="harga_belian" class="form-label">Harga Belian</label>
                         <input type="text" class="form-control" id="harga_belian" name="harga_belian" placeholder="Masukkan Harga Belian" required>
                         <div class="invalid-feedback">Sila masukkan harga belian.</div>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="catatan" class="form-label">Catatan</label>
-                        <input type="text" class="form-control" id="catatan" name="catatan" >
+                        <input type="text" class="form-control" id="catatan" name="catatan">
                         <!-- <div class="invalid-feedback">Sila masukkan tahun daftar.</div> -->
                     </div>
 
-                    <div class="mb-3">
-                        <label for="status_kenderaan" class="form-label">Status</label>
-                        <select id="status_kenderaan" class="form-control" name="status_kenderaan" required>
-                            <option disabled selected value="">--Pilih Status Kenderaan--</option>
-                            <option value="Aktif">Aktif</option>
-                            <option value="Tidak Aktif">Tidak Aktif</option>
-                        </select>
-                        <div class="invalid-feedback">Sila pilih status kenderaan.</div>
-                    </div>
+
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Daftar Kenderaan</button>
@@ -234,7 +241,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/add/signup_kenderaan_jengkaut.php',
+                    url: 'controller/add/signup_kenderaan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -245,7 +252,7 @@ if (!$conn) {
                                 title: 'Success',
                                 text: 'Pendaftaran Berjaya',
                             }).then(() => {
-                                window.location.href = 'kenderaan_jengkaut.php';
+                                window.location.href = 'kenderaan.php';
                             });
                         } else {
                             Swal.fire({

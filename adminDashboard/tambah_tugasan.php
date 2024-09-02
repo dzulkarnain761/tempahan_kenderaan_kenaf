@@ -90,53 +90,58 @@ include 'controller/connection.php';
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
-                    <li class="breadcrumb-item"><a href="crud_tugasan_traktor.php">Tugasan Traktor</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Tugasan</li>
+                    <li class="breadcrumb-item"><a href="crud_tugasan.php">Tugasan </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tambah Tugasan</li>
                 </ol>
             </nav>
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h3>Kemaskini Tugasan</h3>
+                    <h3>Tambah Tugasan</h3>
                 </div>
 
-                <?php
-                $id = $_GET['id'];
+                <form class="tambahTugasan" novalidate>
 
-                // Ensure you escape the ID to prevent SQL injection
-                $id = mysqli_real_escape_string($conn, $id);
+                    <div class="mb-3">
+                        <label for="kategori_kenderaan_input" class="form-label">Kategori Kenderaan</label>
+                        <select name="kategori_kenderaan" id="kategori_kenderaan" class="form-control" required>
+                            <option value="" selected disabled>--Pilih Kategori--</option>
+                            <?php
 
-                $sqlTugasan = "SELECT * FROM `tugasan_traktor` WHERE id = $id";
-                $resultEditTugasan = mysqli_query($conn, $sqlTugasan);
+                            // Query to fetch categories
+                            $sql = "SELECT id, kategori FROM kategori_kenderaan";
+                            $result = mysqli_query($conn, $sql);
 
-                // Fetch the Pemandu member's data
-                if ($resultEditTugasan && mysqli_num_rows($resultEditTugasan) > 0) {
-                    $tugasan = mysqli_fetch_assoc($resultEditTugasan);
-                } else {
-                    // Handle the case where no Pemandu member is found
-                    echo "Tiada Tugasan Dijumpai";
-                    exit;
-                }
-
-                ?>
-
-                <form class="updateTugasanTraktor" novalidate>
+                            // Check if there are results and populate the dropdown
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . htmlspecialchars($row['kategori']) . '">' . htmlspecialchars($row['kategori']) . '</option>';
+                                }
+                            } else {
+                                echo '<option value="" disabled>No categories available</option>';
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">
+                            Sila Pilih Kategori Kenderaan
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="nama_kerja_input" class="form-label">Nama Kerja</label>
-                        <input type="text" class="form-control" id="nama_kerja_input" name="nama_kerja" value="<?php echo htmlspecialchars($tugasan['kerja']); ?>" placeholder="Masukkan Nama Kerja" required>
+                        <input type="text" class="form-control" id="nama_kerja_input" name="nama_kerja" placeholder="Masukkan Nama Kerja" required>
                         <div class="invalid-feedback">
                             Sila masukkan nama kerja.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="kadar_per_jam_input" class="form-label">Kadar Per Jam</label>
-                        <input type="text" class="form-control" id="kadar_per_jam_input" name="kadar_per_jam" value="<?php echo htmlspecialchars($tugasan['harga_per_jam']); ?>" placeholder="Masukkan kadar Per Jam" required>
+                        <input type="text" class="form-control" id="kadar_per_jam_input" name="kadar_per_jam" placeholder="Masukkan kadar Per Jam" required>
                         <div class="invalid-feedback">
                             Sila masukkan kadar per jam.
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Kemaskini Tugasan</button>
+                        <button type="submit" class="btn btn-primary">Tambah Tugasan</button>
                     </div>
                 </form>
             </div>
@@ -156,7 +161,7 @@ include 'controller/connection.php';
             'use strict'
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.updateTugasanTraktor')
+            const forms = document.querySelectorAll('.tambahTugasan')
 
             // Loop over them and prevent submission
             Array.from(forms).forEach(form => {
@@ -173,7 +178,7 @@ include 'controller/connection.php';
 
 
         $(document).ready(function() {
-            $('.updateTugasanTraktor').on('submit', function(e) {
+            $('.tambahTugasan').on('submit', function(e) {
                 e.preventDefault();
 
                 // Check if form is valid before making AJAX request
@@ -184,7 +189,7 @@ include 'controller/connection.php';
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/add/add_tugasan_traktor.php',
+                    url: 'controller/add/add_tugasan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -193,9 +198,9 @@ include 'controller/connection.php';
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success',
-                                text: 'Kemaskini Berjaya',
+                                text: 'Penambahan Berjaya',
                             }).then(() => {
-                                window.location.href = 'crud_tugasan_traktor.php';
+                                window.location.href = 'crud_tugasan.php';
                             });
                         } else {
                             Swal.fire({

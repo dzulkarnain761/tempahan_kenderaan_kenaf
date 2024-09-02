@@ -91,7 +91,7 @@ include 'controller/connection.php';
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
-                    <li class="breadcrumb-item"><a href="crud_tugasan_jengkaut.php">Tugasan Jengkaut</a></li>
+                    <li class="breadcrumb-item"><a href="crud_tugasan.php">Tugasan</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Kemaskini Tugasan</li>
                 </ol>
             </nav>
@@ -107,7 +107,7 @@ include 'controller/connection.php';
                 // Ensure you escape the ID to prevent SQL injection
                 $id = mysqli_real_escape_string($conn, $id);
 
-                $sqlTugasan = "SELECT * FROM `tugasan_jengkaut` WHERE id = $id";
+                $sqlTugasan = "SELECT * FROM `tugasan` WHERE id = $id";
                 $resultEditTugasan = mysqli_query($conn, $sqlTugasan);
 
                 // Fetch the Pemandu member's data
@@ -122,6 +122,37 @@ include 'controller/connection.php';
                 ?>
 
                 <form class="updateTugasanTraktor" novalidate>
+                    <div class="mb-3">
+                        <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
+                        <select name="kategori_kenderaan" id="kategori_kenderaan" class="form-control" required>
+                            
+                            <?php
+
+                            // Query to fetch all categories
+                            $sql = "SELECT * FROM kategori_kenderaan";
+                            $result = mysqli_query($conn, $sql);
+                            $current_value = $tugasan['kategori_kenderaan'];
+
+                            // Check if there are results and populate the dropdown
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Check if the current option is selected
+                                    $selected = ($row['kategori'] == $current_value) ? 'selected' : '';
+                                    echo '<option value="' . htmlspecialchars($row['kategori']) . '" ' . $selected . '>' . htmlspecialchars($row['kategori']) . '</option>';
+                                }
+                            } else {
+                                echo '<option value="" disabled>No categories available</option>';
+                            }
+
+                            // Close connection
+                            mysqli_close($conn);
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">
+                            Sila Pilih Kategori Kenderaan
+                        </div>
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="nama_kerja_input" class="form-label">Nama Kerja</label>
                         <input type="text" class="form-control" id="nama_kerja_input" name="nama_kerja" value="<?php echo htmlspecialchars($tugasan['kerja']); ?>" placeholder="Masukkan Nama Kerja" required>
@@ -186,7 +217,7 @@ include 'controller/connection.php';
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/edit/edit_tugasan_jengkaut.php',
+                    url: 'controller/edit/edit_tugasan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -197,7 +228,7 @@ include 'controller/connection.php';
                                 title: 'Success',
                                 text: 'Kemaskini Berjaya',
                             }).then(() => {
-                                window.location.href = 'crud_tugasan_jengkaut.php';
+                                window.location.href = 'crud_tugasan.php';
                             });
                         } else {
                             Swal.fire({

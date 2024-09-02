@@ -23,6 +23,7 @@ if (!$conn) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +44,18 @@ if (!$conn) {
             margin: 0;
             padding: 0;
             color: #333;
+        }
+
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
+            margin: 0;
         }
 
         .btn {
@@ -185,7 +198,7 @@ if (!$conn) {
 </head>
 
 <body>
-    <div class="container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -210,54 +223,29 @@ if (!$conn) {
                     <a class="btn" onclick="window.location.href = 'daftar_staff.php'">DAFTAR STAF</a>
                 </div>
 
-                <table>
+                <table id="staffTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
                             <td>Kumpulan</td>
                             <td>Nama Staf</td>
                             <td>No Kad Pengenalan</td>
-                            <td>No Telefon</td>
+                            <td>Negeri</td>
                             <td>Kemaskini</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // SQL query to select all staff excluding specific groups
-                        $sqlStaff = "SELECT p.*, k.kump_desc 
-                                    FROM `pengguna` p
-                                    INNER JOIN `kumpulan` k ON p.kumpulan = k.kump_kod
-                                    WHERE p.kumpulan NOT IN ('X', 'Y', 'Z')";
 
-                        $resultStaff = mysqli_query($conn, $sqlStaff);
-                        $count = 1;
-
-                        // Loop through the result set
-                        while ($row = mysqli_fetch_assoc($resultStaff)) {
-                        ?>
-                            <tr data-id="<?php echo $row['id']; ?>">
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row['kump_desc']; ?></td>
-                                <td><?php echo $row['nama']; ?></td>
-                                <td><?php echo $row['no_kp']; ?></td>
-                                <td><?php echo $row['contact_no']; ?></td>
-                                <td>
-                                    <button onclick="window.location.href = 'kemaskini_staff.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
-                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                    </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
-                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                    </button>
-
-                                </td>
-                            </tr>
-                        <?php
-                            $count++;
-                        }
-                        ?>
                     </tbody>
 
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start mt-4" id="pagination">
+                        <!-- Pagination links will be injected here by JavaScript -->
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -270,6 +258,72 @@ if (!$conn) {
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
+        function loadPage(page) {
+            $.ajax({
+                url: 'controller/get_staff.php', // The PHP file that handles the database query
+                type: 'GET',
+                data: {
+                    page: page
+                },
+                dataType: 'json',
+                success: function(response) {
+                    var tbody = $('#staffTable tbody');
+                    tbody.empty();
+
+                    // Populate table
+                    response.data.forEach(function(item, index) {
+                        tbody.append(`
+                        <tr data-id="${item.id}">
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                            <td>${item.kump_desc}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.no_kp}</td>
+                            <td>${item.negeri}</td>
+                            <td>
+                                <button onclick="window.location.href = 'kemaskini_staff.php?id=${item.id}'" class="btn btn-outline-edit">
+                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+                    });
+
+                    // Populate pagination
+                    var pagination = $('#pagination');
+                    pagination.empty();
+
+                    // Previous button
+                    pagination.append(`
+                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                    </li>
+                `);
+
+                    // Page numbers
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        pagination.append(`
+                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    // Next button
+                    pagination.append(`
+                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                    </li>
+                `);
+                }
+            });
+        }
+
+        // Load the first page by default
+        loadPage(1);
+
         function deleteItem(button) {
             var row = button.closest('tr'); // Find the closest <tr> element
             var staffId = row.getAttribute('data-id'); // Get the data-id from <tr>

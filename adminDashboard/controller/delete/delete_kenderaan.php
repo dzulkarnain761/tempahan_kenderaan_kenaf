@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare the SQL statement
-    $sql = "DELETE FROM kenderaan_traktor WHERE id = ?";
+    $sql = "DELETE FROM kenderaan WHERE id = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
         http_response_code(500);

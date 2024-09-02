@@ -96,12 +96,15 @@
                         <h3>Tambah Kategori Kenderaan</h3>
                     </div>
 
-                    <form>
+                    <form class="addKategoriKenderaan">
                         
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Kategori</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Kategori">
+                    <div class="mb-3">
+                        <label for="kategori_input" class="form-label">Nama Kategori</label>
+                        <input type="text" class="form-control" id="kategori_input" name="kategori" placeholder="Masukkan Nama Kategori Baharu" required>
+                        <div class="invalid-feedback">
+                            Sila masukkan kategori.
                         </div>
+                    </div>
                         
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Tambah Kategori Kenderaan</button>
@@ -111,10 +114,74 @@
         </div>
     </div>
 
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.addKategoriKenderaan')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+        })()
+
+
+        $(document).ready(function() {
+            $('.addKategoriKenderaan').on('submit', function(e) {
+                e.preventDefault();
+
+                // Check if form is valid before making AJAX request
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                // Serialize form data and make AJAX request
+                $.ajax({
+                    url: 'controller/add/add_kategori_kenderaan.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Penambahan Berjaya',
+                            }).then(() => {
+                                window.location.href = 'crud_kategori_kenderaan.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: res.message,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
 
 </body>
 

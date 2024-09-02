@@ -118,7 +118,7 @@ if (!$conn) {
                 // Ensure you escape the ID to prevent SQL injection
                 $id = mysqli_real_escape_string($conn, $id);
 
-                $sqlStaff = "SELECT * FROM `pengguna` WHERE id = $id";
+                $sqlStaff = "SELECT * FROM `admin` WHERE id = $id";
                 $resultEditStaff = mysqli_query($conn, $sqlStaff);
 
                 // Fetch the staff member's data
@@ -141,7 +141,7 @@ if (!$conn) {
 
                             $sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
                                             FROM `kumpulan` 
-                                            WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
+                                            WHERE `kump_kod` NOT IN ('Y', 'Z')";
 
                             $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                             // Fetch the current `kump_kod` value from the database
@@ -159,7 +159,7 @@ if (!$conn) {
 
                     <div class="mb-3">
                         <label for="nama_staf" class="form-label">Nama Staf:</label>
-                        <input type="text" class="form-control" id="nama_staf" name="nama_staf" placeholder="Masukkan Nama Staf" value="<?php echo htmlspecialchars($staff['nama']); ?>" minlength="10" required>
+                        <input type="text" class="form-control" id="nama_staf" name="nama_staf" placeholder="Masukkan Nama Staf" minlength="10" value="<?php echo htmlspecialchars($staff['nama']); ?>" required>
                         <div class="invalid-feedback">
                             Sila masukkan nama staf yang sah.
                         </div>
@@ -167,7 +167,7 @@ if (!$conn) {
 
                     <div class="mb-3">
                         <label for="no_kp" class="form-label">Nombor Kad Pengenalan</label>
-                        <input type="text" class="form-control" id="no_kp" name="no_kp" placeholder="Masukkan Nombor Kad Pengenalan" value="<?php echo htmlspecialchars($staff['no_kp']); ?>" minlength="12" maxlength="12" required>
+                        <input type="text" class="form-control" id="no_kp" name="no_kp" placeholder="Masukkan Nombor Kad Pengenalan" minlength="12" maxlength="12" value="<?php echo htmlspecialchars($staff['no_kp']); ?>" disabled>
                         <div class="invalid-feedback">
                             Sila masukkan nombor kad pengenalan yang sah.
                         </div>
@@ -175,7 +175,7 @@ if (!$conn) {
 
                     <div class="mb-3">
                         <label for="no_telefon" class="form-label">Nombor Telefon</label>
-                        <input type="tel" class="form-control" id="no_telefon" name="no_telefon" placeholder="Masukkan Nombor Telefon" value="<?php echo htmlspecialchars($staff['contact_no']); ?>" minlength="10" maxlength="11" required>
+                        <input type="tel" class="form-control" id="no_telefon" name="no_telefon" placeholder="Masukkan Nombor Telefon" minlength="10" maxlength="11" value="<?php echo htmlspecialchars($staff['contact_no']); ?>" required>
                         <div class="invalid-feedback">
                             Sila masukkan nombor telefon yang sah.
                         </div>
@@ -183,8 +183,28 @@ if (!$conn) {
 
                     <div class="mb-3">
                         <label for="email_staff" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email_staff" name="email_staff" value="<?php echo htmlspecialchars($staff['email']); ?>" placeholder="Masukkan Email">
+                        <input type="email" class="form-control" id="email_staff" name="email_staff" placeholder="Masukkan Email" value="<?php echo htmlspecialchars($staff['email']); ?>">
                         <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="negeri_penempatan" class="form-label">Negeri Penempatan</label>
+                        <select id="negeri_penempatan" class="form-control" name="negeri_penempatan" required>
+                            <!-- <option disabled selected value="">--Pilih Negeri--</option> -->
+                            <?php
+                            $sqlNegeri = "SELECT * FROM negeri";
+                            $resultNegeri = mysqli_query($conn, $sqlNegeri);
+
+                            $currentNegeri = $staff['negeri'];
+
+                            while ($row = mysqli_fetch_assoc($resultNegeri)) {
+                                $selectedNegeri = ($row['nama_negeri'] == $currentNegeri) ? 'selected' : '';
+                                echo '<option value="' . $row['nama_negeri'] . '" ' . $selectedNegeri . '>' . $row['nama_negeri'] . '</option>';
+                            }
+                            ?>
+                        </select>
+
+                        <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
                     </div>
                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($staff['id']); ?>">
 
@@ -198,7 +218,7 @@ if (!$conn) {
             </div>
         </div>
     </div>
-    
+
     <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->

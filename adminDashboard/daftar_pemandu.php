@@ -127,30 +127,30 @@ if (!$conn) {
                         <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="kategori_lesen" class="form-label">Kategori Lesen</label>
                         <select id="kategori_lesen" class="form-control" name="kategori_lesen" required>
                             <option disabled selected value="">Pilih Kategori Lesen</option>
                             <?php
 
-                            $sqlKategori = "SELECT * FROM `kategori_lesen`";
+                            // $sqlKategori = "SELECT * FROM `kategori_lesen`";
 
-                            $resultKategori = mysqli_query($conn, $sqlKategori);
+                            // $resultKategori = mysqli_query($conn, $sqlKategori);
 
-                            while ($row = mysqli_fetch_assoc($resultKategori)) {
-                                echo '<option value="' . $row['kategori'] . '">' . $row['kategori'] . ' - ' . $row['description'] . '</option>';
-                            }
+                            // while ($row = mysqli_fetch_assoc($resultKategori)) {
+                            //     echo '<option value="' . $row['kategori'] . '">' . $row['kategori'] . ' - ' . $row['description'] . '</option>';
+                            // }
                             ?>
                         </select>
                         <div class="invalid-feedback">Sila pilih kategori lesen.</div>
-                    </div>
+                    </div> -->
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="tarikh_tamat_lesen" class="form-label">Tarikh Tamat Lesen</label>
                         <input type="date" class="form-control" id="tarikh_tamat_lesen" name="tarikh_tamat_lesen" placeholder="Pilih Tarikh Tamat Lesen" required>
                         <div class="invalid-feedback">Sila pilih tarikh tamat lesen.</div>
-                    </div>
-
+                    </div> -->
+                    <!-- 
                     <div class="mb-3">
                         <label for="status_pemandu" class="form-label">Status</label>
                         <select id="status_pemandu" class="form-control" name="status_pemandu" required>
@@ -159,7 +159,7 @@ if (!$conn) {
                             <option value="Tidak Aktif">Tidak Aktif</option>
                         </select>
                         <div class="invalid-feedback">Sila pilih status.</div>
-                    </div>
+                    </div> -->
 
                     <!-- <div class="mb-3">
                         <label for="kata_laluan" class="form-label">Kata Laluan</label>
@@ -173,7 +173,7 @@ if (!$conn) {
                         <div class="invalid-feedback">Sila sahkan kata laluan.</div>
                     </div> -->
 
-                    <div class="modal-footer" >
+                    <div class="modal-footer">
                         <!-- <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="showPassword">
                             <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
@@ -213,15 +213,15 @@ if (!$conn) {
                 }, false)
             })
 
-            const showPasswordCheckbox = document.getElementById('showPassword');
-            const passwordInput = document.getElementById('kata_laluan');
-            const confirmPasswordInput = document.getElementById('sahkan_kata_laluan');
+            // const showPasswordCheckbox = document.getElementById('showPassword');
+            // const passwordInput = document.getElementById('kata_laluan');
+            // const confirmPasswordInput = document.getElementById('sahkan_kata_laluan');
 
-            showPasswordCheckbox.addEventListener('change', () => {
-                const type = showPasswordCheckbox.checked ? 'text' : 'password';
-                passwordInput.type = type;
-                confirmPasswordInput.type = type;
-            });
+            // showPasswordCheckbox.addEventListener('change', () => {
+            //     const type = showPasswordCheckbox.checked ? 'text' : 'password';
+            //     passwordInput.type = type;
+            //     confirmPasswordInput.type = type;
+            // });
 
 
         })()

@@ -138,6 +138,7 @@ session_start();
             font-size: 14px;
             font-weight: 500;
         }
+
     </style>
 </head>
 
@@ -179,7 +180,7 @@ session_start();
                 </div>
 
                 <?php
-                $sqlTotalUser = "SELECT COUNT(*) AS total_users FROM pengguna WHERE kumpulan NOT IN ('X', 'Z')";
+                $sqlTotalUser = "SELECT COUNT(*) AS total_users FROM admin WHERE kumpulan NOT IN ('Z')";
                 $resultTotalUser = mysqli_query($conn, $sqlTotalUser);
                 $rowTotalUser = mysqli_fetch_assoc($resultTotalUser);
                 ?>
@@ -197,13 +198,7 @@ session_start();
 
                 <?php
 
-                $sqlTotalVehicle = "
-                                    SELECT SUM(total_vehicles) AS total_vehicles FROM (
-                                        SELECT COUNT(*) AS total_vehicles FROM kenderaan_jengkaut
-                                        UNION ALL
-                                        SELECT COUNT(*) AS total_vehicles FROM kenderaan_traktor
-                                    ) AS combined_counts
-                                ";
+                $sqlTotalVehicle = "SELECT COUNT(*) AS total_kenderaan FROM kenderaan";
                 $resultTotalvehicle = mysqli_query($conn, $sqlTotalVehicle);
                 $rowTotalVehicle = mysqli_fetch_assoc($resultTotalvehicle);
                 ?>
@@ -211,7 +206,7 @@ session_start();
 
                 <div class="card">
                     <div>
-                        <div class="numbers"><?php echo $rowTotalVehicle['total_vehicles']; ?></div>
+                        <div class="numbers"><?php echo $rowTotalVehicle['total_kenderaan']; ?></div>
                         <div class="cardName">Kenderaan</div>
                     </div>
 
@@ -221,7 +216,7 @@ session_start();
                 </div>
 
                 <?php
-                $sqlTotalDriver = "SELECT COUNT(*) AS total_drivers FROM pemandu";
+                $sqlTotalDriver = "SELECT COUNT(*) AS total_drivers FROM admin WHERE kumpulan = 'Y'";
                 $resultTotalDriver = mysqli_query($conn, $sqlTotalDriver);
                 $rowTotalDriver = mysqli_fetch_assoc($resultTotalDriver);
                 ?>

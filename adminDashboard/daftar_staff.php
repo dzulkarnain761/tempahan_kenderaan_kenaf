@@ -158,6 +158,22 @@ if (!$conn) {
                         <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="negeri_penempatan" class="form-label">Negeri Penempatan</label>
+                        <select id="negeri_penempatan" class="form-control" name="negeri_penempatan" required>
+                            <option disabled selected value="">--Pilih Negeri--</option>
+                            <?php
+                            $sqlNegeri = "SELECT * FROM negeri";
+                            $resultNegeri = mysqli_query($conn, $sqlNegeri);
+
+                            while ($row = mysqli_fetch_assoc($resultNegeri)) {
+                                echo '<option value="' . $row['nama_negeri'] . '">' . $row['nama_negeri'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
+                    </div>
+
                     <!-- <div class="mb-3">
                         <label for="kata_laluan" class="form-label">Kata Laluan</label>
                         <input type="password" class="form-control" id="kata_laluan" name="kata_laluan" placeholder="Masukkan Kata Laluan" minlength="5" required>

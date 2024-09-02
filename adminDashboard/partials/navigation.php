@@ -25,19 +25,11 @@
         </li>
 
         <li>
-            <a href="kenderaan_jengkaut.php">
+            <a href="kenderaan.php">
                 <span class="icon">
                     <ion-icon name="car-outline"></ion-icon>
                 </span>
-                <span class="title">Jengkaut</span>
-            </a>
-        </li>
-        <li>
-            <a href="kenderaan_traktor.php">
-                <span class="icon">
-                    <ion-icon name="rocket-outline"></ion-icon>
-                </span>
-                <span class="title">Traktor</span>
+                <span class="title">Kenderaan</span>
             </a>
         </li>
 

@@ -12,13 +12,6 @@ if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
 }
 
-$sqlKumpulan = "SELECT `kump_kod`, `kump_desc` 
-FROM `kumpulan` 
-WHERE `kump_kod` NOT IN ('X', 'Y', 'Z')";
-
-$resultKumpulan = mysqli_query($conn, $sqlKumpulan);
-
-
 
 ?>
 
@@ -125,7 +118,7 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                 // Ensure you escape the ID to prevent SQL injection
                 $id = mysqli_real_escape_string($conn, $id);
 
-                $sqlPemandu = "SELECT * FROM `pemandu` WHERE id_pemandu = $id";
+                $sqlPemandu = "SELECT * FROM `admin` WHERE id = $id AND kumpulan = 'Y'";
                 $resultEditPemandu = mysqli_query($conn, $sqlPemandu);
 
                 // Fetch the Pemandu member's data
@@ -149,7 +142,7 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
 
                     <div class="mb-3">
                         <label for="no_kp" class="form-label">Nombor Kad Pengenalan</label>
-                        <input type="text" class="form-control" id="no_kp" name="no_kp" minlength="12" maxlength="12" value="<?php echo htmlspecialchars($pemandu['no_kp']); ?>" placeholder="Masukkan Nombor Kad Pengenalan" required>
+                        <input type="text" class="form-control" id="no_kp" name="no_kp" minlength="12" maxlength="12" value="<?php echo htmlspecialchars($pemandu['no_kp']); ?>" placeholder="Masukkan Nombor Kad Pengenalan" disabled>
                         <div class="invalid-feedback">Sila masukkan nombor kad pengenalan.</div>
                     </div>
 
@@ -165,29 +158,29 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                         <div class="invalid-feedback">Sila masukkan Email yang betul.</div>
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="kategori_lesen" class="form-label">Kategori Lesen</label>
                         <select id="kategori_lesen" class="form-control" name="kategori_lesen" required>
                             <?php
 
-                            $sqlKategori = "SELECT * FROM `kategori_lesen`";
+                            // $sqlKategori = "SELECT * FROM `kategori_lesen`";
 
-                            $resultKategori = mysqli_query($conn, $sqlKategori);
-                            // Fetch the current `kump_kod` value from the database
-                            $currentKumpKod = $pemandu['kategori_lesen']; // Assuming you already have this value from a previous query
+                            // $resultKategori = mysqli_query($conn, $sqlKategori);
+                            // // Fetch the current `kump_kod` value from the database
+                            // $currentKumpKod = $pemandu['kategori_lesen']; // Assuming you already have this value from a previous query
 
-                            while ($row = mysqli_fetch_assoc($resultKategori)) {
-                                // Check if the current `kump_kod` matches the one in the loop
-                                $selected = ($row['kategori'] == $currentKumpKod) ? 'selected' : '';
-                                echo '<option value="' . $row['kategori'] . '" ' . $selected . '>' . $row['kategori'] . ' - ' . $row['description'] . '</option>';
-                            }
+                            // while ($row = mysqli_fetch_assoc($resultKategori)) {
+                            //     // Check if the current `kump_kod` matches the one in the loop
+                            //     $selected = ($row['kategori'] == $currentKumpKod) ? 'selected' : '';
+                            //     echo '<option value="' . $row['kategori'] . '" ' . $selected . '>' . $row['kategori'] . ' - ' . $row['description'] . '</option>';
+                            // }
 
                             ?>
                         </select>
                         <div class="invalid-feedback">Sila pilih kategori lesen.</div>
-                    </div>
+                    </div> -->
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="tarikh_tamat_lesen" class="form-label">Tarikh Tamat Lesen</label>
                         <input type="date" class="form-control" id="tarikh_tamat_lesen" name="tarikh_tamat_lesen" value="<?php echo htmlspecialchars($pemandu['tarikh_tamat_lesen']); ?>" placeholder="Pilih Tarikh Tamat Lesen" required>
                         <div class="invalid-feedback">Sila pilih tarikh tamat lesen.</div>
@@ -200,9 +193,9 @@ $resultKumpulan = mysqli_query($conn, $sqlKumpulan);
                             <option value="Tidak Aktif" <?php echo ($pemandu['status'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
                         </select>
                         <div class="invalid-feedback">Sila pilih status.</div>
-                    </div>
+                    </div> -->
 
-                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($pemandu['id_pemandu']); ?>">
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($pemandu['id']); ?>">
                     <div class="modal-footer">
 
                         <div>

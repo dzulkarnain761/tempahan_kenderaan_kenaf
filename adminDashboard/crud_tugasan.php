@@ -234,56 +234,38 @@ if (!$conn) {
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tugasan Jengkaut </li>
+                    <li class="breadcrumb-item active" aria-current="page">Tugasan </li>
                 </ol>
             </nav>
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h3>Tugasan Jengkaut</h3>
-                    <a class="btn" onclick="window.location.href = 'tambah_tugasan_jengkaut.php'">TAMBAH TUGASAN</a>
+                    <h3>Tugasan</h3>
+                    <a class="btn" onclick="window.location.href = 'tambah_tugasan.php'">TAMBAH TUGASAN</a>
                 </div>
 
 
-                <table>
+                <table id="tugasanTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
+                            <td>Kategori Kenderaan</td>
                             <td>Nama Kerja</td>
                             <td>Harga Per Jam</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // SQL query to select all staff excluding specific groups
-                        $sqlLesen = "SELECT * FROM `tugasan_jengkaut`";
-                        $resultLesen = mysqli_query($conn, $sqlLesen);
-                        $count = 1;
 
-                        // Loop through the result set
-                        while ($row = mysqli_fetch_assoc($resultLesen)) {
-                        ?>
-                            <tr data-id="<?php echo $row['id']; ?>">
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row['kerja']; ?></td>
-                                <td><?php echo $row['harga_per_jam']; ?></td>
-                                <td>
-                                    <button onclick="window.location.href = 'kemaskini_tugasan_jengkaut.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
-                                        <i class="fas fa-edit" style="font-size: 1.5em;"></i>
-                                    </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-outline-delete">
-                                        <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
-                                    </button>
-
-                                </td>
-                            </tr>
-                        <?php
-                            $count++;
-                        }
-                        ?>
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start mt-4" id="pagination">
+                        <!-- Pagination links will be injected here by JavaScript -->
+                    </ul>
+                </nav>
 
             </div>
         </div>
@@ -297,6 +279,71 @@ if (!$conn) {
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
+        function loadPage(page) {
+            $.ajax({
+                url: 'controller/get_tugasan.php', // The PHP file that handles the database query
+                type: 'GET',
+                data: {
+                    page: page
+                },
+                dataType: 'json',
+                success: function(response) {
+                    var tbody = $('#tugasanTable tbody');
+                    tbody.empty();
+
+                    // Populate table
+                    response.data.forEach(function(item, index) {
+                        tbody.append(`
+                        <tr data-id="${item.id}">
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                            <td>${item.kategori_kenderaan}</td>
+                            <td>${item.kerja}</td>
+                            <td>${item.harga_per_jam}</td>
+                            <td>
+                                <button onclick="window.location.href = 'kemaskini_tugasan.php?id=${item.id}'" class="btn btn-outline-edit">
+                                    <i class="fas fa-edit" style="font-size: 1.5em;"></i>
+                                </button>
+                                <button onclick="deleteItem(this)" class="btn btn-outline-delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.5em;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+                    });
+
+                    // Populate pagination
+                    var pagination = $('#pagination');
+                    pagination.empty();
+
+                    // Previous button
+                    pagination.append(`
+                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                    </li>
+                `);
+
+                    // Page numbers
+                    for (var i = 1; i <= response.totalPages; i++) {
+                        pagination.append(`
+                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    // Next button
+                    pagination.append(`
+                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                    </li>
+                `);
+                }
+            });
+        }
+
+        // Load the first page by default
+        loadPage(1);
+
         function deleteItem(button) {
             var row = button.closest('tr'); // Find the closest <tr> element
             var tugasanId = row.getAttribute('data-id'); // Get the data-id from <tr>
@@ -313,7 +360,7 @@ if (!$conn) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/delete/delete_tugasan_jengkaut.php',
+                        url: 'controller/delete/delete_tugasan.php',
                         type: 'POST',
                         data: {
                             id: tugasanId

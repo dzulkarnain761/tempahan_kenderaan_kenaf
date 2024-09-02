@@ -5,6 +5,8 @@ include '../connection.php';
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    $id = $_POST['tugasan_id'];
+    $kategori_kenderaan = $_POST['kategori_kenderaan'];
     $nama_kerja = $_POST['nama_kerja'];
     $kadar_per_jam = $_POST['kadar_per_jam'];
     
@@ -13,16 +15,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["success" => false, "message" => "Pastikan Nombor Sahaja."]);
         exit();
     }
+    
 
-    // Insert the user into the database using prepared statement
-    $sql = $conn->prepare("INSERT INTO tugasan_traktor (kerja, harga_per_jam) VALUES (?, ?)");
+    $sql = $conn->prepare("UPDATE tugasan SET kerja = ?, harga_per_jam = ?, kategori_kenderaan = ? WHERE id = ?");
 
-    $sql->bind_param("ss", $nama_kerja, $kadar_per_jam);
+    $sql->bind_param("ssss", $nama_kerja, $kadar_per_jam, $kategori_kenderaan, $id);
 
     if ($sql->execute() === TRUE) {
         echo json_encode(["success" => true]);
     } else {
-        echo json_encode(["success" => false, "message" => "Penambahan gagal."]);
+        echo json_encode(["success" => false, "message" => "Kemaskini gagal."]);
     }
 
     $sql->close();

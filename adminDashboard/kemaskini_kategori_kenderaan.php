@@ -1,3 +1,8 @@
+<?php
+include 'controller/connection.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +55,7 @@
         .recentOrders {
             position: relative;
             display: grid;
-            min-height: 400px;
+            min-height: 300px;
             background: var(--white);
             padding: 20px;
             box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
@@ -86,33 +91,49 @@
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="tetapan.php">Tetapan</a></li>
-                    <li class="breadcrumb-item"><a href="crud_tugasan_jengkaut.php">Tugasan Jengkaut</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tambah Tugasan</li>
+                    <li class="breadcrumb-item"><a href="crud_kategori_kenderaan.php">Kategori Kenderaan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Kategori Kenderaan</li>
                 </ol>
             </nav>
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h3>Tambah Tugasan</h3>
+                    <h3>Kemaskini Kategori Kenderaan</h3>
                 </div>
 
-                <form class="tambahTugasanJengkaut" novalidate>
+                <?php
+                $id = $_GET['id'];
+
+                // Ensure you escape the ID to prevent SQL injection
+                $id = mysqli_real_escape_string($conn, $id);
+
+                $sqlKategoriKenderaan = "SELECT * FROM `kategori_kenderaan` WHERE id = $id";
+                $resultKategoriKenderaan = mysqli_query($conn, $sqlKategoriKenderaan);
+
+                // Fetch the Pemandu member's data
+                if ($resultKategoriKenderaan && mysqli_num_rows($resultKategoriKenderaan) > 0) {
+                    $kategori_kenderaan = mysqli_fetch_assoc($resultKategoriKenderaan);
+                } else {
+                    // Handle the case where no Pemandu member is found
+                    echo "Tiada Kenderaan Dijumpai";
+                    exit;
+                }
+
+                ?>
+
+                <form class="editKategoriKenderaan">
+
                     <div class="mb-3">
-                        <label for="nama_kerja_input" class="form-label">Nama Kerja</label>
-                        <input type="text" class="form-control" id="nama_kerja_input" name="nama_kerja" placeholder="Masukkan Nama Kerja" required>
+                        <label for="kategori_input" class="form-label">Nama Kategori</label>
+                        <input type="text" class="form-control" id="kategori_input" name="kategori_kenderaan" value="<?php echo htmlspecialchars($kategori_kenderaan['kategori']) ?>" placeholder="Masukkan Nama Kategori Baharu" required>
                         <div class="invalid-feedback">
-                            Sila masukkan nama kerja.
+                            Sila masukkan kategori.
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="kadar_per_jam_input" class="form-label">Kadar Per Jam</label>
-                        <input type="text" class="form-control" id="kadar_per_jam_input" name="kadar_per_jam" placeholder="Masukkan kadar Per Jam" required>
-                        <div class="invalid-feedback">
-                            Sila masukkan kadar per jam.
-                        </div>
-                    </div>
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($kategori_kenderaan['id']) ?>">
+
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Tambah Tugasan</button>
+                        <button type="submit" class="btn btn-primary">Kemaskini Kategori Kenderaan</button>
                     </div>
                 </form>
             </div>
@@ -132,7 +153,7 @@
             'use strict'
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.tambahTugasanJengkaut')
+            const forms = document.querySelectorAll('.editKategoriKenderaan')
 
             // Loop over them and prevent submission
             Array.from(forms).forEach(form => {
@@ -145,11 +166,12 @@
                     form.classList.add('was-validated')
                 }, false)
             })
+
         })()
 
 
         $(document).ready(function() {
-            $('.tambahTugasanJengkaut').on('submit', function(e) {
+            $('.editKategoriKenderaan').on('submit', function(e) {
                 e.preventDefault();
 
                 // Check if form is valid before making AJAX request
@@ -160,7 +182,7 @@
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/add/add_tugasan_jengkaut.php',
+                    url: 'controller/edit/edit_kategori_kenderaan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -171,7 +193,7 @@
                                 title: 'Success',
                                 text: 'Penambahan Berjaya',
                             }).then(() => {
-                                window.location.href = 'crud_tugasan_jengkaut.php';
+                                window.location.href = 'crud_kategori_kenderaan.php';
                             });
                         } else {
                             Swal.fire({
@@ -185,6 +207,7 @@
             });
         });
     </script>
+
 
 </body>
 

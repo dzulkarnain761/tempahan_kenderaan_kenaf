@@ -24,9 +24,9 @@ if (!$conn) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -398,9 +398,8 @@ if (!$conn) {
                             <td>Bil</td>
                             <td>Nama Pemandu</td>
                             <td>No Kad Pengenalan</td>
-                            <!-- <td>Kategori Lesen</td>
-                            <td>Tarikh Tamat Lesen</td> -->
-                            <td>Status</td>
+                            
+                            <td>No Telefon</td>
                             <td>Kemaskini</td>
                         </tr>
                     </thead>
@@ -442,13 +441,13 @@ if (!$conn) {
                     // Populate table
                     response.data.forEach(function(item, index) {
                         tbody.append(`
-                        <tr data-id="${item.id_pemandu}">
-                            <td>${(response.currentPage - 1) * 10 + index + 1}</td>
+                        <tr data-id="${item.id}">
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                             <td>${item.nama}</td>
                             <td>${item.no_kp}</td>
-                            <td>${item.status}</td>
+                            <td>${item.contact_no}</td>
                             <td>
-                                <button onclick="window.location.href = 'kemaskini_pemandu.php?id=${item.id_pemandu}'" class="btn btn-outline-edit">
+                                <button onclick="window.location.href = 'kemaskini_pemandu.php?id=${item.id}'" class="btn btn-outline-edit">
                                     <i class="fas fa-edit" style="font-size: 1.5em;"></i>
                                 </button>
                                 <button onclick="deleteItem(this)" class="btn btn-outline-delete">

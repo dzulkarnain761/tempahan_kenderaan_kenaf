@@ -267,7 +267,7 @@ if (!$conn) {
                                 <td><?php echo $count; ?></td>
                                 <td><?php echo $row['kategori']; ?></td>
                                 <td>
-                                    <button onclick="window.location.href = 'kemaskini_lesen.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
+                                    <button onclick="window.location.href = 'kemaskini_kategori_kenderaan.php?id=<?php echo $row['id']; ?>'" class="btn btn-outline-edit">
                                         <i class="fas fa-edit" style="font-size: 1.5em;"></i>
                                     </button>
                                     <button onclick="deleteItem(this)" class="btn btn-outline-delete"> <!-- Pass this to the function -->
@@ -287,9 +287,58 @@ if (!$conn) {
         </div>
     </div>
 
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+
+        function deleteItem(button) {
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var kategoriId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, padamkannya!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/delete/delete_kategori_kenderaan.php',
+                        type: 'POST',
+                        data: {
+                            id: kategoriId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Berjaya dipadam!",
+                                text: "Kenderaan telah dipadam.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa memadam kenderaan.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
 
 
 </body>

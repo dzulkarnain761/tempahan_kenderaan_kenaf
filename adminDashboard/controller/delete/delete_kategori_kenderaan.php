@@ -4,17 +4,17 @@ include '../connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the staff ID from the POST request
-    $kenderaanId = $_POST['id'];
+    $kategoriId = $_POST['id'];
 
     // Check if the ID is valid
-    if (empty($kenderaanId) || !is_numeric($kenderaanId)) {
+    if (empty($kategoriId) || !is_numeric($kategoriId)) {
         http_response_code(400);
-        echo json_encode(['error' => 'Invalid ID', 'id' => $kenderaanId]);
+        echo json_encode(['error' => 'Invalid ID', 'id' => $kategoriId]);
         exit;
     }
 
     // Prepare the SQL statement
-    $sql = "DELETE FROM kenderaan_jengkaut WHERE id = ?";
+    $sql = "DELETE FROM kategori_kenderaan WHERE id = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
         http_response_code(500);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Bind the parameter and execute the statement
-    $stmt->bind_param('i', $kenderaanId);
+    $stmt->bind_param('i', $kategoriId);
     if ($stmt->execute()) {
         echo json_encode(['success' => 'Staff member deleted successfully']);
     } else {

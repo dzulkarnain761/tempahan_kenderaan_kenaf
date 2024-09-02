@@ -93,13 +93,13 @@ if (!$conn) {
 
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="kenderaan_traktor.php">Senarai Traktor</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Traktor</li>
+                    <li class="breadcrumb-item"><a href="kenderaan.php">Senarai Kenderaan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kemaskini Kenderaan</li>
                 </ol>
             </nav>
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Kemaskini Traktor</h2>
+                    <h2>Kemaskini Kenderaan</h2>
                 </div>
                 <?php
                 $id = $_GET['id'];
@@ -107,7 +107,7 @@ if (!$conn) {
                 // Ensure you escape the ID to prevent SQL injection
                 $id = mysqli_real_escape_string($conn, $id);
 
-                $sqlKenderaan = "SELECT * FROM `kenderaan_traktor` WHERE id = $id";
+                $sqlKenderaan = "SELECT * FROM `kenderaan` WHERE id = $id";
                 $resultEditKenderaan = mysqli_query($conn, $sqlKenderaan);
 
                 // Fetch the Pemandu member's data
@@ -122,27 +122,38 @@ if (!$conn) {
                 ?>
 
                 <form class="editKenderaan" novalidate>
-                    <!-- <div class="mb-3">
-                        <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
-                        <select id="kategori_kenderaan" class="form-control" name="kategori_kenderaan">
 
+
+                <div class="mb-3">
+                        <label for="kategori_kenderaan" class="form-label">Kategori Kenderaan</label>
+                        <select name="kategori_kenderaan" id="kategori_kenderaan" class="form-control" required>
+                            
                             <?php
 
-                            // $sqlKategori = "SELECT * FROM `kategori_kenderaan`";
+                            // Query to fetch all categories
+                            $sql = "SELECT * FROM kategori_kenderaan";
+                            $result = mysqli_query($conn, $sql);
+                            $currentKenderaan = $kenderaan['kategori_kenderaan'];
 
-                            // $resultKategori = mysqli_query($conn, $sqlKategori);
-                            // // Fetch the current `kump_kod` value from the database
-                            // $currentKategori = $kenderaan['kategori']; // Assuming you already have this value from a previous query
+                            // Check if there are results and populate the dropdown
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Check if the current option is selected
+                                    $selectedKenderaan = ($row['kategori'] == $currentKenderaan) ? 'selected' : '';
+                                    echo '<option value="' . htmlspecialchars($row['kategori']) . '" ' . $selectedKenderaan . '>' . htmlspecialchars($row['kategori']) . '</option>';
+                                }
+                            } else {
+                                echo '<option value="" disabled>No categories available</option>';
+                            }
 
-                            // while ($row = mysqli_fetch_assoc($resultKategori)) {
-                            //     // Check if the current `kump_kod` matches the one in the loop
-                            //     $selected = ($row['kategori'] == $currentKategori) ? 'selected' : '';
-                            //     echo '<option value="' . $row['kategori'] . '" ' . $selected . '>' . $row['kategori'] .  '</option>';
-                            // }
-
+                           
                             ?>
                         </select>
-                    </div> -->
+                        <div class="invalid-feedback">
+                            Sila Pilih Kategori Kenderaan
+                        </div>
+                    </div>
+
 
                     <div class="mb-3">
                         <label for="no_aset" class="form-label">Nombor Aset</label>
@@ -198,29 +209,18 @@ if (!$conn) {
                         <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="harga_belian" class="form-label">Harga Belian</label>
-                        <input type="text" class="form-control" id="harga_belian" name="harga_belian" value="<?php echo htmlspecialchars($kenderaan['harga_belian']); ?>" placeholder="Masukkan Harga Belian" required>
-                        <div class="invalid-feedback">Sila masukkan harga belian.</div>
-                    </div>
+
                     <div class="mb-3">
                         <label for="catatan" class="form-label">Catatan</label>
                         <input type="text" class="form-control" id="catatan" name="catatan" value="<?php echo htmlspecialchars($kenderaan['catatan']); ?>">
                         <!-- <div class="invalid-feedback">Sila masukkan tahun daftar.</div> -->
                     </div>
 
-                    <div class="mb-3">
-                        <label for="status_kenderaan" class="form-label">Status</label>
-                        <select id="status_kenderaan" class="form-control" name="status_kenderaan" required>
-                            <option value="Aktif" <?php echo ($kenderaan['status'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
-                            <option value="Tidak Aktif" <?php echo ($kenderaan['status'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
-                        </select>
-                        <div class="invalid-feedback">Sila pilih status kenderaan.</div>
-                    </div>
+
 
                     <input type="hidden" name="id" value="<?php echo $id ?>">
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Kemaskini Traktor</button>
+                        <button type="submit" class="btn btn-primary">Kemaskini Jenkaut</button>
                     </div>
                 </form>
             </div>
@@ -291,7 +291,7 @@ if (!$conn) {
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/edit/edit_kenderaan_traktor.php',
+                    url: 'controller/edit/edit_kenderaan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -302,7 +302,7 @@ if (!$conn) {
                                 title: 'Success',
                                 text: 'Kemaskini Berjaya',
                             }).then(() => {
-                                window.location.href = 'kenderaan_traktor.php';
+                                window.location.href = 'kenderaan.php';
                             });
                         } else {
                             Swal.fire({
