@@ -1,18 +1,10 @@
-<?php
-session_start();
-
-if (!isset($_SESSION["pengguna_id"]) ) {
-    header("Location: login.php");
-    exit();
-}
-
-?>
+<?php include 'controller/auth/sewaan_process.php';?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -20,13 +12,14 @@ if (!isset($_SESSION["pengguna_id"]) ) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>Booking</title>
+    <title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-    <style>
-        /* 
+	<style>
+	 /* 
 	---------------------------------------------
 	global styles
 	--------------------------------------------- 
@@ -104,6 +97,8 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             letter-spacing: 0.3px !important;
             transition: all .5s;
             background-color: #fff;
+            margin-top: 30px;
+            margin-left: 10px;
         }
 
         .border-first-button button:hover {
@@ -133,7 +128,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
         }
 
         .header-area .main-nav .nav {
-            float: right;
+            float: left;
             margin-top: 30px;
             margin-right: 0px;
             background-color: transparent;
@@ -149,7 +144,6 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             padding-left: 20px;
             padding-right: 20px;
         }
-
         .header-area .main-nav .nav li a {
             display: block;
             font-weight: 500;
@@ -171,7 +165,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             color: #4da6e7 !important;
         }
 
-        /* 
+	 /* 
 	---------------------------------------------
 	preloader
 	--------------------------------------------- 
@@ -270,7 +264,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             background: #4da6e7;
             border-radius: 50%;
         }
-
+		
 
         .table-responsive {
             margin: 20px auto;
@@ -278,8 +272,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             max-width: 1200px;
         }
 
-        .table th,
-        .table td {
+        .table th, .table td {
             text-align: center;
             vertical-align: middle;
         }
@@ -292,7 +285,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
         .table-hover tbody tr:hover {
             background-color: #f5f5f5;
         }
-
+        
         .border-first-button button {
             border: 2px solid #343a40;
             padding: 5px 10px;
@@ -300,31 +293,62 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             color: #343a40;
             cursor: pointer;
         }
-
-        .kotak {
+		
+		.kotak {
             border: solid grey 2px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            margin: 20px auto;
-            max-width: 60%;
-            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
-            margin-top: 60px;
-        }
-    </style>
-</head>
+			padding: 15px;
+			background-color: #f9f9f9;
+			margin: 20px auto;
+			max-width: 60%;
+			box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
+			margin-top: 60px;
+		}
+	</style>
+  </head>
 
 <body>
 
-    <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
-        <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="sewaan.php" class="logo">
+				<img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+				<img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+				<li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
+				<li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+				<li class="scroll-to-section"><a href="sewaan.php" class="active">Sewaan</a></li>
+				<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+            </ul>
+			<div class="border-first-button" style="float: right; display: flex; align-items: center;">
+				<ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
+				<span style="margin-left: 10px; margin-top: 30px;"><?php echo $nama?></span>
+				<button onclick="location.href='login.php'">Logout</button>
+			</div>
+            <!-- ***** Menu End ***** -->
+          </nav>
         </div>
+      </div>
     </div>
   </header>
   <!-- ***** Header Area End ***** -->
@@ -337,7 +361,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
                 <tr>
                     <th>No.</th>
                     <th>Nama Penyewa</th>
-                    <th>Kategori Kenderaan</th>
+                    <th>Item Disewa</th>
                     <th>Tarikh Mula</th>
                     <th>Tarikh Akhir</th>
                     <th>Harga</th>
@@ -348,7 +372,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
                 <tr>
                     <td>1</td>
                     <td>Ali Bin Abu</td>
-                    <td>Jengkaut</td>
+                    <td>Projekor</td>
                     <td>01/08/2024</td>
                     <td>05/08/2024</td>
                     <td>RM 200.00</td>
@@ -357,7 +381,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
                 <tr>
                     <td>2</td>
                     <td>Fatimah Binti Ali</td>
-                    <td>Jentera</td>
+                    <td>Kerusi</td>
                     <td>03/08/2024</td>
                     <td>06/08/2024</td>
                     <td>RM 150.00</td>
@@ -366,6 +390,8 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             </tbody>
         </table>
     </div>
+   </div>
+   </div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -374,6 +400,8 @@ if (!isset($_SESSION["pengguna_id"]) ) {
     <script src="assets/js/animation.js"></script>
     <script src="assets/js/imagesloaded.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
         const logoutButton = document.getElementById('logoutButton');

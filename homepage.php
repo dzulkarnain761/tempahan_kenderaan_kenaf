@@ -1,4 +1,7 @@
 <?php
+
+include 'controller/auth/db-connect.php';
+
 session_start();
 
 if (!isset($_SESSION["pengguna_id"]) ) {
@@ -6,6 +9,38 @@ if (!isset($_SESSION["pengguna_id"]) ) {
     exit();
 }
 
+// Function to get the user's name and contact number by no_kp
+function getUserDetailsById($conn, $no_kp) {
+    $sql = "SELECT nama, contact_no FROM penyewa WHERE no_kp = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $no_kp);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc(); // Return an associative array with the user's details
+    } else {
+        return null;
+    }
+}
+
+// Automatically detect no_kp from the session
+if (isset($_SESSION['pengguna_id'])) {
+    $no_kp = $_SESSION['pengguna_id'];
+    $userDetails = getUserDetailsById($conn, $no_kp);
+
+    if ($userDetails) {
+        $nama = $userDetails['nama'];
+    } else {
+        echo json_encode(["success" => false, "message" => "Nama tidak dijumpai."]);
+        exit();
+    }
+} else {
+    echo json_encode(["success" => false, "message" => "No Kad Pengenalan tidak dijumpai dalam sesi."]);
+    exit();
+}
+
+$conn->close(); // Close connection at the end
 ?>
 
 
@@ -18,7 +53,8 @@ if (!isset($_SESSION["pengguna_id"]) ) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>Booking</title>
+    <title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
@@ -34,6 +70,8 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             letter-spacing: 0.3px !important;
             transition: all .5s;
             background-color: #fff;
+            margin-top: 30px;
+            margin-left: 10px;
         }
 
         .border-first-button button:hover {
@@ -250,7 +288,7 @@ preloader
         }
 
         .header-area .main-nav .nav {
-            float: right;
+            float: left;
             margin-top: 30px;
             margin-right: 0px;
             background-color: transparent;
@@ -327,12 +365,13 @@ preloader
                             <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-                            <li class="scroll-to-section">
-                                <div class="border-first-button">
-                                    <button id="logoutButton">Logout</button>
-                                </div>
-                            </li>
                         </ul>
+						
+						<div class="border-first-button" style="float: right; display: flex; align-items: center;">
+							<ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
+							<span style="margin-left: 10px; margin-top: 30px;"><?php echo $nama ?></span>
+							<button onclick="location.href='login.php'">Logout</button>
+						</div>
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
@@ -352,7 +391,7 @@ preloader
                                 data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h6>Selamat Datang NAMA BINTI PENUH !</h6>
+                                        <h6>Selamat Datang <?php echo $nama ?> !</h6>
                                         <h2>TEMPAHAN KENDERAAN LEMBAGA KENAF DAN TEMBAKAU</h2>
                                         <p>Selamat datang ke laman tempahan kenderaan kami! Kami menawarkan pelbagai
                                             pilihan kenderaan untuk memenuhi keperluan anda. Terima kasih.</p>
@@ -385,6 +424,8 @@ preloader
     <script src="assets/js/animation.js" defer></script>
     <script src="assets/js/imagesloaded.js" defer></script>
     <script src="assets/js/custom.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 
     <script>

@@ -1,12 +1,5 @@
-<?php
-session_start();
+<?php include 'controller/auth/profile_process.php'; ?>
 
-if (!isset($_SESSION["pengguna_id"]) ) {
-    header("Location: login.php");
-    exit();
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +13,8 @@ if (!isset($_SESSION["pengguna_id"]) ) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <title>Booking</title>
+	<title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
@@ -104,7 +98,11 @@ if (!isset($_SESSION["pengguna_id"]) ) {
             letter-spacing: 0.3px !important;
             transition: all .5s;
             background-color: #fff;
+            margin-top: 30px;
+            margin-left: 10px;
         }
+
+
 
         .border-first-button button:hover {
             background-color: #4da6e7;
@@ -133,7 +131,7 @@ if (!isset($_SESSION["pengguna_id"]) ) {
         }
 
         .header-area .main-nav .nav {
-            float: right;
+            float: left;
             margin-top: 30px;
             margin-right: 0px;
             background-color: transparent;
@@ -449,12 +447,13 @@ if (!isset($_SESSION["pengguna_id"]) ) {
                             <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="profil.php" class="active">Profil</a></li>
-                            <li class="scroll-to-section">
-                                <div class="border-first-button">
-                                    <button id="logoutButton">Logout</button>
-                                </div>
-                            </li>
                         </ul>
+						
+						<div class="border-first-button" style="float: right; display: flex; align-items: center;">
+							<ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
+							<span style="margin-left: 10px; margin-top: 30px;"><?php echo $nama ?></span>
+							<button onclick="location.href='login.php'">Logout</button>
+						</div>
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
@@ -483,18 +482,12 @@ if (!isset($_SESSION["pengguna_id"]) ) {
                             <div class="card-block">
                                 <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="font-size: 1.5rem;">Maklumat</h6>
                                 <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nama Penuh</p>
-                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;">NAMA PENUH BINTI NAMA PENUH
-                                </h6>
+                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo $nama ?></h6>
                                 <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nombor Kad Pengenalan</p>
-                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;">000000-00-0000</h6>
+                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo $no_kp ?></h6>
                                 <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nombor Telefon</p>
-                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;">000-0000000</h6>
+                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo $contact_no ?></h6>
                                 <div class="text-end border-first-button">
-                                    <!-- Button to trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#changePasswordModal">
-                                        Tukar Kata Laluan
-                                    </button>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#changeEditModal">
                                         Kemaskini
@@ -508,75 +501,38 @@ if (!isset($_SESSION["pengguna_id"]) ) {
         </div>
     </div>
 
-    <!-- Tukar Kata Laluan -->
-    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="changePasswordModalLabel">Tukar Kata Laluan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="currentPassword" class="form-label">Kata Laluan Semasa</label>
-                            <input type="password" class="form-control" id="currentPassword"
-                                placeholder="Masukkan kata laluan semasa">
-                        </div>
-                        <div class="mb-3">
-                            <label for="newPassword" class="form-label">Kata Laluan Baru</label>
-                            <input type="password" class="form-control" id="newPassword"
-                                placeholder="Masukkan kata laluan baru">
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Sahkan Kata Laluan Baru</label>
-                            <input type="password" class="form-control" id="confirmPassword"
-                                placeholder="Sahkan kata laluan baru">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Edit -->
     <div class="modal fade" id="changeEditModal" tabindex="-1" aria-labelledby="changeEditModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="changeEditModalLabel">Edit Maklumat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="currentName" class="form-label">Nama Penuh</label>
-                            <input type="text" class="form-control" id="currentName"
-                                value="NAMA PENUH BINTI NAMA PENUH">
-                        </div>
-                        <div class="mb-3">
-                            <label for="currentNoKp" class="form-label">Nombor Kad Pengenalan</label>
-                            <input type="text" class="form-control" id="currentNoKp" value="000000-00-0000">
-                        </div>
-                        <div class="mb-3">
-                            <label for="currentNoTel" class="form-label">Nombor Telefon</label>
-                            <input type="text" class="form-control" id="currentNoTel" value="000-0000000">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="changeEditModalLabel">Edit Maklumat</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="editForm" method="POST" action="controller/auth/profile_process.php">
+						<div class="mb-3">
+							<label for="currentName" class="form-label">Nama Penuh</label>
+							<input type="text" class="form-control" id="currentName" name="nama" value="<?php echo $nama ?>">
+						</div>
+						<div class="mb-3">
+							<label for="currentNoKp" class="form-label">Nombor Kad Pengenalan</label>
+							<input type="text" class="form-control" id="currentNoKp" name="no_kp" value="<?php echo $no_kp ?>" readonly>
+						</div>
+						<div class="mb-3">
+							<label for="currentNoTel" class="form-label">Nombor Telefon</label>
+							<input type="text" class="form-control" id="currentNoTel" name="contact_no" value="<?php echo $contact_no ?>">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+					<button type="submit" form="editForm" class="btn btn-primary">Simpan Perubahan</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
