@@ -1,4 +1,11 @@
-<?php include 'controller/auth/profile_process.php'; ?>
+<?php
+
+include 'controller/db-connect.php';
+
+include 'controller/get_userdata.php';
+?>
+
+
 
 
 <!DOCTYPE html>
@@ -13,14 +20,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-	<title>eBooking</title>
+    <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <style>
-    /* 
+        /* 
 	---------------------------------------------
 	global styles
 	--------------------------------------------- 
@@ -109,7 +116,7 @@
             color: #fff !important;
         }
 
-                /* 
+        /* 
 	---------------------------------------------
 	header
 	--------------------------------------------- 
@@ -147,6 +154,7 @@
             padding-left: 20px;
             padding-right: 20px;
         }
+
         .header-area .main-nav .nav li a {
             display: block;
             font-weight: 500;
@@ -407,10 +415,11 @@
             background: #4da6e7;
             border-radius: 50%;
         }
-		a {
-			color: #0d6efd;
-			text-decoration: none;
-		}
+
+        a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -448,12 +457,12 @@
                             <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="profil.php" class="active">Profil</a></li>
                         </ul>
-						
-						<div class="border-first-button" style="float: right; display: flex; align-items: center;">
-							<ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
-							<span style="margin-left: 10px; margin-top: 30px;"><?php echo $nama ?></span>
-							<button onclick="location.href='login.php'">Logout</button>
-						</div>
+
+                        <div class="border-first-button" style="float: right; display: flex; align-items: center;">
+                            <ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
+                            <span style="margin-left: 10px; margin-top: 30px;"><?php echo htmlspecialchars($nama);?></span>
+                            <button id="logoutButton">Logout</button>
+                        </div>
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
@@ -480,13 +489,14 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="card-block">
-                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="font-size: 1.5rem;">Maklumat</h6>
                                 <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nama Penuh</p>
-                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo $nama ?></h6>
+                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo htmlspecialchars($nama); ?></h6>
+
                                 <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nombor Kad Pengenalan</p>
-                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo $no_kp ?></h6>
+                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo htmlspecialchars($no_kp); ?></h6>
+
                                 <p class="m-b-10 f-w-600" style="font-size: 1.2rem;">Nombor Telefon</p>
-                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo $contact_no ?></h6>
+                                <h6 class="text-muted f-w-400" style="font-size: 1.2rem;"><?php echo htmlspecialchars($contact_no); ?></h6>
                                 <div class="text-end border-first-button">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#changeEditModal">
@@ -503,36 +513,36 @@
 
     <!-- Edit -->
     <div class="modal fade" id="changeEditModal" tabindex="-1" aria-labelledby="changeEditModalLabel"
-    aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="changeEditModalLabel">Edit Maklumat</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="editForm" method="POST" action="controller/auth/profile_process.php">
-						<div class="mb-3">
-							<label for="currentName" class="form-label">Nama Penuh</label>
-							<input type="text" class="form-control" id="currentName" name="nama" value="<?php echo $nama ?>">
-						</div>
-						<div class="mb-3">
-							<label for="currentNoKp" class="form-label">Nombor Kad Pengenalan</label>
-							<input type="text" class="form-control" id="currentNoKp" name="no_kp" value="<?php echo $no_kp ?>" readonly>
-						</div>
-						<div class="mb-3">
-							<label for="currentNoTel" class="form-label">Nombor Telefon</label>
-							<input type="text" class="form-control" id="currentNoTel" name="contact_no" value="<?php echo $contact_no ?>">
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-					<button type="submit" form="editForm" class="btn btn-primary">Simpan Perubahan</button>
-				</div>
-			</div>
-		</div>
-	</div>
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeEditModalLabel">Edit Maklumat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="POST" action="controller/auth/profile_process.php">
+                        <div class="mb-3">
+                            <label for="currentName" class="form-label">Nama Penuh</label>
+                            <input type="text" class="form-control" id="currentName" name="nama" value="<?php echo $nama ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="currentNoKp" class="form-label">Nombor Kad Pengenalan</label>
+                            <input type="text" class="form-control" id="currentNoKp" name="no_kp" value="<?php echo $no_kp ?>" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="currentNoTel" class="form-label">Nombor Telefon</label>
+                            <input type="text" class="form-control" id="currentNoTel" name="contact_no" value="<?php echo $contact_no ?>">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" form="editForm" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js"></script>

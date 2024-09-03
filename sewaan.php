@@ -1,10 +1,20 @@
-<?php include 'controller/auth/sewaan_process.php';?>
+<?php
+include 'controller/db-connect.php';
+
+// session_start();
+
+// if (!isset($_SESSION["id"])) {
+//     header("Location: login.php");
+//     exit();
+// }
+include 'controller/get_userdata.php';
+?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -18,8 +28,8 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-	<style>
-	 /* 
+    <style>
+        /* 
 	---------------------------------------------
 	global styles
 	--------------------------------------------- 
@@ -144,6 +154,7 @@
             padding-left: 20px;
             padding-right: 20px;
         }
+
         .header-area .main-nav .nav li a {
             display: block;
             font-weight: 500;
@@ -165,7 +176,7 @@
             color: #4da6e7 !important;
         }
 
-	 /* 
+        /* 
 	---------------------------------------------
 	preloader
 	--------------------------------------------- 
@@ -264,7 +275,7 @@
             background: #4da6e7;
             border-radius: 50%;
         }
-		
+
 
         .table-responsive {
             margin: 20px auto;
@@ -272,7 +283,8 @@
             max-width: 1200px;
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             text-align: center;
             vertical-align: middle;
         }
@@ -285,7 +297,7 @@
         .table-hover tbody tr:hover {
             background-color: #f5f5f5;
         }
-        
+
         .border-first-button button {
             border: 2px solid #343a40;
             padding: 5px 10px;
@@ -293,105 +305,111 @@
             color: #343a40;
             cursor: pointer;
         }
-		
-		.kotak {
+
+        .kotak {
             border: solid grey 2px;
-			padding: 15px;
-			background-color: #f9f9f9;
-			margin: 20px auto;
-			max-width: 60%;
-			box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
-			margin-top: 60px;
-		}
-	</style>
-  </head>
+            padding: 15px;
+            background-color: #f9f9f9;
+            margin: 20px auto;
+            max-width: 60%;
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-top: 60px;
+        }
+    </style>
+</head>
 
 <body>
 
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
-
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="sewaan.php" class="logo">
-				<img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-				<img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-				<li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
-				<li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-				<li class="scroll-to-section"><a href="sewaan.php" class="active">Sewaan</a></li>
-				<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-            </ul>
-			<div class="border-first-button" style="float: right; display: flex; align-items: center;">
-				<ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
-				<span style="margin-left: 10px; margin-top: 30px;"><?php echo $nama?></span>
-				<button onclick="location.href='login.php'">Logout</button>
-			</div>
-            <!-- ***** Menu End ***** -->
-          </nav>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
     </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
-  <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
-  <div class="kotak">
-   <h3 class="text-center fw-bold" style="margin-top: 30px; margin-below: 30px;">MAKLUMAT SEWAAN</h3>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>No.</th>
-                    <th>Nama Penyewa</th>
-                    <th>Item Disewa</th>
-                    <th>Tarikh Mula</th>
-                    <th>Tarikh Akhir</th>
-                    <th>Harga</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Ali Bin Abu</td>
-                    <td>Projekor</td>
-                    <td>01/08/2024</td>
-                    <td>05/08/2024</td>
-                    <td>RM 200.00</td>
-                    <td>Disahkan</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Fatimah Binti Ali</td>
-                    <td>Kerusi</td>
-                    <td>03/08/2024</td>
-                    <td>06/08/2024</td>
-                    <td>RM 150.00</td>
-                    <td>Dalam Proses</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="sewaan.php" class="logo">
+                            <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="sewaan.php" class="active">Sewaan</a></li>
+                            <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+                        </ul>
+                        <div class="border-first-button" style="float: right; display: flex; align-items: center;">
+                            <ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
+                            <span style="margin-left: 10px; margin-top: 30px;"><?php echo htmlspecialchars($nama);?></span>
+                            <button id="logoutButton">Logout</button>
+                        </div>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+    <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
+        <div class="kotak">
+            <h3 class="text-center fw-bold" style="margin-top: 30px; margin-bottom: 30px;">MAKLUMAT SEWAAN</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Tarikh Buat Tempahan</th>
+                            <th>Cadangan Tarikh Kerja</th>
+                            <th>Senarai Kerja Kerja</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $id = $_SESSION['id'];
+                        $sqlTempahan = "SELECT * FROM `tempahan` WHERE penyewa_id = $id";
+                        $resultTempahan = mysqli_query($conn, $sqlTempahan);
+                        $no = 1; // Initialize row number
+
+                        while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
+                            <tr data-id="<?= $row['id']; ?>">
+                                <td><?= $no++; ?></td> <!-- Increment the row number -->
+                                <td><?= date('d-m-Y', strtotime($row['tarikh_tempahan'])); ?></td> <!-- Format the date -->
+                                <td><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td> <!-- Format the date -->
+                                <td>
+                                    <?php
+                                    $tempahanId = $row['id'];
+                                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
+                                    $resultKerja = mysqli_query($conn, $sqlKerja);
+                                    $listno = 1;
+                                    while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                                        <span><?= $listno++; ?>. <?= htmlspecialchars($rowKerja['nama_kerja']); ?><br></span>
+                                    <?php endwhile; ?>
+                                </td>
+                                <td><?= htmlspecialchars($row['status']); ?></td> <!-- Escape the status -->
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
     </div>
-   </div>
-   </div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js"></script>

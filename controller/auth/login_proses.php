@@ -45,13 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($resultLogin->num_rows > 0) {
             while ($rowLogin = $resultLogin->fetch_assoc()) {
                 $hashed_password = $rowLogin['password'];
-                $pengguna_id = $rowLogin['no_kp'];
+                $pengguna_id = $rowLogin['id'];
                 $nama_pengguna = $rowLogin['nama'];
+                $no_kp = $rowLogin['no_kp'];
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
                     // PENYEWA
-                    $_SESSION['pengguna_id'] = $pengguna_id;
+                    $_SESSION['id'] = $pengguna_id;
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
+                    $_SESSION['no_kp'] = $no_kp;
 
                     // Rekod audit trail
                     $action = "Log masuk sebagai PENYEWA";
@@ -73,9 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($adminLogin->num_rows > 0) {
             while ($rowAdmin = $adminLogin->fetch_assoc()) {
                 $hashed_password = $rowAdmin['password'];
-                $pengguna_id = $rowAdmin['no_kp'];
+                $pengguna_id = $rowAdmin['id'];
                 $nama_pengguna = $rowAdmin['nama'];
                 $kumpulan = $rowAdmin['kumpulan'];
+                $no_kp = $rowAdmin['no_kp'];
 
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
