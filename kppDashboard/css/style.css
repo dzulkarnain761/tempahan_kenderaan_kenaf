@@ -19,24 +19,18 @@
     width: 100%;
 }
 
+ul {
+    all: unset;
+    list-style: disc;
+    /* padding-left: 20px; */
+    margin: 0;
+}
 
-        .custom-container {
-            position: relative;
-            width: 100%;
-        } 
+nav .breadcrumb {
+    margin-left: 24px;
+}
 
-        ul {
-            all: unset;
-            list-style: disc;
-            /* padding-left: 20px; */
-            margin: 0;
-        }
-
-        nav .breadcrumb {
-            margin-left: 24px;
-        }
-		
-		.breadcrumb {
+.breadcrumb {
     display: flex;
     flex-wrap: wrap;
     padding: 0 0;
@@ -228,7 +222,7 @@ main.active {
     color: var(--blue);
     text-transform: uppercase;
     margin-bottom: 15px;
-	text-align: center;
+    text-align: center;
 }
 
 .cardHeader .btn {
