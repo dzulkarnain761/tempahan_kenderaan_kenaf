@@ -41,7 +41,7 @@
 						<span class="icon">
 							<ion-icon name="person-circle-outline"></ion-icon>
 						</span>
-						<span class="title">Profile</span>
+						<span class="title">Profil</span>
 					</a>
 				</li>
 
@@ -90,11 +90,6 @@
 						<h4 class="text-muted">000-0000000</h4>
 					</div>
 					<div class="text-end">
-						<!-- Button to trigger modal -->
-						<button type="button" class="btn btn-primary"
-							onclick="window.location.href = 'tukarKataLaluan.php'">
-							Tukar Kata Laluan
-						</button>
 						<button type="button" class="btn btn-primary"
 							onclick="window.location.href = 'kemaskiniProfile.php'">
 							Kemaskini

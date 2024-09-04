@@ -41,7 +41,7 @@
 						<span class="icon">
 							<ion-icon name="person-circle-outline"></ion-icon>
 						</span>
-						<span class="title">Profile</span>
+						<span class="title">Profil</span>
 					</a>
 				</li>
 
@@ -97,7 +97,7 @@
 							<td>5.5</td>
 							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
 							<td>
-								<form method="POST" action="sahkan.php">
+								<form method="POST" action="#">
 									<input type="hidden" name="id_permohonan" value="1">
 									<button type="submit" name="tindakan" value="terima"
 										class="btn btn-success">Terima</button>
