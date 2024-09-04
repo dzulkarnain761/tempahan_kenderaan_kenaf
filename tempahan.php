@@ -23,345 +23,11 @@ include 'controller/get_userdata.php';
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <style>
-        .border-first-button button {
-            display: inline-block !important;
-            padding: 10px 20px !important;
-            color: #4da6e7 !important;
-            border: 1px solid #4da6e7 !important;
-            border-radius: 23px;
-            font-weight: 500 !important;
-            letter-spacing: 0.3px !important;
-            transition: all .5s;
-            background-color: #fff;
-            margin-top: 30px;
-            margin-left: 10px;
-        }
-
-        .border-first-button button:hover {
-            background-color: #4da6e7;
-            color: #fff !important;
-        }
-
-        html,
-        body {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            background-color: #fff;
-            -ms-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* 
----------------------------------------------
-Banner Style
---------------------------------------------- 
-*/
-
-        .main-banner {
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            padding: 200px 0px 120px 0px;
-            position: relative;
-            overflow: hidden;
-        }
-
-
-        .main-banner:before {
-            content: '';
-            background-image: url(../images/slider-right-dec.jpg);
-            background-repeat: no-repeat;
-            position: absolute;
-            right: 0;
-            top: 60px;
-            width: 1159px;
-            height: 797px;
-            z-index: -1;
-        }
-
-        .main-banner .left-content {
-            margin-right: 15px;
-        }
-
-        .main-banner .left-content h6 {
-            text-transform: capitalize;
-            font-size: 20px;
-            font-weight: 700;
-            color: #4da6e7;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .main-banner .left-content h2 {
-            z-index: 2;
-            position: relative;
-            font-weight: 700;
-            font-size: 50px;
-            color: #2a2a2a;
-            margin-bottom: 20px;
-        }
-
-        .main-banner .left-content p {
-            margin-bottom: 30px;
-            margin-right: 45px;
-        }
-
-        .main-banner .right-image {
-            text-align: right;
-            position: relative;
-            z-index: 20;
-        }
-
-        .main-banner .right-image img {
-            max-width: 593px;
-        }
-
-        /* 
----------------------------------------------
-preloader
---------------------------------------------- 
-*/
-
-        .js-preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #fff;
-            display: -webkit-box;
-            display: flex;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            opacity: 1;
-            visibility: visible;
-            z-index: 9999;
-            -webkit-transition: opacity 0.25s ease;
-            transition: opacity 0.25s ease;
-        }
-
-        .js-preloader.loaded {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        @-webkit-keyframes dot {
-            50% {
-                -webkit-transform: translateX(96px);
-                transform: translateX(96px);
-            }
-        }
-
-        @keyframes dot {
-            50% {
-                -webkit-transform: translateX(96px);
-                transform: translateX(96px);
-            }
-        }
-
-        @-webkit-keyframes dots {
-            50% {
-                -webkit-transform: translateX(-31px);
-                transform: translateX(-31px);
-            }
-        }
-
-        @keyframes dots {
-            50% {
-                -webkit-transform: translateX(-31px);
-                transform: translateX(-31px);
-            }
-        }
-
-        .preloader-inner {
-            position: relative;
-            width: 142px;
-            height: 40px;
-            background: #fff;
-        }
-
-        .preloader-inner .dot {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            top: 12px;
-            left: 15px;
-            background: #4da6e7;
-            border-radius: 50%;
-            -webkit-transform: translateX(0);
-            transform: translateX(0);
-            -webkit-animation: dot 2.8s infinite;
-            animation: dot 2.8s infinite;
-        }
-
-        .preloader-inner .dots {
-            -webkit-transform: translateX(0);
-            transform: translateX(0);
-            margin-top: 12px;
-            margin-left: 31px;
-            -webkit-animation: dots 2.8s infinite;
-            animation: dots 2.8s infinite;
-        }
-
-        .preloader-inner .dots span {
-            display: block;
-            float: left;
-            width: 16px;
-            height: 16px;
-            margin-left: 16px;
-            background: #4da6e7;
-            border-radius: 50%;
-        }
-
-        /* 
-	---------------------------------------------
-	header
-	--------------------------------------------- 
-	*/
-
-
-        .header-area {
-            background-color: #fff;
-            box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.03);
-        }
-
-        .header-area .main-nav .logo {
-            line-height: 100px;
-            float: left;
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-        }
-
-        .header-area .main-nav .nav {
-            float: left;
-            margin-top: 30px;
-            margin-right: 0px;
-            background-color: transparent;
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-            position: relative;
-            z-index: 999;
-        }
-
-        .header-area .main-nav .nav li {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .header-area .main-nav .nav li a {
-            display: block;
-            font-weight: 500;
-            font-size: 15px;
-            color: #2a2a2a;
-            text-transform: capitalize;
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-            height: 40px;
-            line-height: 40px;
-            border: transparent;
-            letter-spacing: 1px;
-        }
-
-        .header-area .main-nav .nav li:hover a,
-        .header-area .main-nav .nav li a.active {
-            color: #4da6e7 !important;
-        }
-
-        a {
-            color: #0d6efd;
-            text-decoration: none;
-        }
-
-        .form-control {
-            display: block;
-            width: 100%;
-            padding: .375rem .75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #bcbfc2;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            border-radius: .25rem;
-            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
-        }
-
-
-        /* Center modal dialog */
-        .modal-dialog {
-            max-width: 500px;
-            margin: auto;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        /* Override specific properties for modal-dialog-centered */
-        .modal-dialog-centered {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            width: auto;
-            /* Remove fixed width */
-        }
-
-        .modal-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            width: 500px;
-            /* Optional: maximum width */
-            pointer-events: auto;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid rgba(0, 0, 0, .2);
-            border-radius: .3rem;
-            outline: 0;
-            max-height: 100%;
-            border: solid grey 2px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        @media (min-width: 576px) {
-            .modal-dialog {
-                width: 500px;
-            }
-
-            .modal-dialog-scrollable {
-                height: calc(100% - 3.5rem);
-            }
-
-            .modal-dialog-centered {
-                min-height: calc(100% - 3.5rem);
-            }
-
-            .modal-sm {
-                max-width: 300px;
-            }
-        }
     </style>
 </head>
 
@@ -415,7 +81,7 @@ preloader
 
     <!-- ***** Content Start ***** -->
     <div class="modal-dialog modal-dialog-centered wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
-        <div class="modal-content" style="margin-top: 20px; width:900px;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Sila Pilih</h5>
             </div>
@@ -423,8 +89,8 @@ preloader
                 <form>
                     <div class="mb-3">
                         <label for="sewa" class="form-label">Jenis Sewa :</label>
-                        <select id="sewa" class="form-control" name="sewa" required onchange="showForm()">
-                            <option disabled selected>Sila Pilih Jenis Sewa</option>
+                        <select id="sewa" class="form-select" name="sewa" required onchange="showForm()">
+                            <option disabled selected>--Pilih Jenis Sewa--</option>
                             <option value="jam/harian">Per Jam atau Harian</option>
                             <option value="bulanan">Bulanan</option>
                         </select>
@@ -449,7 +115,7 @@ preloader
                     </div>
                     <div class="mb-3">
                         <label for="negeri" class="form-label">Negeri</label>
-                        <select id="negeri" class="form-control" name="negeri" required>
+                        <select id="negeri" class="form-select" name="negeri" required>
                             <option disabled selected value="">--Pilih Negeri--</option>
                             <?php
                             $sqlNegeri = "SELECT * FROM negeri";
@@ -477,8 +143,8 @@ preloader
 
                     <div class="mb-3">
                         <label for="kerja" class="form-label">Jenis Kerja :</label>
-                        <select id="kerja" class="form-control" name="kerja[]" required onchange="showButton()">
-                            <option disabled selected value="">Sila Pilih Jenis Kerja</option>
+                        <select id="kerja" class="form-select" name="kerja[]" required onchange="showButton()">
+                            <option disabled selected value="">--Pilih Jenis Kerja--</option>
                             <?php
                             // Assuming you have a database connection set up as $conn
                             $sqlTugasan = "SELECT * FROM `tugasan`";

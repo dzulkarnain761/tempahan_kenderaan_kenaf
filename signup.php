@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<title>eBooking</title>
+	<link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <link href="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,59 +15,6 @@
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <style>
-        html,
-        body {
-            height: 100%;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            background-color: #fff;
-            -ms-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .modal-dialog-centered {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        .modal-header {
-            display: flex;
-            flex-shrink: 0;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 1rem;
-            border-bottom: 1px solid #dee2e6;
-            border-top-left-radius: calc(.3rem - 1px);
-            border-top-right-radius: calc(.3rem - 1px);
-        }
-
-        .form-control {
-            display: block;
-            width: 100%;
-            padding: .375rem .75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #bcbfc2;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            border-radius: .25rem;
-            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
-        }
-
-        .modal-content {
-            max-height: 100%;
-            border: solid grey 2px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
-        }
     </style>
 </head>
 
