@@ -5,64 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking</title>
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+	<title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.png">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-
     <style>
-	
-	* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-        .custom-container {
-            position: relative;
-            width: 100%;
-        }
-
-        ul {
-            all: unset;
-            list-style: disc;
-            /* padding-left: 20px; */
-            margin: 0;
-        }
-
-        nav .breadcrumb {
-            margin-left: 24px;
-        }
-		
-		/* ================== Table details ============== */
-        .recentOrders {
-            position: relative;
-            display: grid;
-            min-height: 500px;
-            background: var(--white);
-            padding: 20px;
-            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-            border-radius: 20px;
-            margin-top: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
     </style>
 
 </head>
 
 <body>
-    <div class="custom-container">
+    <div class="container">
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#">
-                        <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
+                    <a href="kemaskiniProfile.php">
+                        <img src="images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
 						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
@@ -105,7 +68,7 @@
                 <div class="userName">
                     <div class="user-name">NAMA BINTI PENUH</div>
                     <div class="user">
-                        <img src="assets/images/user.png" alt="User Image">
+                        <img src="images/user.png" alt="User Image">
                     </div>
                 </div>
             </div>
@@ -123,7 +86,7 @@
                     </div>
 
                     <form>
-						<div class="mb-3"><br><br>
+						<div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Email:</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" value="abc@gmail.com">
                         </div>
@@ -133,7 +96,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="000000-00-0000">
+                            <input type="text" class="form-control" id="exampleFormControlInput1" value="000000-00-0000" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
@@ -147,7 +110,7 @@
         </div>
     </div>
 
-    <script src="assets/js/main.js"></script>
+    <script src="js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 

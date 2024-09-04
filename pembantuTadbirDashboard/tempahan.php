@@ -5,51 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking</title>
-    <!-- ======= Styles ====== -->
-    <link rel="stylesheet" href="assets/css/style.css">
+	<title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="images/logo2.png">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 	<style>
-	* {
-		  font-family: 'Poppins', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 600; /* Bold for h2 */
-        }
-        .table thead th {
-            background-color: #2a2185;
-            color: #fff;
-            font-weight: 400; /* Normal weight for th */
-        }
-        .table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .table td, .table th {
-            text-align: center;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-        }
-        .btn-success:hover {
-            background-color: #218838;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border: none;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
 	</style>
 </head>
 
@@ -59,8 +22,8 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#">
-                        <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
+                    <a href="tempahan.php">
+                        <img src="images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
 						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
@@ -104,17 +67,55 @@
                 <div class="userName">
 					<div class="user-name">NAMA BINTI PENUH</div>
 					<div class="user">
-						<img src="assets/images/user.png" alt="User Image">
+						<img src="images/user.png" alt="User Image">
 					</div>
 				</div>
 			</div>
 			
-			
+			<div class="recentOrders">
+				<div class="cardHeader">
+					<h2>Pembayaran</h2>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<td>Bil</td>
+							<td>Nama Pemohon</td>
+							<td>Lokasi Projek</td>
+							<td>Tarikh Kerja</td>
+							<td>Bayaran Pendahuluan</td>
+							<td>Bayaran Keseluruhan</td>
+							<td>Maklumat</td>
+							<td>Tindakan</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Ahmad Bin Ali</td>
+							<td>Kelantan</td>
+							<td>21/06/2024</td>
+							<td>RM 50</td>
+							<td>RM 100</td>
+							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
+							<td>
+								<form method="POST" action="#">
+									<input type="hidden" name="id_permohonan" value="1">
+									<button type="submit" name="tindakan" value="terima"
+										class="btn btn-success">Terima</button>
+									<button type="submit" name="tindakan" value="tolak"
+										class="btn btn-danger">Tolak</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 
     <!-- =========== Scripts =========  -->
-    <script src="assets/js/main.js"></script>
+    <script src="js/main.js"></script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
