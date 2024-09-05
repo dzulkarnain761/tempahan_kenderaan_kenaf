@@ -8,8 +8,8 @@ include 'controller/db-connect.php';
 //     header("Location: login.php");
 //     exit();
 // }
-include 'controller/get_userdata.php';
 
+include 'controller/get_userdata.php';
 ?>
 
 

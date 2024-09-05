@@ -1,3 +1,20 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tempahan_kenderaan";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    //   die("Connection failed: " . mysqli_connect_error());
+    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,21 +22,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
+    <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="images/logo2.png">
     <link rel="stylesheet" href="css/style.css">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
+            margin: 0;
+        }
     </style>
 
 </head>
 
 <!-- =============== Navigation ================ -->
-<div class="container">
+<div class="custom-container">
     <div class="navigation">
         <ul>
             <li>
@@ -86,78 +115,166 @@
                 <h2>MAKLUMAT TEMPAHAN</h2>
             </div>
 
+            <?php
+            $id = $_GET['id'];
+
+            // Ensure you escape the ID to prevent SQL injection
+            $id = mysqli_real_escape_string($conn, $id);
+
+            $sqlTempahan = "SELECT t.*, p.nama 
+                FROM tempahan t
+                INNER JOIN penyewa p ON p.id = t.penyewa_id WHERE t.id = $id";
+            $resultTempahan = mysqli_query($conn, $sqlTempahan);
+
+            // Fetch the Pemandu member's data
+            if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
+                $tempahan = mysqli_fetch_assoc($resultTempahan);
+            } else {
+                // Handle the case where no Pemandu member is found
+                echo "Tiada Tempahan Dijumpai";
+                exit;
+            }
+
+            ?>
+
             <form>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" value="" readonly>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_tempahan']) ?>" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="Nama bin Penyewa"
+                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['nama']) ?>"
                         readonly>
                 </div>
-				<div class="mb-3">
+                <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tarikh Cadangan:</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" value="" readonly>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_kerja']) ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar)::</label>
-                    <input type="number" class="form-control" id="exampleFormControlInput1" value="2" readonly>
+                    <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
+                    <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['hektar']) ?>" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="Kelantan" readonly>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi']) ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Jenis Kerja:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="Meracun" readonly>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="Sayur-sayuran" readonly>
+                    <label for="jenis_kerja_input" class="form-label">Jenis Kerja:</label>
+                    <?php
+                    $tempahanId = $id;
+                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
+                    $resultKerja = mysqli_query($conn, $sqlKerja);
+                    if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
+                        while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                            <div class="input-group mb-3">
+                                <input type="hidden" class="form-control" id="kerjaID" value="<?php echo htmlspecialchars($rowKerja['id']); ?>">
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" readonly>
+                                <button class="btn btn-outline-primary" type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#changeEditModal"
+                                    data-id="<?php echo htmlspecialchars($rowKerja['id']); ?>">Kemaskini</button>
+                            </div>
+                        <?php endwhile;
+                    else: ?>
+                        <input type="text" class="form-control mb-2" id="jenis_kerja_input" value="No kerja found" readonly>
+                    <?php endif; ?>
                 </div>
 
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['catatan']) ?>" readonly>
+                </div>
             </form>
         </div>
-		
-        <div class="recentOrders">
-            <div class="cardHeader">
-                <h2>SILA TETAPKAN PEMANDU DAN KENDERAAN</h2>
+
+        <!-- Modal HTML -->
+        <div class="modal fade" id="changeEditModal" tabindex="-1" aria-labelledby="changeEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changeEditModalLabel">Kemaskini Kerja</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateKerjaForm" method="POST" action="update_kerja.php">
+                            <input type="hidden" id="modalKerjaId" name="kerja_id">
+
+                            <div class="mb-3" id="display_nama_kerja">
+                                <!-- Options will be populated by AJAX -->
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nama_pemandu" class="form-label">Pemandu</label>
+                                <select id="nama_pemandu" class="form-control" name="nama_pemandu" required>
+                                    <option disabled selected value="">--Pilih Pemandu--</option>
+                                    <!-- Options will be populated by AJAX -->
+                                </select>
+                                <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="kenderaan" class="form-label">Kenderaan</label>
+                                <select id="kenderaan" class="form-control" name="kenderaan" required>
+                                    <option disabled selected value="">--Pilih Kenderaan--</option>
+                                    <!-- Options will be populated by AJAX -->
+                                </select>
+                                <div class="invalid-feedback">Sila pilih kenderaan penempatan.</div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" form="updateKerjaForm" class="btn btn-primary">Kemaskini</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <form>
-                <div class="mb-3">
-					<label for="pemandu" class="form-label">Pemandu:</label>
-					<select id="sewa" class="form-control" name="sewa" required>
-						<option disabled selected>--Pilih Nama Pemandu--</option>
-						<option value="...">...</option>
-					</select>
-				</div>
-                <div class="mb-3">
-                    <label for="sewa" class="form-label">Kenderaan:</label>
-                    <select id="sewa" class="form-control" name="sewa" required>
-                        <option disabled selected>--Pilih Kenderaan--</option>
-                        <option value="...">...</option>
-                    </select>
-                </div>
-				<div class="mb-3">
-                    <label for="hargaFull" class="form-label">Harga Bayaran Keseluruhan:</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" value="RM 100" readonly>
-                </div>
-				<div class="mb-3">
-                    <label for="hargaDepo" class="form-label">Harga Bayaran Pndahuluan:</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" value="RM 50" readonly>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Hantar</button>
-                </div>
-            </form>
         </div>
+
+
+
     </div>
 </div>
 
+<script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+<script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/main.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<script>
+    var changeEditModal = document.getElementById('changeEditModal');
+    changeEditModal.addEventListener('show.bs.modal', function(event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget;
+
+        // Extract info from data-* attributes
+        var kerjaId = button.getAttribute('data-id');
+
+        // Update the modal's hidden input value
+        var modalKerjaId = changeEditModal.querySelector('#modalKerjaId');
+        modalKerjaId.value = kerjaId;
+
+        // Trigger AJAX to populate nama_kerja
+        $.ajax({
+            type: 'POST',
+            url: 'controller/get_kerja.php',
+            data: {
+                id: kerjaId
+            },
+            success: function(response) {
+                $('#display_nama_kerja').html(response);
+            },
+            error: function() {
+                $('#display_nama_kerja').html('<input type="text" id="nama_kerja" name="nama_kerja" value="not found">');
+            }
+        });
+    });
+</script>
+
 
 </body>
 

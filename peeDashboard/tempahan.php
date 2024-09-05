@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
+    <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -78,7 +78,7 @@
                     <h2>SENARAI TEMPAHAN</h2>
                 </div>
 
-                <table>
+                <table id="tempahanTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
@@ -91,7 +91,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <td>1</td>
                             <td>Nurul Atikah</td>
                             <td>3</td>
@@ -106,10 +106,26 @@
                                     Tolak
                                 </button>
                             </td>
-                        </tr>
+                        </tr> -->
+
+                        <?php
+
+
+
+                        ?>
 
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start mt-4" id="pagination">
+                        <!-- Pagination links will be injected here by JavaScript -->
+                    </ul>
+                </nav>
+
+
+                
             </div>
         </div>
 
@@ -117,8 +133,129 @@
         <script src="js/main.js"></script>
 
         <!-- ====== ionicons ======= -->
+        <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+        <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+        <script src="assets/js/main.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <script>
+            function loadPage(page) {
+                $.ajax({
+                    url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                    type: 'GET',
+                    data: {
+                        page: page
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        var tbody = $('#tempahanTable tbody');
+                        tbody.empty();
+
+                        // Populate table
+                        response.data.forEach(function(item, index) {
+                            var kerjaList = '';
+                            item.kerja.forEach(function(kerjaItem, kerjaIndex) {
+                                kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                            });
+
+                            tbody.append(`
+                <tr data-id="${item.id}">
+                    <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                    <td>${item.nama}</td>
+                    <td>${item.hektar}</td>
+                    <td>${item.tarikh_kerja}</td>
+                    <td>${item.lokasi}</td>
+                    <td>${kerjaList}</td>
+                    <td>
+                        <button onclick="window.location.href = 'terimaTempahan.php?id=${item.id}'" class="btn btn-success">
+                            Terima
+                        </button>
+                        <button onclick="deleteItem(this)" class="btn btn-danger">
+                            Tolak
+                        </button>
+                    </td>
+                </tr>
+            `);
+                        });
+
+                        // Populate pagination
+                        var pagination = $('#pagination');
+                        pagination.empty();
+
+                        // Previous button
+                        pagination.append(`
+                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                    </li>
+                `);
+
+                        // Page numbers
+                        for (var i = 1; i <= response.totalPages; i++) {
+                            pagination.append(`
+                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                        </li>
+                    `);
+                        }
+
+                        // Next button
+                        pagination.append(`
+                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                    </li>
+                `);
+                    }
+                });
+            }
+
+            // Load the first page by default
+            loadPage(1);
+
+            function deleteItem(button) {
+                var row = button.closest('tr'); // Find the closest <tr> element
+                var tugasanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+                Swal.fire({
+                    title: "Adakah anda pasti?",
+                    text: "Anda tidak akan dapat membatalkan ini!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, padamkannya!",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'controller/delete/delete_tugasan.php',
+                            type: 'POST',
+                            data: {
+                                id: tugasanId
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: "Berjaya dipadam!",
+                                    text: "Fail anda telah dipadam.",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: "Ralat!",
+                                    text: "Ralat berlaku semasa memadam.",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
+
+            }
+        </script>
 </body>
 
 </html>
