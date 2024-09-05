@@ -6244,6 +6244,9 @@ fieldset:disabled .btn {
 .modal-dialog-centered {
     align-items: center;
     justify-content: center;
+	
+            display: flex;
+            height: 100%;
 }
 
 .modal-content {
@@ -6257,7 +6260,6 @@ fieldset:disabled .btn {
     border: 1px solid rgba(0, 0, 0, .2);
     border-radius: .3rem;
     outline: 0;
-    max-height: 100%;
     border: solid grey 2px;
     overflow: hidden;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
@@ -12176,7 +12178,7 @@ fieldset:disabled .btn {
 
 .main-banner-img:after {
     content: '';
-    background-image: url(assets/images/slider-left-dec.jpg);
+    background-image: url(../assets/images/slider-left-dec.jpg);
     background-repeat: no-repeat;
     position: absolute;
     left: 0;
@@ -12188,7 +12190,7 @@ fieldset:disabled .btn {
 
 .main-banner-img:before {
     content: '';
-    background-image: url(assets/images/slider-right-dec.jpg);
+    background-image: url(../assets/images/slider-right-dec.jpg);
     background-repeat: no-repeat;
     position: absolute;
     right: 0;
@@ -12239,11 +12241,15 @@ fieldset:disabled .btn {
 .main-banner .left-content p {
     margin-bottom: 30px;
     margin-right: 45px;
+	font-size: 18px;
+	color: grey;
 }
 
 .left-content p {
     margin-bottom: 30px;
     margin-right: 45px;
+	font-size: 18px;
+	color: grey;
 }
 
 .main-banner .right-image {

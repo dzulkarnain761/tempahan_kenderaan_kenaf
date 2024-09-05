@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>eBooking</title>
 	<link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="penyewaDashboard/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
     </style>
 </head>
 
-<body>
+<body style="height: 100%;">
 
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -81,7 +81,7 @@
                         <button id="signupButton" type="submit" class="btn btn-primary">Daftar Masuk</button>
                     </div>
                     <div style="text-align:center; margin-top: 10px;">
-                        <p><a href="login.php">Kembali ke Log masuk</a></p>
+                        <p style="font-size:17px;"><a href="login.php">Kembali ke Log masuk</a></p>
                     </div>
                 </form>
             </div>

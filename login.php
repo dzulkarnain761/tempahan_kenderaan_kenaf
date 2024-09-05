@@ -3,7 +3,7 @@ session_start();
 
 // if (isset($_SESSION["kumpulan"])) {
 //     if ($_SESSION['kumpulan'] === 'G') {
-//         header("Location: homepage.php");
+//         header("Location: penyewaDashboard/homepage.php");
 //         exit();
 //     } elseif ($_SESSION['kumpulan'] === 'A') {
 //         header("Location: adminDashboard/dashboard.php");
@@ -14,14 +14,14 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>eBooking</title>
 	<link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="penyewaDashboard/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@ session_start();
     </style>
 </head>
 
-<body>
+<body style="height: 100%;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -61,7 +61,7 @@ session_start();
                         <button id="loginButton" type="submit" class="btn btn-primary">Log Masuk</button>
                     </div>
                     <div style="text-align:center; margin-top: 10px;">
-                        <p>Belum daftar? <a href="signup.php">Daftar</a></p>
+                        <p style="font-size:17px;">Belum daftar? <a href="signup.php">Daftar</a></p>
                     </div>
                 </form>
             </div>
