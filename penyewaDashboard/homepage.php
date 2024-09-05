@@ -1,6 +1,6 @@
 <?php
 
-include 'controller/db-connect.php';
+include '../controller/db-connect.php';
 
 // session_start();
 
@@ -8,8 +8,9 @@ include 'controller/db-connect.php';
 //     header("Location: login.php");
 //     exit();
 // }
+include '../controller/get_userdata.php';
 
-include 'controller/get_userdata.php';
+
 ?>
 
 
@@ -23,12 +24,13 @@ include 'controller/get_userdata.php';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>eBooking</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/animated.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animated.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
     <style>
+
     </style>
 </head>
 
@@ -55,8 +57,8 @@ include 'controller/get_userdata.php';
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="homepage.php" class="logo">
-                            <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-                            <img src="assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                            <img src="../assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                            <img src="../assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
@@ -67,10 +69,11 @@ include 'controller/get_userdata.php';
                             <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
                         </ul>
 						
-						<div class="border-first-button" style="float: right; display: flex; align-items: center;">
-							<ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
-							<span style="margin-left: 10px; margin-top: 30px;"><?php echo htmlspecialchars($nama);?></span>
-							<button id="logoutButton">Logout</button>
+						<div class="right-nav">
+							<span><?php echo htmlspecialchars($nama);?></span>
+							<div class="log-out-button">
+								<span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
+							</div>
 						</div>
                         <!-- ***** Menu End ***** -->
                     </nav>
@@ -81,7 +84,7 @@ include 'controller/get_userdata.php';
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Start ***** -->
-    <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="main-banner main-banner-img wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -106,7 +109,7 @@ include 'controller/get_userdata.php';
                         </div>
                         <div class="col-lg-6">
                             <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="assets/images/farm-tractor-concept-illustration.png" alt="Farm Tractor">
+                                <img src="../assets/images/farm-tractor-concept-illustration.png" alt="Farm Tractor">
                             </div>
                         </div>
                     </div>
@@ -118,12 +121,11 @@ include 'controller/get_userdata.php';
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="vendor/jquery/jquery.min.js" defer></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
-    <script src="assets/js/owl-carousel.js" defer></script>
-    <script src="assets/js/animation.js" defer></script>
-    <script src="assets/js/imagesloaded.js" defer></script>
-    <script src="assets/js/custom.js" defer></script>
+    <script src="../vendor/jquery/jquery.min.js" defer></script>
+    <script src="../assets/js/owl-carousel.js" defer></script>
+    <script src="../assets/js/animation.js" defer></script>
+    <script src="../assets/js/imagesloaded.js" defer></script>
+    <script src="../assets/js/custom.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
@@ -150,12 +152,12 @@ include 'controller/get_userdata.php';
 
                     // Show the success dialog
                     Swal.fire({
-                        title: "Logged out!",
-                        text: "You have been successfully logged out.",
+                        title: "Log Keluar!",
+                        text: "Anda telah berjaya log keluar.",
                         icon: "success"
                     }).then(() => {
                         // Optionally, redirect the user after the success dialog
-                        window.location.href = 'controller/auth/logout.php'; // Update with your actual logout URL
+                        window.location.href = '../controller/auth/logout.php'; // Update with your actual logout URL
                     });
                 }
             });

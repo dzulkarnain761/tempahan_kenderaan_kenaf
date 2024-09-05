@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>eBooking</title>
-	<link rel="icon" type="image/x-icon" href="images/logo2.png">
-    <link rel="stylesheet" href="css/style.css">
+	<link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
             <ul>
                 <li>
                     <a href="jobsheet.php">
-                        <img src="images/logo2.png" alt="Brand Logo"
+                        <img src="../assets/images/logo2.png" alt="Brand Logo"
                             style="margin-top: 10px; width:60px; height:60px;">
                         <span class="title" style="margin-top: 10px;">LKTNBooking</span>
                     </a>
@@ -70,7 +70,7 @@
                 <div class="userName">
                     <div class="user-name">NAMA BINTI PENUH</div>
                     <div class="user">
-                        <img src="images/user.png" alt="User Image">
+                        <img src="../assets/images/user.png" alt="User Image">
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 

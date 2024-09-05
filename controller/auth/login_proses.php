@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
                     $stmtAudit->execute();
 
-                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'homepage.php']);
+                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'penyewaDashboard/homepage.php']);
                     exit();
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
