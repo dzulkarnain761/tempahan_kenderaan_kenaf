@@ -19,7 +19,8 @@ include 'controller/get_userdata.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
     <link href="bootstrap.min.css" rel="stylesheet">
@@ -27,7 +28,6 @@ include 'controller/get_userdata.php';
     <link rel="stylesheet" href="assets/css/animated.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <style>
-	
     </style>
 </head>
 
@@ -65,10 +65,12 @@ include 'controller/get_userdata.php';
                             <li class="scroll-to-section"><a href="sewaan.php" class="active">Sewaan</a></li>
                             <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
                         </ul>
-                        <div class="border-first-button" style="float: right; display: flex; align-items: center;">
-                            <ion-icon name="person-outline" style="font-size: 24px; margin-top: 30px;"></ion-icon>
-                            <span style="margin-left: 10px; margin-top: 30px;"><?php echo htmlspecialchars($nama);?></span>
-                            <button id="logoutButton">Logout</button>
+
+                        <div class="right-nav">
+                            <span><?php echo htmlspecialchars($nama); ?></span>
+                            <div class="log-out-button">
+                                <span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
+                            </div>
                         </div>
                         <!-- ***** Menu End ***** -->
                     </nav>
@@ -79,7 +81,8 @@ include 'controller/get_userdata.php';
     <!-- ***** Header Area End ***** -->
     <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
         <div class="formTable">
-            <h3 class="text-center fw-bold" style="margin-top: 30px; margin-bottom: 30px;">MAKLUMAT SEWAAN</h3>
+            <h3 class="text-center fw-bold" style="margin-top: 30px; margin-below: 30px;">MAKLUMAT SEWAAN</h3>
+            <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -96,7 +99,7 @@ include 'controller/get_userdata.php';
                         $sqlTempahan = "SELECT * FROM `tempahan` WHERE penyewa_id = $id";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
                         $no = 1; // Initialize row number
-
+                        
                         while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
                             <tr data-id="<?= $row['id']; ?>">
                                 <td><?= $no++; ?></td> <!-- Increment the row number -->
@@ -117,12 +120,12 @@ include 'controller/get_userdata.php';
                         <?php endwhile; ?>
                     </tbody>
                 </table>
+            </div>
         </div>
     </div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/animation.js"></script>
     <script src="assets/js/imagesloaded.js"></script>
@@ -134,7 +137,7 @@ include 'controller/get_userdata.php';
         const logoutButton = document.getElementById('logoutButton');
 
         // Add a click event listener to the logout button
-        logoutButton.addEventListener('click', function() {
+        logoutButton.addEventListener('click', function () {
             // Show the confirmation dialog
             Swal.fire({
                 title: "Log Keluar",
@@ -152,8 +155,8 @@ include 'controller/get_userdata.php';
 
                     // Show the success dialog
                     Swal.fire({
-                        title: "Logged out!",
-                        text: "You have been successfully logged out.",
+                        title: "Log Keluar!",
+                        text: "Anda telah berjaya log keluar.",
                         icon: "success"
                     }).then(() => {
                         // Optionally, redirect the user after the success dialog
