@@ -34,14 +34,14 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
   exit;
 }
 
-// include autoloader
-require_once 'dompdf/autoload.inc.php';
 
-// reference the Dompdf namespace
-use Dompdf\Dompdf;
 
-// instantiate and use the dompdf class
-$dompdf = new Dompdf();
+
+// Convert image to base64
+$imageData2 = base64_encode(file_get_contents('../../assets/images/logo.jpeg'));
+
+// Prepare base64 image source
+$imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
 
 
 ?>
@@ -152,7 +152,9 @@ $dompdf = new Dompdf();
                         <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22px; table-layout: auto; width: 100%; border: none">
                           <tr>
                             <td style="width: 50%">
-                              <img align="left" src="assets/images/logo.jpeg" width="100%" style="max-width: 160px" />
+                              
+                              
+                              <img align="left" src="<?php echo $imgSrc2 ?>" width="50%" style="max-width: 160px" />
                             </td>
                             <td style="width: 50%">
                               <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> INVOICE </div>
@@ -328,7 +330,7 @@ $dompdf = new Dompdf();
                       <td align="left" style="font-size: 0px; padding: 10px 25px; word-break: break-word">
                         <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22px; table-layout: auto; width: 100%; border: none">
                           <tr>
-                            
+
                             <td style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Maklumat Tempahan :</strong></div>
 
@@ -338,7 +340,7 @@ $dompdf = new Dompdf();
 
                             </td>
 
-                            
+
                           </tr>
                         </table>
                       </td>
@@ -395,7 +397,7 @@ $dompdf = new Dompdf();
 
                           <?php
 
-                          $totalDeposit = $totalHarga/2;
+                          $totalDeposit = $totalHarga / 2;
 
                           ?>
 
@@ -453,7 +455,3 @@ $dompdf = new Dompdf();
 </body>
 
 </html>
-
-
-
-

@@ -158,21 +158,20 @@
                             });
 
                             tbody.append(`
-                            <tr data-id="${item.id}">
-                                <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                                <td>${item.nama}</td>
-                                <td>${item.tarikh_kerja}</td>
-                                <td>${kerjaList}</td>
-                                
-                                <td>
-                                    <button onclick="window.open('../quotationPDF.php?id=${item.id}', '_blank')" class="btn btn-success">
-    Lihat Butiran
-</button>
-                                    <button onclick="deleteItem(this)" class="btn btn-danger">
-                                        Tolak
-                                    </button>
-                                </td>
-                            </tr>
+                            <tr data-id="${item.id}" onclick="window.open('controller/getPDF.php?id=${item.id}', '_blank')">
+    <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+    <td>${item.nama}</td>
+    <td>${item.tarikh_kerja}</td>
+    <td>${kerjaList}</td>
+    <td>
+        <button onclick="acceptItem(event, this)" class="btn btn-success">
+            Terima
+        </button>
+        <button onclick="deleteItem(event, this)" class="btn btn-danger">
+            Tolak
+        </button>
+    </td>
+</tr>
                     `);
                         });
 
@@ -211,12 +210,13 @@
         loadPage(1);
 
 
-        function deleteItem(button) {
+        function acceptItem(event, button) {
+            event.stopPropagation();
             var row = button.closest('tr'); // Find the closest <tr> element
             var tempahanId = row.getAttribute('data-id'); // Get the data-id from <tr>
 
             Swal.fire({
-                title: "Adakah anda pasti?",
+                title: "Terima Tempahan?",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
@@ -245,6 +245,49 @@
                             Swal.fire({
                                 title: "Ralat!",
                                 text: "Ralat berlaku semasa memadam.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+
+        function deleteItem(event, button) {
+            event.stopPropagation();
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var tempahanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+            Swal.fire({
+                title: "Tolak Tempahan?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Terima Tempahan",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/rejectTempahan.php',
+                        type: 'POST',
+                        data: {
+                            id: tempahanId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Berjaya!",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa terima.",
                                 icon: "error"
                             });
                         }
