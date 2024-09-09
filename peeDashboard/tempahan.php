@@ -5,19 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
+    <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
     <!-- =============== Navigation ================ -->
-    <div class="container">
+    <div class="custom-container">
         <div class="navigation">
             <ul>
                 <li>
@@ -83,36 +99,12 @@
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
-                            <td>Keluasan Tanah(Hektar)</td>
                             <td>Tarikh Cadangan</td>
-                            <td>Lokasi Kerja</td>
                             <td>Jenis Kerja</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <tr>
-                            <td>1</td>
-                            <td>Nurul Atikah</td>
-                            <td>3</td>
-                            <td>20/04/2024</td>
-                            <td>Kelantan</td>
-                            <td>Piring</td>
-                            <td>
-                                <button onclick="window.location.href = 'terimaTempahan.php'" class="btn btn-success">
-                                    Terima
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-danger">
-                                    Tolak
-                                </button>
-                            </td>
-                        </tr> -->
-
-                        <?php
-
-
-
-                        ?>
 
                     </tbody>
                 </table>
@@ -124,8 +116,6 @@
                     </ul>
                 </nav>
 
-
-                
             </div>
         </div>
 
@@ -153,59 +143,69 @@
                         var tbody = $('#tempahanTable tbody');
                         tbody.empty();
 
-                        // Populate table
-                        response.data.forEach(function(item, index) {
-                            var kerjaList = '';
-                            item.kerja.forEach(function(kerjaItem, kerjaIndex) {
-                                kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                        // Hide pagination if no data
+                        var pagination = $('#pagination');
+                        if (response.data.length === 0) {
+                            tbody.append(`
+                    <tr>
+                        <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                    </tr>
+                `);
+                            pagination.hide(); // Hide pagination
+                        } else {
+                            // Populate table
+                            response.data.forEach(function(item, index) {
+                                var kerjaList = '';
+                                item.kerja.forEach(function(kerjaItem, kerjaIndex) {
+                                    kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                                });
+
+                                tbody.append(`
+                            <tr data-id="${item.id}">
+                                <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                <td>${item.nama}</td>
+                                <td>${item.tarikh_kerja}</td>
+                                <td>${kerjaList}</td>
+                                
+                                <td>
+                                    <button onclick="window.location.href = 'terimaTempahan.php?id=${item.id}'" class="btn btn-success">
+                                        Terima
+                                    </button>
+                                    <button onclick="deleteItem(this)" class="btn btn-danger">
+                                        Tolak
+                                    </button>
+                                </td>
+                            </tr>
+                    `);
                             });
 
-                            tbody.append(`
-                <tr data-id="${item.id}">
-                    <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                    <td>${item.nama}</td>
-                    <td>${item.hektar}</td>
-                    <td>${item.tarikh_kerja}</td>
-                    <td>${item.lokasi}</td>
-                    <td>${kerjaList}</td>
-                    <td>
-                        <button onclick="window.location.href = 'terimaTempahan.php?id=${item.id}'" class="btn btn-success">
-                            Terima
-                        </button>
-                        <button onclick="deleteItem(this)" class="btn btn-danger">
-                            Tolak
-                        </button>
-                    </td>
-                </tr>
-            `);
-                        });
+                            // Populate pagination and show it if hidden
+                            pagination.empty();
+                            pagination.show(); // Show pagination
 
-                        // Populate pagination
-                        var pagination = $('#pagination');
-                        pagination.empty();
-
-                        // Previous button
-                        pagination.append(`
+                            // Previous button
+                            pagination.append(`
                     <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
                     </li>
                 `);
 
-                        // Page numbers
-                        for (var i = 1; i <= response.totalPages; i++) {
-                            pagination.append(`
+                            // Page numbers
+                            for (var i = 1; i <= response.totalPages; i++) {
+                                pagination.append(`
                         <li class="page-item ${i === response.currentPage ? 'active' : ''}">
                             <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
                         </li>
                     `);
-                        }
+                            }
 
-                        // Next button
-                        pagination.append(`
+                            // Next button
+                            pagination.append(`
                     <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
                     </li>
                 `);
+                        }
                     }
                 });
             }
@@ -213,9 +213,11 @@
             // Load the first page by default
             loadPage(1);
 
+
+
             function deleteItem(button) {
                 var row = button.closest('tr'); // Find the closest <tr> element
-                var tugasanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+                var tempahanId = row.getAttribute('data-id'); // Get the data-id from <tr>
 
                 Swal.fire({
                     title: "Adakah anda pasti?",
@@ -224,15 +226,15 @@
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya, padamkannya!",
+                    confirmButtonText: "Tolak Tempahan",
                     cancelButtonText: "Batal",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: 'controller/delete/delete_tugasan.php',
+                            url: 'controller/rejectTempahan.php',
                             type: 'POST',
                             data: {
-                                id: tugasanId
+                                id: tempahanId
                             },
                             success: function(response) {
                                 Swal.fire({

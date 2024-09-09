@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
-	<link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,18 +16,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-	</style>
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
     <!-- =============== Navigation ================ -->
-    <div class="container">
+    <div class="custom-container">
         <div class="navigation">
             <ul>
                 <li>
                     <a href="pengesahanTolakTerima.php">
                         <img src="../assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
+                        <span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
                     </a>
                 </li>
 
@@ -37,8 +50,8 @@
                         <span class="title">Tempahan</span>
                     </a>
                 </li>
-				
-				<li>
+
+                <li>
                     <a href="profile.php">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
@@ -66,60 +79,181 @@
                 </div>
 
                 <div class="userName">
-					<div class="user-name">NAMA BINTI PENUH</div>
-					<div class="user">
-						<img src="../assets/images/user.png" alt="User Image">
-					</div>
-				</div>
-			</div>
-			
-			<!-- ======================= Pengesahan ================== -->
-			<div class="recentOrders">
-				<div class="cardHeader">
-					<h2>Pengesahan Tempahan Sewaan per Jam atau Harian </h2>
-				</div>
-				<table>
-					<thead>
-						<tr>
-							<td>Bil</td>
-							<td>Nama Pemohon</td>
-							<td>Lokasi Projek</td>
-							<td>Jenis Kerja</td>
-							<td>Keluasan Tanah (Hektar)</td>
-							<td>Maklumat</td>
-							<td>Tindakan</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Ahmad Bin Ali</td>
-							<td>Kelantan</td>
-							<td>Piring</td>
-							<td>5.5</td>
-							<td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-							<td>
-								<form method="POST" action="#">
-									<input type="hidden" name="id_permohonan" value="1">
-									<button type="submit" name="tindakan" value="terima"
-										class="btn btn-success">Terima</button>
-									<button type="submit" name="tindakan" value="tolak"
-										class="btn btn-danger">Tolak</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-	
-	<!-- =========== Scripts =========  -->
+                    <div class="user-name">NAMA BINTI PENUH</div>
+                    <div class="user">
+                        <img src="../assets/images/user.png" alt="User Image">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= Pengesahan ================== -->
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Pengesahan Tempahan Sewaan per Jam atau Harian </h2>
+                </div>
+                <table id="tempahanTable">
+                    <thead>
+                        <tr>
+                            <td>Bil</td>
+                            <td>Nama Pemohon</td>
+                            <td>Tarikh Cadangan</td>
+                            <td>Jenis Kerja</td>
+                            <td>Tindakan</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start mt-4" id="pagination">
+                        <!-- Pagination links will be injected here by JavaScript -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
     <script src="../assets/js/main.js"></script>
 
     <!-- ====== ionicons ======= -->
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function loadPage(page) {
+            $.ajax({
+                url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                type: 'GET',
+                data: {
+                    page: page
+                },
+                dataType: 'json',
+                success: function(response) {
+                    var tbody = $('#tempahanTable tbody');
+                    tbody.empty();
+
+                    // Hide pagination if no data
+                    var pagination = $('#pagination');
+                    if (response.data.length === 0) {
+                        tbody.append(`
+                    <tr>
+                        <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                    </tr>
+                `);
+                        pagination.hide(); // Hide pagination
+                    } else {
+                        // Populate table
+                        response.data.forEach(function(item, index) {
+                            var kerjaList = '';
+                            item.kerja.forEach(function(kerjaItem, kerjaIndex) {
+                                kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                            });
+
+                            tbody.append(`
+                            <tr data-id="${item.id}">
+                                <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                <td>${item.nama}</td>
+                                <td>${item.tarikh_kerja}</td>
+                                <td>${kerjaList}</td>
+                                
+                                <td>
+                                    <button onclick="window.open('../quotationPDF.php?id=${item.id}', '_blank')" class="btn btn-success">
+    Lihat Butiran
+</button>
+                                    <button onclick="deleteItem(this)" class="btn btn-danger">
+                                        Tolak
+                                    </button>
+                                </td>
+                            </tr>
+                    `);
+                        });
+
+                        // Populate pagination and show it if hidden
+                        pagination.empty();
+                        pagination.show(); // Show pagination
+
+                        // Previous button
+                        pagination.append(`
+                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
+                    </li>
+                `);
+
+                        // Page numbers
+                        for (var i = 1; i <= response.totalPages; i++) {
+                            pagination.append(`
+                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                        </li>
+                    `);
+                        }
+
+                        // Next button
+                        pagination.append(`
+                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
+                    </li>
+                `);
+                    }
+                }
+            });
+        }
+
+        // Load the first page by default
+        loadPage(1);
+
+
+        function deleteItem(button) {
+            var row = button.closest('tr'); // Find the closest <tr> element
+            var tempahanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Tolak Tempahan",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/rejectTempahan.php',
+                        type: 'POST',
+                        data: {
+                            id: tempahanId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Berjaya dipadam!",
+                                text: "Fail anda telah dipadam.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa memadam.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
 </body>
 
 </html>
