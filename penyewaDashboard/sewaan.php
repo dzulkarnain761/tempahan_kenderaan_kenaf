@@ -14,76 +14,46 @@ include '../controller/get_userdata.php';
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
-	<style>
-	</style>
-  </head>
+    <style>
+    </style>
+</head>
 
 <body>
 
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
-
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="sewaan.php" class="logo">
-				<img src="../assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-				<img src="../assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-				<li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
-				<li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-				<li class="scroll-to-section"><a href="sewaan.php" class="active">Sewaan</a></li>
-				<li class="scroll-to-section"><a href="profil.php">Profil</a></li>
-            </ul>
-			
-			<div class="right-nav">
-				<span><?php echo htmlspecialchars($nama);?></span>
-				<div class="log-out-button">
-					<span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
-				</div>
-			</div>
-            <!-- ***** Menu End ***** -->
-          </nav>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
     </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
-  <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
-  <div class="formTable">
-   <h3 class="text-center fw-bold" style="margin-top: 30px; margin-below: 30px;">MAKLUMAT SEWAAN</h3>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead class="thead-dark">
+    <!-- ***** Preloader End ***** -->
+
+    <?php include 'partials/header.php'; ?>
+	
+    <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
+        <div class="formTable">
+            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">MAKLUMAT SEWAAN</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
                         <tr>
                             <th>No.</th>
                             <th>Tarikh Buat Tempahan</th>
@@ -92,13 +62,13 @@ include '../controller/get_userdata.php';
                             <th>Status</th>
                         </tr>
                     </thead>
-            <tbody>
+                    <tbody>
                         <?php
                         $id = $_SESSION['id'];
                         $sqlTempahan = "SELECT * FROM `tempahan` WHERE penyewa_id = $id";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
                         $no = 1; // Initialize row number
-
+                        
                         while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
                             <tr data-id="<?= $row['tempahan_id']; ?>">
                                 <td><?= $no++; ?></td> <!-- Increment the row number -->
@@ -118,10 +88,10 @@ include '../controller/get_userdata.php';
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
-        </table>
+                </table>
+            </div>
+        </div>
     </div>
-   </div>
-   </div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -136,7 +106,7 @@ include '../controller/get_userdata.php';
         const logoutButton = document.getElementById('logoutButton');
 
         // Add a click event listener to the logout button
-        logoutButton.addEventListener('click', function() {
+        logoutButton.addEventListener('click', function () {
             // Show the confirmation dialog
             Swal.fire({
                 title: "Log Keluar",
@@ -165,6 +135,20 @@ include '../controller/get_userdata.php';
             });
         });
     </script>
+	<script>
+	  function myFunction() {
+	  const dropdown = document.getElementById("myDropdown");
+	  dropdown.classList.toggle("show");
+	  dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
+	}
+
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+	  if (!event.target.closest('.dropdown')) {
+		document.getElementById("myDropdown").classList.remove("show");
+	  }
+	};
+	</script>
 
 </body>
 
