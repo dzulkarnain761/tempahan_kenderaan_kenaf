@@ -9,7 +9,7 @@ $offset = ($page - 1) * $limit;
 $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
                 INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE status = 'Dalam Pengesahan'
+                
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
@@ -22,7 +22,7 @@ $totalPages = ceil($total / $limit);
 
 $TempahanData = [];
 while ($row = mysqli_fetch_assoc($resultTempahan)) {
-    $tempahanId = $row['id'];
+    $tempahanId = $row['tempahan_id'];
 
     // Fetch related 'tempahan_kerja' data
     $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";

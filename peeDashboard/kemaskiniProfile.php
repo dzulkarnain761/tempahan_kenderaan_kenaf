@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
+    <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -26,7 +26,7 @@
         include 'partials/navigation.php';
         ?>
 
-       
+
 
         <div class="main">
             <div class="topbar">
@@ -49,33 +49,33 @@
                 </ol>
             </nav>
 
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Kemaskini Maklumat</h2>
-                    </div>
-
-                    <form>
-						<div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Email:</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="abc@gmail.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nama Penuh:</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="NAMA PENUH BINTI NAMA PENUH">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" value="000000-00-0000" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
-                            <input type="tel" class="form-control" id="exampleFormControlInput1" value="000-0000000">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Kemaskini</button>
-                        </div>
-                    </form>
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Kemaskini Maklumat</h2>
                 </div>
+
+                <form>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="abc@gmail.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nama Penuh:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="NAMA PENUH BINTI NAMA PENUH">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nombor Kad Pengenalan</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="000000-00-0000" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nombor Telefon</label>
+                        <input type="tel" class="form-control" id="exampleFormControlInput1" value="000-0000000">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Kemaskini</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

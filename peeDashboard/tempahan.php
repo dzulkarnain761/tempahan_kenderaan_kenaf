@@ -125,14 +125,14 @@
                                 });
 
                                 tbody.append(`
-                            <tr data-id="${item.id}">
+                            <tr data-id="${item.tempahan_id}">
                                 <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                 <td>${item.nama}</td>
                                 <td>${item.tarikh_kerja}</td>
                                 <td>${kerjaList}</td>
                                 
                                 <td>
-                                    <button onclick="window.location.href = 'terimaTempahan.php?id=${item.id}'" class="btn btn-success">
+                                    <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
                                         Terima
                                     </button>
                                     <button onclick="deleteItem(this)" class="btn btn-danger">

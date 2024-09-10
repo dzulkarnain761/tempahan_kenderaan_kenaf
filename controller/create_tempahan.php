@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $catatan = $_POST['catatan'];
     $status = "Dalam Pengesahan"; 
 
-    $sqlTempahan = $conn->prepare("INSERT INTO tempahan (`penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi`, `hektar`, `catatan`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $sqlTempahan = $conn->prepare("INSERT INTO tempahan (`penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `catatan`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $sqlTempahan->bind_param("sssssss", $id, $tarikh_kerja, $negeri, $lokasi_kerja, $keluasan_tanah, $catatan, $status);
 
     if ($sqlTempahan->execute()) {

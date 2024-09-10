@@ -89,7 +89,7 @@ if (!$conn) {
 
             $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id WHERE t.id = $id";
+                INNER JOIN penyewa p ON p.id = t.penyewa_id WHERE t.tempahan_id = $id";
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
             // Fetch the Pemandu member's data
@@ -104,10 +104,10 @@ if (!$conn) {
             ?>
 
             <form id="terimaTempahan" method="POST">
-                <input type="hidden" name="tempahanId" value="<?php echo htmlspecialchars($tempahan['id']) ?>">
+                <input type="hidden" name="tempahanId" value="<?php echo htmlspecialchars($tempahan['tempahan_id']) ?>">
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_tempahan']) ?>" disabled>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['created_at']) ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
@@ -120,11 +120,11 @@ if (!$conn) {
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
-                    <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['hektar']) ?>" disabled>
+                    <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['luas_tanah']) ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi']) ?>" disabled>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="jenis_kerja_input" class="form-label">Jenis Kerja:</label>
@@ -135,32 +135,9 @@ if (!$conn) {
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
                         while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
                             <div class="input-group mb-3">
-                                <input type="hidden" class="form-control" id="kerjaID" value="<?php echo htmlspecialchars($rowKerja['id']); ?>">
+                                <input type="hidden" class="form-control" id="kerjaID" value="<?php echo htmlspecialchars($rowKerja['tempahan_id']); ?>">
                                 <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
-                                <?php
-                                if (empty($rowKerja['nama_pemandu'])) {
-                                    // Yellow button for when harga_anggaran is empty or null
-                                ?>
-                                    <button class="btn btn-outline-warning" type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#changeEditModal"
-                                        data-id="<?php echo htmlspecialchars($rowKerja['id']); ?>">
-                                        Kemaskini
-                                    </button>
-                                <?php
-                                } else {
-                                    // Green button for when harga_anggaran is not empty
-                                ?>
-                                    <button class="btn btn-outline-success" type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#changeEditModal"
-                                        data-id="<?php echo htmlspecialchars($rowKerja['id']); ?>">
-                                        Kemaskini
-                                    </button>
-                                <?php
-                                }
-                                ?>
-
+                
                             </div>
                         <?php endwhile;
                     else: ?>
