@@ -22,7 +22,7 @@ include '../controller/get_userdata.php';
         rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
@@ -45,40 +45,8 @@ include '../controller/get_userdata.php';
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="profil.php" class="logo">
-                            <img src="../assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-                            <img src="../assets/images/logo.jpeg" alt="logoLKTN" style="width: 120px; height: auto;">
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="homepage.php">Laman Utama</a></li>
-                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
-                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
-                            <li class="scroll-to-section"><a href="profil.php" class="active">Profil</a></li>
-                        </ul>
-
-                        <div class="right-nav">
-							<span><?php echo htmlspecialchars($nama);?></span>
-							<div class="log-out-button">
-								<span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
-							</div>
-						</div>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ***** Header Area End ***** -->
-
+    <?php include 'partials/header.php'; ?>
+	
     <!-- ***** Profile ***** -->
     <div class="page-content page-container d-flex justify-content-center align-items-center wow fadeIn"
         data-wow-duration="0.75s" data-wow-delay="0s" id="page-content" style="min-height: 100vh;">
@@ -195,6 +163,20 @@ include '../controller/get_userdata.php';
             });
         });
     </script>
+	<script>
+	  function myFunction() {
+	  const dropdown = document.getElementById("myDropdown");
+	  dropdown.classList.toggle("show");
+	  dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
+	}
+
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+	  if (!event.target.closest('.dropdown')) {
+		document.getElementById("myDropdown").classList.remove("show");
+	  }
+	};
+	</script>
 </body>
 
 </html>

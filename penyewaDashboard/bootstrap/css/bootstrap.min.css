@@ -1,4 +1,4 @@
-@charset "UTF-8";
+
 
 /*!
  * Bootstrap v5.1.0 (https://getbootstrap.com/)
@@ -2195,35 +2195,43 @@ progress {
 @media (max-width:575.98px) {
     .table-responsive-sm {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch
+        -webkit-overflow-scrolling: touch;
     }
+	
+	.main-nav {
+        display: none;
+    }
+	
+	.formTable {
+		max-width: 90%;
+	}
 }
 
 @media (max-width:767.98px) {
     .table-responsive-md {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch
+        -webkit-overflow-scrolling: touch;
     }
 }
 
 @media (max-width:991.98px) {
     .table-responsive-lg {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch
+        -webkit-overflow-scrolling: touch;
     }
 }
 
 @media (max-width:1199.98px) {
     .table-responsive-xl {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch
+        -webkit-overflow-scrolling: touch;
     }
 }
 
 @media (max-width:1399.98px) {
     .table-responsive-xxl {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -4018,6 +4026,14 @@ fieldset:disabled .btn {
         right: 0;
         left: auto
     }
+	
+	.main-nav-min {
+		display: none;
+	}
+	
+	.formTable{
+		width: 60%;
+	}
 }
 
 @media (min-width:768px) {
@@ -4038,6 +4054,14 @@ fieldset:disabled .btn {
         right: 0;
         left: auto
     }
+	
+	.main-nav-min {
+		display: none;
+	}
+	
+	.formTable{
+		width: 60%;
+	}
 }
 
 @media (min-width:992px) {
@@ -4058,6 +4082,14 @@ fieldset:disabled .btn {
         right: 0;
         left: auto
     }
+	
+	.main-nav-min {
+		display: none;
+	}
+	
+	.formTable{
+		width: 60%;
+	}
 }
 
 @media (min-width:1200px) {
@@ -4078,6 +4110,14 @@ fieldset:disabled .btn {
         right: 0;
         left: auto
     }
+	
+	.main-nav-min {
+		display: none;
+	}
+	
+	.formTable{
+		width: 60%;
+	}
 }
 
 @media (min-width:1400px) {
@@ -4098,6 +4138,14 @@ fieldset:disabled .btn {
         right: 0;
         left: auto
     }
+	
+	.main-nav-min {
+		display: none;
+	}
+	
+	.formTable{
+		width: 60%;
+	}
 }
 
 .dropup .dropdown-menu[data-bs-popper] {
@@ -12158,7 +12206,6 @@ fieldset:disabled .btn {
     transition: all .5s;
     background-color: #fff;
     margin-top: 30px;
-    margin-left: 10px;
 }
 
 .border-first-button button:hover {
@@ -12172,7 +12219,6 @@ fieldset:disabled .btn {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    padding: 50px 0px 50px 0px;
     position: relative;
 }
 
@@ -12373,6 +12419,8 @@ fieldset:disabled .btn {
 .header-area {
     background-color: #fff;
     box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.03);
+    position: relative; /* Ensures stacking context */
+    z-index: 1; /* Lower than .dropdown-content */
 }
 
 .header-area .main-nav .logo {
@@ -12439,13 +12487,10 @@ fieldset:disabled .btn {
 }
 
 .formTable {
-    border: solid grey 2px;
+    border: solid white 1px;
     padding: 15px;
     background-color: #f9f9f9;
     margin: 20px auto;
-    max-width: 60%;
-    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-top: 60px;
 }
 
 .right-nav {
@@ -12599,4 +12644,46 @@ fieldset:disabled .btn {
     margin: 0 10px 0 0;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+}
+
+.dropbtn {
+    font-size: 30px;
+    color: black;
+    border: none;
+    background: white;
+    cursor: pointer;
+}
+
+.dropdown {
+    float: right;
+    display: inline-block;
+	position: relative; /* Creates a positioning context */
+}
+
+.dropdown-content {
+    display: none; /* Hides the dropdown */
+    position: absolute;
+    background-color: white;
+    min-width: 260px;
+    overflow: hidden; /* Ensures it doesn't interfere with other elements */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    right: 0;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden; /* Makes sure it isn't clickable */
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s; /* Delay visibility change */
+}
+
+.dropdown-content.show {
+    display: block;
+    opacity: 1;
+    visibility: visible; /* Only becomes clickable when visible */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
