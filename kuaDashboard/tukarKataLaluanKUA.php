@@ -57,44 +57,10 @@
 </head>
 
 <body>
-    <div class="custom-container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="profile.php">
-                        <img src="assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width: 60px; height: 60px;">
-                        <span class="title" style="margin-top: 10px;">LKTNBooking</span>
-                    </a>
-                </li>
-
-               <li>
-                    <a href="laporanSerahPulang.php">
-                        <span class="icon">
-                            <ion-icon name="newspaper-outline"></ion-icon>
-                        </span>
-                        <span class="title">Laporan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="profile.php">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                        </span>
-                        <span class="title">Profil</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="../login.php">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sign Out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="container">
+        <?php
+        include 'partials/navigation.php';
+        ?>
 
         <div class="main">
             <div class="topbar">

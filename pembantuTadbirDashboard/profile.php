@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>eBooking</title>
-    <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+	<link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,44 +18,10 @@
 
 <body>
     <!-- =============== Navigation ================ -->
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="profile.php">
-                        <img src="../assets/images/logo2.png" alt="Brand Logo" style="margin-top: 10px; width:60px; height:60px;">
-						<span class="title" style="margin-top: 10px; font-size: 18px;">LKTNBooking</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="tempahan.php">
-                        <span class="icon">
-                            <ion-icon name="book-outline"></ion-icon>
-                        </span>
-                        <span class="title">Tempahan</span>
-                    </a>
-                </li>
-				
-				<li>
-                    <a href="profile.php">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                        </span>
-                        <span class="title">Profil</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="../login.php">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sign Out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+	<div class="container">
+        <?php
+        include 'partials/navigation.php';
+        ?>
 
         <!-- ========================= Main ==================== -->
         <div class="main">
