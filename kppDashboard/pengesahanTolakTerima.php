@@ -159,19 +159,19 @@
 
                             tbody.append(`
                             <tr data-id="${item.id}" onclick="window.open('controller/getPDF.php?id=${item.id}', '_blank')">
-    <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-    <td>${item.nama}</td>
-    <td>${item.tarikh_kerja}</td>
-    <td>${kerjaList}</td>
-    <td>
-        <button onclick="acceptItem(event, this)" class="btn btn-success">
-            Terima
-        </button>
-        <button onclick="deleteItem(event, this)" class="btn btn-danger">
-            Tolak
-        </button>
-    </td>
-</tr>
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.tarikh_kerja}</td>
+                            <td>${kerjaList}</td>
+                            <td>
+                                <button onclick="acceptItem(event, this)" class="btn btn-success">
+                                    Terima
+                                </button>
+                                <button onclick="deleteItem(event, this)" class="btn btn-danger">
+                                    Tolak
+                                </button>
+                            </td>
+                        </tr>
                     `);
                         });
 

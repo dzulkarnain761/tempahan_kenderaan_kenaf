@@ -392,6 +392,8 @@ if (!$conn) {
                                 icon: 'success',
                                 title: 'Success',
                                 text: 'Kemaskini Berjaya',
+                            }).then(() => {
+                                window.location.reload();
                             });
                         } else {
                             Swal.fire({

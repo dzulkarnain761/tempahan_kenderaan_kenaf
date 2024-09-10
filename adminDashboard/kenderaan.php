@@ -450,7 +450,7 @@ if (!$conn) {
                     response.data.forEach(function(item, index) {
                         tbody.append(`
                         <tr data-id="${item.id}">
-                            <td>${(response.currentPage - 1) * 10 + index + 1}</td>
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                             <td>${item.kategori_kenderaan}</td>
                             <td>${item.no_aset}</td>
                             <td>${item.no_pendaftaran}</td>
@@ -474,7 +474,7 @@ if (!$conn) {
                     // Previous button
                     pagination.append(`
                     <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
                     </li>
                 `);
 
@@ -490,7 +490,7 @@ if (!$conn) {
                     // Next button
                     pagination.append(`
                     <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
                     </li>
                 `);
                 }

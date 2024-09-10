@@ -298,7 +298,7 @@ if (!$conn) {
                     // Previous button
                     pagination.append(`
                     <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><<</a>
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
                     </li>
                 `);
 
@@ -314,7 +314,7 @@ if (!$conn) {
                     // Next button
                     pagination.append(`
                     <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">>></a>
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
                     </li>
                 `);
                 }
