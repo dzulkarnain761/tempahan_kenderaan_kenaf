@@ -49,7 +49,7 @@ if (!$conn) {
 </head>
 
 <!-- =============== Navigation ================ -->
-<div class="container">
+<div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
