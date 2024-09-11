@@ -44,15 +44,22 @@ if (!$conn) {
             /* padding-left: 20px; */
             margin: 0;
         }
+
+        .input-group-text {
+            width: 15%;
+            /* Set a fixed width for the labels */
+            text-align: right;
+            /* Align the text to the right for better readability */
+        }
     </style>
 
 </head>
 
 <!-- =============== Navigation ================ -->
 <div class="custom-container">
-        <?php
-        include 'partials/navigation.php';
-        ?>
+    <?php
+    include 'partials/navigation.php';
+    ?>
 
     <!-- ========================= Main ==================== -->
     <div class="main">
@@ -126,18 +133,107 @@ if (!$conn) {
                     <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?>" disabled>
                 </div>
+
                 <div class="mb-3">
                     <label for="jenis_kerja_input" class="form-label">Jenis Kerja:</label>
                     <?php
                     $tempahanId = $id;
                     $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
+
+
+
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
-                        while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                            <div class="input-group mb-3">
-                                <input type="hidden" class="form-control" id="kerjaID" value="<?php echo htmlspecialchars($rowKerja['tempahan_id']); ?>">
-                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
-                
+                        while ($rowKerja = mysqli_fetch_assoc($resultKerja)):
+
+                    ?>
+                            <div class="mb-5">
+                                <input type="hidden" class="form-control" value="<?php echo htmlspecialchars($rowKerja['tempahan_id']); ?>">
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text" id="basic-addon1">Nama Kerja</span>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
+                                </div>
+
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text" id="basic-addon1">Kenderaan</span>
+                                    <select id="no_pendaftaran_kenderaan" class="form-select" name="no_pendaftaran_kenderaan" required>
+                                        <option value="" disabled selected>--Pilih Kenderaan--</option>
+                                        <?php
+
+                                        $nama_kerja = $rowKerja['nama_kerja'];
+
+                                        // Ensure $nama_kerja is properly quoted in the SQL query
+                                        $sqltugasan = "SELECT * FROM `tugasan` WHERE kerja = '$nama_kerja'";
+                                        $resulttugasan = mysqli_query($conn, $sqltugasan);
+
+                                        if ($resulttugasan && mysqli_num_rows($resulttugasan) > 0) {
+                                            $fetchTugasan = mysqli_fetch_assoc($resulttugasan);
+                                            $kategoriKenderaan = $fetchTugasan['kategori_kenderaan'];
+
+                                            // Safely check if $kategoriKenderaan is set
+                                            if ($kategoriKenderaan) {
+                                                // Query to get vehicles from the database that match the category
+                                                $sqlkenderaan = "SELECT * FROM `kenderaan` WHERE kategori_kenderaan = '$kategoriKenderaan'";
+                                                $resultkenderaan = mysqli_query($conn, $sqlkenderaan);
+
+                                                // Check if the query returns any rows
+                                                if ($resultkenderaan && mysqli_num_rows($resultkenderaan) > 0) {
+
+                                                    
+                                                    // Loop through the vehicles and create option elements
+                                                    while ($rowkenderaan = mysqli_fetch_assoc($resultkenderaan)) {
+                                                        $selectedkenderaan = ($rowKerja['kenderaan_id'] == $rowkenderaan['id'] ? 'selected' : '');
+                                                        echo "<option value='" . $rowkenderaan['id'] . " $selectedkenderaan '>" . $rowkenderaan['no_pendaftaran'] . ' - ' . $rowkenderaan['catatan'] . "</option>";
+                                                    }
+                                                } else {
+                                                    // Display message if no vehicles are found
+                                                    echo "<option value='' disabled>No vehicles found</option>";
+                                                }
+                                            } else {
+                                                echo "<option value='' disabled>No category found for the task</option>";
+                                            }
+                                        } else {
+                                            echo "<option value='' disabled>No task found</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text" id="basic-addon1">Pemandu</span>
+                                    <select id="nama_pemandu" class="form-select" name="nama_pemandu" required>
+                                        <option value="" disabled selected>--Pilih Pemandu--</option>
+                                        <?php
+
+                                        // Query to get vehicles from the database that match the category
+                                        $sqlpemandu = "SELECT * FROM `admin` WHERE kumpulan = 'Y'";
+                                        $resultpemandu = mysqli_query($conn, $sqlpemandu);
+
+                                        // Check if the query returns any rows
+                                        if ($resultpemandu && mysqli_num_rows($resultpemandu) > 0) {
+                                            $selectedpemandu = ($rowKerja['pemandu_id'] == $rowpemandu['id'] ? 'selected' : '');
+
+                                            // Loop through the vehicles and create option elements
+                                            while ($rowpemandu = mysqli_fetch_assoc($resultpemandu)) {
+                                                echo "<option value='" . $rowpemandu['id'] . "'>" . $rowpemandu['nama'] . "</option>";
+                                            }
+                                        } else {
+                                            // Display message if no vehicles are found
+                                            echo "<option value='' disabled>No vehicles found</option>";
+                                        }
+
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">Jam</span>
+                                    <input type="text" class="form-control">
+                                    <span class="input-group-text">Harga (RM)</span>
+                                    <input type="text" class="form-control">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+
                             </div>
                         <?php endwhile;
                     else: ?>
@@ -158,55 +254,7 @@ if (!$conn) {
             </form>
         </div>
 
-        <!-- Modal HTML -->
-        <div class="modal fade" id="changeEditModal" tabindex="-1" aria-labelledby="changeEditModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="changeEditModalLabel">Kemaskini Kerja</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="updateKerjaForm" method="POST">
-                            <input type="hidden" id="modalKerjaId" name="id">
 
-                            <div class="mb-3" id="display_nama_kerja">
-                                <!-- Options will be populated by AJAX -->
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="no_pendaftaran_kenderaan" class="form-label">Kenderaan</label>
-                                <select id="no_pendaftaran_kenderaan" class="form-control" name="no_pendaftaran_kenderaan" required>
-
-                                    <!-- Options will be populated by AJAX -->
-                                </select>
-                                <div class="invalid-feedback">Sila pilih kenderaan penempatan.</div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="nama_pemandu" class="form-label">Pemandu</label>
-                                <select id="nama_pemandu" class="form-control" name="nama_pemandu" required>
-
-                                    <!-- Options will be populated by AJAX -->
-                                </select>
-                                <div class="invalid-feedback">Sila pilih kawasan penempatan.</div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="harga_anggaran" class="form-label">Harga Tugasan:</label>
-                                <input type="number" class="form-control" id="harga_anggaran" name="harga_anggaran" required>
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">Kemaskini</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 </div>
@@ -359,39 +407,39 @@ if (!$conn) {
         });
 
         $('#terimaTempahan').on('submit', function(e) {
-                e.preventDefault();
+            e.preventDefault();
 
-                // Check if form is valid before making AJAX request
-                if (!this.checkValidity()) {
-                    e.stopPropagation();
-                    return;
-                }
+            // Check if form is valid before making AJAX request
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                return;
+            }
 
-                // Serialize form data and make AJAX request
-                $.ajax({
-                    url: 'controller/terimaTempahan.php',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        let res = JSON.parse(response);
-                        if (res.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Kemaskini Berjaya',
-                            }).then(() => {
-                                window.location.href = 'tempahan.php';
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: res.message,
-                            });
-                        }
+            // Serialize form data and make AJAX request
+            $.ajax({
+                url: 'controller/terimaTempahan.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Kemaskini Berjaya',
+                        }).then(() => {
+                            window.location.href = 'tempahan.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        });
                     }
-                });
+                }
             });
+        });
 
     });
 </script>
