@@ -23,11 +23,13 @@ include '../controller/get_userdata.php';
         rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link rel="stylesheet" href="bootstrap/css/bootstrapp.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
+	
     <style>
+		
     </style>
 </head>
 
