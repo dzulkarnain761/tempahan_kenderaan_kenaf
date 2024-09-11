@@ -12489,7 +12489,7 @@ fieldset:disabled .btn {
 .formTable {
     border: solid white 1px;
     padding: 15px;
-    background-color: #f9f9f9;
+    background-color: white;
     margin: 20px auto;
 }
 
