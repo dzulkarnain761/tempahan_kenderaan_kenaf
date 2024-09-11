@@ -1,23 +1,80 @@
 <?php
+// Include database connection
+include 'connection.php'; // Adjust path as needed
 
-include 'connection.php';
 
-// Check if form is submitted
+$response = array('success' => false, 'message' => ''); // Default response
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve and sanitize form data
+    $kerja_id = $_POST['kerja_id'];
+    $kenderaan_id = $_POST['kenderaan_id'];
+    $pemandu_id = $_POST['pemandu_id'];
+    $input_hours = $_POST['input_hours'];
+    $input_price = $_POST['input_price'];
+    $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
+    $statusKerja = 'accepted';
 
-    $id = $_POST['tempahanId'];
-    $status = 'Pengesahan KPP';
-    
-    // Update the user in the database using a prepared statement
-    $sql = $conn->prepare("UPDATE tempahan SET status = ? WHERE id = ?");
-    $sql->bind_param("ss", $status, $id);
+    // Validate data here (e.g., check if arrays have the same length)
 
-    if ($sql->execute() === TRUE) {
-        echo json_encode(["success" => true]);
+    // Prepare the update query for tempahan_kerja
+    $updateKerjaQuery = "UPDATE tempahan_kerja SET kenderaan_id = ?, pemandu_id = ?, jam = ?, harga = ?, status_kerja = ? WHERE tempahan_kerja_id = ?";
+    $stmt = $conn->prepare($updateKerjaQuery);
+
+    if ($stmt) {
+        $success = true;
+        // Iterate over each entry and bind parameters
+        foreach ($kerja_id as $index => $value) {
+            $kenderaan_id_value = htmlspecialchars($kenderaan_id[$index]);
+            $pemandu_id_value = htmlspecialchars($pemandu_id[$index]);
+            $hours = htmlspecialchars($input_hours[$index]);
+            $price = htmlspecialchars($input_price[$index]);
+
+            $stmt->bind_param('iiidsi', $kenderaan_id_value, $pemandu_id_value, $hours, $price,$statusKerja, $value);
+
+            // Execute the statement
+            if (!$stmt->execute()) {
+                $success = false;
+                $response['message'] = "Error updating record: " . $stmt->error;
+                break; // Exit loop if error occurs
+            }
+        }
+        // Close the statement
+        $stmt->close();
+
+        if ($success) {
+            // Prepare the update query for tempahan
+            $updateTempahanQuery = "UPDATE tempahan SET status = ? WHERE tempahan_id = ?";
+            $stmt = $conn->prepare($updateTempahanQuery);
+
+            if ($stmt) {
+                $status = 'Pengesahan KPP'; // Set the status value here as needed
+                $stmt->bind_param('si', $status, $tempahan_id);
+
+                // Execute the statement
+                if ($stmt->execute()) {
+                    $response['success'] = true;
+                    $response['message'] = 'Kemaskini Berjaya';
+                } else {
+                    $response['message'] = "Error updating tempahan: " . $stmt->error;
+                }
+
+                // Close the statement
+                $stmt->close();
+            } else {
+                $response['message'] = "Error preparing tempahan update statement: " . $conn->error;
+            }
+        }
     } else {
-        echo json_encode(["success" => false, "message" => "Kemaskini gagal: " . $sql->error]);
+        $response['message'] = "Error preparing tempahan_kerja update statement: " . $conn->error;
     }
 
-    $sql->close();
+    // Close the database connection
     $conn->close();
+} else {
+    $response['message'] = 'Invalid request method';
 }
+
+// Return JSON response
+echo json_encode($response);
+?>

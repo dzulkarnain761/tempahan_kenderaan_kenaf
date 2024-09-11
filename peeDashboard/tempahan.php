@@ -33,7 +33,7 @@
 
 <body>
     <!-- =============== Navigation ================ -->
-   <div class="custom-container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -65,6 +65,7 @@
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
+                            <td>Status</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -124,23 +125,40 @@
                                     kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                                 });
 
+                                let actionButtons = '';
+
+                                if (item.status !== 'Pengesahan KPP') {
+                                    actionButtons = `
+                                    <td>
+                                        <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
+                                            Terima
+                                        </button>
+                                        <button onclick="deleteItem(this)" class="btn btn-danger">
+                                            Tolak
+                                        </button>
+                                    </td>
+                                `;
+                                } else {
+                                    actionButtons = `
+                                    <td>
+                                        <button class="btn btn-primary" onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'">
+                                            Lihat Butiran
+                                        </button>
+                                    </td>
+                                `;
+                                }
+
                                 tbody.append(`
-                            <tr data-id="${item.tempahan_id}">
-                                <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                                <td>${item.nama}</td>
-                                <td>${item.tarikh_kerja}</td>
-                                <td>${kerjaList}</td>
-                                
-                                <td>
-                                    <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
-                                        Terima
-                                    </button>
-                                    <button onclick="deleteItem(this)" class="btn btn-danger">
-                                        Tolak
-                                    </button>
-                                </td>
-                            </tr>
-                    `);
+                                    <tr data-id="${item.tempahan_id}">
+                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                        <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
+                                        <td>${kerjaList}</td>
+                                        <td>${item.status}</td>
+                                        ${actionButtons}
+                                    </tr>
+                                `);
+
                             });
 
                             // Populate pagination and show it if hidden
