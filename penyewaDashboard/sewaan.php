@@ -23,7 +23,7 @@ include '../controller/get_userdata.php';
         rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrapp.min.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
@@ -70,13 +70,13 @@ include '../controller/get_userdata.php';
                         $no = 1; // Initialize row number
                         
                         while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
-                            <tr data-id="<?= $row['tempahan_id']; ?>">
+                            <tr data-id="<?= $row['id']; ?>">
                                 <td><?= $no++; ?></td> <!-- Increment the row number -->
-                                <td><?= date('d-m-Y', strtotime($row['created_at'])); ?></td> <!-- Format the date -->
+                                <td><?= date('d-m-Y', strtotime($row['tarikh_tempahan'])); ?></td> <!-- Format the date -->
                                 <td><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td> <!-- Format the date -->
                                 <td>
                                     <?php
-                                    $tempahanId = $row['tempahan_id'];
+                                    $tempahanId = $row['id'];
                                     $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
                                     $resultKerja = mysqli_query($conn, $sqlKerja);
                                     $listno = 1;
