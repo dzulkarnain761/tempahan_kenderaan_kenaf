@@ -141,7 +141,7 @@
                                 } else {
                                     actionButtons = `
                                     <td>
-                                        <button class="btn btn-primary" onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'">
+                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
                                             Lihat Butiran
                                         </button>
                                     </td>

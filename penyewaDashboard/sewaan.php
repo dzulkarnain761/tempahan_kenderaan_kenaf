@@ -47,7 +47,7 @@ include '../controller/get_userdata.php';
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
-	
+
     <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
         <div class="formTable">
             <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">MAKLUMAT SEWAAN</h3>
@@ -60,6 +60,7 @@ include '../controller/get_userdata.php';
                             <th>Cadangan Tarikh Kerja</th>
                             <th>Senarai Kerja Kerja</th>
                             <th>Status</th>
+                            <th>Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,7 +69,7 @@ include '../controller/get_userdata.php';
                         $sqlTempahan = "SELECT * FROM `tempahan` WHERE penyewa_id = $id";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
                         $no = 1; // Initialize row number
-                        
+
                         while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
                             <tr data-id="<?= $row['tempahan_id']; ?>">
                                 <td><?= $no++; ?></td> <!-- Increment the row number -->
@@ -84,7 +85,14 @@ include '../controller/get_userdata.php';
                                         <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?><br></span>
                                     <?php endwhile; ?>
                                 </td>
-                                <td><?= htmlspecialchars($row['status']); ?></td> <!-- Escape the status -->
+                                <td><?= htmlspecialchars($row['status']); ?></td>
+                                <td><button onclick="acceptItem(event, this)" class="btn btn-success">
+                                        Terima
+                                    </button>
+                                    <button onclick="deleteItem(event, this)" class="btn btn-danger">
+                                        Tolak
+                                    </button>
+                                </td> <!-- Escape the status -->
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
@@ -106,7 +114,7 @@ include '../controller/get_userdata.php';
         const logoutButton = document.getElementById('logoutButton');
 
         // Add a click event listener to the logout button
-        logoutButton.addEventListener('click', function () {
+        logoutButton.addEventListener('click', function() {
             // Show the confirmation dialog
             Swal.fire({
                 title: "Log Keluar",
@@ -135,20 +143,20 @@ include '../controller/get_userdata.php';
             });
         });
     </script>
-	<script>
-	  function myFunction() {
-	  const dropdown = document.getElementById("myDropdown");
-	  dropdown.classList.toggle("show");
-	  dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
-	}
+    <script>
+        function myFunction() {
+            const dropdown = document.getElementById("myDropdown");
+            dropdown.classList.toggle("show");
+            dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
+        }
 
-	// Close the dropdown if the user clicks outside of it
-	window.onclick = function(event) {
-	  if (!event.target.closest('.dropdown')) {
-		document.getElementById("myDropdown").classList.remove("show");
-	  }
-	};
-	</script>
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                document.getElementById("myDropdown").classList.remove("show");
+            }
+        };
+    </script>
 
 </body>
 

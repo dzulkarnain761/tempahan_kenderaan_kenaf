@@ -124,7 +124,7 @@
                             });
 
                             tbody.append(`
-                            <tr data-id="${item.id}" onclick="window.open('controller/getPDF.php?id=${item.id}', '_blank')">
+                            <tr data-id="${item.tempahan_id}" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
                             <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                             <td>${item.nama}</td>
                             <td>${item.tarikh_kerja}</td>
@@ -188,20 +188,20 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Tolak Tempahan",
+                confirmButtonText: "Terima Tempahan",
                 cancelButtonText: "Batal",
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/rejectTempahan.php',
+                        url: 'controller/terimaTempahan.php',
                         type: 'POST',
                         data: {
                             id: tempahanId
                         },
                         success: function(response) {
                             Swal.fire({
-                                title: "Berjaya dipadam!",
-                                text: "Fail anda telah dipadam.",
+                                title: "Berjaya!",
+                                text: "Tempahan Diterima.",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -210,7 +210,7 @@
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: "Ralat!",
-                                text: "Ralat berlaku semasa memadam.",
+                                text: "Ralat berlaku semasa menerima.",
                                 icon: "error"
                             });
                         }
@@ -232,7 +232,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Terima Tempahan",
+                confirmButtonText: "Tolak Tempahan",
                 cancelButtonText: "Batal",
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -245,6 +245,7 @@
                         success: function(response) {
                             Swal.fire({
                                 title: "Berjaya!",
+                                text: "Tempahan Berjaya Ditolak",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -253,7 +254,7 @@
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: "Ralat!",
-                                text: "Ralat berlaku semasa terima.",
+                                text: "Ralat berlaku.",
                                 icon: "error"
                             });
                         }
