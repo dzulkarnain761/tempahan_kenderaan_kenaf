@@ -6280,9 +6280,9 @@ fieldset:disabled .btn {
 
 .modal-dialog-scrollable .modal-content {
     max-height: 100%;
-    border: solid grey 2px;
+    /* border: solid grey 2px; */
     overflow: hidden;
-    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 .modal-dialog-scrollable .modal-body {
@@ -6305,12 +6305,12 @@ fieldset:disabled .btn {
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .2);
+    /* border: 1px solid rgba(0, 0, 0, .2); */
     border-radius: .3rem;
     outline: 0;
-    border: solid grey 2px;
+    /* border: solid grey 2px; */
     overflow: hidden;
-    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 20px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 0px 14px 0 rgba(0, 0, 0, 0.15);
 }
 
 .modal-backdrop {
@@ -12478,7 +12478,7 @@ fieldset:disabled .btn {
 }
 
 .thead-dark th {
-    background-color: #2a2185;
+    background-color: #6495ED;
     color: white;
 }
 
@@ -12489,8 +12489,9 @@ fieldset:disabled .btn {
 .formTable {
     border: solid white 1px;
     padding: 15px;
-    background-color: white;
+    background-color: #ffff;
     margin: 20px auto;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
 }
 
 .right-nav {

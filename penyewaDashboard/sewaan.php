@@ -58,7 +58,7 @@ include '../controller/get_userdata.php';
                     <thead class="thead-dark">
                         <tr>
                             <th>No.</th>
-                            <th>Tarikh Buat Tempahan</th>
+                            
                             <th>Cadangan Tarikh Kerja</th>
                             <th>Senarai Kerja Kerja</th>
                             <th>Status</th>
@@ -73,13 +73,13 @@ include '../controller/get_userdata.php';
                         $no = 1; // Initialize row number
 
                         while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
-                            <tr data-id="<?= $row['id']; ?>">
+                            <tr data-id="<?= $row['tempahan_id']; ?>">
                                 <td><?= $no++; ?></td> <!-- Increment the row number -->
-                                <td><?= date('d-m-Y', strtotime($row['tarikh_tempahan'])); ?></td> <!-- Format the date -->
+                                
                                 <td><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td> <!-- Format the date -->
                                 <td>
                                     <?php
-                                    $tempahanId = $row['id'];
+                                    $tempahanId = $row['tempahan_id'];
                                     $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
                                     $resultKerja = mysqli_query($conn, $sqlKerja);
                                     $listno = 1;
