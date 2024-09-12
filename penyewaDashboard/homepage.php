@@ -16,6 +16,7 @@ include '../controller/get_userdata.php';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,14 +25,13 @@ include '../controller/get_userdata.php';
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
-	<link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/css/ionicons.min.css">
-	<link rel="stylesheet" href="path/to/stylesheet.css" media="print" onload="this.media='all'">
-	<style>
-	</style>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -49,7 +49,39 @@ include '../controller/get_userdata.php';
     </div>
     <!-- ***** Preloader End ***** -->
 
-    <?php include 'partials/header.php'; ?>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="homepage.php" class="logo">
+                            <img src="../assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                            <img src="../assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="homepage.php" class="active">Laman Utama</a></li>
+                            <li class="scroll-to-section"><a href="tempahan.php">Tempah</a></li>
+                            <li class="scroll-to-section"><a href="sewaan.php">Sewaan</a></li>
+                            <li class="scroll-to-section"><a href="profil.php">Profil</a></li>
+                        </ul>
+						
+						<div class="right-nav">
+							<span><?php echo htmlspecialchars($nama);?></span>
+							<div class="log-out-button">
+								<span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
+							</div>
+						</div>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Start ***** -->
     <div class="main-banner main-banner-img wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -61,11 +93,13 @@ include '../controller/get_userdata.php';
                             <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
                                 data-wow-delay="1s">
                                 <div class="row">
+                                    <div class="col-lg-12">
                                         <h6>Selamat Datang <?php echo htmlspecialchars($nama);?> !</h6>
                                         <h2>TEMPAHAN KENDERAAN LEMBAGA KENAF DAN TEMBAKAU</h2>
                                         <p>Selamat datang ke laman tempahan kenderaan kami! Kami menawarkan pelbagai
                                             pilihan kenderaan untuk memenuhi keperluan anda. Terima kasih.</p>
-                                    <div class="back-dropdown">
+                                    </div>
+                                    <div class="col-lg-12">
                                         <div class="border-first-button scroll-to-section">
                                             <button onclick="location.href='tempahan.php'">Tempah</button>
                                         </div>
@@ -94,7 +128,6 @@ include '../controller/get_userdata.php';
     <script src="../assets/js/custom.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-	<link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css">
 
 
     <script>
@@ -129,28 +162,7 @@ include '../controller/get_userdata.php';
                 }
             });
         });
-		
-		const menuToggle = document.querySelector('.menu-toggle');
-		const nav = document.querySelector('.nav');
-
-		menuToggle.addEventListener('click', () => {
-			nav.classList.toggle('show');
-		});
-		
-		
-		function myFunction() {
-			const dropdown = document.getElementById("myDropdown");
-			dropdown.classList.toggle("show");
-			dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
-		}
-			
-		// Close the dropdown if the user clicks outside of it
-		window.onclick = function(event) {
-			if (!event.target.closest('.dropdown')) {
-				document.getElementById("myDropdown").classList.remove("show");
-			}
-		};
-	</script>
+    </script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = $_POST['id'];
-    $status = 'Ditolak';
+    $status = 'ditolak';
     
     // Update the user in the database using a prepared statement
     $sql = $conn->prepare("UPDATE tempahan SET status = ? WHERE id = ?");

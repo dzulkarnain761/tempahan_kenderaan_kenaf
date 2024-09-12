@@ -13,9 +13,12 @@ include 'controller/connection.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
     <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
+    
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -232,6 +235,11 @@ include 'controller/connection.php';
                                         }
                                         ?>
                                     </select>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">Tarikh Kerja</span>
+                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>"  required>
+                                    
                                 </div>
 
                                 <div class="input-group mb-2">

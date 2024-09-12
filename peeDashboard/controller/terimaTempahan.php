@@ -10,15 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kerja_id = $_POST['kerja_id'];
     $kenderaan_id = $_POST['kenderaan_id'];
     $pemandu_id = $_POST['pemandu_id'];
+    $input_date = $_POST['input_date'];
     $input_hours = $_POST['input_hours'];
     $input_price = $_POST['input_price'];
     $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
-    $statusKerja = 'accepted';
+    $statusKerja = 'diterima';
 
     // Validate data here (e.g., check if arrays have the same length)
 
     // Prepare the update query for tempahan_kerja
-    $updateKerjaQuery = "UPDATE tempahan_kerja SET kenderaan_id = ?, pemandu_id = ?, jam = ?, harga = ?, status_kerja = ? WHERE tempahan_kerja_id = ?";
+    $updateKerjaQuery = "UPDATE tempahan_kerja SET kenderaan_id = ?, pemandu_id = ?, jam = ?, harga = ?, status_kerja = ?, tarikh_kerja_cadangan = ? WHERE tempahan_kerja_id = ?";
     $stmt = $conn->prepare($updateKerjaQuery);
 
     if ($stmt) {
@@ -27,10 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($kerja_id as $index => $value) {
             $kenderaan_id_value = htmlspecialchars($kenderaan_id[$index]);
             $pemandu_id_value = htmlspecialchars($pemandu_id[$index]);
+            $dates = htmlspecialchars($input_date[$index]);
             $hours = htmlspecialchars($input_hours[$index]);
             $price = htmlspecialchars($input_price[$index]);
 
-            $stmt->bind_param('iiidsi', $kenderaan_id_value, $pemandu_id_value, $hours, $price,$statusKerja, $value);
+            $stmt->bind_param('iiidssi', $kenderaan_id_value, $pemandu_id_value, $hours, $price,$statusKerja, $dates, $value);
 
             // Execute the statement
             if (!$stmt->execute()) {
@@ -48,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare($updateTempahanQuery);
 
             if ($stmt) {
-                $status = 'Pengesahan KPP'; // Set the status value here as needed
+                $status = 'pengesahan kpp'; // Set the status value here as needed
                 $stmt->bind_param('si', $status, $tempahan_id);
 
                 // Execute the statement
