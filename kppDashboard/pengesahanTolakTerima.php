@@ -46,7 +46,7 @@
                 <div class="userName">
                     <div class="user-name">NAMA BINTI PENUH</div>
                     <div class="user">
-                        <img src="images/user.png" alt="User Image">
+                        <img src="../assets/images/user.png" alt="User Image">
                     </div>
                 </div>
             </div>

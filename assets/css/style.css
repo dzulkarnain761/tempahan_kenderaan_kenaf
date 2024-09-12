@@ -14,6 +14,12 @@
     --black2: #999;
 }
 
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+}
+
 .container {
     position: relative;
     width: 100%;
@@ -68,6 +74,13 @@ nav .breadcrumb {
     width: 80px;
 }
 
+.navigation ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 .navigation ul li {
     position: relative;
     width: 100%;
@@ -87,6 +100,9 @@ nav .breadcrumb {
 }
 
 .navigation ul li a {
+    position: relative;
+    display: block;
+    width: 100%;
     display: flex;
     text-decoration: none;
     color: var(--white);
@@ -98,6 +114,8 @@ nav .breadcrumb {
 }
 
 .navigation ul li a .icon {
+    position: relative;
+    display: block;
     min-width: 60px;
     height: 60px;
     line-height: 75px;
@@ -109,8 +127,12 @@ nav .breadcrumb {
 }
 
 .navigation ul li a .title {
+    position: relative;
+    display: block;
     padding: 0 10px;
+    height: 60px;
     line-height: 60px;
+    text-align: start;
     white-space: nowrap;
 }
 
@@ -148,6 +170,8 @@ nav .breadcrumb {
     position: absolute;
     width: calc(100% - 300px);
     left: 300px;
+    min-height: 100vh;
+    background: var(--white);
     transition: 0.5s;
 }
 
@@ -156,14 +180,12 @@ nav .breadcrumb {
     left: 80px;
 }
 
-main.active {
-    idth: calc(100% - 80px);
-    left: 80px;
-}
-
 .topbar {
+    width: 100%;
+    height: 60px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0 10px;
 }
 
@@ -175,6 +197,7 @@ main.active {
     justify-content: center;
     align-items: center;
     font-size: 2.5rem;
+    cursor: pointer;
 }
 
 .userName {
@@ -195,7 +218,11 @@ main.active {
 }
 
 .user img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -358,6 +385,38 @@ label {
     font-size: .875rem
 }
 
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #bcbfc2;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #d5d9db;
+    opacity: 1
+}
+
+.form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25)
+}
+
 
 /* ================= Profile =================== */
 .profile-section {
@@ -387,22 +446,8 @@ label {
     margin-bottom: 10px;
 }
 
-/* ================= Responsive Design =================== */
+/* ====================== Responsive Design ========================== */
 @media (max-width: 991px) {
-    .navigation {
-        left: -300px;
-    }
-
-    .navigation.active,
-    .toggle.active {
-        width: 375px;
-        left: 0;
-    }
-
-    .main {
-        width: 100%;
-        left: 0;
-    }
 
     .cardBox {
         grid-template-columns: repeat(2, 1fr);
@@ -414,10 +459,6 @@ label {
 }
 
 @media (max-width: 768px) {
-    .details {
-        grid-template-columns: 1fr;
-    }
-
     .recentOrders {
         overflow-x: auto;
     }
@@ -438,6 +479,24 @@ label {
 }
 
 @media (max-width: 480px) {
+    .main.active {
+        left: 385px;
+    }
+
+    .main {
+        width: 100%;
+        left: 0;
+    }
+
+    .navigation.active {
+        width: 100%;
+        left: 0;
+    }
+
+    .navigation {
+        width: 0;
+    }
+
     .cardBox {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -448,21 +507,6 @@ label {
 
     .user {
         min-width: 40px;
-    }
-
-    .navigation {
-        width: 100%;
-        left: -100%;
-        z-index: 1000;
-    }
-
-    .toggle {
-        z-index: 10001;
-    }
-
-    .main.active .toggle {
-        color: white;
-        left: 225px;
     }
 
     .recentOrders h2 {
@@ -485,4 +529,33 @@ a {
 
 a:hover {
     color: #0a58ca
+}
+
+.form-select {
+    display: block;
+    width: 100%;
+    padding: .375rem 2.25rem .375rem .75rem;
+    -moz-padding-start: calc(0.75rem - 3px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #bcbfc2;
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+.form-select:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
 }
