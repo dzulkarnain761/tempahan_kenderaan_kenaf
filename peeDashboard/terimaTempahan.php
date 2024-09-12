@@ -13,42 +13,20 @@ include 'controller/connection.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    
     <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
-    
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
-        .custom-container {
-            position: relative;
-            width: 100%;
-        }
-
-        ul {
-            all: unset;
-            list-style: disc;
-            /* padding-left: 20px; */
-            margin: 0;
-        }
-
-        .input-group-text {
-            width: 15%;
-            /* Set a fixed width for the labels */
-            text-align: right;
-            /* Align the text to the right for better readability */
-        }
     </style>
 
 </head>
 
 <!-- =============== Navigation ================ -->
-<div class="custom-container">
+<div class="container">
     <?php
     include 'partials/navigation.php';
     ?>

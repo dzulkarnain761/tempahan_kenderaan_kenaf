@@ -559,3 +559,8 @@ a:hover {
     outline: 0;
     box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
 }
+
+.input-group-text {
+    width: 15%;
+	text-align: right;
+}
