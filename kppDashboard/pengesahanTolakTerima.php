@@ -32,12 +32,12 @@
 
 <body>
     <!-- =============== Navigation ================ -->
-<div class="custom-container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
-			
-			<div class="main">
+
+        <div class="main">
             <div class="topbar">
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon>
@@ -50,8 +50,8 @@
                     </div>
                 </div>
             </div>
-			
-			 <div class="recentOrders">
+
+            <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Pengesahan Tempahan Sewaan per Jam atau Harian </h2>
                 </div>
@@ -86,9 +86,9 @@
     <script src="../assets/js/main.js"></script>
 
     <!-- ====== ionicons ======= -->
-    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <!-- <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script> -->
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -124,16 +124,19 @@
                             });
 
                             tbody.append(`
-                            <tr data-id="${item.tempahan_id}" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
+                            <tr >
                             <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                             <td>${item.nama}</td>
                             <td>${item.tarikh_kerja}</td>
                             <td>${kerjaList}</td>
                             <td>
-                                <button onclick="acceptItem(event, this)" class="btn btn-success">
+                                <button onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
+                                    Lihat Butiran
+                                </button>
+                                <button  class="btn btn-success btn-sm terimaTempahan" value="${item.tempahan_id}">
                                     Terima
                                 </button>
-                                <button onclick="deleteItem(event, this)" class="btn btn-danger">
+                                <button  class="btn btn-danger btn-sm cancelTempahan" value="${item.tempahan_id}">
                                     Tolak
                                 </button>
                             </td>
@@ -176,20 +179,20 @@
         loadPage(1);
 
 
-        function acceptItem(event, button) {
-            event.stopPropagation();
-            var row = button.closest('tr'); // Find the closest <tr> element
-            var tempahanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+        
+
+        $('.terimaTempahan').on('click', function(e) {
+            // Get the kerjaId from the button's value
+            let tempahanId = $(this).val();
 
             Swal.fire({
-                title: "Terima Tempahan?",
+                title: "Adakah anda pasti?",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Terima Tempahan",
-                cancelButtonText: "Batal",
+                confirmButtonText: "Ya"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -199,9 +202,10 @@
                             id: tempahanId
                         },
                         success: function(response) {
+                            let res = JSON.parse(response);
                             Swal.fire({
-                                title: "Berjaya!",
-                                text: "Tempahan Diterima.",
+                                title: "Berjaya",
+                                text: "Tempahan Diterima",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -210,30 +214,27 @@
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: "Ralat!",
-                                text: "Ralat berlaku semasa menerima.",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
                                 icon: "error"
                             });
                         }
                     });
                 }
             });
+        });
 
-        }
-
-        function deleteItem(event, button) {
-            event.stopPropagation();
-            var row = button.closest('tr'); // Find the closest <tr> element
-            var tempahanId = row.getAttribute('data-id'); // Get the data-id from <tr>
+        $('.rejectTempahan').on('click', function(e) {
+            // Get the kerjaId from the button's value
+            let tempahanId = $(this).val();
 
             Swal.fire({
-                title: "Tolak Tempahan?",
+                title: "Adakah anda pasti?",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Tolak Tempahan",
-                cancelButtonText: "Batal",
+                confirmButtonText: "Ya"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -243,9 +244,10 @@
                             id: tempahanId
                         },
                         success: function(response) {
+                            let res = JSON.parse(response);
                             Swal.fire({
-                                title: "Berjaya!",
-                                text: "Tempahan Berjaya Ditolak",
+                                title: "Berjaya",
+                                text: "Tempahan Dibatalkan",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -254,15 +256,14 @@
                         error: function(xhr, status, error) {
                             Swal.fire({
                                 title: "Ralat!",
-                                text: "Ralat berlaku.",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
                                 icon: "error"
                             });
                         }
                     });
                 }
             });
-
-        }
+        });
     </script>
 </body>
 

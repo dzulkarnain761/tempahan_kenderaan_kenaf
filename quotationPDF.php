@@ -22,7 +22,7 @@ $id = $_GET['id'];
 // Ensure you escape the ID to prevent SQL injection
 $id = mysqli_real_escape_string($conn, $id);
 
-$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id";
+$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id AND (status = 'pengesahan kpp' OR status = 'belum dibayar')";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data

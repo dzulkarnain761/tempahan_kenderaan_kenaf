@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input_hours = $_POST['input_hours'];
     $input_price = $_POST['input_price'];
     $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
-    $statusKerja = 'diterima';
+    $statusKerja = 'pengesahan kpp';
 
     // Validate data here (e.g., check if arrays have the same length)
 

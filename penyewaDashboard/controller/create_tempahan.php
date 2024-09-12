@@ -1,6 +1,6 @@
 <?php
 
-include 'db-connect.php';
+include 'connection.php';
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lokasi_kerja = $_POST['lokasi_kerja'];
     $keluasan_tanah = $_POST['keluasan_tanah'];
     $catatan = $_POST['catatan'];
-    $status = "Dalam Pengesahan"; 
+    $status = "dalam pengesahan"; 
 
     $sqlTempahan = $conn->prepare("INSERT INTO tempahan (`penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `catatan`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $sqlTempahan->bind_param("sssssss", $id, $tarikh_kerja, $negeri, $lokasi_kerja, $keluasan_tanah, $catatan, $status);
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kerja = $_POST['kerja'];
 
         $sqlKerja = $conn->prepare("INSERT INTO tempahan_kerja (`tempahan_id`, `nama_kerja`) VALUES (?, ?)");
-        $sqlKerja->bind_param("ss", $tempahan_id, $nama_kerja);
+        $sqlKerja->bind_param("sss", $tempahan_id, $nama_kerja);
 
         foreach ($kerja as $nama_kerja) {
             if (!$sqlKerja->execute()) {

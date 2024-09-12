@@ -27,16 +27,16 @@ include '../controller/get_userdata.php';
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
-	
+
     <style>
-		
+
     </style>
 </head>
 
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
+    <!-- <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -45,63 +45,172 @@ include '../controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
 
     <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
         <div class="formTable">
-            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">MAKLUMAT SEWAAN</h3>
+            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Dalam Pengesahan</h3>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th>No.</th>
-                            
-                            <th>Cadangan Tarikh Kerja</th>
-                            <th>Senarai Kerja Kerja</th>
-                            <th>Status</th>
-                            <th>Tindakan</th>
+                            <th>Tarikh Kerja</th>
+                            <th>Lokasi Kerja</th>
+                            <th>Luas Tanah</th>
+                            <th>Senarai Kerja</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM `tempahan` WHERE penyewa_id = $id";
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status = 'dalam pengesahan'";
+                        $resultTempahan = mysqli_query($conn, $sqlTempahan);
+
+                        if (!$resultTempahan) {
+                            echo '<tr><td colspan="5">Error fetching data: ' . mysqli_error($conn) . '</td></tr>';
+                        } elseif (mysqli_num_rows($resultTempahan) == 0) {
+                            echo '<tr><td colspan="5">Tiada Tempahan</td></tr>';
+                        } else {
+                            $no = 1; // Initialize row number
+
+                            while ($row = mysqli_fetch_assoc($resultTempahan)):
+                                $tempahanId = $row['tempahan_id'];
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'dalam pengesahan'";
+                                $resultKerja = mysqli_query($conn, $sqlKerja);
+
+                                if (!$resultKerja) {
+                                    echo '<tr><td colspan="5">Error fetching kerja data: ' . mysqli_error($conn) . '</td></tr>';
+                                    continue;
+                                }
+
+                                $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
+                        ?>
+                                <tr data-id="<?= htmlspecialchars($row['tempahan_id']); ?>">
+                                    <!-- Use rowspan to span the number of tempahan_kerja rows -->
+                                    <td rowspan="<?= $totalRows; ?>"><?= $no++; ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['lokasi_kerja']); ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['luas_tanah']); ?></td>
+
+                                    <!-- Display the first row of tempahan_kerja -->
+                                    <?php if ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                                        <td>
+                                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
+                                                <span>
+                                                    <button class="btn btn-danger btn-sm cancelKerja" type="button" value="<?= htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
+                                                </span>
+                                            </li>
+                                        </td>
+                                </tr>
+
+                                <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                                    <tr>
+                                        <td>
+                                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
+                                                <span>
+                                                    <button class="btn btn-danger btn-sm cancelKerja" type="button" value="<?= htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
+                                                </span>
+                                            </li>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        <?php endwhile; ?>
+                    <?php } ?>
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="formTable" style="margin-top: 50px;">
+            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Diterima</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Lokasi Kerja</th>
+                            <th>Senarai Kerja</th>
+                            <th>Tarikh Dicadangkan</th>
+                            <th>Tindakan</th> <!-- Tindakan column with rowspan -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $id = $_SESSION['id'];
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND (status = 'diterima' OR status = 'belum dibayar')";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
                         $no = 1; // Initialize row number
 
-                        while ($row = mysqli_fetch_assoc($resultTempahan)): ?>
-                            <tr data-id="<?= $row['tempahan_id']; ?>">
-                                <td><?= $no++; ?></td> <!-- Increment the row number -->
-                                
-                                <td><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td> <!-- Format the date -->
-                                <td>
+                        if (!$resultTempahan || mysqli_num_rows($resultTempahan) == 0) {
+                            // Display a single row indicating no results
+                            echo '<tr><td colspan="5">Tiada Tempahan</td></tr>';
+                        } else {
+                            while ($row = mysqli_fetch_assoc($resultTempahan)) {
+                                $tempahanId = $row['tempahan_id'];
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND (status_kerja = 'diterima' OR status_kerja = 'belum dibayar')";
+                                $resultKerja = mysqli_query($conn, $sqlKerja);
+                                $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
+                        ?>
+                                <tr data-id="<?= $row['tempahan_id']; ?>">
+                                    <!-- Use rowspan to span the number of tempahan_kerja rows -->
+                                    <td rowspan="<?= $totalRows; ?>"><?= $no++; ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= $row['lokasi_kerja']; ?></td>
+
+                                    <!-- Display the first row of tempahan_kerja -->
                                     <?php
-                                    $tempahanId = $row['tempahan_id'];
-                                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
-                                    $resultKerja = mysqli_query($conn, $sqlKerja);
-                                    $listno = 1;
-                                    while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                                        <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?><br></span>
-                                    <?php endwhile; ?>
-                                </td>
-                                <td><?= htmlspecialchars($row['status']); ?></td>
-                                <td><button onclick="acceptItem(event, this)" class="btn btn-success">
-                                        Terima
-                                    </button>
-                                    <button onclick="deleteItem(event, this)" class="btn btn-danger">
-                                        Tolak
-                                    </button>
-                                </td> <!-- Escape the status -->
-                            </tr>
-                        <?php endwhile; ?>
+                                    $rowKerja = mysqli_fetch_assoc($resultKerja);
+                                    ?>
+                                    <td><?= $rowKerja['nama_kerja']; ?></td>
+                                    <td><?= $rowKerja['tarikh_kerja_cadangan']; ?></td>
+
+                                    <!-- Use rowspan for Tindakan button -->
+                                    <td rowspan="<?= $totalRows; ?>">
+                                        <button class="btn btn-primary btn-sm lihatButiran" value="<?= $row['tempahan_id']; ?>">
+                                            Lihat Butiran
+                                        </button>
+                                        <button class="btn btn-success btn-sm terimaTempahan" value="<?= $row['tempahan_id']; ?>">
+                                            Terima
+                                        </button>
+                                        <button class="btn btn-danger btn-sm cancelTempahan" value="<?= $row['tempahan_id']; ?>">
+                                            Batal
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Loop through the rest of the tempahan_kerja rows -->
+                                <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                                    <tr>
+                                        <td><?= $rowKerja['nama_kerja']; ?></td>
+                                        <td><?= $rowKerja['tarikh_kerja_cadangan']; ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                        <?php
+                            }
+                        }
+                        ?>
                     </tbody>
                 </table>
+
+
             </div>
         </div>
+
+
+
     </div>
+
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -144,8 +253,7 @@ include '../controller/get_userdata.php';
                 }
             });
         });
-    </script>
-    <script>
+
         function myFunction() {
             const dropdown = document.getElementById("myDropdown");
             dropdown.classList.toggle("show");
@@ -158,7 +266,92 @@ include '../controller/get_userdata.php';
                 document.getElementById("myDropdown").classList.remove("show");
             }
         };
+
+        // Attach click event to all buttons with class 'cancelKerja'
+        $('.cancelKerja').on('click', function(e) {
+            // Get the kerjaId from the button's value
+            let kerjaId = $(this).val();
+
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/cancelKerja.php',
+                        type: 'POST',
+                        data: {
+                            id: kerjaId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Berjaya ",
+                                text: "Kerja Dibatalkan",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        $('.cancelTempahan').on('click', function(e) {
+            // Get the kerjaId from the button's value
+            let tempahanId = $(this).val();
+
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Anda tidak akan dapat membatalkan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/cancelTempahan.php',
+                        type: 'POST',
+                        data: {
+                            id: tempahanId
+                        },
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            Swal.fire({
+                                title: "Berjaya",
+                                text: "Tempahan Dibatalkan",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        });
     </script>
+
 
 </body>
 

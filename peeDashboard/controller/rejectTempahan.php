@@ -7,17 +7,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = $_POST['id'];
     $status = 'ditolak';
-    
-    // Update the user in the database using a prepared statement
-    $sql = $conn->prepare("UPDATE tempahan SET status = ? WHERE id = ?");
-    $sql->bind_param("ss", $status, $id);
 
-    if ($sql->execute() === TRUE) {
-        echo json_encode(["success" => true]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Kemaskini gagal: " . $sql->error]);
+    // Prepare and execute the first statement
+    $sql1 = $conn->prepare("UPDATE tempahan SET status = ? WHERE tempahan_id = ?");
+    $sql1->bind_param("ss", $status, $id);
+
+    if (!$sql1->execute()) {
+        echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
+        $sql1->close();
+        $conn->close();
+        exit;
     }
+    $sql1->close();
 
-    $sql->close();
+    // Prepare and execute the second statement
+    $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ?");
+    $sql2->bind_param("ss", $status, $id);
+
+    if (!$sql2->execute()) {
+        echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);
+        $sql2->close();
+        $conn->close();
+        exit;
+    }
+    $sql2->close();
+
     $conn->close();
+    echo json_encode(["success" => true]);
 }
+?>

@@ -136,7 +136,7 @@ include 'controller/connection.php';
                     <label for="jenis_kerja_input" class="form-label">Jenis Kerja:</label>
                     <?php
                     $tempahanId = $id;
-                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja != 'cancelled'";
+                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja != 'ditolak'";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
