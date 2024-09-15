@@ -36,7 +36,7 @@ include '../controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <!-- <div id="js-preloader" class="js-preloader">
+    <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -45,7 +45,7 @@ include '../controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
@@ -202,6 +202,94 @@ include '../controller/get_userdata.php';
                         ?>
                     </tbody>
                 </table>
+
+
+            </div>
+        </div>
+
+        <div class="formTable">
+            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Sedang Berjalan</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Tarikh Kerja</th>
+                            <th>Lokasi Kerja</th>
+                            <th>Luas Tanah</th>
+                            <th>Senarai Kerja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $id = $_SESSION['id'];
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status = 'sedang berjalan'";
+                        $resultTempahan = mysqli_query($conn, $sqlTempahan);
+
+                        if (!$resultTempahan) {
+                            echo '<tr><td colspan="5">Error fetching data: ' . mysqli_error($conn) . '</td></tr>';
+                        } elseif (mysqli_num_rows($resultTempahan) == 0) {
+                            echo '<tr><td colspan="5">Tiada Tempahan</td></tr>';
+                        } else {
+                            $no = 1; // Initialize row number
+
+                            while ($row = mysqli_fetch_assoc($resultTempahan)):
+                                $tempahanId = $row['tempahan_id'];
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'sedang berjalan'";
+                                $resultKerja = mysqli_query($conn, $sqlKerja);
+
+                                if (!$resultKerja) {
+                                    echo '<tr><td colspan="5">Error fetching kerja data: ' . mysqli_error($conn) . '</td></tr>';
+                                    continue;
+                                }
+
+                                $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
+                        ?>
+                                <tr data-id="<?= htmlspecialchars($row['tempahan_id']); ?>">
+                                    <!-- Use rowspan to span the number of tempahan_kerja rows -->
+                                    <td rowspan="<?= $totalRows; ?>"><?= $no++; ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['lokasi_kerja']); ?></td>
+                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['luas_tanah']); ?></td>
+
+                                    <!-- Display the first row of tempahan_kerja -->
+                                    <?php if ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                                        <td>
+                                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
+
+                                                <?php if (htmlspecialchars($rowKerja['status_kerja']) == 'sedang berjalan') { ?>
+                                                    <span class="badge bg-warning rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
+                                                <?php } else { ?>
+                                                    <span class="badge bg-success rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
+                                                <?php } ?>
+                                            </li>
+                                        </td>
+                                    <?php endif; ?>
+                                </tr>
+
+                                <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
+                                    <tr>
+                                        <td>
+                                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
+
+                                                <?php if (htmlspecialchars($rowKerja['status_kerja']) == 'sedang berjalan') { ?>
+                                                    <span class="badge bg-warning rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
+                                                <?php } else { ?>
+                                                    <span class="badge bg-success rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
+                                                <?php } ?>
+                                            </li>
+                                        </td>
+                                    </tr>
+
+                                <?php endwhile; ?>
+                            <?php endwhile; ?>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+
 
 
             </div>

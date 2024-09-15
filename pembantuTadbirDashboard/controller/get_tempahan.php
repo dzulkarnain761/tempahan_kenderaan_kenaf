@@ -1,49 +1,69 @@
 <?php
 include 'connection.php';
 
-$limit = 5; // Number of entries to show per page
+// Set default limit and page, but allow overriding through GET parameters
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 5; // Allow dynamic limit
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
 
-// SQL query to select pemandu with pagination
-$sqlTempahan = "SELECT t.*, p.nama 
-                FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE t.status = 'dalam pengesahan'
-                LIMIT $limit OFFSET $offset";
-$resultTempahan = mysqli_query($conn, $sqlTempahan);
+try {
+    // Prepared statement to fetch tempahan with status filtering
+    $sqlTempahan = "SELECT * FROM tempahan WHERE (status = ? OR status = ?) LIMIT ? OFFSET ?";
+    $stmtTempahan = $conn->prepare($sqlTempahan);
+    $status1 = 'bayaran deposit';
+    $status2 = 'deposit selesai';
+    $stmtTempahan->bind_param('ssii', $status1, $status2, $limit, $offset);
+    $stmtTempahan->execute();
+    $resultTempahan = $stmtTempahan->get_result();
 
-// Fetch total number of records
-$sqlTotal = "SELECT COUNT(*) as total FROM tempahan";
-$resultTotal = mysqli_query($conn, $sqlTotal);
-$rowTotal = mysqli_fetch_assoc($resultTotal);
-$total = $rowTotal['total'];
-$totalPages = ceil($total / $limit);
+    // Fetch total records for pagination
+    $sqlTotal = "SELECT COUNT(*) as total FROM tempahan WHERE status = ?";
+    $stmtTotal = $conn->prepare($sqlTotal);
+    $stmtTotal->bind_param('s', $status1);
+    $stmtTotal->execute();
+    $resultTotal = $stmtTotal->get_result();
+    $rowTotal = $resultTotal->fetch_assoc();
+    $total = $rowTotal['total'];
+    $totalPages = ceil($total / $limit);
 
-$TempahanData = [];
-while ($row = mysqli_fetch_assoc($resultTempahan)) {
-    $tempahanId = $row['tempahan_id'];
+    $TempahanData = [];
+    while ($row = $resultTempahan->fetch_assoc()) {
+        $tempahanId = $row['tempahan_id'];
 
-    // Fetch related 'tempahan_kerja' data
-    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja != 'ditolak'";
-    $resultKerja = mysqli_query($conn, $sqlKerja);
+        // Prepared statement to fetch related tempahan_kerja
+        $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = ? AND (status_kerja = ? OR status_kerja = ?)";
+        $stmtKerja = $conn->prepare($sqlKerja);
+        $statusKerja1 = 'bayaran deposit';
+        $statusKerja2 = 'deposit selesai';
+        $stmtKerja->bind_param('iss', $tempahanId, $statusKerja1, $statusKerja2);
+        $stmtKerja->execute();
+        $resultKerja = $stmtKerja->get_result();
 
-    $kerjaData = [];
-    while ($rowKerja = mysqli_fetch_assoc($resultKerja)) {
-        $kerjaData[] = $rowKerja;
+        $kerjaData = [];
+        while ($rowKerja = $resultKerja->fetch_assoc()) {
+            $kerjaData[] = $rowKerja;
+        }
+
+        // Add kerja data to tempahan
+        $row['kerja'] = $kerjaData;
+
+        // Add tempahan data to the array
+        $TempahanData[] = $row;
     }
 
-    // Add 'kerja' data to the current tempahan
-    $row['kerja'] = $kerjaData;
+    // Prepare response data
+    $response = [
+        'data' => $TempahanData,
+        'totalPages' => $totalPages,
+        'currentPage' => $page
+    ];
 
-    // Add the tempahan record to the data array
-    $TempahanData[] = $row;
+    // Return the response as JSON
+    echo json_encode($response);
+
+} catch (Exception $e) {
+    // Error handling - log the error message and return a failure response
+    error_log($e->getMessage());
+    echo json_encode(['error' => 'An error occurred while fetching data.']);
 }
-
-$response = [
-    'data' => $TempahanData,
-    'totalPages' => $totalPages,
-    'currentPage' => $page
-];
-
-echo json_encode($response);
+?>

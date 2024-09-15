@@ -102,10 +102,10 @@
                         var pagination = $('#pagination');
                         if (response.data.length === 0) {
                             tbody.append(`
-                    <tr>
-                        <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
-                    </tr>
-                `);
+                                <tr>
+                                    <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                                </tr>
+                            `);
                             pagination.hide(); // Hide pagination
                         } else {
                             // Populate table
@@ -158,26 +158,26 @@
 
                             // Previous button
                             pagination.append(`
-                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
-                    </li>
-                `);
+                                <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
+                                </li>
+                            `);
 
                             // Page numbers
                             for (var i = 1; i <= response.totalPages; i++) {
                                 pagination.append(`
-                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
-                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
-                        </li>
-                    `);
-                            }
+                                    <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                                    </li>
+                                `);
+                                }
 
                             // Next button
                             pagination.append(`
-                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
-                    </li>
-                `);
+                                <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
+                                </li>
+                            `);
                         }
                     }
                 });

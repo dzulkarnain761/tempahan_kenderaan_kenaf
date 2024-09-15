@@ -5,22 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
-	<link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <title>eBooking</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
+    <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-    
-	<style>
-	</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+    </style>
 </head>
 
 <body>
     <!-- =============== Navigation ================ -->
-    <div class="container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -33,62 +36,76 @@
                 </div>
 
                 <div class="userName">
-					<div class="user-name">NAMA BINTI PENUH</div>
-					<div class="user">
-						<img src="../assets/images/user.png" alt="User Image">
-					</div>
-				</div>
-			</div>
-			
-			<!-- ================ Order Details List ================= -->
+                    <div class="user-name">NAMA BINTI PENUH</div>
+                    <div class="user">
+                        <img src="../assets/images/user.png" alt="User Image">
+                    </div>
+                </div>
+            </div>
+
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Tempahan</h2>
+                    <h2>SENARAI TUGASAN</h2>
                 </div>
 
-                <table>
+                <table id="tempahanTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
-                            <td>Nama Pemohon</td>
-                            <td>Tarikh Kerja</td>
-                            <td>Lokasi Kerja</td>
+                            <td>Nama Penyewa</td>
+                            <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            <td>Cadangan</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ali Bin Atan</td>
-                            <td>10/10/2024</td>
-                            <td>Kelantan</td>
-                            <td>Menanam Kenaf</td>
-                            <td>Sayur-sayuran</td>
-                            <td>
-                                <button onclick="window.location.href = 'jobsheet.php'" class="btn btn-success">
-                                    Terima
-                                </button>
-                                <button onclick="deleteItem(this)" class="btn btn-danger">
-                                    Tolak
-                                </button>
-                            </td>
-                        </tr>
+                        <?php
+                        include 'controller/connection.php';
+                        $sqlTempahan = "SELECT t.lokasi_kerja, t.luas_tanah, p.nama, tk.*
+                        FROM tempahan t
+                        LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                        LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
+                        WHERE tk.status_kerja = 'sedang berjalan' AND tk.pemandu_id = 13";
+
+                        $result = mysqli_query($conn, $sqlTempahan);
+                        $bil = 1;
+
+                        while ($row = mysqli_fetch_assoc($result)) :
+                        ?>
+                            <tr>
+                                <td><?php echo $bil++; ?></td>
+                                <td><?php echo $row['nama']; ?></td>
+                                <td><?php echo $row['tarikh_kerja_cadangan']; ?></td>
+                                <td><?php echo $row['nama_kerja']; ?></td>
+                                <td>
+                                <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=<?php echo $row['tempahan_kerja_id']; ?>'">Kemaskini</button>
+
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
+
+
+
             </div>
-			
-		</div>
-	</div>
+        </div>
 
-    <!-- =========== Scripts =========  -->
-    <script src="../assets/js/main.js"></script>
+        <!-- =========== Scripts =========  -->
+        <script src="../assets/js/main.js"></script>
 
-    <!-- ====== ionicons ======= -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-	
+        <!-- ====== ionicons ======= -->
+        <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+        <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+        <!-- <script src="assets/js/main.js"></script> -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <script>
+
+        </script>
+    </div>
 </body>
 
 </html>
