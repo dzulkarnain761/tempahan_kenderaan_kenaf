@@ -148,7 +148,7 @@ include '../controller/get_userdata.php';
                     <tbody>
                         <?php
                         $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND (status = 'diterima' OR status = 'belum dibayar')";
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status = 'bayaran deposit'";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
                         $no = 1; // Initialize row number
 
@@ -158,7 +158,7 @@ include '../controller/get_userdata.php';
                         } else {
                             while ($row = mysqli_fetch_assoc($resultTempahan)) {
                                 $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND (status_kerja = 'diterima' OR status_kerja = 'belum dibayar')";
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'bayaran deposit'";
                                 $resultKerja = mysqli_query($conn, $sqlKerja);
                                 $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
                         ?>
@@ -176,14 +176,15 @@ include '../controller/get_userdata.php';
 
                                     <!-- Use rowspan for Tindakan button -->
                                     <td rowspan="<?= $totalRows; ?>">
-                                        <button class="btn btn-primary btn-sm lihatButiran" value="<?= $row['tempahan_id']; ?>">
+                                        <button class="btn btn-primary btn-sm lihatButiran" onclick="window.open('controller/getPDF.php?id=<?= $row['tempahan_id']; ?>', '_blank')">
                                             Lihat Butiran
                                         </button>
-                                        <button class="btn btn-success btn-sm terimaTempahan" value="<?= $row['tempahan_id']; ?>">
-                                            Terima
+
+                                        <button class="btn btn-success btn-sm bayarDeposit" value="<?= $row['tempahan_id']; ?>">
+                                            Bayar
                                         </button>
                                         <button class="btn btn-danger btn-sm cancelTempahan" value="<?= $row['tempahan_id']; ?>">
-                                            Batal
+                                            Tolak
                                         </button>
                                     </td>
                                 </tr>
@@ -334,6 +335,48 @@ include '../controller/get_userdata.php';
                             Swal.fire({
                                 title: "Berjaya",
                                 text: "Tempahan Dibatalkan",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        $('.bayarDeposit').on('click', function(e) {
+            // Get the kerjaId from the button's value
+            let tempahanId = $(this).val();
+
+            Swal.fire({
+                title: "Bayar Tempahan",
+                text: "Anda akan dihantar ke page lain",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/bayarDeposit.php',
+                        type: 'POST',
+                        data: {
+                            id: tempahanId
+                        },
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            Swal.fire({
+                                title: "Berjaya",
+                                text: "Tempahan Diterima",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();

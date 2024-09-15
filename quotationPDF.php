@@ -22,7 +22,7 @@ $id = $_GET['id'];
 // Ensure you escape the ID to prevent SQL injection
 $id = mysqli_real_escape_string($conn, $id);
 
-$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id AND (status = 'pengesahan kpp' OR status = 'belum dibayar')";
+$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id AND status = 'bayaran deposit'";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data
@@ -289,7 +289,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           <tr>
                             <?php
                             $penyewaID = $tempahan['penyewa_id'];
-                            $sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewaID";
+                            $sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewaID" ;
                             $resultPenyewa = mysqli_query($conn, $sqlPenyewa);
 
                             // Fetch the Pemandu member's data
@@ -374,7 +374,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           </tr>
                           <?php
                           // SQL query to select all tasks for the booking
-                          $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $id";
+                          $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $id AND status_kerja != 'ditolak'";
                           $resultKerja = mysqli_query($conn, $sqlKerja);
                           $totalHarga = 0;
 

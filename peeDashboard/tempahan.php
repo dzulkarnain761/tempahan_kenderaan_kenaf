@@ -8,6 +8,8 @@
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
     <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +23,7 @@
 
 <body>
     <!-- =============== Navigation ================ -->
-    <div class="container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -84,7 +86,6 @@
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
         <script>
-
             function loadPage(page) {
                 $.ajax({
                     url: 'controller/get_tempahan.php', // The PHP file that handles the database query
@@ -122,9 +123,10 @@
                                         <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
                                             Terima
                                         </button>
-                                        <button class="btn btn-danger cancelTempahan value=${item.tempahan_id}">
+                                        <button class="btn btn-danger cancelTempahan" value="${item.tempahan_id}">
                                             Tolak
                                         </button>
+
                                     </td>
                                 `;
                                 } else {
@@ -186,48 +188,48 @@
 
 
 
-            $('.cancelTempahan').on('click', function(e) {
-            // Get the kerjaId from the button's value
-            let tempahanId = $(this).val();
+            $(document).on('click', '.cancelTempahan', function(e) {
+                let tempahanId = $(this).attr('value');
 
-            Swal.fire({
-                title: "Adakah anda pasti?",
-                text: "Anda tidak akan dapat membatalkan ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/cancelTempahan.php',
-                        type: 'POST',
-                        data: {
-                            id: tempahanId
-                        },
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            Swal.fire({
-                                title: "Berjaya",
-                                text: "Tempahan Dibatalkan",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
+                Swal.fire({
+                    title: "Adakah anda pasti?",
+                    text: "Anda tidak akan dapat membatalkan ini!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'controller/cancelTempahan.php',
+                            type: 'POST',
+                            data: {
+                                id: tempahanId
+                            },
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                Swal.fire({
+                                    title: "Berjaya",
+                                    text: "Tempahan Dibatalkan",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: "Ralat!",
+                                    text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
             });
-        });
         </script>
+    </div>
 </body>
 
 </html>

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input_hours = $_POST['input_hours'];
     $input_price = $_POST['input_price'];
     $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
-    $statusKerja = 'pengesahan kpp';
+    $statusKerja = 'diterima';
 
     // Validate data here (e.g., check if arrays have the same length)
 
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare($updateTempahanQuery);
 
             if ($stmt) {
-                $status = 'pengesahan kpp'; // Set the status value here as needed
+                $status = 'diterima'; // Set the status value here as needed
                 $stmt->bind_param('si', $status, $tempahan_id);
 
                 // Execute the statement

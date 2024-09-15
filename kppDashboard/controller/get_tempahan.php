@@ -9,7 +9,7 @@ $offset = ($page - 1) * $limit;
 $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
                 INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE status = 'pengesahan kpp'
+                WHERE status = 'diterima'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 

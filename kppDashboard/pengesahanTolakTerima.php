@@ -8,6 +8,8 @@
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
     <link href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,10 +76,9 @@
     <script src="../assets/js/main.js"></script>
 
     <!-- ====== ionicons ======= -->
-    <!-- <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script> -->
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
@@ -124,7 +125,7 @@
                                 <button  class="btn btn-success btn-sm terimaTempahan" value="${item.tempahan_id}">
                                     Terima
                                 </button>
-                                <button  class="btn btn-danger btn-sm cancelTempahan" value="${item.tempahan_id}">
+                                <button  class="btn btn-danger btn-sm rejectTempahan" value="${item.tempahan_id}">
                                     Tolak
                                 </button>
                             </td>
@@ -167,14 +168,13 @@
         loadPage(1);
 
 
-        
 
-        $('.terimaTempahan').on('click', function(e) {
-            // Get the kerjaId from the button's value
-            let tempahanId = $(this).val();
+
+        $(document).on('click', '.terimaTempahan', function(e) {
+            let tempahanId = $(this).attr('value');
 
             Swal.fire({
-                title: "Adakah anda pasti?",
+                title: "Terima Tempahan",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
@@ -193,7 +193,7 @@
                             let res = JSON.parse(response);
                             Swal.fire({
                                 title: "Berjaya",
-                                text: "Tempahan Diterima",
+                                text: "Tempahan Dibatalkan",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();
@@ -211,12 +211,11 @@
             });
         });
 
-        $('.rejectTempahan').on('click', function(e) {
-            // Get the kerjaId from the button's value
-            let tempahanId = $(this).val();
+        $(document).on('click', '.rejectTempahan', function(e) {
+            let tempahanId = $(this).attr('value');
 
             Swal.fire({
-                title: "Adakah anda pasti?",
+                title: "Tolak Tempahan",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,

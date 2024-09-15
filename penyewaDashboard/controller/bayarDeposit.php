@@ -6,7 +6,7 @@ include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = intval($_POST['id']);
-    $status = 'bayaran deposit';
+    $status = 'deposit selesai';
 
     // Prepare and execute the first statement
     $sql1 = $conn->prepare("UPDATE tempahan SET status = ? WHERE tempahan_id = ?");
