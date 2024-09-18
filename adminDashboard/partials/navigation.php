@@ -87,8 +87,8 @@
                     text: "You have been successfully logged out.",
                     icon: "success"
                 }).then(() => {
-                    // Optionally, redirect the user after the success dialog
-                    window.location.href = '../adminDashboard/controller/logout.php'; // Update with your actual logout URL
+                    
+                    window.location.href = '../controller/auth/logout.php'; // Update with your actual logout URL
                 });
             }
         });
