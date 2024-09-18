@@ -1,6 +1,7 @@
 <?php
 
 include 'controller/connection.php';
+include 'controller/session.php';
 
 ?>
 

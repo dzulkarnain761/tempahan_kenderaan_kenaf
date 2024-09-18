@@ -1,11 +1,5 @@
 <?php
 
-session_start();
-
-if (!isset($_SESSION["id"])) {
-    header("Location: ../login.php");
-    exit();
-}
 
 $id = $_SESSION["id"];
 if ($stmt = $conn->prepare("SELECT nama, no_kp, contact_no FROM penyewa WHERE id = ?")) {

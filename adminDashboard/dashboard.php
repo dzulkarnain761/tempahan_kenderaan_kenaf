@@ -1,15 +1,7 @@
 <?php
 
 include 'controller/connection.php';
-
-session_start();
-
-// if (!isset($_SESSION["kumpulan"]) || $_SESSION["kumpulan"] !== 'Z') {
-//     header("Location: ../login.php");
-//     exit();
-// }
-
-
+include 'controller/session.php';
 
 ?>
 

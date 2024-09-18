@@ -1,8 +1,9 @@
 <?php
 
-include '../controller/db-connect.php';
+include 'controller/connection.php';
+include 'controller/session.php';
+include 'controller/get_userdata.php';
 
-include '../controller/get_userdata.php';
 ?>
 
 

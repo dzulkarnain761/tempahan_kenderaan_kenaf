@@ -1,13 +1,9 @@
 <?php
-include '../controller/db-connect.php';
 
-// session_start();
+include 'controller/connection.php';
+include 'controller/session.php';
+include 'controller/get_userdata.php';
 
-// if (!isset($_SESSION["id"])) {
-//     header("Location: login.php");
-//     exit();
-// }
-include '../controller/get_userdata.php';
 ?>
 
 
@@ -36,7 +32,7 @@ include '../controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <!-- <div id="js-preloader" class="js-preloader">
+    <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -45,7 +41,7 @@ include '../controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
