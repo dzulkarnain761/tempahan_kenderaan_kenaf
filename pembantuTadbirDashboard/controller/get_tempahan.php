@@ -1,5 +1,8 @@
 <?php
 include 'connection.php';
+session_start();
+
+$negeri = $_SESSION['negeri'];
 
 // Set default limit and page, but allow overriding through GET parameters
 $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 5; // Allow dynamic limit
@@ -8,18 +11,18 @@ $offset = ($page - 1) * $limit;
 
 try {
     // Prepared statement to fetch tempahan with status filtering
-    $sqlTempahan = "SELECT * FROM tempahan WHERE (status = ? OR status = ?) LIMIT ? OFFSET ?";
+    $sqlTempahan = "SELECT * FROM tempahan WHERE (status = ? OR status = ?) AND negeri = ? LIMIT ? OFFSET ?";
     $stmtTempahan = $conn->prepare($sqlTempahan);
     $status1 = 'bayaran deposit';
     $status2 = 'deposit selesai';
-    $stmtTempahan->bind_param('ssii', $status1, $status2, $limit, $offset);
+    $stmtTempahan->bind_param('sssii', $status1, $status2, $negeri, $limit, $offset);
     $stmtTempahan->execute();
     $resultTempahan = $stmtTempahan->get_result();
 
     // Fetch total records for pagination
-    $sqlTotal = "SELECT COUNT(*) as total FROM tempahan WHERE status = ?";
+    $sqlTotal = "SELECT COUNT(*) as total FROM tempahan WHERE (status = ? OR status = ?) AND negeri = ?";
     $stmtTotal = $conn->prepare($sqlTotal);
-    $stmtTotal->bind_param('s', $status1);
+    $stmtTotal->bind_param('sss', $status1, $status2, $negeri);
     $stmtTotal->execute();
     $resultTotal = $stmtTotal->get_result();
     $rowTotal = $resultTotal->fetch_assoc();

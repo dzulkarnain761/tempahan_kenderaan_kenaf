@@ -31,12 +31,7 @@ include 'controller/session.php';
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="userName">
-					<div class="user-name">NAMA BINTI PENUH</div>
-					<div class="user">
-						<img src="assets/images/user.png" alt="User Image">
-					</div>
-				</div>
+                <?php include 'partials/name_display.php' ?>
 			</div>
 		</div>
 

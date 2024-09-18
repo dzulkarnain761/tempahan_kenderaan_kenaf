@@ -3,6 +3,8 @@
 include 'controller/connection.php';
 include 'controller/session.php';
 
+$pemandu_id = $_SESSION['id'];
+
 ?>
 
 <!DOCTYPE html>
@@ -42,12 +44,7 @@ include 'controller/session.php';
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="userName">
-                    <div class="user-name">NAMA BINTI PENUH</div>
-                    <div class="user">
-                        <img src="../assets/images/user.png" alt="User Image">
-                    </div>
-                </div>
+                <?php include 'partials/name_display.php'; ?>
             </div>
 
             <div class="recentOrders">
@@ -67,31 +64,40 @@ include 'controller/session.php';
                     </thead>
                     <tbody>
                         <?php
-                        include 'controller/connection.php';
                         $sqlTempahan = "SELECT t.lokasi_kerja, t.luas_tanah, p.nama, tk.*
-                        FROM tempahan t
-                        LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                        LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
-                        WHERE tk.status_kerja = 'sedang berjalan' AND tk.pemandu_id = 12";
+        FROM tempahan t
+        LEFT JOIN penyewa p ON p.id = t.penyewa_id
+        LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
+        WHERE tk.status_kerja = 'sedang berjalan' AND tk.pemandu_id = $pemandu_id";
 
                         $result = mysqli_query($conn, $sqlTempahan);
                         $bil = 1;
 
-                        while ($row = mysqli_fetch_assoc($result)) :
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) :
                         ?>
+                                <tr>
+                                    <td><?php echo $bil++; ?></td>
+                                    <td><?php echo $row['nama']; ?></td>
+                                    <td><?php echo $row['tarikh_kerja_cadangan']; ?></td>
+                                    <td><?php echo $row['nama_kerja']; ?></td>
+                                    <td>
+                                        <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=<?php echo $row['tempahan_kerja_id']; ?>'">Kemaskini</button>
+                                    </td>
+                                </tr>
+                            <?php
+                            endwhile;
+                        } else {
+                            ?>
                             <tr>
-                                <td><?php echo $bil++; ?></td>
-                                <td><?php echo $row['nama']; ?></td>
-                                <td><?php echo $row['tarikh_kerja_cadangan']; ?></td>
-                                <td><?php echo $row['nama_kerja']; ?></td>
-                                <td>
-                                <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=<?php echo $row['tempahan_kerja_id']; ?>'">Kemaskini</button>
-
-                                </td>
+                                <td colspan="5" class="text-center">Tiada Tugasan</td>
                             </tr>
-                        <?php endwhile; ?>
+                        <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
+
 
 
 
@@ -109,9 +115,7 @@ include 'controller/session.php';
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-        <script>
 
-        </script>
     </div>
 </body>
 

@@ -26,7 +26,7 @@
         </li>
 
         <li>
-            <a id="logoutButton">
+            <a href="#" id="logoutButton">
                 <span class="icon">
                     <ion-icon name="log-out-outline"></ion-icon>
                 </span>

@@ -91,37 +91,7 @@ include 'controller/get_userdata.php';
 
 
     <script>
-        const logoutButton = document.getElementById('logoutButton');
-
-        // Add a click event listener to the logout button
-        logoutButton.addEventListener('click', function() {
-            // Show the confirmation dialog
-            Swal.fire({
-                title: "Log Keluar",
-                // text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                cancelButtonText: "Batal",
-                confirmButtonText: "Log Keluar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Handle the logout logic here (e.g., redirecting to a logout route)
-                    // Example: window.location.href = '/logout';
-
-                    // Show the success dialog
-                    Swal.fire({
-                        title: "Log Keluar!",
-                        text: "Anda telah berjaya log keluar.",
-                        icon: "success"
-                    }).then(() => {
-                        // Optionally, redirect the user after the success dialog
-                        window.location.href = '../controller/auth/logout.php'; // Update with your actual logout URL
-                    });
-                }
-            });
-        });
+        
 		
 		const menuToggle = document.querySelector('.menu-toggle');
 		const nav = document.querySelector('.nav');
