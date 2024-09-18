@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2024 at 09:05 AM
+-- Generation Time: Sep 18, 2024 at 05:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,13 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `kumpulan`, `negeri`, `password`) VALUES
-(7, 'SUPERRRR ADMINNNN', '000000000000', '00000000000', '', 'Z', 'NEGERI KELANTAN', '$2y$10$0XDhKgg28va1fQGxtnt.JOKe4KZYnCdAbLmnSL3UNnH8C9a1JN0..');
+(7, 'SUPERRRR ADMINNNN', '000000000000', '00000000000', '', 'Z', 'NEGERI KELANTAN', '$2y$10$0XDhKgg28va1fQGxtnt.JOKe4KZYnCdAbLmnSL3UNnH8C9a1JN0..'),
+(8, 'AHMAD ABU PEE', '111111111111', '11111111111', 'ahmadabu@gmail.com', 'D', 'NEGERI KELANTAN', '$2y$10$0ip5cb/lRWinJvgG8qq/zOBYgCXtakjQrdE2IJebKoJgpAiXfgZ06'),
+(9, 'MUHD KAMARUL KPP', '222222222222', '22222222222', 'ahmadkamarul@gmail.com', 'A', 'NEGERI KELANTAN', '$2y$10$TrDN27ZVlYsD2cJH358yDOVK0KaCuPglEYBxSrWNSxbqMWe2oBZn2'),
+(10, 'SITI SYAFIQAH PT', '333333333333', '33333333333', 'sitisyafiqah@gmail.com', 'F', 'NEGERI KELANTAN', '$2y$10$Y4L9wiWd9HPbLgStWveiiOBjs/8eg8w0yAqKgpNZB8IkFxdJcCWom'),
+(11, 'NUR BATRISYA', '444444444444', '44444444444', 'nurbatrisya@gmail.com', 'F', 'NEGERI TERENGGANU', '$2y$10$gIHIfofp7RwXvzcXo7kWkuu7r2TH50Y3Njq/.aDNHAzXiNy5.8tLy'),
+(12, 'MOHD AZMI BIN AB KADIR', '555555555555', '55555555555', 'mazmi@lktn.gov.my', 'Y', '', '$2y$10$xAFM9GpsD.e3/.aPnCJpJugxOKbvvf76c7Ui/qkwfbTQthgWodLfK'),
+(13, 'AZHAR BIN HAMAT', '666666666666', '66666666666', '', 'Y', '', '$2y$10$x2r.DMNl/UPms290ngi8u.c3kfYAcRZqgwTtTbRu9vkepHM/dXTbK');
 
 -- --------------------------------------------------------
 
@@ -175,7 +181,9 @@ CREATE TABLE `kenderaan` (
 --
 
 INSERT INTO `kenderaan` (`id`, `kategori_kenderaan`, `no_aset`, `no_pendaftaran`, `tahun_daftar`, `negeri_penempatan`, `kawasan_penempatan`, `catatan`, `status`) VALUES
-(4, 'Traktor', '001364', 'DAE9475', '1998', 'BKK', '45', 'ROSAKKK', 'Aktif');
+(4, 'Traktor', '001364', 'DAE9475', '1998', 'BKK', '45', 'ROSAKKK', 'Aktif'),
+(5, 'Traktor', 'LKTN/H/11/016737', 'WVD859', '2011', 'BKK', 'BAHAGIAN KEJURUTERAAN DAN KILANG', 'AZHAR', 'Aktif'),
+(6, 'Jengkaut', 'LKTN/H/11/016790', 'WVC1192', '2011', 'BKK', 'BAHAGIAN KEJURUTERAAN DAN KILANG', 'AZMI', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -227,6 +235,18 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('1', 'Log masuk sebagai PENYEWA', '2024-09-02 22:49:07', '::1'),
 ('1', 'Log masuk sebagai PENYEWA', '2024-09-02 22:49:33', '::1'),
 ('1', 'Log masuk sebagai PENYEWA', '2024-09-02 23:07:00', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-04 03:05:55', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-04 19:23:45', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-09 02:08:19', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-09 19:20:25', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-10 01:40:19', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-11 01:09:43', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-11 18:40:27', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-11 20:02:16', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-14 19:17:54', '::1'),
+('1', 'Log masuk sebagai PENYEWA', '2024-09-17 20:10:53', '::1'),
+('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-15 00:05:31', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-09-09 20:16:40', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:01:33', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:13:30', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 18:57:38', '::1');
@@ -279,7 +299,8 @@ CREATE TABLE `penyewa` (
 --
 
 INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `password`) VALUES
-(1, 'TESTING PENYEWA', '666666666666', '66666666666', NULL, 'testing alamat penyewa', '$2y$10$mGZkE2ALUBkZ64puDbKES.AVhgHBErzMX4i18ysBLvyuu6c7Dl50y');
+(1, 'TESTING PENYEWA', '666666666666', '66666666666', NULL, 'testing alamat penyewa', '$2y$10$mGZkE2ALUBkZ64puDbKES.AVhgHBErzMX4i18ysBLvyuu6c7Dl50y'),
+(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', NULL, 'pengkalan batu, pasir mas,', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC');
 
 -- --------------------------------------------------------
 
@@ -288,23 +309,27 @@ INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `
 --
 
 CREATE TABLE `tempahan` (
-  `id` int(11) NOT NULL,
+  `tempahan_id` int(11) NOT NULL,
   `penyewa_id` int(11) DEFAULT NULL,
   `tarikh_kerja` date DEFAULT NULL,
   `negeri` varchar(100) DEFAULT NULL,
-  `lokasi` varchar(255) DEFAULT NULL,
-  `hektar` decimal(10,2) DEFAULT NULL,
+  `lokasi_kerja` varchar(255) DEFAULT NULL,
+  `luas_tanah` decimal(10,2) DEFAULT NULL,
   `catatan` text DEFAULT NULL,
-  `status` varchar(30) DEFAULT NULL,
-  `tarikh_tempahan` date NOT NULL DEFAULT current_timestamp()
+  `cara_bayaran` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'dalam pengesahan',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tempahan`
 --
 
-INSERT INTO `tempahan` (`id`, `penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi`, `hektar`, `catatan`, `status`, `tarikh_tempahan`) VALUES
-(8, 1, '2024-09-11', 'NEGERI KELANTAN', 'testing kerja', 2.00, '', 'Dalam Pengesahan', '2024-09-03');
+INSERT INTO `tempahan` (`tempahan_id`, `penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `catatan`, `cara_bayaran`, `status`, `created_at`, `updated_at`) VALUES
+(6, 1, '2024-09-20', 'NEGERI KELANTAN', 'adasdasd', 2.00, '', NULL, 'bayaran deposit', '2024-09-18 03:02:40', '2024-09-18 03:06:30'),
+(7, 1, '2024-09-26', 'NEGERI KELANTAN', 'asdasd', 2.00, '', NULL, 'sedang berjalan', '2024-09-18 03:03:14', '2024-09-18 03:07:54'),
+(8, 1, '2024-09-26', 'NEGERI KELANTAN', 'asdasd', 3.00, '', NULL, 'dalam pengesahan', '2024-09-18 03:04:09', '2024-09-18 03:04:09');
 
 -- --------------------------------------------------------
 
@@ -313,20 +338,34 @@ INSERT INTO `tempahan` (`id`, `penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi`, 
 --
 
 CREATE TABLE `tempahan_kerja` (
-  `id` int(11) NOT NULL,
+  `tempahan_kerja_id` int(11) NOT NULL,
+  `tempahan_id` int(11) DEFAULT NULL,
   `nama_kerja` varchar(255) DEFAULT NULL,
+  `kenderaan_id` int(11) DEFAULT NULL,
+  `pemandu_id` int(11) DEFAULT NULL,
+  `jam` int(11) NOT NULL,
   `harga` decimal(10,2) DEFAULT NULL,
-  `tempahan_id` int(11) DEFAULT NULL
+  `tarikh_kerja_cadangan` date DEFAULT NULL,
+  `status_kerja` varchar(50) DEFAULT 'dalam pengesahan',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `masa_mula_odometer` time NOT NULL,
+  `masa_akhir_odometer` time NOT NULL,
+  `jumlah_jam` decimal(5,2) DEFAULT 0.00,
+  `jumlah_bayaran` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tempahan_kerja`
 --
 
-INSERT INTO `tempahan_kerja` (`id`, `nama_kerja`, `harga`, `tempahan_id`) VALUES
-(5, 'Piring Batas Besar', NULL, 8),
-(6, 'Rotor 1', NULL, 8),
-(7, 'Rotor 2', NULL, 8);
+INSERT INTO `tempahan_kerja` (`tempahan_kerja_id`, `tempahan_id`, `nama_kerja`, `kenderaan_id`, `pemandu_id`, `jam`, `harga`, `tarikh_kerja_cadangan`, `status_kerja`, `created_at`, `updated_at`, `masa_mula_odometer`, `masa_akhir_odometer`, `jumlah_jam`, `jumlah_bayaran`) VALUES
+(9, 6, 'Baikpulih Parit', NULL, NULL, 0, NULL, NULL, 'bayaran deposit', '2024-09-18 03:02:40', '2024-09-18 03:05:55', '00:00:00', '00:00:00', 0.00, 0.00),
+(10, 6, 'Parit Baru', NULL, NULL, 0, NULL, NULL, 'bayaran deposit', '2024-09-18 03:02:40', '2024-09-18 03:05:55', '00:00:00', '00:00:00', 0.00, 0.00),
+(11, 7, 'Rotor 1', NULL, NULL, 0, NULL, NULL, 'sedang berjalan', '2024-09-18 03:03:14', '2024-09-18 03:08:29', '00:00:00', '00:00:00', 0.00, 0.00),
+(12, 7, 'Rotor 2', NULL, NULL, 0, NULL, NULL, 'selesai', '2024-09-18 03:03:14', '2024-09-18 03:08:29', '00:00:00', '00:00:00', 0.00, 0.00),
+(13, 8, 'Piring', NULL, NULL, 0, NULL, NULL, 'dalam pengesahan', '2024-09-18 03:04:09', '2024-09-18 03:04:09', '00:00:00', '00:00:00', 0.00, 0.00),
+(14, 8, 'Piring Batas Besar', NULL, NULL, 0, NULL, NULL, 'dalam pengesahan', '2024-09-18 03:04:09', '2024-09-18 03:04:09', '00:00:00', '00:00:00', 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -417,14 +456,15 @@ ALTER TABLE `penyewa`
 -- Indexes for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`tempahan_id`),
+  ADD KEY `fk_penyewa` (`penyewa_id`);
 
 --
 -- Indexes for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tempahan_id` (`tempahan_id`);
+  ADD PRIMARY KEY (`tempahan_kerja_id`),
+  ADD KEY `fk_tempahan` (`tempahan_id`);
 
 --
 -- Indexes for table `tugasan`
@@ -440,7 +480,7 @@ ALTER TABLE `tugasan`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `kategori_kenderaan`
@@ -464,7 +504,7 @@ ALTER TABLE `kawasan`
 -- AUTO_INCREMENT for table `kenderaan`
 --
 ALTER TABLE `kenderaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `kumpulan`
@@ -482,19 +522,19 @@ ALTER TABLE `negeri`
 -- AUTO_INCREMENT for table `penyewa`
 --
 ALTER TABLE `penyewa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tugasan`
@@ -507,10 +547,16 @@ ALTER TABLE `tugasan`
 --
 
 --
+-- Constraints for table `tempahan`
+--
+ALTER TABLE `tempahan`
+  ADD CONSTRAINT `fk_penyewa` FOREIGN KEY (`penyewa_id`) REFERENCES `penyewa` (`id`);
+
+--
 -- Constraints for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  ADD CONSTRAINT `tempahan_kerja_ibfk_1` FOREIGN KEY (`tempahan_id`) REFERENCES `tempahan` (`id`);
+  ADD CONSTRAINT `fk_tempahan` FOREIGN KEY (`tempahan_id`) REFERENCES `tempahan` (`tempahan_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
