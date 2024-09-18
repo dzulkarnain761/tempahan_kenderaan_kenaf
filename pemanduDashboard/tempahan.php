@@ -65,7 +65,7 @@
                         FROM tempahan t
                         LEFT JOIN penyewa p ON p.id = t.penyewa_id
                         LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
-                        WHERE tk.status_kerja = 'sedang berjalan' AND tk.pemandu_id = 13";
+                        WHERE tk.status_kerja = 'sedang berjalan' AND tk.pemandu_id = 12";
 
                         $result = mysqli_query($conn, $sqlTempahan);
                         $bil = 1;

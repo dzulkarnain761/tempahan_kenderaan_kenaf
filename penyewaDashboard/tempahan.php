@@ -116,18 +116,32 @@ include '../controller/get_userdata.php';
                             <option disabled selected value="">--Pilih Jenis Kerja--</option>
                             <?php
                             // Assuming you have a database connection set up as $conn
-                            $sqlTugasan = "SELECT * FROM `tugasan`";
+                            $sqlTugasan = "SELECT * FROM `tugasan` ORDER BY `kategori_kenderaan`, `kerja`";
                             $result = $conn->query($sqlTugasan);
 
+                            $currentCategory = ''; // Variable to track the current category
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
-                                    echo '<option value="' . $row['kerja'] . '">' . $row['kerja'] . ' - RM ' . $row['harga_per_jam'] . '/Jam' . '</option>';
+                                    // Check if the category has changed, if so, close the previous optgroup and start a new one
+                                    if ($currentCategory != $row['kategori_kenderaan']) {
+                                        if ($currentCategory != '') {
+                                            echo '</optgroup>'; // Close the previous optgroup if it's not the first one
+                                        }
+                                        $currentCategory = $row['kategori_kenderaan'];
+                                        echo '<optgroup label="' . htmlspecialchars($currentCategory) . '">';
+                                    }
+
+                                    // Output the options within the current category
+                                    echo '<option value="' . $row['kerja'] . '">' . $row['kerja'] . ' - RM ' . number_format($row['harga_per_jam'], 2) . '/Jam</option>';
                                 }
+                                echo '</optgroup>'; // Close the last optgroup
                             } else {
                                 echo '<option disabled>No available options</option>';
                             }
                             ?>
                         </select>
+
+
                     </div>
 
                     <div id="additionalSelects"></div>
@@ -221,13 +235,34 @@ include '../controller/get_userdata.php';
 
             <?php
             $result->data_seek(0); // Reset the result pointer to the beginning
+
+            $currentCategory = ''; // Variable to track the current category
             while ($row = $result->fetch_assoc()) {
+                // Check if the category has changed, if so, create a new optgroup element
+                if ($currentCategory != $row['kategori_kenderaan']) {
+                    if ($currentCategory != '') {
+                        // Close the previous optgroup
+                        echo 'newSelect.appendChild(optgroup);';
+                    }
+                    $currentCategory = $row['kategori_kenderaan'];
+
+                    // Create a new optgroup
+                    echo 'var optgroup = document.createElement("optgroup");';
+                    echo 'optgroup.label = "' . htmlspecialchars($currentCategory) . '";';
+                }
+
+                // Create the option and add it to the current optgroup
                 echo 'var option = document.createElement("option");';
                 echo 'option.value = "' . $row['kerja'] . '";';
-                echo 'option.textContent = "' . $row['kerja'] . ' - RM ' . $row['harga_per_jam'] . '/Jam";';
-                echo 'newSelect.appendChild(option);';
+                echo 'option.textContent = "' . $row['kerja'] . ' - RM ' . number_format($row['harga_per_jam'], 2) . '/Jam";';
+                echo 'optgroup.appendChild(option);';
+            }
+            // Append the last optgroup
+            if ($currentCategory != '') {
+                echo 'newSelect.appendChild(optgroup);';
             }
             ?>
+
 
             newSelectDiv.appendChild(newSelect);
             additionalSelects.appendChild(newSelectDiv);
@@ -309,7 +344,7 @@ include '../controller/get_userdata.php';
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: '../controller/create_tempahan.php',
+                    url: 'controller/create_tempahan.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -343,20 +378,20 @@ include '../controller/get_userdata.php';
             console.log("Selected Kerja values:", kerjaValues);
         }
     </script>
-	<script>
-	  function myFunction() {
-	  const dropdown = document.getElementById("myDropdown");
-	  dropdown.classList.toggle("show");
-	  dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
-	}
+    <script>
+        function myFunction() {
+            const dropdown = document.getElementById("myDropdown");
+            dropdown.classList.toggle("show");
+            dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
+        }
 
-	// Close the dropdown if the user clicks outside of it
-	window.onclick = function(event) {
-	  if (!event.target.closest('.dropdown')) {
-		document.getElementById("myDropdown").classList.remove("show");
-	  }
-	};
-	</script>
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                document.getElementById("myDropdown").classList.remove("show");
+            }
+        };
+    </script>
 
 </body>
 

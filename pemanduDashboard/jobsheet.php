@@ -80,6 +80,7 @@
             ?>
 
             <form>
+
                 <div class="mb-3">
                     <label for="namaPenyewa" class="form-label">Nama Penyewa :</label>
                     <input type="text" class="form-control" id="namaPenyewa" value="<?php echo isset($tempahan['nama']) ? $tempahan['nama'] : ''; ?>" readonly>
@@ -112,30 +113,31 @@
                 <h2>BORANG PENGESAHAN KERJA</h2>
             </div>
 
-            <form id="work_form">
+            <form id="selesaiKerja" method="POST">
+                <input type="hidden" name="tempahan_kerja_id" value="<?php echo $id ?>">
                 <div class="mb-3">
                     <label for="nama_kerja" class="form-label">Nama Kerja :</label>
-                    <input type="text" class="form-control" id="nama_kerja" value="<?php echo isset($tempahan['nama_kerja']) ? $tempahan['nama_kerja'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="nama_kerja" name="nama_kerja" value="<?php echo isset($tempahan['nama_kerja']) ? $tempahan['nama_kerja'] : ''; ?>" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="harga_per_jam" class="form-label">Harga Per Jam (RM/Jam)</label>
-                    <input type="text" class="form-control" id="harga_per_jam" value="<?php echo isset($tempahan['harga_per_jam']) ? $tempahan['harga_per_jam'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="harga_per_jam" name="harga_per_jam" value="<?php echo isset($tempahan['harga_per_jam']) ? $tempahan['harga_per_jam'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="masa_mula" class="form-label">Odometer Masa Mula</label>
-                    <input type="time" class="form-control" id="masa_mula" required>
+                    <input type="time" class="form-control" id="masa_mula" name="masa_mula" required>
                 </div>
                 <div class="mb-3">
                     <label for="masa_akhir" class="form-label">Odometer Masa Akhir</label>
-                    <input type="time" class="form-control" id="masa_akhir" required>
+                    <input type="time" class="form-control" id="masa_akhir" name="masa_akhir" required>
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_jam" class="form-label">Jumlah Jam Kerja</label>
-                    <input type="text" class="form-control" id="jumlah_jam" placeholder="Jumlah Jam Kerja" readonly>
+                    <input type="text" class="form-control" id="jumlah_jam" name="jumlah_jam" placeholder="Jumlah Jam Kerja" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_bayaran" class="form-label">Jumlah Bayaran (RM)</label>
-                    <input type="text" class="form-control" id="jumlah_bayaran" placeholder="Jumlah Bayaran" readonly>
+                    <input type="text" class="form-control" id="jumlah_bayaran" name="jumlah_bayaran" placeholder="Jumlah Bayaran" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Hantar</button>
@@ -146,7 +148,7 @@
 </div>
 
 <!-- =========== Scripts =========  -->
-<script src="../assets/js/main.js"></script>
+<!-- <script src="../assets/js/main.js"></script> -->
 
 <!-- ====== ionicons ======= -->
 <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
@@ -186,7 +188,37 @@
         // Trigger the calculation when the time inputs change
         $('#masa_mula, #masa_akhir').on('change', calculateTotal);
 
-        
+
+        $('#selesaiKerja').on('submit', function(e) {
+            e.preventDefault();
+
+            // Serialize form data and make AJAX request
+            $.ajax({
+                url: 'controller/selesaiKerja.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: res.message,
+                        }).then(() => {
+                            window.location.href = 'tempahan.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        });
+                    }
+                }
+            });
+        });
+
+
     });
 </script>
 

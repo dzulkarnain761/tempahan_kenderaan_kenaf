@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kerja = $_POST['kerja'];
 
         $sqlKerja = $conn->prepare("INSERT INTO tempahan_kerja (`tempahan_id`, `nama_kerja`) VALUES (?, ?)");
-        $sqlKerja->bind_param("sss", $tempahan_id, $nama_kerja);
+        $sqlKerja->bind_param("ss", $tempahan_id, $nama_kerja);
 
         foreach ($kerja as $nama_kerja) {
             if (!$sqlKerja->execute()) {

@@ -36,7 +36,7 @@ include '../controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
+    <!-- <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -45,14 +45,14 @@ include '../controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
 
     <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
         <div class="formTable">
-            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Dalam Pengesahan</h3>
+            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Sedang Berjalan</h3>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="thead-dark">
@@ -101,11 +101,13 @@ include '../controller/get_userdata.php';
                                         <td>
                                             <li style="display: flex; justify-content: space-between; align-items: center;">
                                                 <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
+
                                                 <span>
                                                     <button class="btn btn-danger btn-sm cancelKerja" type="button" value="<?= htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
                                                 </span>
                                             </li>
                                         </td>
+                                    <?php endif; ?>
                                 </tr>
 
                                 <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
@@ -113,16 +115,17 @@ include '../controller/get_userdata.php';
                                         <td>
                                             <li style="display: flex; justify-content: space-between; align-items: center;">
                                                 <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
+
                                                 <span>
                                                     <button class="btn btn-danger btn-sm cancelKerja" type="button" value="<?= htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
                                                 </span>
                                             </li>
                                         </td>
                                     </tr>
+
                                 <?php endwhile; ?>
-                            <?php endif; ?>
-                        <?php endwhile; ?>
-                    <?php } ?>
+                            <?php endwhile; ?>
+                        <?php } ?>
                     </tbody>
                 </table>
 
@@ -131,6 +134,7 @@ include '../controller/get_userdata.php';
 
             </div>
         </div>
+
 
         <div class="formTable" style="margin-top: 50px;">
             <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Diterima</h3>
@@ -235,7 +239,7 @@ include '../controller/get_userdata.php';
 
                             while ($row = mysqli_fetch_assoc($resultTempahan)):
                                 $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'sedang berjalan'";
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND (status_kerja = 'sedang berjalan' OR status_kerja = 'selesai')";
                                 $resultKerja = mysqli_query($conn, $sqlKerja);
 
                                 if (!$resultKerja) {
