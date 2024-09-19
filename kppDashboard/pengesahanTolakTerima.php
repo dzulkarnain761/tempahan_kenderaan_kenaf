@@ -103,7 +103,7 @@ include 'controller/session.php';
                     if (response.data.length === 0) {
                         tbody.append(`
                     <tr>
-                        <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                        <td colspan="7" class="text-center">Tiada Tempahan</td>
                     </tr>
                 `);
                         pagination.hide(); // Hide pagination
@@ -170,9 +170,6 @@ include 'controller/session.php';
         // Load the first page by default
         loadPage(1);
 
-
-
-
         $(document).on('click', '.terimaTempahan', function(e) {
             let tempahanId = $(this).attr('value');
 
@@ -196,7 +193,7 @@ include 'controller/session.php';
                             let res = JSON.parse(response);
                             Swal.fire({
                                 title: "Berjaya",
-                                text: "Tempahan Dibatalkan",
+                                text: "Berjaya Kemaskini Tempahan",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();

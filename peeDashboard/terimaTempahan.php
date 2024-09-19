@@ -221,9 +221,9 @@ include 'controller/session.php';
                                     <!-- Store the rate per hour as a hidden input field -->
                                     <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
                                     <span class="input-group-text">Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam']); ?>" min="0" step="0.5" placeholder="<?php echo $rateharga; ?> / Jam" required>
+                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.5" placeholder="<?php echo $rateharga; ?> / Jam" required>
                                     <span class="input-group-text">Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga']); ?>" readonly>
+                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
                                     <span class="input-group-text">.00</span>
                                 </div>
 

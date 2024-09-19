@@ -32,7 +32,7 @@ include 'controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
+    <!-- <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -41,14 +41,14 @@ include 'controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
 
     <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
         <div class="formTable">
-            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Sedang Berjalan</h3>
+            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Dalam Pengesahan</h3>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="thead-dark">
@@ -63,7 +63,7 @@ include 'controller/get_userdata.php';
                     <tbody>
                         <?php
                         $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status = 'dalam pengesahan'";
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status_tempahan = 'pengesahan pee'";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
                         if (!$resultTempahan) {
@@ -75,7 +75,7 @@ include 'controller/get_userdata.php';
 
                             while ($row = mysqli_fetch_assoc($resultTempahan)):
                                 $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'dalam pengesahan'";
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
                                 $resultKerja = mysqli_query($conn, $sqlKerja);
 
                                 if (!$resultKerja) {
@@ -148,7 +148,7 @@ include 'controller/get_userdata.php';
                     <tbody>
                         <?php
                         $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status = 'bayaran deposit'";
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status_tempahan = 'bayaran deposit'";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
                         $no = 1; // Initialize row number
 
@@ -158,7 +158,7 @@ include 'controller/get_userdata.php';
                         } else {
                             while ($row = mysqli_fetch_assoc($resultTempahan)) {
                                 $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'bayaran deposit'";
+                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
                                 $resultKerja = mysqli_query($conn, $sqlKerja);
                                 $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
                         ?>
@@ -223,7 +223,7 @@ include 'controller/get_userdata.php';
                     <tbody>
                         <?php
                         $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status = 'sedang berjalan'";
+                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status_tempahan = 'kerja dijalankan'";
                         $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
                         if (!$resultTempahan) {
@@ -434,7 +434,7 @@ include 'controller/get_userdata.php';
                             let res = JSON.parse(response);
                             Swal.fire({
                                 title: "Berjaya",
-                                text: "Tempahan Diterima",
+                                text: "Deposit Berjaya Dibayar",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();

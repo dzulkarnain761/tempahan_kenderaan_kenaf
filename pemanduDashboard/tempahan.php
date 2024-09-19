@@ -65,10 +65,10 @@ $pemandu_id = $_SESSION['id'];
                     <tbody>
                         <?php
                         $sqlTempahan = "SELECT t.lokasi_kerja, t.luas_tanah, p.nama, tk.*
-        FROM tempahan t
-        LEFT JOIN penyewa p ON p.id = t.penyewa_id
-        LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
-        WHERE tk.status_kerja = 'sedang berjalan' AND tk.pemandu_id = $pemandu_id";
+                                        FROM tempahan t
+                                        LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                                        LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
+                                        WHERE tk.status_kerja = 'dijalankan' AND tk.pemandu_id = $pemandu_id";
 
                         $result = mysqli_query($conn, $sqlTempahan);
                         $bil = 1;

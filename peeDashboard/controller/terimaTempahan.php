@@ -2,7 +2,6 @@
 // Include database connection
 include 'connection.php'; // Adjust path as needed
 
-
 $response = array('success' => false, 'message' => ''); // Default response
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,16 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input_hours = $_POST['input_hours'];
     $input_price = $_POST['input_price'];
     $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
-    $statusKerja = 'diterima';
 
-    // Validate data here (e.g., check if arrays have the same length)
+    // Validate that all input hours are valid
+    foreach ($input_hours as $hours) {
+        if ($hours < 0.5) {
+            $response['message'] = 'Sila Masukkan nilai jam yang sah (minimum 0.5 jam)';
+            echo json_encode($response);
+            exit; // Stop execution if invalid input is found
+        }
+    }
 
     // Prepare the update query for tempahan_kerja
-    $updateKerjaQuery = "UPDATE tempahan_kerja SET kenderaan_id = ?, pemandu_id = ?, jam = ?, harga = ?, status_kerja = ?, tarikh_kerja_cadangan = ? WHERE tempahan_kerja_id = ?";
+    $updateKerjaQuery = "UPDATE tempahan_kerja SET kenderaan_id = ?, pemandu_id = ?, jam_anggaran = ?, harga_anggaran = ?, tarikh_kerja_cadangan = ? WHERE tempahan_kerja_id = ?";
     $stmt = $conn->prepare($updateKerjaQuery);
 
     if ($stmt) {
         $success = true;
+        $total_harga_anggaran = 0;
         // Iterate over each entry and bind parameters
         foreach ($kerja_id as $index => $value) {
             $kenderaan_id_value = htmlspecialchars($kenderaan_id[$index]);
@@ -31,8 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $dates = htmlspecialchars($input_date[$index]);
             $hours = htmlspecialchars($input_hours[$index]);
             $price = htmlspecialchars($input_price[$index]);
+            $total_harga_anggaran += $price; 
 
-            $stmt->bind_param('iiidssi', $kenderaan_id_value, $pemandu_id_value, $hours, $price,$statusKerja, $dates, $value);
+            $stmt->bind_param('iiidsi', $kenderaan_id_value, $pemandu_id_value, $hours, $price, $dates, $value);
 
             // Execute the statement
             if (!$stmt->execute()) {
@@ -41,17 +48,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break; // Exit loop if error occurs
             }
         }
+        $total_deposit = $total_harga_anggaran / 2;
         // Close the statement
         $stmt->close();
 
         if ($success) {
             // Prepare the update query for tempahan
-            $updateTempahanQuery = "UPDATE tempahan SET status = ? WHERE tempahan_id = ?";
+            $updateTempahanQuery = "UPDATE tempahan SET status_tempahan = ?, total_harga_anggaran = ?, total_deposit = ? WHERE tempahan_id = ?";
             $stmt = $conn->prepare($updateTempahanQuery);
 
             if ($stmt) {
-                $status = 'diterima'; // Set the status value here as needed
-                $stmt->bind_param('si', $status, $tempahan_id);
+                $status = 'pengesahan kpp'; // Set the status value here as needed
+                // Use 'ssid' as parameter types (string, double, double, integer)
+                $stmt->bind_param('sddi', $status, $total_harga_anggaran, $total_deposit, $tempahan_id);
 
                 // Execute the statement
                 if ($stmt->execute()) {
@@ -79,4 +88,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Return JSON response
 echo json_encode($response);
-?>

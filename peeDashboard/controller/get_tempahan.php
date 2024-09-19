@@ -9,12 +9,14 @@ $offset = ($page - 1) * $limit;
 $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
                 INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE t.status = 'dalam pengesahan'
+                WHERE t.status_tempahan = 'pengesahan pee' OR t.status_tempahan = 'pengesahan kpp'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch total number of records
-$sqlTotal = "SELECT COUNT(*) as total FROM tempahan";
+$sqlTotal = "SELECT COUNT(*) as total FROM tempahan t
+                INNER JOIN penyewa p ON p.id = t.penyewa_id
+                WHERE t.status_tempahan = 'pengesahan pee' OR t.status_tempahan = 'pengesahan kpp'";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];

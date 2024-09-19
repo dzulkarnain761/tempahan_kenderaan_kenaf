@@ -22,7 +22,7 @@ $id = $_GET['id'];
 // Ensure you escape the ID to prevent SQL injection
 $id = mysqli_real_escape_string($conn, $id);
 
-$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id AND status = 'bayaran deposit'";
+$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data
@@ -383,12 +383,12 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jam'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['harga'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jam_anggaran'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['harga_anggaran'] ?></td>
                             </tr>
                           <?php
                             // Add to total price
-                            $totalHarga += $rowKerja['harga'];
+                            $totalHarga += $rowKerja['harga_anggaran'];
                           }
                           ?>
 

@@ -6,11 +6,12 @@ include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = intval($_POST['id']);
-    $status = 'sedang berjalan';
+    $status1 = 'kerja dijalankan';
+    $status2 = 'deposit selesai';
 
     // Prepare and execute the first statement
-    $sql1 = $conn->prepare("UPDATE tempahan SET status = ? WHERE tempahan_id = ?");
-    $sql1->bind_param("si", $status, $id);
+    $sql1 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+    $sql1->bind_param("ssi", $status1,$status2, $id);
 
     if (!$sql1->execute()) {
         echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
@@ -20,9 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $sql1->close();
 
+    $status3 = 'dijalankan';
+
     // Prepare and execute the second statement
     $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ?");
-    $sql2->bind_param("si", $status, $id);
+    $sql2->bind_param("si", $status3, $id);
 
     if (!$sql2->execute()) {
         echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);

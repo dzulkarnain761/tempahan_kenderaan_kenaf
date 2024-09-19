@@ -57,7 +57,6 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            <td>Status</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -119,7 +118,7 @@ include 'controller/session.php';
 
                                 let actionButtons = '';
 
-                                if (item.status != 'pengesahan kpp') {
+                                if (item.status_tempahan != 'pengesahan kpp') {
                                     actionButtons = `
                                     <td>
                                         <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
@@ -147,7 +146,6 @@ include 'controller/session.php';
                                         <td>${item.nama}</td>
                                         <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
-                                        <td>${item.status}</td>
                                         ${actionButtons}
                                     </tr>
                                 `);

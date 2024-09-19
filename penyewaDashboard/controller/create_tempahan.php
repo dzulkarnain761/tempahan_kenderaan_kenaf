@@ -12,10 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lokasi_kerja = $_POST['lokasi_kerja'];
     $keluasan_tanah = $_POST['keluasan_tanah'];
     $catatan = $_POST['catatan'];
-    $status = "dalam pengesahan"; 
 
-    $sqlTempahan = $conn->prepare("INSERT INTO tempahan (`penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `catatan`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $sqlTempahan->bind_param("sssssss", $id, $tarikh_kerja, $negeri, $lokasi_kerja, $keluasan_tanah, $catatan, $status);
+    $sqlTempahan = $conn->prepare("INSERT INTO tempahan (`penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `catatan`) VALUES (?, ?, ?, ?, ?, ?)");
+    $sqlTempahan->bind_param("ssssss", $id, $tarikh_kerja, $negeri, $lokasi_kerja, $keluasan_tanah, $catatan);
 
     if ($sqlTempahan->execute()) {
         // Get the last inserted ID from tempahan table

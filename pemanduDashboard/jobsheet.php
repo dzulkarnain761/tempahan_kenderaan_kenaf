@@ -67,7 +67,7 @@ include 'controller/session.php';
                     LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
                     LEFT JOIN kenderaan k ON k.id = tk.kenderaan_id
                     LEFT JOIN tugasan tgs ON tgs.kerja = tk.nama_kerja
-                    WHERE tk.status_kerja = 'sedang berjalan' AND tk.tempahan_kerja_id = $id";
+                    WHERE tk.tempahan_kerja_id = $id";
 
             // Execute the query
             $result = $conn->query($sqlTempahan);
