@@ -19,18 +19,30 @@ include 'controller/session.php';
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <!-- ======= Styles ====== -->
-
+    <!-- <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        :root {
-            --skyblue: #d0e5f5;
-        }
-
         * {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        .custom-container {
+            position: relative;
+            width: 100%;
+        }
+
+        ul {
+            all: unset;
+            list-style: disc;
+            /* padding-left: 20px; */
+            margin: 0;
+        }
+
+        nav .breadcrumb {
+            margin-left: 24px;
         }
 
         /* ================== Table details ============== */
@@ -259,7 +271,7 @@ include 'controller/session.php';
 
 <body>
     <!-- =============== Navigation ================ -->
-    <div class="container">
+    <div class="custom-container">
         <?php
         include 'partials/navigation.php';
         ?>
@@ -354,9 +366,10 @@ include 'controller/session.php';
                         <tr>
                             <td>Bil</td>
                             <td>Nama Penyewa</td>
-                            <td>Tarikh Cadangan</td>
+                            <td>Tarikh Kerja</td>
                             <td>Jenis Kerja</td>
-                            <td>Tindakan</td>
+                            <td>Pemandu</td>
+                            <td>Status</td>
                         </tr>
                     </thead>
 
@@ -364,6 +377,14 @@ include 'controller/session.php';
 
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-start mt-4" id="pagination">
+                        <!-- Pagination links will be injected here by JavaScript -->
+                    </ul>
+                </nav>
+
             </div>
         </div>
     </div>
@@ -394,8 +415,6 @@ include 'controller/session.php';
                     var tbody = $('#tempahanTable tbody');
                     tbody.empty();
 
-                    // Hide pagination if no data
-                    var pagination = $('#pagination');
                     if (response.data.length === 0) {
                         tbody.append(`
                                 <tr>
@@ -404,56 +423,54 @@ include 'controller/session.php';
                             `);
                         pagination.hide(); // Hide pagination
                     } else {
+
                         // Populate table
                         response.data.forEach(function(item, index) {
-                            var kerjaList = '';
-                            item.kerja.forEach(function(kerjaItem, kerjaIndex) {
-                                kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
-                            });
-
-
-
                             tbody.append(`
-                                    <tr data-id="${item.tempahan_kerja_id}">
-                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                                        <td>${item.nama}</td>
-                                        <td>${item.tarikh_kerja}</td>
-                                        <td>${kerjaList}</td>
-                                        <td>
-                                        <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>
-                                    </td>
-                                    </tr>
-                                `);
-
+                        <tr data-id="${item.id}">
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.tarikh_kerja_cadangan}</td>
+                            <td>${item.nama_kerja}</td>
+                            <td>${item.nama_pemandu}</td>
+                            <td>${item.status_kerja}</td>
+                            
+                        </tr>
+                    `);
                         });
 
-                        // Populate pagination and show it if hidden
+                        // Populate pagination
+                        var pagination = $('#pagination');
                         pagination.empty();
-                        pagination.show(); // Show pagination
 
                         // Previous button
                         pagination.append(`
-                                <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
-                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
-                                </li>
-                            `);
+                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
+                    </li>
+                    `);
 
                         // Page numbers
                         for (var i = 1; i <= response.totalPages; i++) {
                             pagination.append(`
-                                    <li class="page-item ${i === response.currentPage ? 'active' : ''}">
-                                        <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
-                                    </li>
-                                `);
+                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                        </li>
+                    `);
                         }
 
                         // Next button
                         pagination.append(`
-                                <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
-                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
-                                </li>
-                            `);
+                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
+                    </li>
+                    `);
+
                     }
+
+
+
+
                 }
             });
         }
