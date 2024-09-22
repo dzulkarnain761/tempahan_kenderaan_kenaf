@@ -20,12 +20,104 @@ include 'controller/get_userdata.php';
     <title>eBooking</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/style.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/animated.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
 
     <style>
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
 
+        .container-custom {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .rental-list {
+            margin-bottom: 20px;
+        }
+
+        .rental-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .rental-item:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .rental-item .id,
+        .rental-item .status {
+            font-weight: bold;
+        }
+
+        .rental-item .status {
+            float: right;
+        }
+
+        .rental-item .dalamPengesahan {
+            color: #007bff;
+        }
+
+        .rental-item .bayaranDeposit {
+            color: grey;
+        }
+
+        .rental-item .ditolak {
+            color: red;
+        }
+
+        .rental-item .selesai {
+            color: green;
+        }
+
+        .rental-item .belum-bayar {
+            color: #ff0000;
+        }
+
+        .rental-item p {
+            margin: 5px 0;
+        }
+
+        .details {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #e9f7fd;
+        }
+
+        .details.active {
+            display: block;
+        }
+
+        .details h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .semibold {
+            font-weight: 600;
+        }
+
+        li {
+            margin-bottom: 14px;
+        }
     </style>
 </head>
 
@@ -46,256 +138,193 @@ include 'controller/get_userdata.php';
 
     <?php include 'partials/header.php'; ?>
 
-    <div class=" wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
-        <div class="formTable">
-            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Dalam Pengesahan</h3>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Tarikh Kerja</th>
-                            <th>Lokasi Kerja</th>
-                            <th>Luas Tanah</th>
-                            <th>Senarai Kerja</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    <div class="container-custom">
+        <h3 class="text-center fw-bold" style="margin-top: 15px; margin-bottom: 15px;">Tempahan</h3>
+
+
+
+
+        <div class="rental-list">
+            <?php
+            // Fetch bookings with status 'dalam pengesahan'
+            $sqlTempahan = "SELECT t.*, p.nama
+                    FROM tempahan t
+                    INNER JOIN penyewa p ON p.id = t.penyewa_id
+                    WHERE t.status_bayaran = 'dalam pengesahan' AND t.penyewa_id = $id";
+
+            $resultTempahan = mysqli_query($conn, $sqlTempahan);
+
+            // Loop through each booking
+            while ($row = mysqli_fetch_assoc($resultTempahan)) {
+                // Get the booking ID and the renter's name
+                $tempahanId = $row['tempahan_id'];
+                $penyewaNama = $row['nama'];
+                $tarikhKerja = $row['tarikh_kerja'];
+
+                // Fetch the list of tasks for the current booking
+                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
+                $resultKerja = mysqli_query($conn, $sqlKerja);
+
+                // Fetch additional details for the modal (e.g., booking date, work location, etc.)
+                // Assuming you have these fields in the 'tempahan' table.
+                $tarikhTempahan = $row['created_at'];
+                // $masaTempahan = $row['masa_tempahan'];
+                $negeri = $row['negeri'];
+                $lokasiKerja = $row['lokasi_kerja'];
+                $keluasanTanah = $row['luas_tanah'];
+                $catatan = $row['catatan'] ?? '-'; // If there are no notes, display '-'
+                $statusBayaran = $row['status_bayaran'];
+                $statusTempahan = $row['status_tempahan'];
+
+                $counterKerja = 1;
+
+            ?>
+                <div class="rental-item">
+                    <div class="id">
+                        Tempahan ID: <?php echo $tempahanId; ?> <!-- Display booking ID -->
+                        <div class="status dalamPengesahan"><?php echo strtoupper($statusBayaran); ?></div>
+                    </div><br>
+
+                    <p>
+                        <span class="semibold">Cadangan Tarikh Kerja : </span>
+                        <span><?php echo date('d/m/Y', strtotime($tarikhKerja)); ?></span> <!-- Display proposed work date -->
+                    </p>
+
+                    <p><span class="semibold">Senarai Kerja : </span></p>
+                    <ol>
                         <?php
-                        $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status_tempahan = 'pengesahan pee'";
-                        $resultTempahan = mysqli_query($conn, $sqlTempahan);
-
-                        if (!$resultTempahan) {
-                            echo '<tr><td colspan="5">Error fetching data: ' . mysqli_error($conn) . '</td></tr>';
-                        } elseif (mysqli_num_rows($resultTempahan) == 0) {
-                            echo '<tr><td colspan="5">Tiada Tempahan</td></tr>';
-                        } else {
-                            $no = 1; // Initialize row number
-
-                            while ($row = mysqli_fetch_assoc($resultTempahan)):
-                                $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
-                                $resultKerja = mysqli_query($conn, $sqlKerja);
-
-                                if (!$resultKerja) {
-                                    echo '<tr><td colspan="5">Error fetching kerja data: ' . mysqli_error($conn) . '</td></tr>';
-                                    continue;
-                                }
-
-                                $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
+                        $counterKerja = 1; // Initialize a counter for task numbering
+                        while ($kerja = mysqli_fetch_assoc($resultKerja)) {
+                            // Check if the booking status is 'pengesahan pee'
+                            if ($statusTempahan == 'pengesahan pee') {
                         ?>
-                                <tr data-id="<?= htmlspecialchars($row['tempahan_id']); ?>">
-                                    <!-- Use rowspan to span the number of tempahan_kerja rows -->
-                                    <td rowspan="<?= $totalRows; ?>"><?= $no++; ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['lokasi_kerja']); ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['luas_tanah']); ?></td>
-
-                                    <!-- Display the first row of tempahan_kerja -->
-                                    <?php if ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                                        <td>
-                                            <li style="display: flex; justify-content: space-between; align-items: center;">
-                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
-
-                                                <span>
-                                                    <button class="btn btn-danger btn-sm cancelKerja" type="button" value="<?= htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
-                                                </span>
-                                            </li>
-                                        </td>
-                                    <?php endif; ?>
-                                </tr>
-
-                                <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                                    <tr>
-                                        <td>
-                                            <li style="display: flex; justify-content: space-between; align-items: center;">
-                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
-
-                                                <span>
-                                                    <button class="btn btn-danger btn-sm cancelKerja" type="button" value="<?= htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
-                                                </span>
-                                            </li>
-                                        </td>
-                                    </tr>
-
-                                <?php endwhile; ?>
-                            <?php endwhile; ?>
-                        <?php } ?>
-                    </tbody>
-                </table>
-
-
-
-
-            </div>
-        </div>
-
-
-        <div class="formTable" style="margin-top: 50px;">
-            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Diterima</h3>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Lokasi Kerja</th>
-                            <th>Senarai Kerja</th>
-                            <th>Tarikh Dicadangkan</th>
-                            <th>Tindakan</th> <!-- Tindakan column with rowspan -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status_tempahan = 'bayaran deposit'";
-                        $resultTempahan = mysqli_query($conn, $sqlTempahan);
-                        $no = 1; // Initialize row number
-
-                        if (!$resultTempahan || mysqli_num_rows($resultTempahan) == 0) {
-                            // Display a single row indicating no results
-                            echo '<tr><td colspan="5">Tiada Tempahan</td></tr>';
-                        } else {
-                            while ($row = mysqli_fetch_assoc($resultTempahan)) {
-                                $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
-                                $resultKerja = mysqli_query($conn, $sqlKerja);
-                                $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
-                        ?>
-                                <tr data-id="<?= $row['tempahan_id']; ?>">
-                                    <!-- Use rowspan to span the number of tempahan_kerja rows -->
-                                    <td rowspan="<?= $totalRows; ?>"><?= $no++; ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= $row['lokasi_kerja']; ?></td>
-
-                                    <!-- Display the first row of tempahan_kerja -->
-                                    <?php
-                                    $rowKerja = mysqli_fetch_assoc($resultKerja);
-                                    ?>
-                                    <td><?= $rowKerja['nama_kerja']; ?></td>
-                                    <td><?= $rowKerja['tarikh_kerja_cadangan']; ?></td>
-
-                                    <!-- Use rowspan for Tindakan button -->
-                                    <td rowspan="<?= $totalRows; ?>">
-                                        <button class="btn btn-primary btn-sm lihatButiran" onclick="window.open('controller/getPDF.php?id=<?= $row['tempahan_id']; ?>', '_blank')">
-                                            Lihat Butiran
-                                        </button>
-
-                                        <button class="btn btn-success btn-sm bayarDeposit" value="<?= $row['tempahan_id']; ?>">
-                                            Bayar
-                                        </button>
-                                        <button class="btn btn-danger btn-sm cancelTempahan" value="<?= $row['tempahan_id']; ?>">
-                                            Tolak
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <!-- Loop through the rest of the tempahan_kerja rows -->
-                                <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                                    <tr>
-                                        <td><?= $rowKerja['nama_kerja']; ?></td>
-                                        <td><?= $rowKerja['tarikh_kerja_cadangan']; ?></td>
-                                    </tr>
-                                <?php endwhile; ?>
+                                <!-- Display task list with status 'pengesahan pee' -->
+                                <li style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span><?php echo $counterKerja . '. ' . $kerja['nama_kerja']; ?></span> <!-- Display task name with numbering -->
+                                    <span>
+                                        <button class="btn btn-danger btn-sm" type="button" value="<?php echo $kerja['tempahan_kerja_id'] ?>">Batal Kerja</button> <!-- Cancel task button -->
+                                    </span>
+                                </li>
+                            <?php
+                            } else {
+                            ?>
+                                <!-- Display task list for statuses other than 'pengesahan pee' -->
+                                <li style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span><?php echo $counterKerja . '. ' . $kerja['nama_kerja']; ?></span> <!-- Display task name with numbering -->
+                                    <span><?php $kerja['status_kerja']; ?></span>
+                                </li>
                         <?php
                             }
+                            // Increment the counter after each task
+                            $counterKerja++;
                         }
                         ?>
-                    </tbody>
-                </table>
+                    </ol>
 
 
-            </div>
+                    <hr>
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <span>
+                            <button class="btn btn-danger btn-sm" type="button">Batal Tempahan</button> <!-- Cancel booking button -->
+                        </span>
+                        <span>
+                            <!-- Button to trigger the modal, with the correct tempahan_id to display details -->
+                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button> <!-- View details button -->
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Modal for each booking with unique ID -->
+                <div class="modal fade" id="detailModal_<?php echo $tempahanId; ?>" tabindex="-1" aria-labelledby="detailModalLabel_<?php echo $tempahanId; ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailModalLabel_<?php echo $tempahanId; ?>">Butiran Tempahan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Detailed information for the selected booking -->
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Tarikh Tempahan:
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo date('d/m/Y', strtotime($tarikhTempahan)); ?>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Negeri:
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $negeri; ?>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Lokasi Kerja:
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $lokasiKerja; ?>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Keluasan Tanah (Hektar):
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $keluasanTanah; ?>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Catatan:
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $catatan; ?>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <!-- <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Senarai Kerja:
+                                    </span><br> -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Kerja</th>
+                                            <th>Cadangan Tarikh</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Reset the pointer for the task result set to iterate again for the modal
+                                        mysqli_data_seek($resultKerja, 0);
+                                        while ($kerjaModal = mysqli_fetch_assoc($resultKerja)) { ?>
+                                            <tr>
+                                                <td><?php echo $kerjaModal['nama_kerja']; ?></td> <!-- Display task name -->
+                                                <td><?php echo date('d/m/Y', strtotime($kerjaModal['tarikh_kerja_cadangan'])); ?></td> <!-- Display proposed work date -->
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                                </p>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php } ?>
         </div>
-
-        <div class="formTable">
-            <h3 class="text-center fw-bold" style="margin-top: 15px; margin-below: 15px;">Sedang Berjalan</h3>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Tarikh Kerja</th>
-                            <th>Lokasi Kerja</th>
-                            <th>Luas Tanah</th>
-                            <th>Senarai Kerja</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $id = $_SESSION['id'];
-                        $sqlTempahan = "SELECT * FROM tempahan WHERE penyewa_id = $id AND status_tempahan = 'kerja dijalankan'";
-                        $resultTempahan = mysqli_query($conn, $sqlTempahan);
-
-                        if (!$resultTempahan) {
-                            echo '<tr><td colspan="5">Error fetching data: ' . mysqli_error($conn) . '</td></tr>';
-                        } elseif (mysqli_num_rows($resultTempahan) == 0) {
-                            echo '<tr><td colspan="5">Tiada Tempahan</td></tr>';
-                        } else {
-                            $no = 1; // Initialize row number
-
-                            while ($row = mysqli_fetch_assoc($resultTempahan)):
-                                $tempahanId = $row['tempahan_id'];
-                                $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND (status_kerja = 'sedang berjalan' OR status_kerja = 'selesai')";
-                                $resultKerja = mysqli_query($conn, $sqlKerja);
-
-                                if (!$resultKerja) {
-                                    echo '<tr><td colspan="5">Error fetching kerja data: ' . mysqli_error($conn) . '</td></tr>';
-                                    continue;
-                                }
-
-                                $totalRows = mysqli_num_rows($resultKerja); // Get total number of rows for this tempahan
-                        ?>
-                                <tr data-id="<?= htmlspecialchars($row['tempahan_id']); ?>">
-                                    <!-- Use rowspan to span the number of tempahan_kerja rows -->
-                                    <td rowspan="<?= $totalRows; ?>"><?= $no++; ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= date('d-m-Y', strtotime($row['tarikh_kerja'])); ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['lokasi_kerja']); ?></td>
-                                    <td rowspan="<?= $totalRows; ?>"><?= htmlspecialchars($row['luas_tanah']); ?></td>
-
-                                    <!-- Display the first row of tempahan_kerja -->
-                                    <?php if ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                                        <td>
-                                            <li style="display: flex; justify-content: space-between; align-items: center;">
-                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
-
-                                                <?php if (htmlspecialchars($rowKerja['status_kerja']) == 'sedang berjalan') { ?>
-                                                    <span class="badge bg-warning rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
-                                                <?php } else { ?>
-                                                    <span class="badge bg-success rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
-                                                <?php } ?>
-                                            </li>
-                                        </td>
-                                    <?php endif; ?>
-                                </tr>
-
-                                <?php while ($rowKerja = mysqli_fetch_assoc($resultKerja)): ?>
-                                    <tr>
-                                        <td>
-                                            <li style="display: flex; justify-content: space-between; align-items: center;">
-                                                <span><?= htmlspecialchars($rowKerja['nama_kerja']); ?></span>
-
-                                                <?php if (htmlspecialchars($rowKerja['status_kerja']) == 'sedang berjalan') { ?>
-                                                    <span class="badge bg-warning rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
-                                                <?php } else { ?>
-                                                    <span class="badge bg-success rounded-pill"><?= htmlspecialchars($rowKerja['status_kerja']); ?></span>
-                                                <?php } ?>
-                                            </li>
-                                        </td>
-                                    </tr>
-
-                                <?php endwhile; ?>
-                            <?php endwhile; ?>
-                        <?php } ?>
-                    </tbody>
-                </table>
-
-
-
-
-            </div>
-        </div>
-
-
 
     </div>
 
@@ -307,12 +336,12 @@ include 'controller/get_userdata.php';
     <script src="../assets/js/animation.js"></script>
     <script src="../assets/js/imagesloaded.js"></script>
     <script src="../assets/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
-        
-
         function myFunction() {
             const dropdown = document.getElementById("myDropdown");
             dropdown.classList.toggle("show");
