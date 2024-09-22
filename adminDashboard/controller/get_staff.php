@@ -17,7 +17,9 @@ $resultstaff = mysqli_query($conn, $sqlstaff);
 
 
 // Fetch total number of records
-$sqlTotal = "SELECT COUNT(*) as total FROM `admin`";
+$sqlTotal = "SELECT COUNT(*) as total FROM `admin` p
+                                    INNER JOIN `kumpulan` k ON p.kumpulan = k.kump_kod
+                                    WHERE p.kumpulan NOT IN ('Y', 'Z')";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];
@@ -35,7 +37,3 @@ $response = [
 ];
 
 echo json_encode($response);
-
-
-
-

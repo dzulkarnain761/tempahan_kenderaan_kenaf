@@ -19,6 +19,7 @@ include 'controller/session.php';
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <!-- ======= Styles ====== -->
+
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         :root {
@@ -65,6 +66,54 @@ include 'controller/session.php';
             text-decoration: none;
             color: var(--white);
             border-radius: 6px;
+        }
+
+        .cardBox {
+            position: relative;
+            width: 100%;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 30px;
+        }
+
+        .cardBox .card {
+            position: relative;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .cardBox .card .numbers {
+            position: relative;
+            font-weight: 500;
+            font-size: 2.5rem;
+            color: var(--blue);
+        }
+
+        .cardBox .card .cardName {
+            color: var(--black2);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .cardBox .card .iconBx {
+            font-size: 3.5rem;
+            color: var(--black2);
+        }
+
+        .cardBox .card:hover {
+            background: var(--blue);
+        }
+
+        .cardBox .card:hover .numbers,
+        .cardBox .card:hover .cardName,
+        .cardBox .card:hover .iconBx {
+            color: var(--white);
         }
 
         table {
@@ -131,6 +180,80 @@ include 'controller/session.php';
             font-weight: 500;
         }
 
+        /* ====================== Responsive Design ========================== */
+        @media (max-width: 991px) {
+            .navigation {
+                left: -300px;
+            }
+
+            .navigation.active {
+                width: 300px;
+                left: 0;
+            }
+
+            .main {
+                width: 100%;
+                left: 0;
+            }
+
+            .main.active {
+                left: 300px;
+            }
+
+            .cardBox {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .recentOrders {
+                overflow-x: auto;
+            }
+
+            .status.inProgress {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cardBox {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .cardHeader h2 {
+                font-size: 20px;
+            }
+
+            .user {
+                min-width: 40px;
+            }
+
+            .navigation {
+                width: 100%;
+                left: -100%;
+                z-index: 1000;
+            }
+
+            .navigation.active {
+                width: 100%;
+                left: 0;
+            }
+
+            .toggle {
+                z-index: 10001;
+            }
+
+            .main.active .toggle {
+                color: #fff;
+                position: fixed;
+                right: 0;
+                left: initial;
+            }
+        }
     </style>
 </head>
 
@@ -226,54 +349,19 @@ include 'controller/session.php';
                     <h2>Kerja Berjalan</h2>
                 </div>
 
-                <table>
+                <table id="tempahanTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
                             <td>Nama Penyewa</td>
-                            <td>Tarikh Tempah</td>
-                            <td>Tarikh Kerja</td>
-                            <td>Maklumat</td>
-                            <td>Status</td>
+                            <td>Tarikh Cadangan</td>
+                            <td>Jenis Kerja</td>
+                            <td>Tindakan</td>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Nurul</td>
-                            <td>21 Jun 2024</td>
-                            <td>21 Jun 2024</td>
-                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
 
-                        <tr>
-                            <td>2</td>
-                            <td>Mohd</td>
-                            <td>21 Jun 2024</td>
-                            <td>21 Jun 2024</td>
-                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-                            <td><span class="status inProgress">In Progress</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>Nik</td>
-                            <td>21 Jun 2024</td>
-                            <td>21 Jun 2024</td>
-                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>4</td>
-                            <td>Nur</td>
-                            <td>21 Jun 2024</td>
-                            <td>21 Jun 2024</td>
-                            <td><a href="file.pdf" target="_blank">Lihat PDF</a></td>
-                            <td><span class="status inProgress">In Progress</span></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -284,16 +372,95 @@ include 'controller/session.php';
 
     <!-- =========== Scripts =========  -->
     <script src="assets/js/main.js"></script>
-    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
-    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
 
-    <!-- ====== ionicons ======= -->
+
+    <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <!-- <script src="assets/js/main.js"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script>
+        function loadPage(page) {
+            $.ajax({
+                url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                type: 'GET',
+                data: {
+                    page: page
+                },
+                dataType: 'json',
+                success: function(response) {
+                    var tbody = $('#tempahanTable tbody');
+                    tbody.empty();
+
+                    // Hide pagination if no data
+                    var pagination = $('#pagination');
+                    if (response.data.length === 0) {
+                        tbody.append(`
+                                <tr>
+                                    <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                                </tr>
+                            `);
+                        pagination.hide(); // Hide pagination
+                    } else {
+                        // Populate table
+                        response.data.forEach(function(item, index) {
+                            var kerjaList = '';
+                            item.kerja.forEach(function(kerjaItem, kerjaIndex) {
+                                kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                            });
 
 
+
+                            tbody.append(`
+                                    <tr data-id="${item.tempahan_kerja_id}">
+                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                        <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
+                                        <td>${kerjaList}</td>
+                                        <td>
+                                        <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>
+                                    </td>
+                                    </tr>
+                                `);
+
+                        });
+
+                        // Populate pagination and show it if hidden
+                        pagination.empty();
+                        pagination.show(); // Show pagination
+
+                        // Previous button
+                        pagination.append(`
+                                <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
+                                </li>
+                            `);
+
+                        // Page numbers
+                        for (var i = 1; i <= response.totalPages; i++) {
+                            pagination.append(`
+                                    <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                                    </li>
+                                `);
+                        }
+
+                        // Next button
+                        pagination.append(`
+                                <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
+                                </li>
+                            `);
+                    }
+                }
+            });
+        }
+
+        // Load the first page by default
+        loadPage(1);
+    </script>
 </body>
 
 </html>

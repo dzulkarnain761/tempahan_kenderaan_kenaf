@@ -63,38 +63,7 @@ $pemandu_id = $_SESSION['id'];
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $sqlTempahan = "SELECT t.lokasi_kerja, t.luas_tanah, p.nama, tk.*
-                                        FROM tempahan t
-                                        LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                                        LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
-                                        WHERE tk.status_kerja = 'dijalankan' AND tk.pemandu_id = $pemandu_id";
-
-                        $result = mysqli_query($conn, $sqlTempahan);
-                        $bil = 1;
-
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) :
-                        ?>
-                                <tr>
-                                    <td><?php echo $bil++; ?></td>
-                                    <td><?php echo $row['nama']; ?></td>
-                                    <td><?php echo $row['tarikh_kerja_cadangan']; ?></td>
-                                    <td><?php echo $row['nama_kerja']; ?></td>
-                                    <td>
-                                        <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=<?php echo $row['tempahan_kerja_id']; ?>'">Kemaskini</button>
-                                    </td>
-                                </tr>
-                            <?php
-                            endwhile;
-                        } else {
-                            ?>
-                            <tr>
-                                <td colspan="5" class="text-center">Tiada Tugasan</td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
+                        
                     </tbody>
                 </table>
 
@@ -114,6 +83,87 @@ $pemandu_id = $_SESSION['id'];
         <!-- <script src="assets/js/main.js"></script> -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <script>
+            function loadPage(page) {
+                $.ajax({
+                    url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                    type: 'GET',
+                    data: {
+                        page: page
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        var tbody = $('#tempahanTable tbody');
+                        tbody.empty();
+
+                        // Hide pagination if no data
+                        var pagination = $('#pagination');
+                        if (response.data.length === 0) {
+                            tbody.append(`
+                                <tr>
+                                    <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                                </tr>
+                            `);
+                            pagination.hide(); // Hide pagination
+                        } else {
+                            // Populate table
+                            response.data.forEach(function(item, index) {
+                                var kerjaList = '';
+                                item.kerja.forEach(function(kerjaItem, kerjaIndex) {
+                                    kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                                });
+
+
+
+                                tbody.append(`
+                                    <tr data-id="${item.tempahan_kerja_id}">
+                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                        <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
+                                        <td>${kerjaList}</td>
+                                        <td>
+                                        <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>
+                                    </td>
+                                    </tr>
+                                `);
+
+                            });
+
+                            // Populate pagination and show it if hidden
+                            pagination.empty();
+                            pagination.show(); // Show pagination
+
+                            // Previous button
+                            pagination.append(`
+                                <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
+                                </li>
+                            `);
+
+                            // Page numbers
+                            for (var i = 1; i <= response.totalPages; i++) {
+                                pagination.append(`
+                                    <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                                    </li>
+                                `);
+                            }
+
+                            // Next button
+                            pagination.append(`
+                                <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
+                                </li>
+                            `);
+                        }
+                    }
+                });
+            }
+
+            // Load the first page by default
+            loadPage(1);
+        </script>
 
 
     </div>

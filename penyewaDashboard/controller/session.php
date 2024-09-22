@@ -7,4 +7,11 @@ if (!isset($_SESSION["id"])) {
     exit();
 }
 
+if (isset($_SESSION["kumpulan"])) {
+    header("Location: ../controller/auth/routeAdmin.php");
+    exit();
+}
+
+
+
 ?>
