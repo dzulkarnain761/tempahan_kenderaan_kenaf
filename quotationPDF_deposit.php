@@ -374,7 +374,10 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           </tr>
                           <?php
                           // SQL query to select all tasks for the booking
-                          $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $id AND status_kerja != 'ditolak'";
+                          $sqlKerja = "SELECT * FROM `tempahan_kerja` 
+                                        WHERE tempahan_id = $id 
+                                        AND status_kerja NOT IN ('ditolak','dibatalkan')";
+
                           $resultKerja = mysqli_query($conn, $sqlKerja);
                           $totalHarga = 0;
 

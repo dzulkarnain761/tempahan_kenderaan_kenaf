@@ -124,7 +124,7 @@ include 'controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <!-- <div id="js-preloader" class="js-preloader">
+    <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -133,7 +133,7 @@ include 'controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
@@ -154,7 +154,7 @@ include 'controller/get_userdata.php';
 
             if (mysqli_num_rows($resultTempahan) == 0) {
                 echo '<div style="text-align: center;">
-                        <span>Tiada Tempahan. <a href="#">Tempah Sekarang</a></span>
+                        <span>Tiada Tempahan. <a href="tempahan.php">Tempah Sekarang</a></span>
                     </div>';
             } else {
                 // Loop through each booking

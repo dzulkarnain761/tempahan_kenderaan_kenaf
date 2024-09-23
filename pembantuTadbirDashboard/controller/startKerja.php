@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare and execute the first statement
     $sql1 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-    $sql1->bind_param("ssi", $status1,$status2, $id);
+    $sql1->bind_param("ssi", $status1, $status2, $id);
 
     if (!$sql1->execute()) {
         echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
@@ -21,11 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $sql1->close();
 
-    $status3 = 'dijalankan';
+    $updateStatusKerja = 'dijalankan';
+    $statusKerja = 'tempahan diproses';
 
     // Prepare and execute the second statement
-    $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ?");
-    $sql2->bind_param("si", $status3, $id);
+    $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ? AND status_kerja = ?");
+    $sql2->bind_param("sis", $updateStatusKerja, $id, $statusKerja);
 
     if (!$sql2->execute()) {
         echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);
@@ -36,6 +37,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql2->close();
 
     $conn->close();
-    echo json_encode(["success" => true , "id" => $id]);
+    echo json_encode(["success" => true, "id" => $id]);
 }
-?>
