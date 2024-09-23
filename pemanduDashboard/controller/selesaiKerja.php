@@ -62,7 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Step 4.3: Update the tempahan table
         $sql4 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ?, total_harga_sebenar = ?, total_baki = ? WHERE tempahan_id = ?");
         $status_tempahan = 'kerja selesai';
-        $status_bayaran = ($total_baki > 0) ? 'belum bayar' : 'selesai';  // Adjust payment status based on balance
+        if ($total_baki == 0) {
+            $status_bayaran = 'selesai';
+        } else {
+            $status_bayaran = ($total_baki > 0) ? 'belum bayar' : 'bayaran balik';
+        }
+        
         $sql4->bind_param("ssdds", $status_tempahan, $status_bayaran, $total_harga_sebenar, $total_baki, $tempahan_id);
 
         if (!$sql4->execute()) {

@@ -157,7 +157,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                               <img align="left" src="<?php echo $imgSrc2 ?>" width="50%" style="max-width: 160px" />
                             </td>
                             <td style="width: 50%">
-                              <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> INVOICE </div>
+                              <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> QUOTATION </div>
                             </td>
                           </tr>
                         </table>
@@ -219,14 +219,14 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           <tr>
                             <td>
                               <div style="font-family: helvetica">
-                                <span style="color: #333"><strong>Invoice Number:</strong></span>
-                                <span style="color: #555; white-space: nowrap">#123123</span>
+                              <span style="color: #333"><strong> Tempahan ID:</strong></span>
+                              <span style="color: #555; white-space: nowrap"><?php echo $tempahan['tempahan_id']; ?></span>
                               </div>
                             </td>
                             <td width="50%">
                               <div style="font-family: helvetica">
                                 <span style="color: #333"><strong>Tarikh Dikeluarkan:</strong></span>
-                                <span style="color: #555; white-space: nowrap"><?php echo date('d/m/Y', strtotime($tempahan['created_at'])); ?></span>
+                                <span style="color: #555; white-space: nowrap"><?php echo date('d/m/Y', strtotime($tempahan['updated_at'])); ?></span>
                               </div>
                             </td>
                           </tr>
@@ -289,7 +289,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           <tr>
                             <?php
                             $penyewaID = $tempahan['penyewa_id'];
-                            $sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewaID" ;
+                            $sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewaID";
                             $resultPenyewa = mysqli_query($conn, $sqlPenyewa);
 
                             // Fetch the Pemandu member's data
@@ -383,12 +383,12 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jam_anggaran'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['harga_anggaran'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jumlah_jam'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['jumlah_bayaran'] ?></td>
                             </tr>
                           <?php
                             // Add to total price
-                            $totalHarga += $rowKerja['harga_anggaran'];
+                            $totalHarga += $rowKerja['jumlah_bayaran'];
                           }
                           ?>
 
@@ -398,14 +398,17 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                             <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($totalHarga, 2) ?></td>
                           </tr>
 
-                          <?php
-                          $totalDeposit = $totalHarga / 2;
-                          ?>
+                        
+                          <tr>
+                            <td><strong>Sudah Dibayar</strong></td>
+                            <td></td>
+                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right">- RM <?php echo number_format($tempahan['total_deposit'], 2) ?></td>
+                          </tr>
 
                           <tr>
-                            <td><strong>Perlu Dibayar (50%)</strong></td>
+                            <td><strong>Perlu Dibayar</strong></td>
                             <td></td>
-                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right"><strong>RM <?php echo number_format($totalDeposit, 2) ?></strong></td>
+                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right"><strong>RM <?php echo number_format($tempahan['total_baki'], 2) ?></strong></td>
                           </tr>
                         </table>
 
@@ -435,7 +438,9 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                       <td align="left" style="font-size: 0px; padding: 10px 25px; word-break: break-word">
                         <div style="font-family: helvetica; font-size: 13px; line-height: 1; text-align: left; color: #000000">
                           <span style="color: #333"><strong>Tarikh Tamat Tempoh :</strong></span>
-                          <span style="color: #555; white-space: nowrap"><?php echo date('d/m/Y', strtotime($tempahan['created_at'])); ?></span>
+                          <span style="color: #555; white-space: nowrap">
+                            <?php echo date('d/m/Y', strtotime($tempahan['updated_at'] . ' +7 days')); ?>
+                          </span>
                         </div>
                       </td>
                     </tr>

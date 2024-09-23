@@ -70,6 +70,7 @@ include 'controller/session.php';
                         <!-- Pagination links will be injected here by JavaScript -->
                     </ul>
                 </nav>
+
             </div>
         </div>
     </div>
@@ -81,6 +82,7 @@ include 'controller/session.php';
     <!-- ====== ionicons ======= -->
     <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -115,24 +117,43 @@ include 'controller/session.php';
                                 kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                             });
 
+                            var actionButton = '';
+
+                            if (item.status_bayaran === 'deposit diproses') {
+                                actionButton = `
+                                    <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
+                                    <button class="btn btn-success btn-sm startKerja" value="${item.tempahan_id}">
+                                        Mula Kerja
+                                    </button>`;
+                            } else if (item.status_bayaran === 'bayaran diproses') {
+                                actionButton = `
+                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
+                                        <button class="btn btn-success btn-sm selesaiTempahan" value="${item.tempahan_id}">
+                                            Selesai Tempahan
+                                        </button>`;
+                            } else {
+                                actionButton = `
+                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
+                                        <button class="btn btn-success btn-sm refundTempahan" value="${item.tempahan_id}">
+                                            Bayar Balik
+                                        </button>`;
+                            }
+
+
+                            // Append the row to tbody
                             tbody.append(`
-                            <tr >
-                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                            <td>${item.nama}</td>
-                            <td>${item.tarikh_kerja}</td>
-                            <td>${kerjaList}</td>
-                            <td>
-                                <button onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
-                                    Lihat Resit
-                                </button>
-                                <button  class="btn btn-success btn-sm startKerja" value="${item.tempahan_id}">
-                                    Mula Kerja
-                                </button>
-                                
-                            </td>
-                        </tr>
-                    `);
+                                    <tr>
+                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                        <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
+                                        <td>${kerjaList}</td>
+                                        <td>${actionButton}</td>
+                                    </tr>
+
+                                `);
+
                         });
+
 
                         // Populate pagination and show it if hidden
                         pagination.empty();
@@ -209,11 +230,11 @@ include 'controller/session.php';
             });
         });
 
-        $(document).on('click', '.rejectTempahan', function(e) {
+        $(document).on('click', '.selesaiTempahan', function(e) {
             let tempahanId = $(this).attr('value');
 
             Swal.fire({
-                title: "Tolak Tempahan",
+                title: "Selesai Tempahan",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
@@ -223,7 +244,7 @@ include 'controller/session.php';
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/rejectTempahan.php',
+                        url: 'controller/selesaiTempahan.php',
                         type: 'POST',
                         data: {
                             id: tempahanId
@@ -232,7 +253,48 @@ include 'controller/session.php';
                             let res = JSON.parse(response);
                             Swal.fire({
                                 title: "Berjaya",
-                                text: "Tempahan Dibatalkan",
+                                text: "Berjaya Kemaskini Tempahan",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).on('click', '.refundTempahan', function(e) {
+            let tempahanId = $(this).attr('value');
+
+            Swal.fire({
+                title: "Bayar Balik Tempahan",
+                text: "Anda akan pergi ke page lain",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/refund.php',
+                        type: 'POST',
+                        data: {
+                            id: tempahanId
+                        },
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            Swal.fire({
+                                title: "Berjaya",
+                                text: "Berjaya Kemaskini Tempahan",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();

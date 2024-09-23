@@ -1,6 +1,10 @@
 <?php
 include 'connection.php';
 
+session_start();
+
+$negeri = $_SESSION['negeri'];
+
 $limit = 5; // Number of entries to show per page
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
@@ -9,14 +13,14 @@ $offset = ($page - 1) * $limit;
 $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
                 INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE status_tempahan = 'deposit diproses'
+                WHERE (t.status_bayaran = 'deposit diproses' OR t.status_bayaran = 'bayaran diproses' OR t.status_bayaran = 'bayaran balik') AND t.negeri = '$negeri'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch total number of records
 $sqlTotal = "SELECT COUNT(*) as total FROM tempahan t
                 INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE status_tempahan = 'deposit diproses'";
+                WHERE (t.status_tempahan = 'deposit diproses' OR t.status_tempahan = 'bayaran diproses' OR t.status_bayaran = 'bayaran balik') AND t.negeri = '$negeri'";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];

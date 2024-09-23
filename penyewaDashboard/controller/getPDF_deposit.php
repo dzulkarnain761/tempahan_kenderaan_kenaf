@@ -13,7 +13,7 @@
 	$dompdf = new Dompdf($options);
 
 	ob_start();
-	require('../../quotationPDF.php');
+	require('../../quotationPDF_deposit.php');
 	$html = ob_get_clean();
 	$dompdf->loadHtml($html);
 
