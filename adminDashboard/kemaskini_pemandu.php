@@ -13,7 +13,8 @@ include 'controller/session.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking</title>
+    <title>eBooking</title>
+	<link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -24,49 +25,6 @@ include 'controller/session.php';
 
 
     <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .custom-container {
-            position: relative;
-            width: 100%;
-        }
-
-        ul {
-            all: unset;
-            list-style: disc;
-            /* padding-left: 20px; */
-            margin: 0;
-        }
-
-        nav .breadcrumb {
-            margin-left: 24px;
-        }
-
-        .cardHeader h3 {
-            font-weight: 600;
-            color: var(--blue);
-            text-transform: uppercase;
-            margin-bottom: 25px;
-        }
-
-        /* ================== Table details ============== */
-        .recentOrders {
-            position: relative;
-            display: grid;
-            min-height: 500px;
-            background: var(--white);
-            padding: 20px;
-            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-            border-radius: 20px;
-            margin-top: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
     </style>
 
 </head>
