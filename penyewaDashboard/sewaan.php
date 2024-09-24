@@ -255,7 +255,7 @@ include 'controller/get_userdata.php';
                                         <?php
                                         switch ($kerja['status_kerja']) {
                                             case 'tempahan diproses':
-                                                echo '<span class="badge bg-secondary">Tempahan Diproses</span>';
+                                                echo '';
                                                 break;
                                             case 'dijalankan':
                                                 echo '<span class="badge bg-warning">Dijalankan</span>';

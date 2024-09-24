@@ -59,7 +59,8 @@ $pemandu_id = $_SESSION['id'];
                             <td>Nama Penyewa</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            <td>Status</td>
+                            <td>Lokasi Kerja</td>
+                            <td>Luas (Hektar)</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -113,15 +114,25 @@ $pemandu_id = $_SESSION['id'];
 
                             // Populate table
                             response.data.forEach(function(item, index) {
+
+                                var actionButton = '';
+
+                                if (item.status_kerja === 'tempahan diproses') {
+                                    actionButton = `<button class="btn btn-success startKerja" value="${item.tempahan_kerja_id}">Mula Kerja</button>`;
+                                } else {
+                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>`;
+                                }
+
                                 tbody.append(`
-                        <tr data-id="${item.id}">
+                        <tr data-id="${item.tempahan_kerja_id}">
                             <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                             <td>${item.nama}</td>
                             <td>${item.tarikh_kerja_cadangan}</td>
                             <td>${item.nama_kerja}</td>
-                            <td>${item.status_kerja}</td>
+                            <td>${item.lokasi_kerja}</td>
+                            <td>${item.luas_tanah}</td>
                             <td>
-                                <button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>
+                                ${actionButton}
                             </td>
                             
                         </tr>
@@ -163,6 +174,48 @@ $pemandu_id = $_SESSION['id'];
 
             // Load the first page by default
             loadPage(1);
+
+
+            $(document).on('click', '.startKerja', function(e) {
+                let kerjaId = $(this).attr('value');
+
+                Swal.fire({
+                    title: "Mula Kerja",
+                    text: "Anda tidak akan dapat membatalkan ini!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'controller/startKerja.php',
+                            type: 'POST',
+                            data: {
+                                id: kerjaId
+                            },
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                Swal.fire({
+                                    title: "Berjaya",
+                                    text: "Berjaya Kemaskini Tempahan",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: "Ralat!",
+                                    text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         </script>
 
 

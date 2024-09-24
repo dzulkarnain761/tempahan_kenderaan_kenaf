@@ -15,7 +15,7 @@ $sqltempahan = "SELECT t.lokasi_kerja, t.luas_tanah, p.nama, tk.*, a.nama as nam
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
                 LEFT JOIN admin a ON tk.pemandu_id = a.id
-                WHERE tk.status_kerja = 'dijalankan' AND tk.pemandu_id = $pemandu_id
+                WHERE t.status_tempahan = 'pengesahan pemandu' AND (tk.status_kerja = 'tempahan diproses' OR tk.status_kerja = 'dijalankan') AND tk.pemandu_id = $pemandu_id
                 LIMIT $limit OFFSET $offset";
 $resulttempahan = mysqli_query($conn, $sqltempahan);
 
@@ -25,7 +25,7 @@ $sqlTotal = "SELECT COUNT(*) as total FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
                 LEFT JOIN admin a ON tk.pemandu_id = a.id
-                WHERE tk.status_kerja = 'dijalankan' AND tk.pemandu_id = $pemandu_id";
+                WHERE t.status_tempahan = 'pengesahan pemandu' AND (tk.status_kerja = 'tempahan diproses' OR tk.status_kerja = 'dijalankan') AND tk.pemandu_id = $pemandu_id";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];

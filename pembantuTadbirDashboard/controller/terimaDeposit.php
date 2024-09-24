@@ -6,7 +6,7 @@ include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = intval($_POST['id']);
-    $status1 = 'kerja dijalankan';
+    $status1 = 'pengesahan pemandu';
     $status2 = 'deposit selesai';
 
     // Prepare and execute the first statement
@@ -21,20 +21,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $sql1->close();
 
-    $updateStatusKerja = 'dijalankan';
-    $statusKerja = 'tempahan diproses';
+    // $updateStatusKerja = 'dijalankan';
+    // $statusKerja = 'tempahan diproses';
 
-    // Prepare and execute the second statement
-    $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ? AND status_kerja = ?");
-    $sql2->bind_param("sis", $updateStatusKerja, $id, $statusKerja);
+    // // Prepare and execute the second statement
+    // $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ? AND status_kerja = ?");
+    // $sql2->bind_param("sis", $updateStatusKerja, $id, $statusKerja);
 
-    if (!$sql2->execute()) {
-        echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);
-        $sql2->close();
-        $conn->close();
-        exit;
-    }
-    $sql2->close();
+    // if (!$sql2->execute()) {
+    //     echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);
+    //     $sql2->close();
+    //     $conn->close();
+    //     exit;
+    // }
+    // $sql2->close();
 
     $conn->close();
     echo json_encode(["success" => true, "id" => $id]);

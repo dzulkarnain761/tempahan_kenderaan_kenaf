@@ -122,14 +122,14 @@ include 'controller/session.php';
                             if (item.status_bayaran === 'deposit diproses') {
                                 actionButton = `
                                     <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
-                                    <button class="btn btn-success btn-sm startKerja" value="${item.tempahan_id}">
-                                        Mula Kerja
+                                    <button class="btn btn-success btn-sm terimaDeposit" value="${item.tempahan_id}">
+                                        Terima Deposit
                                     </button>`;
                             } else if (item.status_bayaran === 'bayaran diproses') {
                                 actionButton = `
                                         <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
                                         <button class="btn btn-success btn-sm selesaiTempahan" value="${item.tempahan_id}">
-                                            Selesai Tempahan
+                                            Terima Bayaran
                                         </button>`;
                             } else {
                                 actionButton = `
@@ -189,7 +189,7 @@ include 'controller/session.php';
         // Load the first page by default
         loadPage(1);
 
-        $(document).on('click', '.startKerja', function(e) {
+        $(document).on('click', '.terimaDeposit', function(e) {
             let tempahanId = $(this).attr('value');
 
             Swal.fire({
@@ -203,7 +203,7 @@ include 'controller/session.php';
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/startKerja.php',
+                        url: 'controller/terimaDeposit.php',
                         type: 'POST',
                         data: {
                             id: tempahanId
