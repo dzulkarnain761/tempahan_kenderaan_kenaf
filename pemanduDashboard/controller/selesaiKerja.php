@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql2->close();
 
     // Step 3: Check if all tempahan_kerja with the same tempahan_id have the status 'selesai'
-    $sql3 = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ? AND status_kerja != 'selesai'");
+    $sql3 = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ? AND status_kerja NOT IN ('selesai','dibatalkan','ditolak')");
     $sql3->bind_param("s", $tempahan_id);
     $sql3->execute();
     $sql3->bind_result($remaining_jobs);

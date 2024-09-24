@@ -31,7 +31,7 @@ while ($row = mysqli_fetch_assoc($resultTempahan)) {
     $tempahanId = $row['tempahan_id'];
 
     // Fetch related 'tempahan_kerja' data
-    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
+    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND (status_kerja = 'tempahan diproses' OR status_kerja = 'selesai')";
     $resultKerja = mysqli_query($conn, $sqlKerja);
 
     $kerjaData = [];

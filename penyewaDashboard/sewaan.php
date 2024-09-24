@@ -410,7 +410,9 @@ include 'controller/get_userdata.php';
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                        
+                                        <span>
+                                            <button class="btn btn-success btn-sm" type="button" data-id="' . $tempahanId . '">Resit</button>
+                                        </span>
                                         
                                         <span>
                                             <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
