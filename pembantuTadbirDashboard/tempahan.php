@@ -310,7 +310,7 @@ include 'controller/session.php';
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'controller/refund.php',
+                        url: 'controller/refundTempahan.php',
                         type: 'POST',
                         data: {
                             id: tempahanId
@@ -319,7 +319,7 @@ include 'controller/session.php';
                             let res = JSON.parse(response);
                             Swal.fire({
                                 title: "Berjaya",
-                                text: "Berjaya Kemaskini Tempahan",
+                                text: "Berjaya Bayar Balik Tempahan",
                                 icon: "success"
                             }).then(() => {
                                 window.location.reload();

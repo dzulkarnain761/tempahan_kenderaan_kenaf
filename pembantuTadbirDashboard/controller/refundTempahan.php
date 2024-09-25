@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $total_baki = abs($rowTempahan['total_baki']);
     $jenis_pembayaran = 'bayaran balik';
-    $cara_pembayaran = 'online banking';
+    $cara_pembayaran = 'atas talian';
 
     // Prepare and execute the first statement for resit_pembayaran
     $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran(tempahan_id, jenis_pembayaran, jumlah, cara_pembayaran) VALUES (?, ?, ?, ?)");
