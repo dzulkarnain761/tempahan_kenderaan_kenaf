@@ -44,6 +44,7 @@ include 'controller/session.php';
                 <?php include 'partials/name_display.php'; ?>
             </div>
 
+
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Pengesahan Bayaran </h2>
@@ -56,6 +57,8 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
+                            <td>Status</td>
+                            <td>Cara Bayar</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -117,27 +120,48 @@ include 'controller/session.php';
                                 kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                             });
 
-                            var actionButton = '';
 
+                            let actionButton = '';
+                            let caraBayaran = item.cara_bayaran;
+                            let statusBayaran = item.status_bayaran;
+
+                            // Common 'Lihat Butiran' button
+                            const lihatButiranButton = `
+                                <button class="btn btn-primary" onclick="window.location.href='detail_tempahan.php?id=${item.tempahan_id}'">
+                                    Lihat Butiran
+                                </button>`;
+
+                            // Decide button based on status_bayaran
                             if (item.status_bayaran === 'deposit diproses') {
-                                actionButton = `
-                                    <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
-                                    <button class="btn btn-success btn-sm terimaDeposit" value="${item.tempahan_id}">
-                                        Terima Deposit
-                                    </button>`;
+                                actionButton = lihatButiranButton + `
+                                <button class="btn btn-success btn-sm terimaDeposit" value="${item.tempahan_id}" data-cara-bayaran="${item.cara_bayaran}">
+                                    Terima Deposit
+                                </button>`;
+
+                                statusBayaran = 'Deposit';
+
                             } else if (item.status_bayaran === 'bayaran diproses') {
-                                actionButton = `
-                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
-                                        <button class="btn btn-success btn-sm selesaiTempahan" value="${item.tempahan_id}">
-                                            Terima Bayaran
-                                        </button>`;
-                            } else {
-                                actionButton = `
-                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_${item.tempahan_id}">Lihat Butiran</button>
-                                        <button class="btn btn-success btn-sm refundTempahan" value="${item.tempahan_id}">
-                                            Bayar Balik
-                                        </button>`;
+                                actionButton = lihatButiranButton + `
+                                <button class="btn btn-success btn-sm selesaiTempahan" value="${item.tempahan_id}" data-cara-bayaran="${item.cara_bayaran}">
+                                    Terima Bayaran
+                                </button>`;
+
+                                statusBayaran = 'Bayaran Penuh';
+
+                            } else if (item.status_bayaran === 'bayaran balik'){
+                                actionButton = lihatButiranButton + `
+                                <button class="btn btn-success btn-sm refundTempahan" value="${item.tempahan_id}" data-cara-bayaran="bayaran balik">
+                                    Bayar Balik
+                                </button>`;
+
+                                caraBayaran = 'bayaran balik';
+                                statusBayaran = 'Bayaran Balik';
+                            }else{
+                                actionButton = lihatButiranButton
                             }
+
+
+
 
 
                             // Append the row to tbody
@@ -147,11 +171,12 @@ include 'controller/session.php';
                                         <td>${item.nama}</td>
                                         <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
+                                        <td>${statusBayaran}</td>
+                                        <td>${caraBayaran}</td>
                                         <td>${actionButton}</td>
                                     </tr>
 
                                 `);
-
                         });
 
 

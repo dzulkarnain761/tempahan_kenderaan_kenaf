@@ -6,36 +6,57 @@ include 'connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = intval($_POST['id']);
-    $status1 = 'pengesahan pemandu';
-    $status2 = 'deposit selesai';
 
-    // Prepare and execute the first statement
-    $sql1 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-    $sql1->bind_param("ssi", $status1, $status2, $id);
+    // Retrieve total deposit and payment method
+    $sqlTempahan = "SELECT cara_bayaran, total_deposit FROM tempahan WHERE tempahan_id = ?";
+    $stmtTempahan = $conn->prepare($sqlTempahan);
+    $stmtTempahan->bind_param("i", $id);
+    $stmtTempahan->execute();
+    $resultTempahan = $stmtTempahan->get_result();
 
-    if (!$sql1->execute()) {
-        echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
-        $sql1->close();
+    if ($rowTempahan = $resultTempahan->fetch_assoc()) {
+        $cara_bayaran = $rowTempahan['cara_bayaran'];
+        $total_deposit = $rowTempahan['total_deposit'];
+    } else {
+        // Tempahan not found
+        echo json_encode(["success" => false, "message" => "Tempahan tidak dijumpai"]);
+        $stmtTempahan->close();
         $conn->close();
         exit;
     }
-    $sql1->close();
+    $stmtTempahan->close();
 
-    // $updateStatusKerja = 'dijalankan';
-    // $statusKerja = 'tempahan diproses';
+    // Insert into resit_pembayaran only if cara_bayaran is 'tunai'
+    if ($cara_bayaran == 'tunai') {
+        $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_pembayaran) VALUES (?, ?, ?, ?)");
+        $jenis_pembayaran = 'deposit'; // Payment type is deposit
+        $sqlResit->bind_param("isds", $id, $jenis_pembayaran, $total_deposit, $cara_bayaran);
 
-    // // Prepare and execute the second statement
-    // $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ? AND status_kerja = ?");
-    // $sql2->bind_param("sis", $updateStatusKerja, $id, $statusKerja);
+        if (!$sqlResit->execute()) {
+            echo json_encode(["success" => false, "message" => "Kemaskini resit gagal: " . $sqlResit->error]);
+            $sqlResit->close();
+            $conn->close();
+            exit;
+        }
+        $sqlResit->close();
+    }
 
-    // if (!$sql2->execute()) {
-    //     echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);
-    //     $sql2->close();
-    //     $conn->close();
-    //     exit;
-    // }
-    // $sql2->close();
+    // Update tempahan status and payment status
+    $status_tempahan = 'pengesahan pemandu';
+    $status_bayaran = 'deposit selesai';
 
+    $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+    $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $id);
+
+    if (!$sqlUpdateTempahan->execute()) {
+        echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error]);
+        $sqlUpdateTempahan->close();
+        $conn->close();
+        exit;
+    }
+    $sqlUpdateTempahan->close();
+
+    // Close the connection and return success message
     $conn->close();
-    echo json_encode(["success" => true, "id" => $id]);
+    echo json_encode(["success" => true, "message" => "Deposit berjaya diproses", "id" => $id]);
 }

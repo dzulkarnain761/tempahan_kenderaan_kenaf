@@ -224,7 +224,7 @@ include 'controller/session.php';
                                     <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.5" placeholder="<?php echo $rateharga; ?> / Jam" required>
                                     <span class="input-group-text">Harga (RM)</span>
                                     <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
-                                    <span class="input-group-text">.00</span>
+                                    
                                 </div>
 
 

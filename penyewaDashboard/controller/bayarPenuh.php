@@ -5,49 +5,62 @@ include 'connection.php';
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Safely handle input
     $id = intval($_POST['id']);
-    $status = 'bayaran diproses';
+    $cara_bayar = $_POST['cara_bayaran'];
 
     // Retrieve total deposit
-    $sqlTempahan = "SELECT total_baki FROM tempahan WHERE tempahan_id = $id";
-    $resultTempahan = mysqli_query($conn, $sqlTempahan);
-    $rowTempahan = mysqli_fetch_assoc($resultTempahan);
+    $sqlTempahan = "SELECT total_baki FROM tempahan WHERE tempahan_id = ?";
+    $stmtTempahan = $conn->prepare($sqlTempahan);
+    $stmtTempahan->bind_param("i", $id);
+    $stmtTempahan->execute();
+    $resultTempahan = $stmtTempahan->get_result();
 
-    if (!$rowTempahan) {
+    if ($rowTempahan = $resultTempahan->fetch_assoc()) {
+        $total_baki = $rowTempahan['total_baki'];
+    } else {
         echo json_encode(["success" => false, "message" => "Tempahan tidak dijumpai"]);
+        $stmtTempahan->close();
         $conn->close();
         exit;
     }
+    $stmtTempahan->close();
 
-    $total_baki = $rowTempahan['total_baki'];
-    $jenis_pembayaran = 'bayaran penuh';
-    $cara_pembayaran = 'online banking';
+    // If the payment method is 'atas talian', insert into resit_pembayaran
+    if ($cara_bayar == 'atas talian') {
 
-    // Prepare and execute the first statement for resit_pembayaran
-    $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran(tempahan_id, jenis_pembayaran, jumlah, cara_pembayaran) VALUES (?, ?, ?, ?)");
-    $sqlResit->bind_param("isds", $id, $jenis_pembayaran, $total_baki, $cara_pembayaran);
+        // Prepare and execute the first statement for resit_pembayaran
+        $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran(tempahan_id, jenis_pembayaran, jumlah, cara_pembayaran) VALUES (?, ?, ?, ?)");
+        $jenis_pembayaran = 'bayaran penuh'; // Define the jenis_pembayaran
+        $sqlResit->bind_param("isds", $id, $jenis_pembayaran, $total_baki, $cara_bayar);
 
-    if (!$sqlResit->execute()) {
-        echo json_encode(["success" => false, "message" => "Kemaskini resit gagal: " . $sqlResit->error]);
+        if (!$sqlResit->execute()) {
+            echo json_encode(["success" => false, "message" => "Kemaskini resit gagal: " . $sqlResit->error]);
+            $sqlResit->close();
+            $conn->close();
+            exit;
+        }
         $sqlResit->close();
-        $conn->close();
-        exit;
     }
-    $sqlResit->close();
 
     // Prepare and execute the update for tempahan status
-    $sql1 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-    $sql1->bind_param("ssi", $status, $status, $id);
+    $status = 'bayaran diproses';
+    $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ?, cara_bayaran = ? WHERE tempahan_id = ?");
+    $sqlUpdateTempahan->bind_param("sssi", $status, $status, $cara_bayar, $id);
 
-    if (!$sql1->execute()) {
-        echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
-        $sql1->close();
+    if (!$sqlUpdateTempahan->execute()) {
+        echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error]);
+        $sqlUpdateTempahan->close();
         $conn->close();
         exit;
     }
-    $sql1->close();
+    $sqlUpdateTempahan->close();
 
+    // Close the connection and return success
     $conn->close();
-    echo json_encode(["success" => true, "id" => $id]);
+    if($cara_bayar == 'atas talian'){
+        echo json_encode(['success' => true, 'message' => 'Bayaran Akan Diproses']);
+    }else{
+        echo json_encode(['success' => true, 'message' => 'Sila Bayar Di Kaunter LKTN Sebelum Tarikh Akhir']);
+    }
 }
-?>
