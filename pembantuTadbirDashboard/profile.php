@@ -2,6 +2,7 @@
 
 include 'controller/connection.php';
 include 'controller/session.php';
+include 'controller/get_userdata.php';
 
 ?>
 
@@ -50,13 +51,13 @@ include 'controller/session.php';
                     </div>
                     <div class="profile-details">
                         <p>Email :</p>
-                        <h4 class="text-muted">abc@gmail.com</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($email); ?></h4>
 						<p>Nama Penuh :</p>
-                        <h4 class="text-muted">NAMA BIN PENUH</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($nama); ?></h4>
                         <p>Nombor Kad Pengenalan :</p>
-                        <h4 class="text-muted">000000-00-0000</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($no_kp); ?></h4>
                         <p>Nombor Telefon :</p>
-                        <h4 class="text-muted">000-0000000</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($contact_no); ?></h4>
                     </div>
 					<div class="text-end">
 						<button type="button" class="btn btn-primary" onclick="window.location.href = 'kemaskiniProfile.php'">
