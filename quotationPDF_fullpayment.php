@@ -220,7 +220,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                             <td>
                               <div style="font-family: helvetica">
                               <span style="color: #333"><strong> Tempahan ID:</strong></span>
-                              <span style="color: #555; white-space: nowrap"><?php echo $tempahan['tempahan_id']; ?></span>
+                              <span style="color: #555; white-space: nowrap"><?php echo sprintf('%05d', $tempahan['tempahan_id']); ?></span>
                               </div>
                             </td>
                             <td width="50%">
@@ -402,7 +402,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
 
                         
                           <tr>
-                            <td><strong>Sudah Dibayar</strong></td>
+                            <td><strong>Sudah Dibayar (Deposit)</strong></td>
                             <td></td>
                             <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right">- RM <?php echo number_format($tempahan['total_deposit'], 2) ?></td>
                           </tr>
