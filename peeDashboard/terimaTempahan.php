@@ -77,44 +77,56 @@ include 'controller/session.php';
 
             ?>
 
+
+            <input type="hidden" name="tempahan_id" value="<?php echo htmlspecialchars($tempahan['tempahan_id']) ?>">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
+                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo date('Y-m-d', strtotime($tempahan['created_at'])) ?>" disabled>
+
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['nama']) ?>"
+                    disabled>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Tarikh Cadangan:</label>
+                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_kerja']) ?>" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
+                <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['luas_tanah']) ?>" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?>" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['catatan']) ?>" disabled>
+            </div>
+
+
+        </div>
+
+        <div class="recentOrders">
+            <div class="cardHeader">
+                <h2>PENGESAHAN TEMPAHAN</h2>
+            </div>
+
             <form id="terimaTempahan" method="POST">
                 <input type="hidden" name="tempahan_id" value="<?php echo htmlspecialchars($tempahan['tempahan_id']) ?>">
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo date('Y-m-d', strtotime($tempahan['created_at'])) ?>" disabled>
 
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['nama']) ?>"
-                        disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Tarikh Cadangan:</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_kerja']) ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
-                    <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['luas_tanah']) ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?>" disabled>
-                </div>
 
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['catatan']) ?>" disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label for="jenis_kerja_input" class="form-label">Jenis Kerja:</label>
                     <?php
                     $tempahanId = $id;
                     $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
+                      
                         while ($rowKerja = mysqli_fetch_assoc($resultKerja)):
                             $tempahan_id = htmlspecialchars($rowKerja['tempahan_id']);
                             $nama_kerja = htmlspecialchars($rowKerja['nama_kerja']);
@@ -129,24 +141,35 @@ include 'controller/session.php';
                                 $rateharga = $fetchTugasan['harga_per_jam'];
                             }
                     ?>
-                            <div class="mb-5">
-                                <input type="hidden" name="kerja_id[]" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">
+                            <div class="mb-5" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
+                                <input type="hidden" name="tempahan_kerja_id[]" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">
+
                                 <div class="input-group mb-2">
                                     <span class="input-group-text" id="basic-addon1">Nama Kerja</span>
                                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
                                     <button class="btn btn-outline-danger cancelKerja" type="button" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
                                 </div>
 
-
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">Tarikh Kerja</span>
+                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" required>
+                                </div>
 
                                 <div class="input-group mb-2">
+                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
+                                    <span class="input-group-text">Jam</span>
+                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.5" required>
+                                    <span class="input-group-text">Harga (RM)</span>
+                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
+                                </div><br>
+
+                                <!-- Kenderaan Select -->
+                                <div class="input-group mb-2">
                                     <span class="input-group-text" id="basic-addon1">Kenderaan</span>
-                                    <select id="kenderaan_id" class="form-select" name="kenderaan_id[]" required>
+                                    <select id="kenderaan_id_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="form-select" name="kenderaan_id[]" required>
                                         <option value="" disabled selected>--Pilih Kenderaan--</option>
                                         <?php
-                                        // Assuming $conn is your mysqli connection
-
-                                        // Use prepared statements to avoid SQL injection
+                                        // Fetch Kenderaan options based on the kerja
                                         $stmt = $conn->prepare("SELECT * FROM `tugasan` WHERE kerja = ?");
                                         $stmt->bind_param('s', $nama_kerja);
                                         $stmt->execute();
@@ -157,7 +180,6 @@ include 'controller/session.php';
                                             $kategoriKenderaan = $fetchTugasan['kategori_kenderaan'];
 
                                             if ($kategoriKenderaan) {
-                                                // Prepare the statement for the second query
                                                 $stmt = $conn->prepare("SELECT * FROM `kenderaan` WHERE kategori_kenderaan = ?");
                                                 $stmt->bind_param('s', $kategoriKenderaan);
                                                 $stmt->execute();
@@ -165,9 +187,7 @@ include 'controller/session.php';
 
                                                 if ($resultkenderaan && $resultkenderaan->num_rows > 0) {
                                                     while ($rowkenderaan = $resultkenderaan->fetch_assoc()) {
-                                                        // Check if the current kenderaan is selected
                                                         $selectedkenderaan = ($rowKerja['kenderaan_id'] == $rowkenderaan['id']) ? 'selected' : '';
-                                                        // Properly format the option element
                                                         echo "<option value='" . htmlspecialchars($rowkenderaan['id']) . "' $selectedkenderaan>" . htmlspecialchars($rowkenderaan['no_pendaftaran']) . ' - ' . htmlspecialchars($rowkenderaan['catatan']) . "</option>";
                                                     }
                                                 } else {
@@ -179,63 +199,50 @@ include 'controller/session.php';
                                         } else {
                                             echo "<option value='' disabled>No task found</option>";
                                         }
-
-                                        // Close the statement
                                         $stmt->close();
                                         ?>
                                     </select>
                                 </div>
 
-
+                                <!-- Pemandu Select -->
                                 <div class="input-group mb-2">
                                     <span class="input-group-text" id="basic-addon1">Pemandu</span>
-                                    <select id="pemandu_id" class="form-select" name="pemandu_id[]" required>
+                                    <select id="pemandu_id_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="form-select" name="pemandu_id[]" required>
                                         <option value="" disabled selected>--Pilih Pemandu--</option>
                                         <?php
-                                        // Query to get pemandu from the database
                                         $sqlpemandu = "SELECT * FROM `admin` WHERE kumpulan = 'Y'";
                                         $resultpemandu = mysqli_query($conn, $sqlpemandu);
 
-                                        // Check if the query returns any rows
                                         if ($resultpemandu && mysqli_num_rows($resultpemandu) > 0) {
-                                            // Loop through the pemandu and create option elements
                                             while ($rowpemandu = mysqli_fetch_assoc($resultpemandu)) {
-                                                // Determine if this option should be selected
                                                 $selected = ($rowKerja['pemandu_id'] == $rowpemandu['id']) ? 'selected' : '';
                                                 echo "<option value='" . htmlspecialchars($rowpemandu['id']) . "' $selected>" . htmlspecialchars($rowpemandu['nama']) . "</option>";
                                             }
                                         } else {
-                                            // Display message if no pemandu are found
                                             echo "<option value='' disabled>No pemandu found</option>";
                                         }
                                         ?>
                                     </select>
                                 </div>
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text">Tarikh Kerja</span>
-                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>"  required>
-                                    
+
+                                <!-- Container for additional selects -->
+                                <div id="additionalSelects_<?php echo $rowKerja['tempahan_kerja_id']; ?>">
+
                                 </div>
 
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.5" placeholder="<?php echo $rateharga; ?> / Jam" required>
-                                    <span class="input-group-text">Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
-                                    
+                                <!-- Add/Remove buttons -->
+                                <div class="d-flex mt-3 mb-3">
+                                    <button id="addButton_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="btn btn-primary me-2" type="button" onclick="addSelect(<?php echo $rowKerja['tempahan_kerja_id']; ?>)">+</button>
+                                    <button id="removeButton_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="btn btn-danger" style="display:none;" type="button" onclick="removeSelect(<?php echo $rowKerja['tempahan_kerja_id']; ?>)">-</button>
                                 </div>
-
-
                             </div>
-                        <?php endwhile;
+                        <?php
+                            $rowKerja['tempahan_kerja_id']++; // Increment index for each row
+                        endwhile;
                     else: ?>
                         <input type="text" class="form-control mb-2" id="jenis_kerja_input" value="No kerja found" disabled>
                     <?php endif; ?>
                 </div>
-
-
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Terima Tempahan</button>
@@ -258,6 +265,57 @@ include 'controller/session.php';
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 <script>
+    function addSelect(index) {
+        const additionalSelects = document.getElementById('additionalSelects_' + index);
+        const newSelect = `
+        <div class="select-group mb-2">
+            <div class="input-group mb-2">
+                <span class="input-group-text">Additional Kenderaan</span>
+                <select class="form-select kenderaan-select" name="kenderaan_id[]">
+                    <option value="" disabled selected>--Pilih Kenderaan--</option>
+                    <!-- Add your Kenderaan options here -->
+                </select>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Additional Pemandu</span>
+                <select class="form-select pemandu-select" name="pemandu_id[]">
+                    <option value="" disabled selected>--Pilih Pemandu--</option>
+
+                </select>
+            </div>
+        </div>`;
+        additionalSelects.insertAdjacentHTML('beforeend', newSelect);
+        document.getElementById('removeButton_' + index).style.display = 'inline-block';
+
+        // Fetch options for Kenderaan
+        fetch('controller/fetchOptions.php?type=kenderaan')
+            .then(response => response.text())
+            .then(data => {
+                const kenderaanSelects = additionalSelects.querySelectorAll('.kenderaan-select');
+                kenderaanSelects[kenderaanSelects.length - 1].innerHTML += data;
+            });
+
+        // Fetch options for Pemandu
+        fetch('controller/fetchOptions.php?type=pemandu')
+            .then(response => response.text())
+            .then(data => {
+                const pemanduSelects = additionalSelects.querySelectorAll('.pemandu-select');
+                pemanduSelects[pemanduSelects.length - 1].innerHTML += data;
+            });
+
+    }
+
+    function removeSelect(index) {
+        const additionalSelects = document.getElementById('additionalSelects_' + index);
+        const selectGroup = additionalSelects.lastElementChild; // Get the last select group (both Kenderaan and Pemandu)
+        if (selectGroup) {
+            selectGroup.remove(); // Remove the entire group of select elements
+        }
+        if (additionalSelects.children.length === 0) {
+            document.getElementById('removeButton_' + index).style.display = 'none';
+        }
+    }
+
     var changeEditModal = document.getElementById('changeEditModal');
     $(document).ready(function() {
 

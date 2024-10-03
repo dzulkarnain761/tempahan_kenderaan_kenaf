@@ -1,6 +1,5 @@
 <?php
 
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -47,9 +46,6 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
     echo "Tiada Penyewa Dijumpai";
     exit;
 }
-
-
-
 
 ?>
 
