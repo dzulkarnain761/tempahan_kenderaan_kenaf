@@ -3,8 +3,6 @@
 include 'controller/connection.php';
 include 'controller/session.php';
 
-$pemandu_id = $_SESSION['id'];
-
 ?>
 
 <!DOCTYPE html>
@@ -49,18 +47,16 @@ $pemandu_id = $_SESSION['id'];
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>SENARAI TUGASAN</h2>
+                    <h2>SENARAI TEMPAHAN SELESAI</h2>
                 </div>
 
                 <table id="tempahanTable">
                     <thead>
                         <tr>
                             <td>Bil</td>
-                            <td>Nama Penyewa</td>
+                            <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            <td>Lokasi Kerja</td>
-                            <td>Luas (Hektar)</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -76,7 +72,6 @@ $pemandu_id = $_SESSION['id'];
                     </ul>
                 </nav>
 
-
             </div>
         </div>
 
@@ -90,10 +85,11 @@ $pemandu_id = $_SESSION['id'];
         <!-- <script src="assets/js/main.js"></script> -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
         <script>
             function loadPage(page) {
                 $.ajax({
-                    url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                    url: 'controller/get_sejarah.php', // The PHP file that handles the database query
                     type: 'GET',
                     data: {
                         page: page
@@ -103,71 +99,75 @@ $pemandu_id = $_SESSION['id'];
                         var tbody = $('#tempahanTable tbody');
                         tbody.empty();
 
+                        // Hide pagination if no data
+                        var pagination = $('#pagination');
                         if (response.data.length === 0) {
                             tbody.append(`
                                 <tr>
-                                    <td colspan="7" class="text-center">Tiada rekod dijumpai.</td>
+                                    <td colspan="7" class="text-center">Tiada rekod yang dijumpai.</td>
                                 </tr>
                             `);
                             pagination.hide(); // Hide pagination
                         } else {
-
                             // Populate table
                             response.data.forEach(function(item, index) {
+                                var kerjaList = '';
+                                item.kerja.forEach(function(kerjaItem, kerjaIndex) {
+                                    kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
+                                });
 
-                                var actionButton = '';
+                                let actionButtons = '';
 
-                                if (item.status_kerja === 'tempahan diproses') {
-                                    actionButton = `<button class="btn btn-success startKerja" value="${item.tempahan_kerja_id}">Mula Kerja</button>`;
-                                } else {
-                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>`;
+                                if (item.status_tempahan != 'pengesahan kpp') {
+                                    actionButtons = `
+                                    <td>
+                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
+                                            Lihat Butiran
+                                        </button>
+                                    </td>
+                                `;
+								
                                 }
 
                                 tbody.append(`
-                        <tr data-id="${item.tempahan_kerja_id}">
-                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                            <td>${item.nama}</td>
-                            <td>${item.tarikh_kerja_cadangan}</td>
-                            <td>${item.nama_kerja}</td>
-                            <td>${item.lokasi_kerja}</td>
-                            <td>${item.luas_tanah}</td>
-                            <td>
-                                ${actionButton}
-                            </td>
-                            
-                        </tr>
-                    `);
+                                    <tr data-id="${item.tempahan_id}">
+                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                        <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
+                                        <td>${kerjaList}</td>
+                                        ${actionButtons}
+                                    </tr>
+                                `);
+
                             });
 
-                            // Populate pagination
-                            var pagination = $('#pagination');
+                            // Populate pagination and show it if hidden
                             pagination.empty();
+                            pagination.show(); // Show pagination
 
                             // Previous button
                             pagination.append(`
-                    <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
-                    </li>
-                    `);
+                                <li class="page-item ${response.currentPage === 1 ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage - 1})"><</a>
+                                </li>
+                            `);
 
                             // Page numbers
                             for (var i = 1; i <= response.totalPages; i++) {
                                 pagination.append(`
-                        <li class="page-item ${i === response.currentPage ? 'active' : ''}">
-                            <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
-                        </li>
-                    `);
-                            }
+                                    <li class="page-item ${i === response.currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
+                                    </li>
+                                `);
+                                }
 
                             // Next button
                             pagination.append(`
-                    <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
-                    </li>
-                    `);
-
+                                <li class="page-item ${response.currentPage === response.totalPages ? 'disabled' : ''}">
+                                    <a class="page-link" href="#" onclick="loadPage(${response.currentPage + 1})">></a>
+                                </li>
+                            `);
                         }
-
                     }
                 });
             }
@@ -175,50 +175,7 @@ $pemandu_id = $_SESSION['id'];
             // Load the first page by default
             loadPage(1);
 
-
-            $(document).on('click', '.startKerja', function(e) {
-                let kerjaId = $(this).attr('value');
-
-                Swal.fire({
-                    title: "Mula Kerja",
-                    text: "Anda tidak akan dapat membatalkan ini!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: 'controller/startKerja.php',
-                            type: 'POST',
-                            data: {
-                                id: kerjaId
-                            },
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                Swal.fire({
-                                    title: "Berjaya",
-                                    text: "Berjaya Kemaskini Tempahan",
-                                    icon: "success"
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                Swal.fire({
-                                    title: "Ralat!",
-                                    text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                    icon: "error"
-                                });
-                            }
-                        });
-                    }
-                });
-            });
         </script>
-
-
     </div>
 </body>
 

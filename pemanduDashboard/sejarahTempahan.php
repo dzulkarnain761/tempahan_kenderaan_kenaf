@@ -93,7 +93,7 @@ $pemandu_id = $_SESSION['id'];
         <script>
             function loadPage(page) {
                 $.ajax({
-                    url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                    url: 'controller/get_sejarah.php', // The PHP file that handles the database query
                     type: 'GET',
                     data: {
                         page: page
@@ -117,10 +117,8 @@ $pemandu_id = $_SESSION['id'];
 
                                 var actionButton = '';
 
-                                if (item.status_kerja === 'tempahan diproses') {
-                                    actionButton = `<button class="btn btn-success startKerja" value="${item.tempahan_kerja_id}">Mula Kerja</button>`;
-                                } else {
-                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>`;
+                                if (item.status_kerja === 'selesai') {
+                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='sejarahJobsheet.php?id=${item.tempahan_kerja_id}'">Lihat Butiran</button>`;
                                 }
 
                                 tbody.append(`
@@ -174,48 +172,6 @@ $pemandu_id = $_SESSION['id'];
 
             // Load the first page by default
             loadPage(1);
-
-
-            $(document).on('click', '.startKerja', function(e) {
-                let kerjaId = $(this).attr('value');
-
-                Swal.fire({
-                    title: "Mula Kerja",
-                    text: "Anda tidak akan dapat membatalkan ini!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: 'controller/startKerja.php',
-                            type: 'POST',
-                            data: {
-                                id: kerjaId
-                            },
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                Swal.fire({
-                                    title: "Berjaya",
-                                    text: "Berjaya Kemaskini Tempahan",
-                                    icon: "success"
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                Swal.fire({
-                                    title: "Ralat!",
-                                    text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                    icon: "error"
-                                });
-                            }
-                        });
-                    }
-                });
-            });
         </script>
 
 
