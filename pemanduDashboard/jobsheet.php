@@ -150,7 +150,7 @@ include 'controller/session.php';
 </div>
 
 <!-- =========== Scripts =========  -->
-<!-- <script src="../assets/js/main.js"></script> -->
+<script src="../assets/js/main.js"></script>
 
 <!-- ====== ionicons ======= -->
 <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>

@@ -2,6 +2,26 @@
 // Get the current page name
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
+<style>
+.profile-link {
+    text-decoration: none; /* Hilangkan garis bawah */
+    color: inherit; /* Kekalkan warna teks asal */
+}
+
+.profile-link:hover {
+    color: #4da6e7; /* Tukar warna kepada biru apabila di-hover */
+}
+
+#logoutButton {
+    color: inherit; /* Kekalkan warna asal */
+    text-decoration: none; /* Hilangkan garis bawah */
+}
+
+#logoutButton:hover {
+    color: red; /* Tukar warna kepada merah apabila di-hover */
+}
+
+</style>
 
 <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
     <div class="container">
@@ -29,18 +49,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <a href="sewaan.php"
                                 class="<?php echo ($current_page == 'sewaan.php') ? 'active' : ''; ?>">Sewaan</a>
                         </li>
-                        <li class="scroll-to-section">
-                            <a href="profil.php"
-                                class="<?php echo ($current_page == 'profil.php') ? 'active' : ''; ?>">Profil</a>
+						 <li class="scroll-to-section">
+                            <a href="sejarahTempahan.php"
+                                class="<?php echo ($current_page == 'sejarahTempahan.php') ? 'active' : ''; ?>">Sejarah</a>
                         </li>
                     </ul>
 
                     <div class="right-nav">
-                        <span><?php echo htmlspecialchars($nama); ?></span>
-                        <div class="log-out-button">
-                            <span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
-                        </div>
-                    </div>
+						<a href="profil.php" class="profile-link">
+							<span><?php echo htmlspecialchars($nama); ?></span>
+						</a>
+						<div class="log-out-button">
+							<span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
+						</div>
+					</div>
                     <!-- ***** Menu End ***** -->
                 </nav>
 
