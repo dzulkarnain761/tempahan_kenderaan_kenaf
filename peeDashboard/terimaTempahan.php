@@ -56,14 +56,14 @@ include 'controller/session.php';
             </div>
 
             <?php
-            $id = $_GET['id'];
+            $tempahan_id = $_GET['tempahan_id'];
 
             // Ensure you escape the ID to prevent SQL injection
-            $id = mysqli_real_escape_string($conn, $id);
+            $tempahan_id = mysqli_real_escape_string($conn, $tempahan_id);
 
             $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id WHERE t.tempahan_id = $id";
+                INNER JOIN penyewa p ON p.id = t.penyewa_id WHERE t.tempahan_id = $tempahan_id";
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
             // Fetch the Pemandu member's data
@@ -121,13 +121,31 @@ include 'controller/session.php';
 
                 <div class="mb-3">
                     <?php
-                    $tempahanId = $id;
+                    $tempahanId = $tempahan_id;
                     $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
-                      
+
                         while ($rowKerja = mysqli_fetch_assoc($resultKerja)):
+
+
+                            // Ensure the variable is properly concatenated with the query string
+                            $sqlTotalJobsheet = "SELECT COUNT(*) FROM jobsheet WHERE tempahan_kerja_id = " . $rowKerja['tempahan_kerja_id'];
+                            $resultTotalJobsheet = mysqli_query($conn, $sqlTotalJobsheet);
+                            $totalJobsheet = mysqli_fetch_array($resultTotalJobsheet)[0]; // Get the total count
+
+                            // Run the second query for jobsheet status
+                            $sqlJobsheetStatus = "SELECT COUNT(*) FROM jobsheet WHERE status_jobsheet = 'dalam pengesahan' AND tempahan_kerja_id = " . $rowKerja['tempahan_kerja_id'];
+                            $resultJobsheetStatus = mysqli_query($conn, $sqlJobsheetStatus);
+                            $totalJobsheetStatus = mysqli_fetch_array($resultJobsheetStatus)[0]; // Get the total count for status
+
+                            // Determine the button class based on conditions
+                            if ($totalJobsheetStatus > 0 || $totalJobsheet == 0) {
+                                $button = 'btn-outline-warning';
+                            } else {
+                                $button = 'btn-outline-primary';
+                            }
                             $tempahan_id = htmlspecialchars($rowKerja['tempahan_id']);
                             $nama_kerja = htmlspecialchars($rowKerja['nama_kerja']);
                             $rateharga = 0; // Default rate
@@ -142,12 +160,16 @@ include 'controller/session.php';
                             }
                     ?>
                             <div class="mb-5" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
+
+
                                 <input type="hidden" name="tempahan_kerja_id[]" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">
 
                                 <div class="input-group mb-2">
                                     <span class="input-group-text" id="basic-addon1">Nama Kerja</span>
                                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
-                                    <button class="btn btn-outline-danger cancelKerja" type="button" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal Kerja</button>
+                                    <button class="btn btn-outline-secondary" type="button" disabled>Bilangan Pemandu : <?php echo $totalJobsheet;  ?></button>
+                                    <button class="btn <?php echo $button ?>" type="button" onclick="window.location.href='pilihPemandu.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini</button>
+                                    <button class="btn btn-outline-danger cancelKerja" type="button" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal </button>
                                 </div>
 
                                 <div class="input-group mb-2">
@@ -161,83 +183,11 @@ include 'controller/session.php';
                                     <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.5" required>
                                     <span class="input-group-text">Harga (RM)</span>
                                     <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
-                                </div><br>
-
-                                <!-- Kenderaan Select -->
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text" id="basic-addon1">Kenderaan</span>
-                                    <select id="kenderaan_id_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="form-select" name="kenderaan_id[]" required>
-                                        <option value="" disabled selected>--Pilih Kenderaan--</option>
-                                        <?php
-                                        // Fetch Kenderaan options based on the kerja
-                                        $stmt = $conn->prepare("SELECT * FROM `tugasan` WHERE kerja = ?");
-                                        $stmt->bind_param('s', $nama_kerja);
-                                        $stmt->execute();
-                                        $resulttugasan = $stmt->get_result();
-
-                                        if ($resulttugasan && $resulttugasan->num_rows > 0) {
-                                            $fetchTugasan = $resulttugasan->fetch_assoc();
-                                            $kategoriKenderaan = $fetchTugasan['kategori_kenderaan'];
-
-                                            if ($kategoriKenderaan) {
-                                                $stmt = $conn->prepare("SELECT * FROM `kenderaan` WHERE kategori_kenderaan = ?");
-                                                $stmt->bind_param('s', $kategoriKenderaan);
-                                                $stmt->execute();
-                                                $resultkenderaan = $stmt->get_result();
-
-                                                if ($resultkenderaan && $resultkenderaan->num_rows > 0) {
-                                                    while ($rowkenderaan = $resultkenderaan->fetch_assoc()) {
-                                                        $selectedkenderaan = ($rowKerja['kenderaan_id'] == $rowkenderaan['id']) ? 'selected' : '';
-                                                        echo "<option value='" . htmlspecialchars($rowkenderaan['id']) . "' $selectedkenderaan>" . htmlspecialchars($rowkenderaan['no_pendaftaran']) . ' - ' . htmlspecialchars($rowkenderaan['catatan']) . "</option>";
-                                                    }
-                                                } else {
-                                                    echo "<option value='' disabled>No vehicles found</option>";
-                                                }
-                                            } else {
-                                                echo "<option value='' disabled>No category found for the task</option>";
-                                            }
-                                        } else {
-                                            echo "<option value='' disabled>No task found</option>";
-                                        }
-                                        $stmt->close();
-                                        ?>
-                                    </select>
                                 </div>
 
-                                <!-- Pemandu Select -->
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text" id="basic-addon1">Pemandu</span>
-                                    <select id="pemandu_id_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="form-select" name="pemandu_id[]" required>
-                                        <option value="" disabled selected>--Pilih Pemandu--</option>
-                                        <?php
-                                        $sqlpemandu = "SELECT * FROM `admin` WHERE kumpulan = 'Y'";
-                                        $resultpemandu = mysqli_query($conn, $sqlpemandu);
-
-                                        if ($resultpemandu && mysqli_num_rows($resultpemandu) > 0) {
-                                            while ($rowpemandu = mysqli_fetch_assoc($resultpemandu)) {
-                                                $selected = ($rowKerja['pemandu_id'] == $rowpemandu['id']) ? 'selected' : '';
-                                                echo "<option value='" . htmlspecialchars($rowpemandu['id']) . "' $selected>" . htmlspecialchars($rowpemandu['nama']) . "</option>";
-                                            }
-                                        } else {
-                                            echo "<option value='' disabled>No pemandu found</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-
-                                <!-- Container for additional selects -->
-                                <div id="additionalSelects_<?php echo $rowKerja['tempahan_kerja_id']; ?>">
-
-                                </div>
-
-                                <!-- Add/Remove buttons -->
-                                <div class="d-flex mt-3 mb-3">
-                                    <button id="addButton_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="btn btn-primary me-2" type="button" onclick="addSelect(<?php echo $rowKerja['tempahan_kerja_id']; ?>)">+</button>
-                                    <button id="removeButton_<?php echo $rowKerja['tempahan_kerja_id']; ?>" class="btn btn-danger" style="display:none;" type="button" onclick="removeSelect(<?php echo $rowKerja['tempahan_kerja_id']; ?>)">-</button>
-                                </div>
                             </div>
                         <?php
-                            $rowKerja['tempahan_kerja_id']++; // Increment index for each row
+
                         endwhile;
                     else: ?>
                         <input type="text" class="form-control mb-2" id="jenis_kerja_input" value="No kerja found" disabled>
@@ -265,57 +215,6 @@ include 'controller/session.php';
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 <script>
-    function addSelect(index) {
-        const additionalSelects = document.getElementById('additionalSelects_' + index);
-        const newSelect = `
-        <div class="select-group mb-2">
-            <div class="input-group mb-2">
-                <span class="input-group-text">Additional Kenderaan</span>
-                <select class="form-select kenderaan-select" name="kenderaan_id[]">
-                    <option value="" disabled selected>--Pilih Kenderaan--</option>
-                    <!-- Add your Kenderaan options here -->
-                </select>
-            </div>
-            <div class="input-group mb-2">
-                <span class="input-group-text">Additional Pemandu</span>
-                <select class="form-select pemandu-select" name="pemandu_id[]">
-                    <option value="" disabled selected>--Pilih Pemandu--</option>
-
-                </select>
-            </div>
-        </div>`;
-        additionalSelects.insertAdjacentHTML('beforeend', newSelect);
-        document.getElementById('removeButton_' + index).style.display = 'inline-block';
-
-        // Fetch options for Kenderaan
-        fetch('controller/fetchOptions.php?type=kenderaan')
-            .then(response => response.text())
-            .then(data => {
-                const kenderaanSelects = additionalSelects.querySelectorAll('.kenderaan-select');
-                kenderaanSelects[kenderaanSelects.length - 1].innerHTML += data;
-            });
-
-        // Fetch options for Pemandu
-        fetch('controller/fetchOptions.php?type=pemandu')
-            .then(response => response.text())
-            .then(data => {
-                const pemanduSelects = additionalSelects.querySelectorAll('.pemandu-select');
-                pemanduSelects[pemanduSelects.length - 1].innerHTML += data;
-            });
-
-    }
-
-    function removeSelect(index) {
-        const additionalSelects = document.getElementById('additionalSelects_' + index);
-        const selectGroup = additionalSelects.lastElementChild; // Get the last select group (both Kenderaan and Pemandu)
-        if (selectGroup) {
-            selectGroup.remove(); // Remove the entire group of select elements
-        }
-        if (additionalSelects.children.length === 0) {
-            document.getElementById('removeButton_' + index).style.display = 'none';
-        }
-    }
-
     var changeEditModal = document.getElementById('changeEditModal');
     $(document).ready(function() {
 

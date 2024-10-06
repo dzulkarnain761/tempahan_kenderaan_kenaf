@@ -121,7 +121,7 @@ include 'controller/session.php';
                                 if (item.status_tempahan != 'pengesahan kpp') {
                                     actionButtons = `
                                     <td>
-                                        <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
+                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-success">
                                             Terima
                                         </button>
                                         <button class="btn btn-danger cancelTempahan" value="${item.tempahan_id}">

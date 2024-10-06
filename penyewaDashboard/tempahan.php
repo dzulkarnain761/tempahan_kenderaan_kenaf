@@ -177,7 +177,7 @@ include 'controller/get_userdata.php';
                     </div>
                     <div class="mb-3">
                         <label for="keluasanTanah" class="form-label">Keluasan Tanah (Hektar) :</label>
-                        <input type="number" class="form-control" id="keluasanTanah" min="0.1" step="0.5" placeholder="Masukkan Keluasan Tanah" required>
+                        <input type="number" class="form-control" id="keluasanTanah" min="0.1" step="0.1" placeholder="Masukkan Keluasan Tanah" required>
                     </div>
                     <input type="hidden" value="<?php $_SESSION['id']; ?>">
                     <div class="modal-footer">
