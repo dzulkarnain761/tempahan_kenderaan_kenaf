@@ -54,7 +54,6 @@ include 'controller/session.php';
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
-                            <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
                             <td>Tindakan</td>
                         </tr>
@@ -117,16 +116,19 @@ include 'controller/session.php';
 
                             tbody.append(`
                             <tr >
-                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                            <td>${item.nama}</td>
-                            <td>${item.tarikh_kerja}</td>
-                            <td>${kerjaList}</td>
-                            <td>
-                                <button onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
-                                    Lihat Butiran
-                                </button>
-                            </td>
-                        </tr>
+								<td>${(response.currentPage - 1) * 5 + index + 1}</td>
+								<td>${item.nama}</td>
+								<td>${kerjaList}</td>
+								<td>
+									<a href="sejarahButiran.php?id=${item.tempahan_id}">
+										<ion-icon name="document-text-outline" size="large"></ion-icon>
+									</a>
+
+									<a href="controller/getPDF.php?id=${item.tempahan_id}" target="_blank">
+										<ion-icon name="print-outline" size="large"></ion-icon>
+									</a>
+								</td>
+							</tr>
                     `);
                         });
 

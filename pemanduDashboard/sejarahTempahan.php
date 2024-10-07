@@ -57,7 +57,7 @@ $pemandu_id = $_SESSION['id'];
                         <tr>
                             <td>Bil</td>
                             <td>Nama Penyewa</td>
-                            <td>Tarikh Cadangan</td>
+                            <td>Tarikh Kerja</td>
                             <td>Jenis Kerja</td>
                             <td>Lokasi Kerja</td>
                             <td>Luas (Hektar)</td>
