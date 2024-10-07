@@ -127,10 +127,6 @@ include 'controller/session.php';
                     }
                     ?>
 
-
-
-
-
                 </form>
 
             </div>
@@ -181,21 +177,35 @@ include 'controller/session.php';
                                     <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
                                     <span class="input-group-text">Harga Anggaran (RM)</span>
                                     <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Total Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jumlah_jam']); ?>" readonly>
-                                    <span class="input-group-text">Total Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['jumlah_bayaran']); ?>" readonly>
                                 </div><br>
+
                     <?php  }
                         }
                     } else {
                         echo "<p>No work found for this order.</p>";
                     }
                     ?>
+
+                    <?php
+
+                    // Query to get the total deposit
+                    $sqlDeposit = "SELECT total_harga_anggaran FROM tempahan WHERE tempahan_id = $id";
+
+                    // Execute the query
+                    $resultDeposit = mysqli_query($conn, $sqlDeposit);
+
+                    // Fetch the result
+                    $deposit = mysqli_fetch_assoc($resultDeposit);
+
+                    ?>
+
+                    <div class="input-group mb-2 align-self-end" >
+                        <span class="input-group-text">Total (RM)</span>
+                        <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo isset($deposit['total_harga_anggaran']) ? $deposit['total_harga_anggaran'] : '0'; ?>" readonly>
+                    </div>
+
+
+
                 </form>
 
 

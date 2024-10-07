@@ -58,16 +58,18 @@ include 'controller/session.php';
             include 'controller/connection.php';
 
             // Get the ID from the URL query string
-            $id = $_GET['id'];
+            $jobsheet_id = $_GET['jobsheet_id'];
 
             // Query to get the necessary details
-            $sqlTempahan = "SELECT t.lokasi_kerja, t.luas_tanah, p.nama, tk.*, tk.nama_kerja, k.no_pendaftaran, tgs.harga_per_jam
-                    FROM tempahan t
-                    LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                    LEFT JOIN tempahan_kerja tk ON tk.tempahan_id = t.tempahan_id
-                    LEFT JOIN kenderaan k ON k.id = tk.kenderaan_id
-                    LEFT JOIN tugasan tgs ON tgs.kerja = tk.nama_kerja
-                    WHERE tk.tempahan_kerja_id = $id";
+            $sqlTempahan = "SELECT t.lokasi_kerja,t.luas_tanah,tk.nama_kerja,tk.tarikh_kerja_cadangan,p.nama,p.contact_no,tk.status_kerja,k.no_pendaftaran, tgs.harga_per_jam,j.*
+                FROM jobsheet j
+                LEFT JOIN tempahan t ON j.tempahan_id = t.tempahan_id
+                LEFT JOIN tempahan_kerja tk ON j.tempahan_kerja_id = tk.tempahan_kerja_id
+                LEFT JOIN admin a ON j.pemandu_id = a.id
+                LEFT JOIN penyewa p ON t.penyewa_id = p.id
+                LEFT JOIN kenderaan k ON k.id = j.kenderaan_id
+                LEFT JOIN tugasan tgs ON tgs.kerja = tk.nama_kerja
+                WHERE t.status_tempahan = 'pengesahan pemandu' AND j.status_jobsheet = 'dijalankan' AND j.jobsheet_id = $jobsheet_id";
 
             // Execute the query
             $result = $conn->query($sqlTempahan);
@@ -85,24 +87,24 @@ include 'controller/session.php';
 
                 <div class="mb-3">
                     <label for="namaPenyewa" class="form-label">Nama Penyewa :</label>
-                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo isset($tempahan['nama']) ? $tempahan['nama'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo isset($tempahan['nama']) ? $tempahan['nama'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="tarikhKerja" class="form-label">Tarikh Kerja :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo isset($tempahan['tarikh_kerja_cadangan']) ? $tempahan['tarikh_kerja_cadangan'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja_cadangan'])); ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="noPendaftaran" class="form-label">Nombor Pendaftaran Kenderaan :</label>
-                    <input type="text" class="form-control" id="noPendaftaran" value="<?php echo isset($tempahan['no_pendaftaran']) ? $tempahan['no_pendaftaran'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="noPendaftaran" value="<?php echo isset($tempahan['no_pendaftaran']) ? $tempahan['no_pendaftaran'] : ''; ?>" disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="luasTanah" class="form-label">Luas Tanah :</label>
-                    <input type="text" class="form-control" id="luasTanah" value="<?php echo isset($tempahan['luas_tanah']) ? $tempahan['luas_tanah'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="luasTanah" value="<?php echo isset($tempahan['luas_tanah']) ? $tempahan['luas_tanah'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="lokasiKerja" class="form-label">Lokasi Kerja :</label>
-                    <input type="text" class="form-control" id="lokasiKerja" value="<?php echo isset($tempahan['lokasi_kerja']) ? $tempahan['lokasi_kerja'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="lokasiKerja" value="<?php echo isset($tempahan['lokasi_kerja']) ? $tempahan['lokasi_kerja'] : ''; ?>" disabled>
                 </div>
             </form>
 
@@ -116,14 +118,18 @@ include 'controller/session.php';
             </div>
 
             <form id="selesaiKerja" method="POST">
-                <input type="hidden" name="tempahan_kerja_id" value="<?php echo $id ?>">
+                <input type="hidden" name="jobsheet_id" value="<?php echo $jobsheet_id ?>">
                 <div class="mb-3">
                     <label for="nama_kerja" class="form-label">Nama Kerja :</label>
-                    <input type="text" class="form-control" id="nama_kerja" name="nama_kerja" value="<?php echo isset($tempahan['nama_kerja']) ? $tempahan['nama_kerja'] : ''; ?>" readonly>
+                    <input type="text" class="form-control" id="nama_kerja" name="nama_kerja" value="<?php echo isset($tempahan['nama_kerja']) ? $tempahan['nama_kerja'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="harga_per_jam" class="form-label">Harga Per Jam (RM/Jam)</label>
-                    <input type="text" class="form-control" id="harga_per_jam" name="harga_per_jam" value="<?php echo isset($tempahan['harga_per_jam']) ? $tempahan['harga_per_jam'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="harga_per_jam" name="harga_per_jam" value="<?php echo isset($tempahan['harga_per_jam']) ? $tempahan['harga_per_jam'] : '0'; ?>" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="harga_per_jam" class="form-label">Tarikh Kerja Dijalankan :</label>
+                    <input type="date" class="form-control" id="tarikh_kerja" name="tarikh_kerja" required>
                 </div>
                 <div class="mb-3">
                     <label for="masa_mula" class="form-label">Odometer Masa Mula</label>
@@ -135,14 +141,15 @@ include 'controller/session.php';
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_jam" class="form-label">Jumlah Jam Kerja</label>
-                    <input type="text" class="form-control" id="jumlah_jam" name="jumlah_jam" placeholder="Jumlah Jam Kerja" readonly>
+                    <input type="text" class="form-control" id="jumlah_jam" name="jumlah_jam" placeholder="0" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_bayaran" class="form-label">Jumlah Bayaran (RM)</label>
-                    <input type="text" class="form-control" id="jumlah_bayaran" name="jumlah_bayaran" placeholder="Jumlah Bayaran" readonly>
+                    <input type="text" class="form-control" id="jumlah_bayaran" name="jumlah_bayaran" placeholder="0" readonly>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Hantar</button>
+                    <button type="button" class="btn btn-danger notCompleted">Tidak Selesai</button>
+                    <button type="submit" class="btn btn-success">Selesai</button>
                 </div>
             </form>
         </div>
@@ -181,11 +188,15 @@ include 'controller/session.php';
                 // Calculate total payment
                 var total_bayaran = time_diff * parseFloat(harga_per_jam);
 
+                // Round up the total_bayaran to the nearest integer and ensure it has 2 decimal places
+                var rounded_bayaran = Math.ceil(total_bayaran);
+
                 // Update fields
-                $('#jumlah_jam').val(time_diff.toFixed(2)); // Show hours worked
-                $('#jumlah_bayaran').val(total_bayaran.toFixed(2)); // Show total price
+                $('#jumlah_jam').val(time_diff.toFixed(1)); // Show hours worked
+                $('#jumlah_bayaran').val(rounded_bayaran.toFixed(2)); // Show total price rounded up
             }
         }
+
 
         // Trigger the calculation when the time inputs change
         $('#masa_mula, #masa_akhir').on('change', calculateTotal);
@@ -193,29 +204,53 @@ include 'controller/session.php';
 
         $('#selesaiKerja').on('submit', function(e) {
             e.preventDefault();
+            
+            Swal.fire({
+                title: "Selesai Kerja?",
+                showDenyButton: true,
+                confirmButtonText: "Selesai",
+                denyButtonText: `Belum Selesai`,
+                showCloseButton: true,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/selesaiKerja.php',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            if (res.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: res.message,
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: res.message,
+                                });
+                            }
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                        title: "Catatan",
+                        input: "text",
+                        inputAttributes: {
+                            autocapitalize: "off"
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: "Hantar Jobsheet",
+                        showLoaderOnConfirm: true,
 
-            // Serialize form data and make AJAX request
-            $.ajax({
-                url: 'controller/selesaiKerja.php',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    let res = JSON.parse(response);
-                    if (res.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: res.message,
-                        }).then(() => {
-                            window.location.href = 'tempahan.php';
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: res.message,
-                        });
-                    }
+                    }).then((result) => {
+
+                    });
                 }
             });
         });

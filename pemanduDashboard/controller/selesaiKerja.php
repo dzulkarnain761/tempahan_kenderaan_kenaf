@@ -4,7 +4,7 @@ include 'connection.php';
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $id = $_POST['tempahan_kerja_id'];
+    $jobsheet_id = $_POST['jobsheet_id'];
     $status = 'selesai';
     $masa_mula = $_POST['masa_mula'];
     $masa_akhir = $_POST['masa_akhir'];
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql1->close();
 
     // Step 2: Update the current tempahan_kerja
-    $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ?, masa_mula_odometer = ?, masa_akhir_odometer = ?, jumlah_jam = ?, jumlah_bayaran = ? WHERE tempahan_kerja_id = ?");
+    $sql2 = $conn->prepare("UPDATE jobsheet SET status_jobsheet = ?, masa_mula_odometer = ?, masa_akhir_odometer = ?, jam = ?, harga = ? WHERE jobsheet_id = ?");
     $sql2->bind_param("sssdds", $status, $masa_mula, $masa_akhir, $jumlah_jam, $jumlah_bayaran, $id);
 
     if (!$sql2->execute()) {

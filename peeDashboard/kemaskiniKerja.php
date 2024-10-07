@@ -168,21 +168,8 @@ include 'controller/session.php';
                                     <span class="input-group-text" id="basic-addon1">Nama Kerja</span>
                                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
                                     <button class="btn btn-outline-secondary" type="button" disabled>Bilangan Pemandu : <?php echo $totalJobsheet;  ?></button>
-                                    <button class="btn <?php echo $button ?>" type="button" onclick="window.location.href='pilihPemandu.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini</button>
-                                    <button class="btn btn-outline-danger cancelKerja" type="button" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal </button>
-                                </div>
-
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text">Tarikh Kerja</span>
-                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" required>
-                                </div>
-
-                                <div class="input-group mb-2">
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.1" required>
-                                    <span class="input-group-text">Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
+                                    <button class="btn <?php echo $button ?>" type="button" onclick="window.location.href='kemaskiniJobsheet.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini</button>
+                                    
                                 </div>
 
                             </div>
@@ -193,11 +180,6 @@ include 'controller/session.php';
                         <input type="text" class="form-control mb-2" id="jenis_kerja_input" value="No kerja found" disabled>
                     <?php endif; ?>
                 </div>
-
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Terima Tempahan</button>
-                </div>
-
 
             </form>
         </div>
@@ -217,70 +199,6 @@ include 'controller/session.php';
 <script>
     var changeEditModal = document.getElementById('changeEditModal');
     $(document).ready(function() {
-
-
-
-        $(document).on('input', '.input_hours', function() {
-            // Find the closest parent with the class `.mb-5` to ensure the correct set of inputs
-            let parentDiv = $(this).closest('.mb-5');
-
-            // Get the rate per hour and hours from the respective input fields
-            let rate_per_hour = parentDiv.find('.rate_per_hour').val();
-            let hours = $(this).val();
-
-            // Calculate the price if both values are provided
-            if (hours && rate_per_hour) {
-                let price = hours * rate_per_hour;
-                parentDiv.find('.output_price').val(price);
-            } else {
-                parentDiv.find('.output_price').val('0');
-            }
-        });
-
-
-        // Attach click event to all buttons with class 'cancelKerja'
-        $('.cancelKerja').on('click', function(e) {
-            // Get the kerjaId from the button's value
-            let kerjaId = $(this).val();
-
-            Swal.fire({
-                title: "Adakah anda pasti?",
-                text: "Anda tidak akan dapat membatalkan ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, padamkannya!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/cancelKerja.php',
-                        type: 'POST',
-                        data: {
-                            id: kerjaId
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                title: "Berjaya dipadam!",
-                                text: "Status kerja telah dikemaskini.",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
-
-
 
 
         $('#terimaTempahan').on('submit', function(e) {

@@ -25,8 +25,7 @@ if (isset($_POST['tempahan_kerja_id'])) {
         $jobsheet_id = $jobsheet_ids[$index];   // Get the corresponding jobsheet_id
 
         // Bind the parameters (i = integer)
-        $sqlJobsheet->bind_param("iiis", $kenderaan_id, $pemandu_id, $status_jobsheet, $jobsheet_id );
-
+        $sqlJobsheet->bind_param("iisi", $kenderaan_id, $pemandu_id, $status_jobsheet, $jobsheet_id );
         // Execute the query
         if (!$sqlJobsheet->execute()) {
             echo json_encode(["success" => false, "message" => "Gagal mendaftar kerja."]);

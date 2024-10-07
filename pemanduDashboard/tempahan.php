@@ -118,9 +118,9 @@ $pemandu_id = $_SESSION['id'];
                                 var actionButton = '';
 
                                 if (item.status_kerja === 'tempahan diproses') {
-                                    actionButton = `<button class="btn btn-success startKerja" value="${item.tempahan_kerja_id}">Mula Kerja</button>`;
+                                    actionButton = `<button class="btn btn-success startKerja" value="${item.jobsheet_id}">Mula Kerja</button>`;
                                 } else {
-                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>`;
+                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?jobsheet_id=${item.jobsheet_id}'">Kemaskini</button>`;
                                 }
 
                                 tbody.append(`
@@ -177,7 +177,7 @@ $pemandu_id = $_SESSION['id'];
 
 
             $(document).on('click', '.startKerja', function(e) {
-                let kerjaId = $(this).attr('value');
+                let jobsheet_id = $(this).attr('value');
 
                 Swal.fire({
                     title: "Mula Kerja",
@@ -193,7 +193,7 @@ $pemandu_id = $_SESSION['id'];
                             url: 'controller/startKerja.php',
                             type: 'POST',
                             data: {
-                                id: kerjaId
+                                jobsheet_id: jobsheet_id
                             },
                             success: function(response) {
                                 let res = JSON.parse(response);

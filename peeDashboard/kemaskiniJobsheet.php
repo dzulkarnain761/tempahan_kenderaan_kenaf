@@ -69,11 +69,10 @@ include 'controller/session.php';
             aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="tempahan.php">Tempahan</a></li>
-                <li class="breadcrumb-item"><a href="terimaTempahan.php?tempahan_id=<?php echo $tempahan_id ?>">Maklumat Tempahan</a></li>
+                <li class="breadcrumb-item"><a href="kemaskiniKerja.php?tempahan_id=<?php echo $tempahan_id ?>">Maklumat Tempahan</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Kemaskini Kerja</li>
             </ol>
         </nav>
-
 
         <div class="recentOrders">
             <div class="cardHeader">
@@ -94,9 +93,15 @@ include 'controller/session.php';
                     <?php
                     $sqlJobsheet = "SELECT * FROM `jobsheet` WHERE tempahan_kerja_id = $tempahan_kerja_id";
                     $resultJobsheet = mysqli_query($conn, $sqlJobsheet);
-
+                    
                     if ($resultJobsheet && mysqli_num_rows($resultJobsheet) > 0) {
                         while ($rowJobsheet = mysqli_fetch_assoc($resultJobsheet)) {
+
+                            if($rowJobsheet['status_jobsheet'] == 'dijalankan' || $rowJobsheet['status_jobsheet'] == 'selesai'){
+                                $inputaction = 'disabled';
+                            }else{
+                                $inputaction = '';
+                            }
 
                     ?>
                             <input type="hidden" name="jobsheet_id[]" value="<?php echo $rowJobsheet['jobsheet_id']; ?>">
@@ -104,7 +109,7 @@ include 'controller/session.php';
                             <!-- Kenderaan Select -->
                             <div class="input-group mb-2">
                                 <span class="input-group-text" id="basic-addon1">Kenderaan</span>
-                                <select class="form-select" name="kenderaan_id[]" required>
+                                <select class="form-select" name="kenderaan_id[]" $inputaction>
                                     <option value="" disabled selected>--Pilih Kenderaan--</option>
                                     <?php
 
@@ -124,7 +129,7 @@ include 'controller/session.php';
                                 </select>
 
                                 <span class="input-group-text" id="basic-addon1">Pemandu</span>
-                                <select class="form-select" name="pemandu_id[]" required>
+                                <select class="form-select" name="pemandu_id[]" $inputaction>
                                     <option value="" disabled selected>--Pilih Pemandu--</option>
                                     <?php
 
@@ -146,6 +151,13 @@ include 'controller/session.php';
                                 <button type="button" class="btn btn-outline-danger deleteJobsheet" value="<?php echo $rowJobsheet['jobsheet_id']; ?>">Padam</button>
 
                             </div>
+
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" id="basic-addon1">Catatan</span>
+                                <input type="text" class="form-control" value="<?php echo $rowJobsheet['catatan']; ?>" disabled>
+                            </div><br>
+
+                           
 
                     <?php
                         }
@@ -288,7 +300,7 @@ include 'controller/session.php';
                             title: 'Success',
                             text: res.message,
                         }).then(() => {
-                            window.location.href = 'terimaTempahan.php?tempahan_id=<?= $tempahan_id ?>';
+                            window.location.href = 'kemaskiniKerja.php?tempahan_id=<?= $tempahan_id ?>';
                         });
                     } else {
                         Swal.fire({

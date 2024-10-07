@@ -57,6 +57,7 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
+                            <td>Status</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -118,7 +119,7 @@ include 'controller/session.php';
 
                                 let actionButtons = '';
 
-                                if (item.status_tempahan != 'pengesahan kpp') {
+                                if (item.status_tempahan == 'pengesahan pee') {
                                     actionButtons = `
                                     <td>
                                         <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-success">
@@ -130,14 +131,26 @@ include 'controller/session.php';
 
                                     </td>
                                 `;
-                                } else {
+                                } else if(item.status_tempahan == 'pengesahan kpp') {
                                     actionButtons = `
                                     <td>
                                         <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
                                             Lihat Butiran
                                         </button>
+                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-secondary">
+                                            Kemaskini
+                                        </button>
                                     </td>
                                 `;
+                                }else{
+                                    actionButtons = `
+                                    <td>
+                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-success">
+                                            Kemaskini
+                                        </button>
+                                    </td>
+                                `;
+
                                 }
 
                                 tbody.append(`
@@ -146,6 +159,7 @@ include 'controller/session.php';
                                         <td>${item.nama}</td>
                                         <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
+                                        <td>${item.status_tempahan}</td>
                                         ${actionButtons}
                                     </tr>
                                 `);
@@ -170,7 +184,7 @@ include 'controller/session.php';
                                         <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
                                     </li>
                                 `);
-                                }
+                            }
 
                             // Next button
                             pagination.append(`
