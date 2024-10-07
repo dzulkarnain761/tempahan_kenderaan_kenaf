@@ -55,7 +55,6 @@ include 'controller/session.php';
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
-                            <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
                             <td>Cara Bayar</td>
                             <td>Tindakan</td>
@@ -140,7 +139,6 @@ include 'controller/session.php';
                                     <tr>
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
-                                        <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
                                         <td>${caraBayaran}</td>
                                         <td>${actionButton}</td>
