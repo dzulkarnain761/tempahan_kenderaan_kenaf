@@ -56,7 +56,7 @@ include 'controller/session.php';
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
                             <td>Jenis Kerja</td>
-                            <td>Cara Bayar</td>
+                            
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -125,7 +125,7 @@ include 'controller/session.php';
 
                             // Common 'Lihat Butiran' button
                             const lihatButiranButton = `
-                                <button class="btn btn-primary" onclick="window.location.href='butiran_tempahan.php?id=${item.tempahan_id}'">
+                                <button class="btn btn-primary" onclick="window.location.href='butiran_tempahan.php?tempahan_id=${item.tempahan_id}'">
                                     Lihat Butiran
                                 </button>`;
 
@@ -140,7 +140,7 @@ include 'controller/session.php';
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
                                         <td>${kerjaList}</td>
-                                        <td>${caraBayaran}</td>
+                                        
                                         <td>${actionButton}</td>
                                     </tr>
 
