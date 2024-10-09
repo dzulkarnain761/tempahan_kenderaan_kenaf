@@ -38,35 +38,49 @@ if (isset($_POST['id'])) {
         exit;
     }
 
-    // Prepare and execute the SQL statement to update the kerja status
-    $sql = "UPDATE `tempahan_kerja` SET `status_kerja` = ? WHERE `tempahan_kerja_id` = ?";
-    $stmt = $conn->prepare($sql);
-    if ($stmt) {
-        $stmt->bind_param("si", $statusKerja, $tempahan_kerja_id);
-        if ($stmt->execute()) {
-            // Prepare and execute the SQL statement to delete the entry from jobsheet table
-            $sqlJobsheet = "DELETE FROM `jobsheet` WHERE `tempahan_kerja_id` = ?";
-            $stmtJobsheet = $conn->prepare($sqlJobsheet);
-            if ($stmtJobsheet) {
-                $stmtJobsheet->bind_param("i", $tempahan_kerja_id);
-                if ($stmtJobsheet->execute()) {
-                    echo json_encode(['success' => true, 'message' => 'Success to delete jobs record']);
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'Failed to delete jobsheet record']);
-                }
-                $stmtJobsheet->close();
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to prepare statement for deleting jobsheet record']);
+    try {
+        // Prepare and execute the SQL statement to update the kerja status
+        $sql = "UPDATE `tempahan_kerja` SET `status_kerja` = ? WHERE `tempahan_kerja_id` = ?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt) {
+            $stmt->bind_param("si", $statusKerja, $tempahan_kerja_id);
+            if (!$stmt->execute()) {
+                throw new Exception('Failed to update kerja status: ' . $stmt->error);
             }
+            $stmt->close();
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update kerja status']);
+            throw new Exception('Failed to prepare statement for updating kerja status: ' . $conn->error);
         }
-        $stmt->close();
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare statement for updating kerja status']);
+
+        // Prepare and execute the SQL statement to delete the entry from jobsheet table
+        $sqlJobsheet = "DELETE FROM `jobsheet` WHERE `tempahan_kerja_id` = ?";
+        $stmtJobsheet = $conn->prepare($sqlJobsheet);
+
+        if ($stmtJobsheet) {
+            $stmtJobsheet->bind_param("i", $tempahan_kerja_id);
+            if (!$stmtJobsheet->execute()) {
+                throw new Exception('Failed to delete jobsheet record: ' . $stmtJobsheet->error);
+            }
+            $stmtJobsheet->close();
+        } else {
+            throw new Exception('Failed to prepare statement for deleting jobsheet record: ' . $conn->error);
+        }
+
+        // Commit the transaction if both operations are successful
+        $conn->commit();
+        echo json_encode(['success' => true, 'message' => 'Success to delete jobs record']);
+    } catch (Exception $e) {
+        // Rollback the transaction in case of error
+        $conn->rollback();
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    } finally {
+        // Close the connection
+        $conn->close();
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid input']);
 }
-
 $conn->close();
+
+

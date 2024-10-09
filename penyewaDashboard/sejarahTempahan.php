@@ -26,6 +26,10 @@ include 'controller/get_userdata.php';
     <link rel="stylesheet" href="../assets/css/owl.css">
 
     <style>
+        
+        .rental-item .status {
+            float: right;
+        }
     </style>
 </head>
 

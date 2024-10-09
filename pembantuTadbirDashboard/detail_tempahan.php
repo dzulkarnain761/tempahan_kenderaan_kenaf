@@ -172,7 +172,7 @@ include 'controller/session.php';
 
                 <div class="input-group mb-2 align-self-end">
                     <span class="input-group-text">Total Anggaran (RM)</span>
-                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo $total_harga_sebenar ?? '0'; ?>" readonly>
+                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo $total_harga_anggaran ?? '0'; ?>" readonly>
                 </div>
             </div>
 

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Step 1: Get the tempahan_id of the current tempahan_kerja
-    $sql1 = $conn->prepare("SELECT tempahan_kerja_id FROM jobsheet WHERE jobsheet_id= ?");
+    $sql1 = $conn->prepare("SELECT tempahan_kerja_id FROM jobsheet WHERE jobsheet_id = ?");
     $sql1->bind_param("s", $jobsheet_id);
     $sql1->execute();
     $sql1->bind_result($tempahan_kerja_id);

@@ -26,6 +26,9 @@ include 'controller/get_userdata.php';
     <link rel="stylesheet" href="../assets/css/owl.css">
 
     <style>
+        .rental-item .status {
+            float: right;
+        }
     </style>
 </head>
 
@@ -124,6 +127,9 @@ include 'controller/get_userdata.php';
                                     break;
                                 case 'selesai':
                                     echo '<div class="status badge bg-success">Selesai</div>';
+                                    break;
+                                case 'ditolak':
+                                    echo '<div class="status badge bg-danger">Ditolak</div>';
                                     break;
 
                                 default:
@@ -341,7 +347,6 @@ include 'controller/get_userdata.php';
                                 <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                 <div style="display: flex; justify-content: flex-end; gap: 10px;">
                                     
-                                    
                                     <span>
                                         <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
                                     </span>
@@ -404,7 +409,7 @@ include 'controller/get_userdata.php';
                                             Catatan:
                                         </span><br>
                                         <span style="font-size: large;">
-                                            <?php echo $catatan; ?>
+                                            <?php echo $catatan ?? 'Tiada Catatan'; ?>
                                         </span>
                                     </p>
 

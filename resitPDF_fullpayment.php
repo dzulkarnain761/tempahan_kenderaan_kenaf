@@ -139,7 +139,7 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
         <!-- Totals Section -->
         <div style="text-align: right;">
             <p><strong>Subtotal : </strong>RM <?php echo $tempahan['total_harga_sebenar'] ?></p>
-            <p><strong>Deposit (50%) : </strong> - RM <?php echo $tempahan['total_deposit'] ?></p>
+            <p><strong>Deposit : </strong> - RM <?php echo $tempahan['total_deposit'] ?></p>
             <p><strong>Total : </strong> RM <?php echo $tempahan['total_baki'] ?></p>
         </div>
 

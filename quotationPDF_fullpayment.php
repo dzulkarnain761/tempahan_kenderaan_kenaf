@@ -325,22 +325,16 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                         </table>
                       </td>
                     </tr>
-
                     <tr>
                       <td align="left" style="font-size: 0px; padding: 10px 25px; word-break: break-word">
                         <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22px; table-layout: auto; width: 100%; border: none">
                           <tr>
-
                             <td style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Maklumat Tempahan :</strong></div>
-
                               <div class="company-info" style="color: #555; font-family: helvetica">Lokasi : <?php echo $tempahan['lokasi_kerja'] ?></div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Keluasan : <?php echo $tempahan['luas_tanah'] ?> Hektar</div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Tarikh Kerja : <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])); ?></div>
-
                             </td>
-
-
                           </tr>
                         </table>
                       </td>
