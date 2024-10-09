@@ -260,13 +260,23 @@ include 'controller/session.php';
                             id: kerjaId
                         },
                         success: function(response) {
-                            Swal.fire({
-                                title: "Berjaya dipadam!",
-                                text: "Status kerja telah dikemaskini.",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
+                            let res = JSON.parse(response);
+
+                            if (res.success) {
+                                Swal.fire({
+                                    title: "Berjaya dipadam",
+                                    text: res.message,
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Gagal Padam",
+                                    text: res.message,
+                                    icon: "error"
+                                })
+                            }
                         },
                         error: function(xhr, status, error) {
                             Swal.fire({
@@ -279,8 +289,6 @@ include 'controller/session.php';
                 }
             });
         });
-
-
 
 
         $('#terimaTempahan').on('submit', function(e) {
