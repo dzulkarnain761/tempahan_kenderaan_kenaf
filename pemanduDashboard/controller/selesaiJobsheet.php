@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql2->close();
 
         // Step 3: Check if all jobsheets with the same tempahan_kerja_id have the status 'selesai'
-        $sql3 = $conn->prepare("SELECT COUNT(*) FROM jobsheet WHERE tempahan_kerja_id = ? AND status_jobsheet NOT IN ('dalam proses','selesai','dalam pengesahan')");
+        $sql3 = $conn->prepare("SELECT COUNT(*) FROM jobsheet WHERE tempahan_kerja_id = ? AND status_jobsheet NOT IN ('selesai','dalam pengesahan')");
         $sql3->bind_param("s", $tempahan_kerja_id);
         $sql3->execute();
         $sql3->bind_result($remaining_jobs);
