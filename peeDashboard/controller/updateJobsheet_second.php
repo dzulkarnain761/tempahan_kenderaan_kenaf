@@ -25,7 +25,6 @@ if (isset($_POST['tempahan_kerja_id'])) {
         $kenderaan_id = $kenderaan_ids[$index]; // Get the corresponding kenderaan_id
         $jobsheet_id = $jobsheet_ids[$index];   // Get the corresponding jobsheet_id
 
-        // Bind the parameters (i = integer, s = string)
         $sqlJobsheet->bind_param("iisi", $kenderaan_id, $pemandu_id, $status_jobsheet, $jobsheet_id);
         // Execute the query
         if (!$sqlJobsheet->execute()) {
@@ -49,7 +48,6 @@ if (isset($_POST['tempahan_kerja_id'])) {
         $conn->close();
         exit();
     }
-
 
     // Bind the parameters for the update
     $sqlTempahanKerja->bind_param("si", $status_tempahan_kerja, $tempahan_kerja_id);

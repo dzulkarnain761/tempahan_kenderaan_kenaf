@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sqlUpdateTempahanKerja->close();
 
             // Check if all tasks with the same tempahan_id have the status 'selesai'
-            $sql4 = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ? AND status_kerja NOT IN ('selesai','dibatalkan','ditolak','belum selesai','tempahan diproses')");
+            $sql4 = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ? AND status_kerja NOT IN ('selesai','dibatalkan','ditolak','tempahan diproses')");
             $sql4->bind_param("s", $tempahan_id);
             $sql4->execute();
             $sql4->bind_result($remaining_task);
