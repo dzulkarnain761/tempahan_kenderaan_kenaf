@@ -153,9 +153,7 @@ include 'controller/session.php';
                                         </button>
                                     </td>
                                 `;
-
                                 }
-
                                 tbody.append(`
                                     <tr data-id="${item.tempahan_id}">
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
@@ -166,7 +164,6 @@ include 'controller/session.php';
                                         ${actionButtons}
                                     </tr>
                                 `);
-
                             });
 
                             // Populate pagination and show it if hidden

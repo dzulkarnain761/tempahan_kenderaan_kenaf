@@ -117,10 +117,10 @@ $pemandu_id = $_SESSION['id'];
 
                                 var actionButton = '';
 
-                                if (item.status_kerja === 'tempahan diproses') {
-                                    actionButton = `<button class="btn btn-success startKerja" value="${item.jobsheet_id}">Mula Kerja</button>`;
-                                } else {
+                                if (item.status_jobsheet === 'dijalankan') {
                                     actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?jobsheet_id=${item.jobsheet_id}'">Kemaskini</button>`;
+                                } else {
+                                    actionButton = `<button class="btn btn-success startKerja" value="${item.jobsheet_id}">Mula Kerja</button>`;
                                 }
 
                                 tbody.append(`
