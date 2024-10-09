@@ -6,7 +6,7 @@ if (isset($_POST['tempahan_kerja_id'])) {
     
     $pemandu_ids = $_POST['pemandu_id'];
     $kenderaan_ids = $_POST['kenderaan_id'];
-    $jobsheet_ids = $_POST['jobsheet_id']; // Assuming you are passing jobsheet_id from the form
+    $jobsheet_ids = $_POST['jobsheet_id']; 
 
     // Prepare the SQL statement
     $sqlJobsheet = $conn->prepare("UPDATE `jobsheet` SET `kenderaan_id`= ?, `pemandu_id`= ?, status_jobsheet = ? WHERE `jobsheet_id` = ?");

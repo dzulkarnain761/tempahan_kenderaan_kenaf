@@ -122,7 +122,7 @@ include 'controller/session.php';
                 <div class="mb-3">
                     <?php
                     $tempahanId = $tempahan_id;
-                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
+                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja NOT IN ('dibatalkan','ditolak','selesai')";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):

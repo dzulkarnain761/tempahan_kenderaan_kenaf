@@ -166,7 +166,10 @@ include 'controller/get_userdata.php';
                                                 echo '';
                                                 break;
                                             case 'dijalankan':
-                                                echo '<span class="badge bg-warning">Dijalankan</span>';
+                                                echo '<span class="badge bg-warning text-dark">Dijalankan</span>';
+                                                break;
+                                            case 'belum selesai':
+                                                echo '<span class="badge bg-warning text-dark">Belum Selesai</span>';
                                                 break;
                                             case 'selesai':
                                                 echo '<span class="badge bg-success">Selesai</span>';

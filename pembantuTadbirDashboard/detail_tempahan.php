@@ -55,13 +55,13 @@ include 'controller/session.php';
             include 'controller/connection.php';
 
             // Get the ID from the URL query string
-            $id = $_GET['id'];
+            $tempahan_id = $_GET['tempahan_id'];
 
             // Query to get the necessary details
             $sqlTempahan = "SELECT t.*, p.nama
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE t.status_bayaran NOT IN ('dalam pengesahan', 'ditolak', 'dibatalkan','selesai','bayaran deposit') AND t.tempahan_id = $id";
+                WHERE t.status_bayaran NOT IN ('dalam pengesahan', 'ditolak', 'dibatalkan','selesai','bayaran deposit') AND t.tempahan_id = $tempahan_id";
 
             // Execute the query
             $result = $conn->query($sqlTempahan);
@@ -101,23 +101,16 @@ include 'controller/session.php';
                         <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['luas_tanah'] ?>" readonly>
                     </div>
 
-                    <?php
-                    if ($tempahan['status_bayaran'] == 'deposit diproses' || $tempahan['status_bayaran'] == 'deposit selesai') {
-                    ?>
-                        <label for="depositKerja" class="form-label">Deposit (RM) :</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control" id="depositKerja" value="<?php echo htmlspecialchars($tempahan['total_deposit']); ?>" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_resit_deposit.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
-                        </div>
-                    <?php
-                    } else {
-                    ?>
-                        <label for="depositKerja" class="form-label">Deposit (RM) :</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control" id="depositKerja" value="<?php echo htmlspecialchars($tempahan['total_deposit']); ?>" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_resit_deposit.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
-                        </div>
+                    <label for="depositKerja" class="form-label">Deposit (RM) :</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="depositKerja" value="<?php echo htmlspecialchars($tempahan['total_deposit']); ?>" readonly>
+                        <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_resit_deposit.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
+                    </div>
 
+
+                    <?php
+                    if ($tempahan['status_bayaran'] == 'bayaran diproses' || $tempahan['status_bayaran'] == 'bayaran selesai') {
+                    ?>
                         <label for="totalKerja" class="form-label">Bayaran Penuh (RM) :</label>
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" id="totalKerja" value="<?php echo htmlspecialchars($tempahan['total_baki']); ?>" readonly>
@@ -133,83 +126,102 @@ include 'controller/session.php';
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Butiran Kerja</h2>
+                    <h2>Butiran Kerja (Anggaran)</h2>
                 </div>
 
-                <form>
-                    <?php
-                    // Query to get the necessary details
-                    $sqlkerja = "SELECT * FROM tempahan_kerja WHERE status_kerja NOT IN ('dibatalkan','ditolak') AND tempahan_id = $id";
+                <?php
+                // Prepare the first statement to get total_harga_anggaran and total_harga_sebenar
+                $sql1 = $conn->prepare("SELECT total_harga_anggaran, total_harga_sebenar FROM tempahan WHERE tempahan_id = ?");
+                $sql1->bind_param("s", $tempahan_id);
+                $sql1->execute();
+                $sql1->bind_result($total_harga_anggaran, $total_harga_sebenar);
+                $sql1->fetch(); // Fetch the result
 
-                    // Execute the query
-                    $result = $conn->query($sqlkerja);
+                // Close the first statement
+                $sql1->close();
+
+                // Prepare the second statement for tempahan_kerja
+                $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE status_kerja NOT IN ('dibatalkan', 'ditolak') AND tempahan_id = ?");
+                $sqlkerja->bind_param("s", $tempahan_id);
+                $sqlkerja->execute();
+                $result = $sqlkerja->get_result(); // Get the result set from the prepared statement
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+
+                ?>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Nama Kerja</span>
+                            <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
+                        </div>
+                        <div class="input-group mb-2">
+                            <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
+                            <span class="input-group-text">Jam Anggaran</span>
+                            <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
+                            <span class="input-group-text">Harga Anggaran (RM)</span>
+                            <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
+                        </div><br>
+
+                <?php
+
+                    }
+                } else {
+                    echo "<p>No work found for this order.</p>";
+                }
+                ?>
+
+                <div class="input-group mb-2 align-self-end">
+                    <span class="input-group-text">Total Anggaran (RM)</span>
+                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo $total_harga_sebenar ?? '0'; ?>" readonly>
+                </div>
+            </div>
+
+            <?php
+            if ($tempahan['status_bayaran'] == 'bayaran diproses' || $tempahan['status_bayaran'] == 'bayaran selesai') {
+            ?>
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Butiran Kerja</h2>
+                    </div>
+
+                    <?php
+                    // Prepare the second query again (already prepared earlier)
+                    $sqlkerja->execute();
+                    $result = $sqlkerja->get_result(); // Get the result set from the prepared statement
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            if ($tempahan['status_bayaran'] == 'deposit diproses') {
+
                     ?>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <span class="input-group-text">Nama Kerja</span>
-                                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam Anggaran</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                                    <span class="input-group-text">Harga Anggaran (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Nama Kerja</span>
+                                <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
+                                <span class="input-group-text">Jam</span>
+                                <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['total_jam']); ?>" readonly>
+                                <span class="input-group-text">Harga (RM)</span>
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($row['total_harga']); ?>" readonly>
+                            </div><br>
 
-                                </div><br>
+                    <?php
 
-                            <?php  } else {
-                            ?>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <span class="input-group-text">Nama Kerja</span>
-                                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam Anggaran</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                                    <span class="input-group-text">Harga Anggaran (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
-                                </div><br>
-
-                    <?php  }
                         }
                     } else {
                         echo "<p>No work found for this order.</p>";
                     }
                     ?>
 
-                    <?php
-
-                    // Query to get the total deposit
-                    $sqlDeposit = "SELECT total_harga_anggaran FROM tempahan WHERE tempahan_id = $id";
-
-                    // Execute the query
-                    $resultDeposit = mysqli_query($conn, $sqlDeposit);
-
-                    // Fetch the result
-                    $deposit = mysqli_fetch_assoc($resultDeposit);
-
-                    ?>
-
-                    <div class="input-group mb-2 align-self-end" >
+                    <div class="input-group mb-2 align-self-end">
                         <span class="input-group-text">Total (RM)</span>
-                        <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo isset($deposit['total_harga_anggaran']) ? $deposit['total_harga_anggaran'] : '0'; ?>" readonly>
+                        <input type="text" class="form-control" value="<?php echo $total_harga_sebenar ?? '0'; ?>" readonly>
                     </div>
+                </div>
+            <?php
+            }
+            ?>
 
-
-
-                </form>
-
-
-            </div>
         </div>
     </div>
 

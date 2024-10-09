@@ -76,35 +76,39 @@ include 'controller/session.php';
 
             // Fetch the data into an associative array
             if ($result->num_rows > 0) {
-                $tempahan = $result->fetch_assoc();
+                $jobsheet = $result->fetch_assoc();
             } else {
                 echo "No records found.";
-                $tempahan = [];
+                $jobsheet = [];
             }
             ?>
 
             <form>
+                <div class="mb-3">
+                    <label for="no_bill" class="form-label">No Bill :</label>
+                    <input type="text" class="form-control" id="no_bill" value="<?php echo isset($jobsheet['tempahan_id']) ? $jobsheet['tempahan_id'] : ''; ?>" disabled>
+                </div>
 
                 <div class="mb-3">
                     <label for="namaPenyewa" class="form-label">Nama Penyewa :</label>
-                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo isset($tempahan['nama']) ? $tempahan['nama'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo isset($jobsheet['nama']) ? $jobsheet['nama'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="tarikhKerja" class="form-label">Tarikh Kerja :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja_cadangan'])); ?>" disabled>
+                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo date('d/m/Y', strtotime($jobsheet['tarikh_kerja_cadangan'])); ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="noPendaftaran" class="form-label">Nombor Pendaftaran Kenderaan :</label>
-                    <input type="text" class="form-control" id="noPendaftaran" value="<?php echo isset($tempahan['no_pendaftaran']) ? $tempahan['no_pendaftaran'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="noPendaftaran" value="<?php echo isset($jobsheet['no_pendaftaran']) ? $jobsheet['no_pendaftaran'] : ''; ?>" disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="luasTanah" class="form-label">Luas Tanah :</label>
-                    <input type="text" class="form-control" id="luasTanah" value="<?php echo isset($tempahan['luas_tanah']) ? $tempahan['luas_tanah'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="luasTanah" value="<?php echo isset($jobsheet['luas_tanah']) ? $jobsheet['luas_tanah'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="lokasiKerja" class="form-label">Lokasi Kerja :</label>
-                    <input type="text" class="form-control" id="lokasiKerja" value="<?php echo isset($tempahan['lokasi_kerja']) ? $tempahan['lokasi_kerja'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="lokasiKerja" value="<?php echo isset($jobsheet['lokasi_kerja']) ? $jobsheet['lokasi_kerja'] : ''; ?>" disabled>
                 </div>
             </form>
 
@@ -121,11 +125,11 @@ include 'controller/session.php';
                 <input type="hidden" name="jobsheet_id" value="<?php echo $jobsheet_id ?>">
                 <div class="mb-3">
                     <label for="nama_kerja" class="form-label">Nama Kerja :</label>
-                    <input type="text" class="form-control" id="nama_kerja" name="nama_kerja" value="<?php echo isset($tempahan['nama_kerja']) ? $tempahan['nama_kerja'] : ''; ?>" disabled>
+                    <input type="text" class="form-control" id="nama_kerja" name="nama_kerja" value="<?php echo isset($jobsheet['nama_kerja']) ? $jobsheet['nama_kerja'] : ''; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="harga_per_jam" class="form-label">Harga Per Jam (RM/Jam)</label>
-                    <input type="text" class="form-control" id="harga_per_jam" name="harga_per_jam" value="<?php echo isset($tempahan['harga_per_jam']) ? $tempahan['harga_per_jam'] : '0'; ?>" disabled>
+                    <input type="text" class="form-control" id="harga_per_jam" name="harga_per_jam" value="<?php echo isset($jobsheet['harga_per_jam']) ? $jobsheet['harga_per_jam'] : '0'; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="harga_per_jam" class="form-label">Tarikh Kerja Dijalankan :</label>
@@ -147,9 +151,13 @@ include 'controller/session.php';
                     <label for="jumlah_bayaran" class="form-label">Jumlah Bayaran (RM)</label>
                     <input type="text" class="form-control" id="jumlah_bayaran" name="jumlah_bayaran" placeholder="0" readonly>
                 </div>
+                <div class="mb-3">
+                    <label for="catatan" class="form-label">Catatan</label>
+                    <input type="text" class="form-control" id="catatan" name="catatan">
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger notCompleted">Tidak Selesai</button>
-                    <button type="submit" class="btn btn-success">Selesai</button>
+                    <button type="submit" class="btn btn-danger" name="submit_action" value="belum_selesai">Tidak Selesai</button>
+                    <button type="submit" class="btn btn-primary" name="submit_action" value="selesai">Selesai</button>
                 </div>
             </form>
         </div>
@@ -204,57 +212,44 @@ include 'controller/session.php';
 
         $('#selesaiKerja').on('submit', function(e) {
             e.preventDefault();
-            
-            Swal.fire({
-                title: "Selesai Kerja?",
-                showDenyButton: true,
-                confirmButtonText: "Selesai",
-                denyButtonText: `Belum Selesai`,
-                showCloseButton: true,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/selesaiKerja.php',
-                        type: 'POST',
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            if (res.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success',
-                                    text: res.message,
-                                }).then(() => {
-                                    window.location.href = 'tempahan.php';
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: res.message,
-                                });
-                            }
-                        }
-                    });
-                } else if (result.isDenied) {
-                    Swal.fire({
-                        title: "Catatan",
-                        input: "text",
-                        inputAttributes: {
-                            autocapitalize: "off"
-                        },
-                        showCancelButton: true,
-                        confirmButtonText: "Hantar Jobsheet",
-                        showLoaderOnConfirm: true,
 
-                    }).then((result) => {
+            // Get the value of the button clicked
+            let submitAction = $(document.activeElement).val(); // get the value of the button
 
-                    });
+            let url = ''; // Initialize URL
+
+            // Determine which URL to use based on the button clicked
+            if (submitAction === 'selesai') {
+                url = 'controller/selesaiJobsheet.php';
+            } else if (submitAction === 'belum_selesai') {
+                url = 'controller/belumSelesaiJobsheet.php';
+            }
+
+            // Make the AJAX request to the appropriate controller
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: res.tempahan_kerja_id,
+                        }).then(() => {
+                            window.location.href = 'tempahan.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        });
+                    }
                 }
             });
         });
-
 
     });
 </script>

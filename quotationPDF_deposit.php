@@ -379,7 +379,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                                         AND status_kerja NOT IN ('ditolak','dibatalkan')";
 
                           $resultKerja = mysqli_query($conn, $sqlKerja);
-                          $totalHarga = 0;
+                          
 
                           // Loop through the result set
                           while ($rowKerja = mysqli_fetch_assoc($resultKerja)) {
@@ -390,25 +390,18 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['harga_anggaran'] ?></td>
                             </tr>
                           <?php
-                            // Add to total price
-                            $totalHarga += $rowKerja['harga_anggaran'];
                           }
                           ?>
 
                           <tr>
                             <td><strong>Total Harga</strong></td>
                             <td></td>
-                            <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($totalHarga, 2) ?></td>
+                            <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($tempahan['total_harga_anggaran'], 2) ?></td>
                           </tr>
-
-                          <?php
-                          $totalDeposit = $totalHarga / 2;
-                          ?>
-
                           <tr>
                             <td><strong>Perlu Dibayar - Deposit(50%)</strong></td>
                             <td></td>
-                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right"><strong>RM <?php echo number_format($totalDeposit, 2) ?></strong></td>
+                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right"><strong>RM <?php echo number_format($tempahan['total_deposit'], 2) ?></strong></td>
                           </tr>
                         </table>
 

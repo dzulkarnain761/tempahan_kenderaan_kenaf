@@ -71,6 +71,8 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
             <p style="margin: 5px 0;">Tel : +609-766 8000</p>
             <p style="margin: 5px 0;">Tarikh : <?php echo date('d/m/Y', strtotime($tempahan['updated_at'])); ?></p>
             <hr style="border: 1px solid #ccc;">
+            <p style="margin: 5px 0;">Bill No : <?php echo sprintf('%05d', $tempahan['tempahan_id']); ?></p>
+            <hr style="border: 1px solid #ccc;">
         </div>
 
         <!-- Customer Info -->

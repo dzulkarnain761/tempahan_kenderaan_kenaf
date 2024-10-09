@@ -104,12 +104,12 @@ include 'controller/session.php';
                             }
 
                     ?>
-                            <input type="hidden" name="jobsheet_id[]" value="<?php echo $rowJobsheet['jobsheet_id']; ?>">
+                            <input type="hidden" name="jobsheet_id[]" value="<?php echo $rowJobsheet['jobsheet_id']; ?>" <?php echo $inputaction; ?>>
 
                             <!-- Kenderaan Select -->
                             <div class="input-group mb-2">
                                 <span class="input-group-text" id="basic-addon1">Kenderaan</span>
-                                <select class="form-select" name="kenderaan_id[]" $inputaction>
+                                <select class="form-select" name="kenderaan_id[]" <?php echo $inputaction; ?>>
                                     <option value="" disabled selected>--Pilih Kenderaan--</option>
                                     <?php
 
@@ -129,7 +129,7 @@ include 'controller/session.php';
                                 </select>
 
                                 <span class="input-group-text" id="basic-addon1">Pemandu</span>
-                                <select class="form-select" name="pemandu_id[]" $inputaction>
+                                <select class="form-select" name="pemandu_id[]" <?php echo $inputaction; ?>>
                                     <option value="" disabled selected>--Pilih Pemandu--</option>
                                     <?php
 
@@ -148,7 +148,7 @@ include 'controller/session.php';
                                     } ?>
 
                                 </select>
-                                <button type="button" class="btn btn-outline-danger deleteJobsheet" value="<?php echo $rowJobsheet['jobsheet_id']; ?>">Padam</button>
+                                <button type="button" class="btn btn-outline-danger deleteJobsheet" value="<?php echo $rowJobsheet['jobsheet_id']; ?>" <?php echo $inputaction; ?>>Padam</button>
 
                             </div>
 
@@ -289,9 +289,10 @@ include 'controller/session.php';
 
             // Serialize form data and make AJAX request
             $.ajax({
-                url: 'controller/updateJobsheet.php',
+                url: 'controller/updateJobsheet_second.php',
                 type: 'POST',
                 data: $(this).serialize(),
+                tempahan_kerja_id: <?= $tempahan_kerja_id ?>,
                 success: function(response) {
                     let res = JSON.parse(response);
                     if (res.success) {

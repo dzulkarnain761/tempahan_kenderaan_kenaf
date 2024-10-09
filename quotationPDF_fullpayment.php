@@ -378,26 +378,24 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                                         WHERE tempahan_id = $id 
                                         AND status_kerja NOT IN ('ditolak','dibatalkan')";
                           $resultKerja = mysqli_query($conn, $sqlKerja);
-                          $totalHarga = 0;
-
+                          
                           // Loop through the result set
                           while ($rowKerja = mysqli_fetch_assoc($resultKerja)) {
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jumlah_jam'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['jumlah_bayaran'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['total_jam'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['total_harga'] ?></td>
                             </tr>
                           <?php
-                            // Add to total price
-                            $totalHarga += $rowKerja['jumlah_bayaran'];
+                           
                           }
                           ?>
 
                           <tr>
                             <td><strong>Total Harga</strong></td>
                             <td></td>
-                            <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($totalHarga, 2) ?></td>
+                            <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($tempahan['total_harga_sebenar'], 2) ?></td>
                           </tr>
 
                         

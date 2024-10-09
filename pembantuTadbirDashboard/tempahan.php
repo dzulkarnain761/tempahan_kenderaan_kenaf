@@ -127,7 +127,7 @@ include 'controller/session.php';
 
                             // Common 'Lihat Butiran' button
                             const lihatButiranButton = `
-                                <button class="btn btn-primary" onclick="window.location.href='detail_tempahan.php?id=${item.tempahan_id}'">
+                                <button class="btn btn-primary" onclick="window.location.href='detail_tempahan.php?tempahan_id=${item.tempahan_id}'">
                                     Lihat Butiran
                                 </button>`;
 

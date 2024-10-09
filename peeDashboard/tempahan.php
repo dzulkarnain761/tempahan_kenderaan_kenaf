@@ -131,7 +131,7 @@ include 'controller/session.php';
 
                                     </td>
                                 `;
-                                } else if(item.status_tempahan == 'pengesahan kpp') {
+                                } else if (item.status_tempahan == 'pengesahan kpp') {
                                     actionButtons = `
                                     <td>
                                         <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
@@ -142,10 +142,13 @@ include 'controller/session.php';
                                         </button>
                                     </td>
                                 `;
-                                }else{
+                                } else {
                                     actionButtons = `
                                     <td>
-                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-success">
+                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
+                                            Lihat Butiran
+                                        </button>
+                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-warning">
                                             Kemaskini
                                         </button>
                                     </td>

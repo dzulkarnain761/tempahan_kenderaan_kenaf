@@ -75,7 +75,9 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
             <p style="margin: 5px 0;">Kubang Kerian,
                 16150 Kota Bharu, Kelantan Darul Naim.</p>
             <p style="margin: 5px 0;">Tel: +609-766 8000</p>
-            <p style="margin: 5px 0;">Date: <?php echo date('d/m/Y', strtotime($tempahan['updated_at'])); ?></p>
+            <p style="margin: 5px 0;">Tarikh : <?php echo date('d/m/Y', strtotime($tempahan['updated_at'])); ?></p>
+            <hr style="border: 1px solid #ccc;">
+            <p style="margin: 5px 0;">Bill No : <?php echo sprintf('%05d', $tempahan['tempahan_id']); ?></p>
             <hr style="border: 1px solid #ccc;">
         </div>
 
@@ -122,9 +124,9 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
 
                     <tr>
                         <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['jumlah_jam'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_jam'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rateharga ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['jumlah_bayaran'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_harga'] ?></td>
                     </tr>
                 <?php
                    
