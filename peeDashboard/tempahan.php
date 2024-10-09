@@ -142,7 +142,7 @@ include 'controller/session.php';
                                         </button>
                                     </td>
                                 `;
-                                }else if (item.status_tempahan == 'belum selesai') {
+                                } else {
                                     actionButtons = `
                                     <td>
                                         <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
@@ -150,14 +150,6 @@ include 'controller/session.php';
                                         </button>
                                         <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-warning">
                                             Kemaskini
-                                        </button>
-                                    </td>
-                                `;
-                                } else {
-                                    actionButtons = `
-                                    <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
-                                            Lihat Butiran
                                         </button>
                                     </td>
                                 `;
