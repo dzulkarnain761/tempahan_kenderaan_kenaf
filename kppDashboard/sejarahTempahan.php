@@ -120,11 +120,11 @@ include 'controller/session.php';
 								<td>${item.nama}</td>
 								<td>${kerjaList}</td>
 								<td>
-									<a href="sejarahButiran.php?id=${item.tempahan_id}">
+									<a href="sejarahButiran.php?tempahan_id=${item.tempahan_id}">
 										<ion-icon name="document-text-outline" size="large"></ion-icon>
 									</a>
 
-									<a href="controller/getPDF.php?id=${item.tempahan_id}" target="_blank">
+									<a href="controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}" target="_blank">
 										<ion-icon name="print-outline" size="large"></ion-icon>
 									</a>
 								</td>
