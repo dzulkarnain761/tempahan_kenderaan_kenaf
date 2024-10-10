@@ -145,7 +145,7 @@ include 'controller/session.php';
                                 } else {
                                     actionButtons = `
                                     <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
+                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')">
                                             Lihat Butiran
                                         </button>
                                         <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-warning">

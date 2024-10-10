@@ -122,7 +122,7 @@ include 'controller/session.php';
                             <td>${item.tarikh_kerja}</td>
                             <td>${kerjaList}</td>
                             <td>
-                                <button onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
+                                <button onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
                                     Lihat Butiran
                                 </button>
                                 <button  class="btn btn-success btn-sm terimaTempahan" value="${item.tempahan_id}">
