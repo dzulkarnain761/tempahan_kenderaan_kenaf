@@ -36,7 +36,7 @@ include 'controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
+    <!-- <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -45,7 +45,7 @@ include 'controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
@@ -59,7 +59,7 @@ include 'controller/get_userdata.php';
             $sqlTempahan = "SELECT t.*, p.nama
                     FROM tempahan t
                     INNER JOIN penyewa p ON p.id = t.penyewa_id
-                    WHERE t.status_bayaran = 'selesai'  AND t.penyewa_id = $id";
+                    WHERE t.status_bayaran = 'selesai' OR t.status_bayaran = 'dibatalkan' AND t.penyewa_id = $id";
 
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
@@ -76,7 +76,7 @@ include 'controller/get_userdata.php';
                     $tarikhKerja = $row['tarikh_kerja'];
 
                     // Fetch the list of tasks for the current booking
-                    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'selesai'";
+                    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     // Fetch additional details for the modal (e.g., booking date, work location, etc.)
@@ -99,6 +99,9 @@ include 'controller/get_userdata.php';
 
                             <?php
                             switch ($statusBayaran) {
+                                case 'dibatalkan':
+                                    echo '<div class="status badge bg-danger">Dibatalkan</div>';
+                                    break;
                                 case 'selesai':
                                     echo '<div class="status badge bg-success">Selesai</div>';
                                     break;
@@ -130,6 +133,24 @@ include 'controller/get_userdata.php';
                         <hr>
                         <?php
                         switch ($statusBayaran) {
+
+                            case 'dibatalkan':
+                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                    <!-- Left side: Link to Lihat Sebut Harga -->
+                                <span>
+                                  
+                                </span>
+
+                                <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
+                                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                    
+                                    
+                                    <span>
+                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+                                    </span>
+                                </div>
+                            </div>';
+                                break;
                             case 'selesai':
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->

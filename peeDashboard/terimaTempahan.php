@@ -82,7 +82,6 @@ include 'controller/session.php';
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
                 <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo date('Y-m-d', strtotime($tempahan['created_at'])) ?>" disabled>
-
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
@@ -106,8 +105,6 @@ include 'controller/session.php';
                 <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['catatan']) ?>" disabled>
             </div>
-
-
         </div>
 
         <div class="recentOrders">
@@ -122,7 +119,7 @@ include 'controller/session.php';
                 <div class="mb-3">
                     <?php
                     $tempahanId = $tempahan_id;
-                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja = 'tempahan diproses'";
+                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
@@ -130,22 +127,7 @@ include 'controller/session.php';
                         while ($rowKerja = mysqli_fetch_assoc($resultKerja)):
 
 
-                            // Ensure the variable is properly concatenated with the query string
-                            $sqlTotalJobsheet = "SELECT COUNT(*) FROM jobsheet WHERE tempahan_kerja_id = " . $rowKerja['tempahan_kerja_id'];
-                            $resultTotalJobsheet = mysqli_query($conn, $sqlTotalJobsheet);
-                            $totalJobsheet = mysqli_fetch_array($resultTotalJobsheet)[0]; // Get the total count
 
-                            // Run the second query for jobsheet status
-                            $sqlJobsheetStatus = "SELECT COUNT(*) FROM jobsheet WHERE status_jobsheet = 'dalam pengesahan' AND tempahan_kerja_id = " . $rowKerja['tempahan_kerja_id'];
-                            $resultJobsheetStatus = mysqli_query($conn, $sqlJobsheetStatus);
-                            $totalJobsheetStatus = mysqli_fetch_array($resultJobsheetStatus)[0]; // Get the total count for status
-
-                            // Determine the button class based on conditions
-                            if ($totalJobsheetStatus > 0 || $totalJobsheet == 0) {
-                                $button = 'btn-outline-warning';
-                            } else {
-                                $button = 'btn-outline-primary';
-                            }
                             $tempahan_id = htmlspecialchars($rowKerja['tempahan_id']);
                             $nama_kerja = htmlspecialchars($rowKerja['nama_kerja']);
                             $rateharga = 0; // Default rate
@@ -162,25 +144,40 @@ include 'controller/session.php';
                             <div class="mb-5" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
 
 
+
+                                <?php
+                                $inputaction = 'disabled';
+
+                                if ($tempahan['status_tempahan'] == 'pengesahan pee') {
+                                    $inputaction = 'required';
+                                } ?>
+
+
                                 <input type="hidden" name="tempahan_kerja_id[]" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">
 
                                 <div class="input-group mb-2">
                                     <span class="input-group-text" id="basic-addon1">Nama Kerja</span>
                                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
-                                    <button class="btn btn-outline-secondary" type="button" disabled>Bilangan Pemandu : <?php echo $totalJobsheet;  ?></button>
-                                    <button class="btn <?php echo $button ?>" type="button" onclick="window.location.href='pilihPemandu.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini</button>
-                                    <button class="btn btn-outline-danger cancelKerja" type="button" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Batal </button>
+
+                                    <?php if ($tempahan['status_tempahan'] == 'pengesahan pee') { ?>
+                                        <button class="btn btn-outline-danger cancelKerja" type="button" value="<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>">Tolak</button>
+                                    <?php } ?>
+
                                 </div>
 
                                 <div class="input-group mb-2">
                                     <span class="input-group-text">Tarikh Kerja</span>
-                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" required>
+                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" <?php echo $inputaction ?>>
                                 </div>
 
                                 <div class="input-group mb-2">
                                     <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
                                     <span class="input-group-text">Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" step="0.1" required>
+                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" max="6" <?php echo $inputaction ?>>
+                                    <span class="input-group-text">Minit</span>
+                                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['minit_anggaran']); ?>" min="0" max="55" step="5" <?php echo $inputaction ?>>
+                                </div>
+                                <div class="input-group mb-2">
                                     <span class="input-group-text">Harga (RM)</span>
                                     <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" readonly>
                                 </div>
@@ -194,9 +191,36 @@ include 'controller/session.php';
                     <?php endif; ?>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Terima Tempahan</button>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Pengesahan Oleh :</label>
+                    <select name="pengesahan_pee" class="form-select" required>
+                        <option value="">--Pilih PEE--</option>
+                        <?php
+                        $sqlAdminPee = "SELECT id, nama FROM admin WHERE kumpulan = 'D'";
+                        $result = mysqli_query($conn, $sqlAdminPee);
+
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
+                            }
+                        }
+                        ?>
+                    </select>
                 </div>
+
+
+
+
+                <?php if ($tempahan['status_tempahan'] == 'pengesahan pee') { ?>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger cancelTempahan" value="<?php echo $tempahanId ?>">Tolak Tempahan</button>
+                        <button type="button" class="btn btn-secondary previewQuotation" value="<?php echo $tempahan_id ?>">Preview Sebut Harga</button>
+                        <button type="submit" class="btn btn-primary">Terima Dan Hantar Ke KPP</button>
+                    </div>
+
+                <?php } ?>
+
+
 
 
             </form>
@@ -220,22 +244,27 @@ include 'controller/session.php';
 
 
 
-        $(document).on('input', '.input_hours', function() {
-            // Find the closest parent with the class `.mb-5` to ensure the correct set of inputs
+        $(document).on('input', '.input_hours, .input_minutes', function() {
+            // Find the closest parent with the class `.mb-2` (adjust to match your structure)
             let parentDiv = $(this).closest('.mb-5');
 
-            // Get the rate per hour and hours from the respective input fields
-            let rate_per_hour = parentDiv.find('.rate_per_hour').val();
-            let hours = $(this).val();
+            // Get the rate per hour, hours, and minutes from the respective input fields
+            let rate_per_hour = parseFloat(parentDiv.find('.rate_per_hour').val());
+            let hours = parseInt(parentDiv.find('.input_hours').val()) || 0;
+            let minutes = parseInt(parentDiv.find('.input_minutes').val()) || 0;
 
-            // Calculate the price if both values are provided
-            if (hours && rate_per_hour) {
-                let price = hours * rate_per_hour;
+            // Convert minutes to hours and calculate the total time
+            let totalHours = hours + (minutes / 60);
+
+            // Calculate the price based on the total hours
+            if (totalHours && rate_per_hour) {
+                let price = (totalHours * rate_per_hour).toFixed(2); // To ensure 2 decimal places
                 parentDiv.find('.output_price').val(price);
             } else {
-                parentDiv.find('.output_price').val('0');
+                parentDiv.find('.output_price').val('0.00');
             }
         });
+
 
 
         // Attach click event to all buttons with class 'cancelKerja'
@@ -244,7 +273,7 @@ include 'controller/session.php';
             let kerjaId = $(this).val();
 
             Swal.fire({
-                title: "Adakah anda pasti?",
+                title: "Tolak Kerja",
                 text: "Anda tidak akan dapat membatalkan ini!",
                 icon: "warning",
                 showCancelButton: true,
@@ -291,25 +320,24 @@ include 'controller/session.php';
         });
 
 
-        $('#terimaTempahan').on('submit', function(e) {
-            e.preventDefault();
+        $('.previewQuotation').on('click', function(e) {
+            e.preventDefault(); // Prevent default form submission
 
-            // Serialize form data and make AJAX request
+            // Get the form related to the button clicked
+            var form = $(this).closest('form');
+            let tempahan_id = $(this).val(); // Get the value of the button (tempahan_id)
+
             $.ajax({
-                url: 'controller/terimaTempahan.php',
+                url: 'controller/preview_quotation.php',
                 type: 'POST',
-                data: $(this).serialize(),
+                data: form.serialize(), // Serialize form data
                 success: function(response) {
                     let res = JSON.parse(response);
                     if (res.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: res.message,
-                        }).then(() => {
-                            window.location.href = 'tempahan.php';
-                        });
+                        // Use backticks to interpolate `id` into the URL
+                        window.open(`controller/getPDF_quotation_fullpayment.php?tempahan_id=${tempahan_id}`, '_blank');
                     } else {
+                        // Show error message if failure
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
@@ -319,6 +347,102 @@ include 'controller/session.php';
                 }
             });
         });
+
+
+
+
+        $('#terimaTempahan').on('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: "Hantar Ke KPP",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/terimaTempahan.php',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            if (res.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: res.message,
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: res.message,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        });
+
+        $(document).on('click', '.cancelTempahan', function(e) {
+            let tempahanId = $(this).attr('value');
+
+            Swal.fire({
+                title: "Tolak Tempahan",
+                text: "Sila nyatakan sebab menolak tempahan:",
+                input: 'textarea', // Add input field
+                inputPlaceholder: 'Sebab tolak tempahan...',
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Anda perlu memberikan sebab untuk menolak tempahan!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let reason = result.value; // Get input value
+                    $.ajax({
+                        url: 'controller/cancelTempahan.php',
+                        type: 'POST',
+                        data: {
+                            tempahan_id: tempahanId,
+                            sebab_ditolak: reason // Pass the reason to the server
+                        },
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            Swal.fire({
+                                title: "Berjaya",
+                                text: "Tempahan Dibatalkan",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.href = 'tempahan.php';
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: "Ralat!",
+                                text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
 
     });
 </script>

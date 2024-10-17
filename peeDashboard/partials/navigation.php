@@ -16,6 +16,14 @@
                 <span class="title">Tempahan</span>
             </a>
         </li>
+        <li>
+            <a href="jobsheet.php">
+                <span class="icon">
+                    <ion-icon name="document-outline"></ion-icon>
+                </span>
+                <span class="title">Jobsheet</span>
+            </a>
+        </li>
 
         <li>
             <a href="sejarahTempahan.php">

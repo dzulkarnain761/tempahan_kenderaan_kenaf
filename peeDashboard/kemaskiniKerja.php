@@ -122,7 +122,7 @@ include 'controller/session.php';
                 <div class="mb-3">
                     <?php
                     $tempahanId = $tempahan_id;
-                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId AND status_kerja NOT IN ('dibatalkan','ditolak','selesai')";
+                    $sqlKerja = "SELECT * FROM `tempahan_kerja` WHERE tempahan_id = $tempahanId";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
                     if ($resultKerja && mysqli_num_rows($resultKerja) > 0):
@@ -136,7 +136,7 @@ include 'controller/session.php';
                             $totalJobsheet = mysqli_fetch_array($resultTotalJobsheet)[0]; // Get the total count
 
                             // Run the second query for jobsheet status
-                            $sqlJobsheetStatus = "SELECT COUNT(*) FROM jobsheet WHERE status_jobsheet = 'dalam pengesahan' AND tempahan_kerja_id = " . $rowKerja['tempahan_kerja_id'];
+                            $sqlJobsheetStatus = "SELECT COUNT(*) FROM jobsheet WHERE tempahan_kerja_id = " . $rowKerja['tempahan_kerja_id'];
                             $resultJobsheetStatus = mysqli_query($conn, $sqlJobsheetStatus);
                             $totalJobsheetStatus = mysqli_fetch_array($resultJobsheetStatus)[0]; // Get the total count for status
 

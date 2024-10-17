@@ -20,7 +20,7 @@ if (isset($_POST['id'])) {
     }
 
     // Prepare the second SQL statement to count remaining kerja
-    $sql3 = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ? AND status_kerja = 'tempahan diproses'");
+    $sql3 = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ?");
     if ($sql3) {
         $sql3->bind_param("i", $tempahan_id);
         $sql3->execute();
@@ -40,36 +40,19 @@ if (isset($_POST['id'])) {
 
     try {
         // Prepare and execute the SQL statement to update the kerja status
-        $sql = "UPDATE `tempahan_kerja` SET `status_kerja` = ? WHERE `tempahan_kerja_id` = ?";
+        $sql = "DELETE FROM `tempahan_kerja` WHERE `tempahan_kerja_id` = ?";
         $stmt = $conn->prepare($sql);
 
         if ($stmt) {
-            $stmt->bind_param("si", $statusKerja, $tempahan_kerja_id);
+            $stmt->bind_param("i", $tempahan_kerja_id);
             if (!$stmt->execute()) {
-                throw new Exception('Failed to update kerja status: ' . $stmt->error);
+                throw new Exception('Failed to delete kerja : ' . $stmt->error);
             }
+            echo json_encode(['success' => true, 'message' => 'Berjaya Tolak']);
             $stmt->close();
         } else {
             throw new Exception('Failed to prepare statement for updating kerja status: ' . $conn->error);
         }
-
-        // Prepare and execute the SQL statement to delete the entry from jobsheet table
-        $sqlJobsheet = "DELETE FROM `jobsheet` WHERE `tempahan_kerja_id` = ?";
-        $stmtJobsheet = $conn->prepare($sqlJobsheet);
-
-        if ($stmtJobsheet) {
-            $stmtJobsheet->bind_param("i", $tempahan_kerja_id);
-            if (!$stmtJobsheet->execute()) {
-                throw new Exception('Failed to delete jobsheet record: ' . $stmtJobsheet->error);
-            }
-            $stmtJobsheet->close();
-        } else {
-            throw new Exception('Failed to prepare statement for deleting jobsheet record: ' . $conn->error);
-        }
-
-        // Commit the transaction if both operations are successful
-        $conn->commit();
-        echo json_encode(['success' => true, 'message' => 'Success to delete jobs record']);
     } catch (Exception $e) {
         // Rollback the transaction in case of error
         $conn->rollback();
@@ -80,7 +63,5 @@ if (isset($_POST['id'])) {
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid input']);
+    $conn->close();
 }
-$conn->close();
-
-

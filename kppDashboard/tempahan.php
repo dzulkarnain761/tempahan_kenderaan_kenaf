@@ -122,7 +122,7 @@ include 'controller/session.php';
                             <td>${item.tarikh_kerja}</td>
                             <td>${kerjaList}</td>
                             <td>
-                                <button onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
+                                <button onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
                                     Lihat Butiran
                                 </button>
                                 <button  class="btn btn-success btn-sm terimaTempahan" value="${item.tempahan_id}">
@@ -216,19 +216,28 @@ include 'controller/session.php';
 
             Swal.fire({
                 title: "Tolak Tempahan",
-                text: "Anda tidak akan dapat membatalkan ini!",
+                text: "Sila nyatakan sebab menolak tempahan:",
+                input: 'textarea', // Add input field
+                inputPlaceholder: 'Sebab tolak tempahan...',
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
+                confirmButtonText: "Ya",
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Anda perlu memberikan sebab untuk menolak tempahan!';
+                    }
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
+                    let reason = result.value; // Get input value
                     $.ajax({
                         url: 'controller/rejectTempahan.php',
                         type: 'POST',
                         data: {
-                            id: tempahanId
+                            tempahan_id: tempahanId,
+                            sebab_ditolak: reason // Pass the reason to the server
                         },
                         success: function(response) {
                             let res = JSON.parse(response);
@@ -237,7 +246,7 @@ include 'controller/session.php';
                                 text: "Tempahan Dibatalkan",
                                 icon: "success"
                             }).then(() => {
-                                window.location.reload();
+                                window.location.href = 'tempahan.php';
                             });
                         },
                         error: function(xhr, status, error) {

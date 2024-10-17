@@ -55,12 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Prepare the update query for tempahan
-        $updateTempahanQuery = "UPDATE tempahan SET total_harga_anggaran = ?, status_tempahan = ?, disahkan_oleh = ? WHERE tempahan_id = ?";
+        $updateTempahanQuery = "UPDATE tempahan SET total_harga_anggaran = ?, disahkan_oleh = ? WHERE tempahan_id = ?";
         $stmt = $conn->prepare($updateTempahanQuery);
-        $status_tempahan = 'pengesahan kpp';
 
         if ($stmt) {
-            $stmt->bind_param('dsii', $total_harga_anggaran, $status_tempahan, $pengesahan_pee, $tempahan_id);
+            $stmt->bind_param('dii', $total_harga_anggaran, $pengesahan_pee, $tempahan_id);
 
             // Execute the statement
             if (!$stmt->execute()) {

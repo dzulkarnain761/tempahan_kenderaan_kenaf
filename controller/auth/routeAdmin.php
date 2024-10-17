@@ -14,7 +14,7 @@ $kumpulan = $_SESSION['kumpulan'];
 switch ($kumpulan) {
     case 'A':
         // Redirect to page for label2
-        header('Location: ../../kppDashboard/pengesahanTolakTerima.php');
+        header('Location: ../../kppDashboard/tempahan.php');
         break;
     case 'B':
         // Redirect to page KETUA UNIT PEMBAIKIAN (KUP)

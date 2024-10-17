@@ -16,13 +16,13 @@ if (!$conn) {
 
 
 
-$id = $_GET['id'];
+$tempahan_id = $_GET['tempahan_id'];
 
 
 // Ensure you escape the ID to prevent SQL injection
-$id = mysqli_real_escape_string($conn, $id);
+$id = mysqli_real_escape_string($conn, $tempahan_id);
 
-$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $id";
+$sqlTempahan = "SELECT t.*, a.nama FROM `tempahan` t LEFT JOIN admin a ON a.id = t.disahkan_oleh WHERE tempahan_id = $tempahan_id";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data
@@ -157,7 +157,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                               <img align="left" src="<?php echo $imgSrc2 ?>" width="50%" style="max-width: 160px" />
                             </td>
                             <td style="width: 50%">
-                              <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> QUOTATION </div>
+                              <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> SEBUT HARGA </div>
                             </td>
                           </tr>
                         </table>
@@ -334,6 +334,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                               <div class="company-info" style="color: #555; font-family: helvetica">Lokasi : <?php echo $tempahan['lokasi_kerja'] ?></div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Keluasan : <?php echo $tempahan['luas_tanah'] ?> Hektar</div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Tarikh Kerja : <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])); ?></div>
+                              <div class="company-info" style="color: #555; font-family: helvetica">Disahkan Oleh : <?php echo $tempahan['nama']; ?></div>
                             </td>
                           </tr>
                         </table>
@@ -364,13 +365,13 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           <tr>
                             <td style="max-width: 50%; width: 50%; border-bottom: 1px solid #777; padding: 0 0 10px 0; color: #333; font-family: helvetica"><strong>SERVIS</strong></td>
                             <td style="border-bottom: 1px solid #777; padding: 0 0 10px 0; color: #333; font-family: helvetica; white-space: nowrap" align="right"><strong>JAM</strong></td>
+                            <td style="border-bottom: 1px solid #777; padding: 0 0 10px 0; color: #333; font-family: helvetica; white-space: nowrap" align="right"><strong>MINIT</strong></td>
                             <td style="border-bottom: 1px solid #777; padding: 0 0 10px 0; color: #333; font-family: helvetica; white-space: nowrap" align="right"><strong>HARGA</strong></td>
                           </tr>
                           <?php
                           // SQL query to select all tasks for the booking
                           $sqlKerja = "SELECT * FROM `tempahan_kerja` 
-                                        WHERE tempahan_id = $id 
-                                        AND status_kerja NOT IN ('ditolak','dibatalkan')";
+                                      WHERE tempahan_id = $tempahan_id ";
                           $resultKerja = mysqli_query($conn, $sqlKerja);
                           
                           // Loop through the result set
@@ -378,8 +379,9 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['total_jam'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['total_harga'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jam_anggaran'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['minit_anggaran'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['harga_anggaran'] ?></td>
                             </tr>
                           <?php
                            
@@ -389,21 +391,11 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           <tr>
                             <td><strong>Total Harga</strong></td>
                             <td></td>
-                            <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($tempahan['total_harga_sebenar'], 2) ?></td>
+                            <td></td>
+                            <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($tempahan['total_harga_anggaran'], 2) ?></td>
                           </tr>
 
-                        
-                          <tr>
-                            <td><strong>Sudah Dibayar (Deposit)</strong></td>
-                            <td></td>
-                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right">- RM <?php echo number_format($tempahan['total_deposit'], 2) ?></td>
-                          </tr>
-
-                          <tr>
-                            <td><strong>Perlu Dibayar</strong></td>
-                            <td></td>
-                            <td style="border-top: 1px solid #777; color: #333; padding: 10px 0 0 0; font-family: helvetica; white-space: nowrap" align="right"><strong>RM <?php echo number_format($tempahan['total_baki'], 2) ?></strong></td>
-                          </tr>
+                      
                         </table>
 
                       </td>

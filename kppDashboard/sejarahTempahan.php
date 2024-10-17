@@ -115,7 +115,7 @@ include 'controller/session.php';
                             });
 
                             tbody.append(`
-                            <tr >
+                            <tr>
 								<td>${(response.currentPage - 1) * 5 + index + 1}</td>
 								<td>${item.nama}</td>
 								<td>${kerjaList}</td>
