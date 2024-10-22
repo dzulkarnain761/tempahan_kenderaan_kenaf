@@ -57,8 +57,8 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            <td>Status</td>
                             <td>Cara Bayar</td>
+                            <td>Jenis Pembayaran</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -120,50 +120,6 @@ include 'controller/session.php';
                                 kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                             });
 
-
-                            let actionButton = '';
-                            let caraBayaran = item.cara_bayaran;
-                            let statusBayaran = item.status_bayaran;
-
-                            // Common 'Lihat Butiran' button
-                            const lihatButiranButton = `
-                                <button class="btn btn-primary" onclick="window.location.href='detail_tempahan.php?tempahan_id=${item.tempahan_id}'">
-                                    Lihat Butiran
-                                </button>`;
-
-                            // Decide button based on status_bayaran
-                            if (item.status_bayaran === 'deposit diproses') {
-                                actionButton = lihatButiranButton + `
-                                <button class="btn btn-success btn-sm terimaDeposit" value="${item.tempahan_id}" data-cara-bayaran="${item.cara_bayaran}">
-                                    Terima Deposit
-                                </button>`;
-
-                                statusBayaran = 'Deposit';
-
-                            } else if (item.status_bayaran === 'bayaran diproses') {
-                                actionButton = lihatButiranButton + `
-                                <button class="btn btn-success btn-sm selesaiTempahan" value="${item.tempahan_id}" data-cara-bayaran="${item.cara_bayaran}">
-                                    Terima Bayaran
-                                </button>`;
-
-                                statusBayaran = 'Bayaran Penuh';
-
-                            } else if (item.status_bayaran === 'bayaran balik'){
-                                actionButton = lihatButiranButton + `
-                                <button class="btn btn-success btn-sm refundTempahan" value="${item.tempahan_id}" data-cara-bayaran="bayaran balik">
-                                    Bayar Balik
-                                </button>`;
-
-                                caraBayaran = 'bayaran balik';
-                                statusBayaran = 'Bayaran Balik';
-                            }else{
-                                actionButton = lihatButiranButton
-                            }
-
-
-
-
-
                             // Append the row to tbody
                             tbody.append(`
                                     <tr>
@@ -171,11 +127,12 @@ include 'controller/session.php';
                                         <td>${item.nama}</td>
                                         <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
-                                        <td>${statusBayaran}</td>
-                                        <td>${caraBayaran}</td>
-                                        <td>${actionButton}</td>
+                                        <td>${item.cara_bayar}</td>
+                                        <td>${item.jenis_pembayaran}</td>  
+                                        <td><button class="btn btn-primary" onclick="window.location.href='detail_tempahan.php?tempahan_id=${item.tempahan_id}'">
+                                    Lihat Butiran
+                                </button></td>
                                     </tr>
-
                                 `);
                         });
 
@@ -214,128 +171,6 @@ include 'controller/session.php';
         // Load the first page by default
         loadPage(1);
 
-        $(document).on('click', '.terimaDeposit', function(e) {
-            let tempahanId = $(this).attr('value');
-
-            Swal.fire({
-                title: "Mula Kerja",
-                text: "Anda tidak akan dapat membatalkan ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/terimaDeposit.php',
-                        type: 'POST',
-                        data: {
-                            id: tempahanId
-                        },
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            Swal.fire({
-                                title: "Berjaya",
-                                text: "Berjaya Kemaskini Tempahan",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
-
-        $(document).on('click', '.selesaiTempahan', function(e) {
-            let tempahanId = $(this).attr('value');
-
-            Swal.fire({
-                title: "Selesai Tempahan",
-                text: "Anda tidak akan dapat membatalkan ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/selesaiTempahan.php',
-                        type: 'POST',
-                        data: {
-                            id: tempahanId
-                        },
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            Swal.fire({
-                                title: "Berjaya",
-                                text: "Berjaya Kemaskini Tempahan",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
-
-        $(document).on('click', '.refundTempahan', function(e) {
-            let tempahanId = $(this).attr('value');
-
-            Swal.fire({
-                title: "Bayar Balik Tempahan",
-                text: "Anda akan pergi ke page lain",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/refundTempahan.php',
-                        type: 'POST',
-                        data: {
-                            id: tempahanId
-                        },
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            Swal.fire({
-                                title: "Berjaya",
-                                text: "Berjaya Bayar Balik Tempahan",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
     </script>
 </body>
 

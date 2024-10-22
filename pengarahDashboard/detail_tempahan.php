@@ -228,6 +228,8 @@ include 'controller/session.php';
                             </div>
                         </div>
                     </div>
+
+
                 </form>
 
             </div>
@@ -293,7 +295,7 @@ include 'controller/session.php';
                     </div>
                     <div>
                         <button type="button" class="btn btn-danger cancelTempahan" value="<?= $tempahan_id ?>">Batal Tempahan</button>
-                        <button type="button" class="btn btn-success terimaBayaran" value="<?= $tempahan_id ?>">Hantar Ke Pengarah</button>
+                        <button type="button" class="btn btn-success terimaBayaran" value="<?= $tempahan_id ?>">Terima Bayaran</button>
                     </div>
                 </div>
             </div>
@@ -320,7 +322,7 @@ include 'controller/session.php';
                 let tempahanId = $(this).attr('value');
 
                 Swal.fire({
-                    title: "Hantar Ke Pengarah",
+                    title: "Terima Bayaran",
                     text: "You won't be able to revert this!",
                     icon: "warning",
                     showCancelButton: true,

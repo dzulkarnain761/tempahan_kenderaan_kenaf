@@ -55,7 +55,7 @@ include 'controller/get_userdata.php';
 
         <div class="rental-list">
             <?php
-            // Fetch bookings with status 'dalam pengesahan'
+
             $sqlTempahan = "SELECT t.*, p.nama
 				FROM tempahan t
 				INNER JOIN penyewa p ON p.id = t.penyewa_id
@@ -79,16 +79,6 @@ include 'controller/get_userdata.php';
                     $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
                     $resultKerja = mysqli_query($conn, $sqlKerja);
 
-                    // First query: Get total count of 'tempahan_kerja'
-                    $sqlTotalKerja = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ?");
-                    $sqlTotalKerja->bind_param("i", $tempahanId);
-                    $sqlTotalKerja->execute();
-                    $sqlTotalKerja->bind_result($total_kerja);
-                    $sqlTotalKerja->fetch();
-                    $sqlTotalKerja->close();
-
-                    // Fetch additional details for the modal (e.g., booking date, work location, etc.)
-                    // Assuming you have these fields in the 'tempahan' table.
                     $tarikhTempahan = $row['created_at'];
                     // $masaTempahan = $row['masa_tempahan'];
                     $negeri = $row['negeri'];
@@ -108,14 +98,14 @@ include 'controller/get_userdata.php';
                                 case 'dalam pengesahan':
                                     echo '<div class="status badge bg-secondary">Dalam Pengesahan</div>';
                                     break;
-                                case 'deposit selesai':
-                                    echo '<div class="status badge bg-success">Deposit Selesai</div>';
-                                    break;
                                 case 'belum bayar':
                                     echo '<div class="status badge bg-danger">Belum Bayar</div>';
                                     break;
                                 case 'bayaran diproses':
                                     echo '<div class="status badge bg-info text-dark">Bayaran Diproses</div>';
+                                    break;
+                                case 'selesai bayaran':
+                                    echo '<div class="status badge bg-danger">Selesai Bayaran</div>';
                                     break;
                                 case 'refund':
                                     echo '<div class="status badge bg-warning text-dark">Refund</div>';
@@ -134,38 +124,40 @@ include 'controller/get_userdata.php';
 
                         </div><br>
 
-                        <p>
-                            <span class="semibold">Cadangan Tarikh Kerja : </span>
-                            <span><?php echo date('d/m/Y', strtotime($tarikhKerja)); ?></span> <!-- Display proposed work date -->
-                        </p>
+                        
 
                         <p><span class="semibold">Senarai Kerja : </span></p>
                         <ol>
                             <?php
                             $counterKerja = 1; // Initialize a counter for task numbering
                             while ($kerja = mysqli_fetch_assoc($resultKerja)) {
-
-                                if ($statusTempahan == 'pengesahan pee') {
                             ?>
-                                    <!-- Display task list with status 'pengesahan pee' -->
-                                    <li style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span><?php echo $counterKerja . '. ' . $kerja['nama_kerja']; ?></span> <!-- Display task name with numbering -->
-                                        <?php if ($total_kerja > 1) { ?>
+                                <!-- Display task list with status 'pengesahan pee' -->
+                                <li style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span><?php echo $counterKerja . '. ' . $kerja['nama_kerja']; ?></span> <!-- Display task name with numbering -->
+                                    <?php
+
+                                    // First query: Get total count of 'tempahan_kerja'
+                                    $sqlTotalKerja = $conn->prepare("SELECT COUNT(*) FROM tempahan_kerja WHERE tempahan_id = ?");
+                                    $sqlTotalKerja->bind_param("i", $tempahanId);
+                                    $sqlTotalKerja->execute();
+                                    $sqlTotalKerja->bind_result($total_kerja);
+                                    $sqlTotalKerja->fetch();
+                                    $sqlTotalKerja->close();
+                                    if ($statusTempahan == 'pengesahan pee') {
+                                        if ($total_kerja > 1) { ?>
                                             <span>
                                                 <button class="btn btn-danger btn-sm cancelKerjaBtn" type="button" data-id="<?php echo $kerja['tempahan_kerja_id']; ?>">Batal Kerja</button> <!-- Cancel task button -->
                                             </span>
 
                                         <?php } ?>
 
-
-
-                                    </li>
-                            <?php
+                                </li>
+                        <?php
+                                        $counterKerja++;
+                                    }
                                 }
-                                // Increment the counter after each task
-                                $counterKerja++;
-                            }
-                            ?>
+                        ?>
                         </ol>
 
                         <hr>
@@ -186,7 +178,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -206,7 +198,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -233,7 +225,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -254,7 +246,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                 <span>
-                                    <a href="controller/quotationPDF_fullpayment.php?id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                    <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                 </span>
 
                                 <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -393,7 +385,7 @@ include 'controller/get_userdata.php';
                                             </div>
 
                                             <div class="option-wrapper">
-                                                <input type="radio" name="cara_bayaran" class="hidden-radio" value="atas talian" id="fullpayment_online_<?php echo $tempahanId; ?>">
+                                                <input type="radio" name="cara_bayaran" class="hidden-radio" value="fpx" id="fullpayment_online_<?php echo $tempahanId; ?>">
                                                 <label class="option-label" for="fullpayment_online_<?php echo $tempahanId; ?>">
                                                     <div class="option-content">
                                                         <div class="card-details">Secara Atas Talian</div>
@@ -542,7 +534,7 @@ include 'controller/get_userdata.php';
                 url: 'controller/bayarPenuh.php',
                 type: 'POST',
                 data: {
-                    id: tempahanId,
+                    tempahan_id: tempahanId,
                     cara_bayaran: selectedPayment
                 },
                 success: function(response) {

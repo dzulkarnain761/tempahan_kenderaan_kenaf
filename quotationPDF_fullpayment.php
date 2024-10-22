@@ -22,7 +22,7 @@ $tempahan_id = $_GET['tempahan_id'];
 // Ensure you escape the ID to prevent SQL injection
 $id = mysqli_real_escape_string($conn, $tempahan_id);
 
-$sqlTempahan = "SELECT t.*, a.nama FROM `tempahan` t LEFT JOIN admin a ON a.id = t.disahkan_oleh WHERE tempahan_id = $tempahan_id";
+$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $tempahan_id";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data
@@ -334,7 +334,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                               <div class="company-info" style="color: #555; font-family: helvetica">Lokasi : <?php echo $tempahan['lokasi_kerja'] ?></div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Keluasan : <?php echo $tempahan['luas_tanah'] ?> Hektar</div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Tarikh Kerja : <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])); ?></div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Disahkan Oleh : <?php echo $tempahan['nama']; ?></div>
+                              
                             </td>
                           </tr>
                         </table>

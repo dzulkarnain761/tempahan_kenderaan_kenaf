@@ -55,8 +55,10 @@ include 'controller/session.php';
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
+                            <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            
+                            <td>Cara Bayar</td>
+                            <td>Jenis Pembayaran</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -132,16 +134,27 @@ include 'controller/session.php';
                             // Decide button based on status_bayaran
                             if (item.status_bayaran === 'selesai') {
                                 actionButton = lihatButiranButton;
-							}
+                            }
 
                             // Append the row to tbody
                             tbody.append(`
                                     <tr>
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
-                                        
-                                        <td>${actionButton}</td>
+                                        <td>${item.cara_bayar}</td>
+                                        <td>${item.jenis_pembayaran}</td>  
+                                        <td><button class="btn btn-primary" onclick="window.location.href='jana_resit.php?tempahan_id=${item.tempahan_id}'">
+                                                Butiran
+                                            </button>
+                                            <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')">
+                                                Quotation
+                                            </button>
+                                            <button class="btn btn-primary" onclick="window.open('../bukti_resit/${item.bukti_resit_path}', '_blank')">
+                                                Resit
+                                            </button>
+                                        </td>
                                     </tr>
 
                                 `);
@@ -181,8 +194,6 @@ include 'controller/session.php';
 
         // Load the first page by default
         loadPage(1);
-
-     
     </script>
 </body>
 

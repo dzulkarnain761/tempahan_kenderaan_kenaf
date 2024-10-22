@@ -1,3 +1,11 @@
+<?php
+
+include 'controller/connection.php';
+include 'controller/session.php';
+include 'controller/get_userdata.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,12 +38,7 @@
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="userName">
-                    <div class="user-name">NAMA BINTI PENUH</div>
-                    <div class="user">
-                        <img src="../assets/images/user.png" alt="User Image">
-                    </div>
-                </div>
+                <?php include 'partials/name_display.php'; ?>
             </div>
 
             <div class="recentOrders">
@@ -48,13 +51,13 @@
                     </div>
                     <div class="profile-details">
                         <p>Email :</p>
-                        <h4 class="text-muted">abc@gmail.com</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($email); ?></h4>
 						<p>Nama Penuh :</p>
-                        <h4 class="text-muted">NAMA BIN PENUH</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($nama); ?></h4>
                         <p>Nombor Kad Pengenalan :</p>
-                        <h4 class="text-muted">000000-00-0000</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($no_kp); ?></h4>
                         <p>Nombor Telefon :</p>
-                        <h4 class="text-muted">000-0000000</h4>
+                        <h4 class="text-muted"><?php echo htmlspecialchars($contact_no); ?></h4>
                     </div>
 					<div class="text-end">
 						<button type="button" class="btn btn-primary" onclick="window.location.href = 'kemaskiniProfile.php'">

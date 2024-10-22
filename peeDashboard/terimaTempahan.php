@@ -191,27 +191,24 @@ include 'controller/session.php';
                     <?php endif; ?>
                 </div>
 
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Pengesahan Oleh :</label>
-                    <select name="pengesahan_pee" class="form-select" required>
-                        <option value="">--Pilih PEE--</option>
-                        <?php
-                        $sqlAdminPee = "SELECT id, nama FROM admin WHERE kumpulan = 'D'";
-                        $result = mysqli_query($conn, $sqlAdminPee);
-
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
-                            }
-                        }
-                        ?>
-                    </select>
-                </div>
-
-
-
-
                 <?php if ($tempahan['status_tempahan'] == 'pengesahan pee') { ?>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Pengesahan Oleh :</label>
+                        <select name="pengesahan_pee" class="form-select" required>
+                            <option value="">--Pilih PEE--</option>
+                            <?php
+                            $sqlAdminPee = "SELECT id, nama FROM admin WHERE kumpulan = 'D'";
+                            $result = mysqli_query($conn, $sqlAdminPee);
+
+                            if ($result) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='" . $row['nama'] . "'>" . $row['nama'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger cancelTempahan" value="<?php echo $tempahanId ?>">Tolak Tempahan</button>
                         <button type="button" class="btn btn-secondary previewQuotation" value="<?php echo $tempahan_id ?>">Preview Sebut Harga</button>

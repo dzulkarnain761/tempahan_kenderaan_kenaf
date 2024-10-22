@@ -57,7 +57,7 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            <td>Status</td>
+                            
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -117,45 +117,18 @@ include 'controller/session.php';
                                     kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                                 });
 
-                                let actionButtons = '';
-
-                                if (item.status_tempahan == 'pengesahan pee') {
-                                    actionButtons = `
-                                    <td>
-                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
-                                            Lihat Butiran
-                                        </button>
-
-                                    </td>
-                                `;
-                                } else if (item.status_tempahan == 'pengesahan kpp') {
-                                    actionButtons = `
-                                    <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')">
-                                            Lihat Butiran
-                                        </button>
-                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-secondary">
-                                            Kemaskini
-                                        </button>
-                                    </td>
-                                `;
-                                } else {
-                                    actionButtons = `
-                                    <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')">
-                                            Lihat Butiran
-                                        </button>
-                                    </td>
-                                `;
-                                }
                                 tbody.append(`
                                     <tr data-id="${item.tempahan_id}">
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
                                         <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
-                                        <td>${item.status_tempahan}</td>
-                                        ${actionButtons}
+                                        
+                                        <td>
+                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
+                                            Lihat Butiran
+                                        </button>
+                                    </td>
                                     </tr>
                                 `);
                             });

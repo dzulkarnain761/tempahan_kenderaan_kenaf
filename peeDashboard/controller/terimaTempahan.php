@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status_tempahan = 'pengesahan kpp';
 
         if ($stmt) {
-            $stmt->bind_param('dsii', $total_harga_anggaran, $status_tempahan, $pengesahan_pee, $tempahan_id);
+            $stmt->bind_param('dssi', $total_harga_anggaran, $status_tempahan, $pengesahan_pee, $tempahan_id);
 
             // Execute the statement
             if (!$stmt->execute()) {
