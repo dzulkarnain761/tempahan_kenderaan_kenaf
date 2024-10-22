@@ -18,6 +18,16 @@
             </a>
         </li>
 
+
+        <li>
+            <a href="sejarahTempahan.php">
+                <span class="icon">
+                    <ion-icon name="time-outline"></ion-icon>
+                </span>
+                <span class="title">Sejarah</span>
+            </a>
+        </li>
+
         <li>
             <a href="profile.php">
                 <span class="icon">

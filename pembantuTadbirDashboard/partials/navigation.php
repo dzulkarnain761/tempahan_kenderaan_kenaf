@@ -12,7 +12,24 @@
                 <span class="icon">
                     <ion-icon name="book-outline"></ion-icon>
                 </span>
-                <span class="title">Tempahan</span>
+                <span class="title">Pengesahan Bayaran</span>
+            </a>
+        </li>
+        <li>
+            <a href="tempahan_resit.php">
+                <span class="icon">
+                    <ion-icon name="receipt-outline"></ion-icon>
+                </span>
+                <span class="title">Jana Resit</span>
+            </a>
+        </li>
+        
+        <li>
+            <a href="sejarahTempahan.php">
+                <span class="icon">
+                    <ion-icon name="time-outline"></ion-icon>
+                </span>
+                <span class="title">Sejarah</span>
             </a>
         </li>
 

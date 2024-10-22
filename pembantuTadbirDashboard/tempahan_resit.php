@@ -44,9 +44,10 @@ include 'controller/session.php';
                 <?php include 'partials/name_display.php'; ?>
             </div>
 
+
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Pengesahan Tempahan Sewaan per Jam atau Harian </h2>
+                    <h2>Jana Resit</h2>
                 </div>
 
                 <table id="tempahanTable">
@@ -56,6 +57,8 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
+                            <td>Cara Bayar</td>
+                            <td>Jenis Pembayaran</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -70,6 +73,7 @@ include 'controller/session.php';
                         <!-- Pagination links will be injected here by JavaScript -->
                     </ul>
                 </nav>
+
             </div>
         </div>
     </div>
@@ -81,6 +85,7 @@ include 'controller/session.php';
     <!-- ====== ionicons ======= -->
     <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
     <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -88,7 +93,7 @@ include 'controller/session.php';
     <script>
         function loadPage(page) {
             $.ajax({
-                url: 'controller/get_tempahan.php', // The PHP file that handles the database query
+                url: 'controller/get_tempahan_resit.php', // The PHP file that handles the database query
                 type: 'GET',
                 data: {
                     page: page
@@ -115,26 +120,22 @@ include 'controller/session.php';
                                 kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                             });
 
+                            // Append the row to tbody
                             tbody.append(`
-                            <tr >
-                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
-                            <td>${item.nama}</td>
-                            <td>${item.tarikh_kerja}</td>
-                            <td>${kerjaList}</td>
-                            <td>
-                                <button onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
+                                    <tr>
+                                        <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                                        <td>${item.nama}</td>
+                                        <td>${item.tarikh_kerja}</td>
+                                        <td>${kerjaList}</td>
+                                        <td>${item.cara_bayar}</td>
+                                        <td>${item.jenis_pembayaran}</td>  
+                                        <td><button class="btn btn-primary" onclick="window.location.href='jana_resit.php?tempahan_id=${item.tempahan_id}'">
                                     Lihat Butiran
-                                </button>
-                                <button  class="btn btn-success btn-sm terimaTempahan" value="${item.tempahan_id}">
-                                    Terima
-                                </button>
-                                <button  class="btn btn-danger btn-sm rejectTempahan" value="${item.tempahan_id}">
-                                    Tolak
-                                </button>
-                            </td>
-                        </tr>
-                    `);
+                                </button></td>
+                                    </tr>
+                                `);
                         });
+
 
                         // Populate pagination and show it if hidden
                         pagination.empty();
@@ -170,87 +171,10 @@ include 'controller/session.php';
         // Load the first page by default
         loadPage(1);
 
-        $(document).on('click', '.terimaTempahan', function(e) {
-            let tempahanId = $(this).attr('value');
+        
+        
 
-            Swal.fire({
-                title: "Terima Tempahan",
-                text: "Anda tidak akan dapat membatalkan ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/terimaTempahan.php',
-                        type: 'POST',
-                        data: {
-                            id: tempahanId
-                        },
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            Swal.fire({
-                                title: "Berjaya",
-                                text: "Berjaya Kemaskini Tempahan",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
-
-        $(document).on('click', '.rejectTempahan', function(e) {
-            let tempahanId = $(this).attr('value');
-
-            Swal.fire({
-                title: "Tolak Tempahan",
-                text: "Anda tidak akan dapat membatalkan ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'controller/rejectTempahan.php',
-                        type: 'POST',
-                        data: {
-                            id: tempahanId
-                        },
-                        success: function(response) {
-                            let res = JSON.parse(response);
-                            Swal.fire({
-                                title: "Berjaya",
-                                text: "Tempahan Dibatalkan",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: "Ralat!",
-                                text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
+        
     </script>
 </body>
 

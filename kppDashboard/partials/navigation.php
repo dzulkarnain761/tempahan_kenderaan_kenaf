@@ -10,11 +10,20 @@
 
 
         <li>
-            <a href="pengesahanTolakTerima.php">
+            <a href="tempahan.php">
                 <span class="icon">
                     <ion-icon name="book-outline"></ion-icon>
                 </span>
                 <span class="title">Tempahan</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="sejarahTempahan.php">
+                <span class="icon">
+                    <ion-icon name="time-outline"></ion-icon>
+                </span>
+                <span class="title">Sejarah</span>
             </a>
         </li>
 

@@ -5,34 +5,34 @@ include 'connection.php';
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $id = $_POST['id'];
+    $tempahan_id = intval($_POST['tempahan_id']); // Ensure $id is an integer
+    $sebab_ditolak = $_POST['sebab_ditolak'];
     $status = 'ditolak';
 
-    // Prepare and execute the first statement
-    $sql1 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-    $sql1->bind_param("ss", $status,$status, $id);
+    // Start the transaction
+    $conn->begin_transaction();
 
-    if (!$sql1->execute()) {
-        echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
+    try {
+        // Prepare and execute the first statement
+        $sql1 = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ?, sebab_ditolak = ? WHERE tempahan_id = ?");
+        $sql1->bind_param("sssi", $status, $status,$sebab_ditolak, $tempahan_id); // Change to "ssi" since $id is an integer
+
+        if (!$sql1->execute()) {
+            throw new Exception("Kemaskini tempahan gagal: " . $sql1->error);
+        }
         $sql1->close();
+
+        // Commit the transaction
+        $conn->commit();
+        echo json_encode(["success" => true]);
+
+    } catch (Exception $e) {
+        // Rollback the transaction in case of error
+        $conn->rollback();
+        echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    } finally {
+        // Close the connection
         $conn->close();
-        exit;
     }
-    $sql1->close();
-
-    // Prepare and execute the second statement
-    $sql2 = $conn->prepare("UPDATE tempahan_kerja SET status_kerja = ? WHERE tempahan_id = ?");
-    $sql2->bind_param("ss", $status, $id);
-
-    if (!$sql2->execute()) {
-        echo json_encode(["success" => false, "message" => "Kemaskini tempahan_kerja gagal: " . $sql2->error]);
-        $sql2->close();
-        $conn->close();
-        exit;
-    }
-    $sql2->close();
-
-    $conn->close();
-    echo json_encode(["success" => true]);
 }
 ?>

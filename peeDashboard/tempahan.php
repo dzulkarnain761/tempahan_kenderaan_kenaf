@@ -57,6 +57,7 @@ include 'controller/session.php';
                             <td>Nama Pemohon</td>
                             <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
+                            <td>Status</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -118,38 +119,48 @@ include 'controller/session.php';
 
                                 let actionButtons = '';
 
-                                if (item.status_tempahan != 'pengesahan kpp') {
+                                if (item.status_tempahan == 'pengesahan pee') {
                                     actionButtons = `
                                     <td>
-                                        <button onclick="window.location.href = 'terimaTempahan.php?id=${item.tempahan_id}'" class="btn btn-success">
-                                            Terima
-                                        </button>
-                                        <button class="btn btn-danger cancelTempahan" value="${item.tempahan_id}">
-                                            Tolak
+                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
+                                            Lihat Butiran
                                         </button>
 
+                                    </td>
+                                `;
+                                } else if (item.status_tempahan == 'pengesahan kpp') {
+                                    actionButtons = `
+                                    <td>
+                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')">
+                                            Lihat Sebut Harga
+                                        </button>
+                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-secondary">
+                                            Lihat Butiran
+                                        </button>
                                     </td>
                                 `;
                                 } else {
                                     actionButtons = `
                                     <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF.php?id=${item.tempahan_id}', '_blank')">
+                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')">
                                             Lihat Butiran
+                                        </button>
+                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-warning">
+                                            Kemaskini
                                         </button>
                                     </td>
                                 `;
                                 }
-
                                 tbody.append(`
                                     <tr data-id="${item.tempahan_id}">
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
                                         <td>${item.tarikh_kerja}</td>
                                         <td>${kerjaList}</td>
+                                        <td>${item.status_tempahan}</td>
                                         ${actionButtons}
                                     </tr>
                                 `);
-
                             });
 
                             // Populate pagination and show it if hidden
@@ -170,7 +181,7 @@ include 'controller/session.php';
                                         <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
                                     </li>
                                 `);
-                                }
+                            }
 
                             // Next button
                             pagination.append(`
@@ -188,46 +199,7 @@ include 'controller/session.php';
 
 
 
-            $(document).on('click', '.cancelTempahan', function(e) {
-                let tempahanId = $(this).attr('value');
-
-                Swal.fire({
-                    title: "Adakah anda pasti?",
-                    text: "Anda tidak akan dapat membatalkan ini!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: 'controller/cancelTempahan.php',
-                            type: 'POST',
-                            data: {
-                                id: tempahanId
-                            },
-                            success: function(response) {
-                                let res = JSON.parse(response);
-                                Swal.fire({
-                                    title: "Berjaya",
-                                    text: "Tempahan Dibatalkan",
-                                    icon: "success"
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                Swal.fire({
-                                    title: "Ralat!",
-                                    text: "Ralat berlaku semasa mengemaskini status kerja.",
-                                    icon: "error"
-                                });
-                            }
-                        });
-                    }
-                });
-            });
+            
         </script>
     </div>
 </body>

@@ -55,13 +55,14 @@ include 'controller/session.php';
             include 'controller/connection.php';
 
             // Get the ID from the URL query string
-            $id = $_GET['id'];
+            $tempahan_id = $_GET['tempahan_id'];
 
             // Query to get the necessary details
-            $sqlTempahan = "SELECT t.*, p.nama
+            $sqlTempahan = "SELECT t.tempahan_id,t.lokasi_kerja,t.luas_tanah, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.nombor_rujukan
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE t.status_bayaran NOT IN ('dalam pengesahan', 'ditolak', 'dibatalkan','selesai','bayaran deposit') AND t.tempahan_id = $id";
+                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
+                WHERE t.tempahan_id = $tempahan_id";
 
             // Execute the query
             $result = $conn->query($sqlTempahan);
@@ -100,37 +101,133 @@ include 'controller/session.php';
                         <label for="tarikhKerja" class="form-label">Luas Tanah (Hektar) :</label>
                         <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['luas_tanah'] ?>" readonly>
                     </div>
+                    <div class="mb-3">
+                        <label for="tarikhKerja" class="form-label">Cara Bayaran :</label>
+                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['cara_bayar'] ?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tarikhKerja" class="form-label">Jenis Pembayaran :</label>
+                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['jenis_pembayaran'] ?>" readonly>
+                    </div>
 
-                    <?php
-                    if ($tempahan['status_bayaran'] == 'deposit diproses' || $tempahan['status_bayaran'] == 'deposit selesai') {
-                    ?>
-                        <label for="depositKerja" class="form-label">Deposit (RM) :</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control" id="depositKerja" value="<?php echo htmlspecialchars($tempahan['total_deposit']); ?>" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_resit_deposit.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
+                    <?php if ($tempahan['cara_bayar'] == 'fpx') { ?>
+                        <div class="mb-3">
+                            <label for="tarikhKerja" class="form-label">Nombor Rujukan :</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['nombor_rujukan'] ?>" readonly>
+                                <button type="button" class="btn btn-outline-secondary " data-bs-toggle="modal" data-bs-target="#fpxDetails">Lihat Butiran</button>
+                            </div>
                         </div>
-                    <?php
-                    } else {
-                    ?>
-                        <label for="depositKerja" class="form-label">Deposit (RM) :</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control" id="depositKerja" value="<?php echo htmlspecialchars($tempahan['total_deposit']); ?>" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_resit_deposit.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
+
+                    <?php } ?>
+
+
+
+                    <!-- Modal FPX-->
+                    <div class="modal fade" id="fpxDetails" tabindex="-1" aria-labelledby="fpxDetailsLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="fpxDetailsLabel">Butiran FPX</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <?php
+
+                                $sqlFPX = "SELECT `fpx_id_transaksi`, `fpx_id_bank`, `fpx_nama_bank`, `fpx_nama_pembeli`, `fpx_akaun_bank_pembeli`, `jumlah_bayaran`, `fpx_masa_transaksi`, `fpx_kod_respon`, `nombor_rujukan`, `catatan` FROM `fpx_payments` WHERE 1";
+
+                                $result = mysqli_query($conn, $sqlFPX);
+
+                                // Check if there are results
+                                if (mysqli_num_rows($result) > 0) {
+                                    // Fetch the data into an associative array
+                                    $row = mysqli_fetch_assoc($result);
+
+                                    // Extracting values
+                                    $fpx_id_transaksi = $row['fpx_id_transaksi'];
+                                    $fpx_id_bank = $row['fpx_id_bank'];
+                                    $fpx_nama_bank = $row['fpx_nama_bank'];
+                                    $fpx_nama_pembeli = $row['fpx_nama_pembeli'];
+                                    $fpx_akaun_bank_pembeli = $row['fpx_akaun_bank_pembeli'];
+                                    $jumlah_bayaran = $row['jumlah_bayaran'];
+                                    $fpx_masa_transaksi = $row['fpx_masa_transaksi'];
+                                    $fpx_kod_respon = $row['fpx_kod_respon'];
+                                    $nombor_rujukan = $row['nombor_rujukan'];
+                                    $catatan = $row['catatan'];
+                                }
+                                ?>
+                                <div class="modal-body">
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            FPX ID
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $fpx_id_transaksi; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            Bank Name
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $fpx_nama_bank; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            Buyer Name
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $fpx_nama_pembeli; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            Amount Paid
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $jumlah_bayaran; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            Transaction Time
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $fpx_masa_transaksi; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            Reference Number
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $nombor_rujukan; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            FPX respons kod
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $fpx_kod_respon; ?>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                            Notes
+                                        </span><br>
+                                        <span style="font-size: large;">
+                                            <?php echo $catatan; ?>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
                         </div>
-
-                        <label for="totalKerja" class="form-label">Bayaran Penuh (RM) :</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control" id="totalKerja" value="<?php echo htmlspecialchars($tempahan['total_baki']); ?>" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_resit_fullpayment.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
-                        </div>
-                    <?php
-                    }
-                    ?>
-
-
-
-
-
+                    </div>
                 </form>
 
             </div>
@@ -140,66 +237,67 @@ include 'controller/session.php';
                     <h2>Butiran Kerja</h2>
                 </div>
 
-                <form>
-                    <?php
-                    // Query to get the necessary details
-                    $sqlkerja = "SELECT * FROM tempahan_kerja WHERE status_kerja NOT IN ('dibatalkan','ditolak') AND tempahan_id = $id";
+                <?php
+                // Prepare the first statement to get total_harga_anggaran and total_harga_sebenar
+                $sql1 = $conn->prepare("SELECT total_harga_anggaran, total_harga_sebenar FROM tempahan WHERE tempahan_id = ?");
+                $sql1->bind_param("s", $tempahan_id);
+                $sql1->execute();
+                $sql1->bind_result($total_harga_anggaran, $total_harga_sebenar);
+                $sql1->fetch(); // Fetch the result
 
-                    // Execute the query
-                    $result = $conn->query($sqlkerja);
+                // Close the first statement
+                $sql1->close();
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            if ($tempahan['status_bayaran'] == 'deposit diproses') {
-                    ?>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <span class="input-group-text">Nama Kerja</span>
-                                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam Anggaran</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                                    <span class="input-group-text">Harga Anggaran (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
+                // Prepare the second statement for tempahan_kerja
+                $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_id = ?");
+                $sqlkerja->bind_param("s", $tempahan_id);
+                $sqlkerja->execute();
+                $result = $sqlkerja->get_result(); // Get the result set from the prepared statement
 
-                                </div><br>
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
 
-                            <?php  } else {
-                            ?>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <span class="input-group-text">Nama Kerja</span>
-                                    <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam Anggaran</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                                    <span class="input-group-text">Harga Anggaran (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <!-- Store the rate per hour as a hidden input field -->
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Total Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jumlah_jam']); ?>" readonly>
-                                    <span class="input-group-text">Total Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['jumlah_bayaran']); ?>" readonly>
-                                </div><br>
-                    <?php  }
-                        }
-                    } else {
-                        echo "<p>No work found for this order.</p>";
+                ?>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Nama Kerja</span>
+                            <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
+                            <span class="input-group-text">Tarikh Kerja</span>
+                            <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['tarikh_kerja_cadangan']); ?>" readonly>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Jam </span>
+                            <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
+                            <span class="input-group-text">Minit </span>
+                            <input type="text" class="form-control output_price" value="<?php echo htmlspecialchars($row['minit_anggaran']); ?>" readonly>
+                        </div>
+                        <div class="input-group mb-2">  
+                            <span class="input-group-text">Harga </span>
+                            <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
+                        </div><br>
+
+                <?php
+
                     }
-                    ?>
-                </form>
+                } else {
+                    echo "<p>No work found for this order.</p>";
+                }
+                ?>
 
-
+                <div class="input-group mb-2 align-self-end">
+                    <span class="input-group-text">Total Anggaran (RM)</span>
+                    <input type="text" class="form-control output_price" value="<?php echo $total_harga_anggaran ?? '0'; ?>" readonly>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-danger cancelTempahan" value="<?= $tempahan_id ?>">Batal Tempahan</button>
+                        <button type="button" class="btn btn-success terimaBayaran" value="<?= $tempahan_id ?>">Hantar Ke Pengarah</button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -214,6 +312,105 @@ include 'controller/session.php';
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $(document).on('click', '.terimaBayaran', function(e) {
+                let tempahanId = $(this).attr('value');
+
+                Swal.fire({
+                    title: "Hantar Ke Pengarah",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'controller/terimaBayaran.php',
+                            type: 'POST',
+                            data: {
+                                tempahan_id: tempahanId
+                            },
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                if (res.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: res.message,
+                                    }).then(() => {
+                                        window.location.href = 'tempahan.php';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: res.message,
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+            });
+
+            $(document).on('click', '.cancelTempahan', function(e) {
+                let tempahanId = $(this).attr('value');
+
+                Swal.fire({
+                    title: "Tolak Tempahan",
+                    text: "Sila nyatakan sebab menolak tempahan:",
+                    input: 'textarea', // Add input field
+                    inputPlaceholder: 'Sebab tolak tempahan...',
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya",
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Anda perlu memberikan sebab untuk menolak tempahan!';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let reason = result.value; // Get input value
+                        $.ajax({
+                            url: 'controller/cancelTempahan.php',
+                            type: 'POST',
+                            data: {
+                                tempahan_id: tempahanId,
+                                sebab_ditolak: reason // Pass the reason to the server
+                            },
+                            success: function(response) {
+                                let res = JSON.parse(response);
+                                Swal.fire({
+                                    title: "Berjaya",
+                                    text: "Tempahan Dibatalkan",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: "Ralat!",
+                                    text: "Ralat berlaku semasa mengemaskini status kerja.",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
 
 
 </body>

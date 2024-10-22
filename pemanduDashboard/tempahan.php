@@ -106,7 +106,7 @@ $pemandu_id = $_SESSION['id'];
                         if (response.data.length === 0) {
                             tbody.append(`
                                 <tr>
-                                    <td colspan="7" class="text-center">Tiada rekod dalam Database</td>
+                                    <td colspan="7" class="text-center">Tiada rekod dijumpai.</td>
                                 </tr>
                             `);
                             pagination.hide(); // Hide pagination
@@ -114,15 +114,10 @@ $pemandu_id = $_SESSION['id'];
 
                             // Populate table
                             response.data.forEach(function(item, index) {
-
                                 var actionButton = '';
 
-                                if (item.status_kerja === 'tempahan diproses') {
-                                    actionButton = `<button class="btn btn-success startKerja" value="${item.tempahan_kerja_id}">Mula Kerja</button>`;
-                                } else {
-                                    actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?id=${item.tempahan_kerja_id}'">Kemaskini</button>`;
-                                }
-
+                                actionButton = `<button class="btn btn-primary" onclick="window.location.href='jobsheet.php?jobsheet_id=${item.jobsheet_id}'">Lihat Butiran</button>`;
+                               
                                 tbody.append(`
                         <tr data-id="${item.tempahan_kerja_id}">
                             <td>${(response.currentPage - 1) * 5 + index + 1}</td>
@@ -177,7 +172,7 @@ $pemandu_id = $_SESSION['id'];
 
 
             $(document).on('click', '.startKerja', function(e) {
-                let kerjaId = $(this).attr('value');
+                let jobsheet_id = $(this).attr('value');
 
                 Swal.fire({
                     title: "Mula Kerja",
@@ -193,7 +188,7 @@ $pemandu_id = $_SESSION['id'];
                             url: 'controller/startKerja.php',
                             type: 'POST',
                             data: {
-                                id: kerjaId
+                                jobsheet_id: jobsheet_id
                             },
                             success: function(response) {
                                 let res = JSON.parse(response);

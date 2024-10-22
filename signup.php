@@ -29,21 +29,21 @@
             <div class="modal-body">
                 <form class="signupForm" novalidate>
                     <div class="mb-3">
-                        <label for="nokp" class="form-label">Nombor Kad Pengenalan:</label>
+                        <label for="nokp" class="form-label">No. Kad Pengenalan <span style="color: red;">*</span>  </label>
                         <input type="text" class="form-control" id="nokp" name="nokp" placeholder="Masukkan Nombor Kad Pengenalan" minlength="12" maxlength="12" required>
                         <div class="invalid-feedback">
                             Sila masukkan nombor kad pengenalan yang sah.
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="fullname" class="form-label">Nama Penuh :</label>
+                        <label for="fullname" class="form-label">Nama Penuh <span style="color: red;">*</span></label>
                         <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Masukkan Nama Penuh" minlength="10" required>
                         <div class="invalid-feedback">
                             Sila masukkan nama penuh yang sah.
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="contactno" class="form-label">Nombor Telefon :</label>
+                        <label for="contactno" class="form-label">Nombor Telefon <span style="color: red;">*</span></label>
                         <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Masukkan Nombor Telefon"  minlength="10" maxlength="11" required>
                         <div class="invalid-feedback">
                             Sila masukkan nombor telefon yang sah.
@@ -51,10 +51,18 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat Rumah :</label>
+                        <label for="alamat" class="form-label">Alamat Rumah <span style="color: red;">*</span></label>
                         <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Rumah" minlength="10" required>
                         <div class="invalid-feedback">
                             Sila masukkan alamat yang sah.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mail" class="form-label">Email </label>
+                        <input type="email" class="form-control" id="mail" name="mail" placeholder="Masukkan Email">
+                        <div class="invalid-feedback">
+                            Sila masukkan nama penuh yang sah.
                         </div>
                     </div>
 
