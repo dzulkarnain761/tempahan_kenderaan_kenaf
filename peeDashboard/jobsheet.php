@@ -125,7 +125,7 @@ include 'controller/session.php';
                                         <td>${kerjaList}</td>
                                         
                                         <td>
-                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
+                                        <button onclick="window.location.href = 'pengesahan_jobsheet.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
                                             Lihat Butiran
                                         </button>
                                     </td>
