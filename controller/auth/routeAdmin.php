@@ -36,6 +36,10 @@ switch ($kumpulan) {
         // Redirect to page for PEMBANTU TADBIR
         header('Location: ../../pembantuTadbirDashboard/tempahan.php');
         break;
+    case 'G':
+        // Redirect to page for PEMBANTU TADBIR
+        header('Location: ../../kewanganDashboard/tempahan.php');
+        break;
     case 'Y':
         // Redirect to page for PEMANDU
         header('Location: ../../pemanduDashboard/tempahan.php');

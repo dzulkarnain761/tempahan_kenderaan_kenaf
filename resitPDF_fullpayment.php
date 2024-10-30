@@ -16,15 +16,15 @@ if (!$conn) {
 
 
 
-$id = $_GET['id'];
+$tempahan_id = $_GET['tempahan_id'];
 
 
 // Ensure you escape the ID to prevent SQL injection
-$id = mysqli_real_escape_string($conn, $id);
+$tempahan_id = mysqli_real_escape_string($conn, $tempahan_id);
 
 $sqlTempahan = "SELECT r.*,t.* FROM resit_pembayaran r
                 LEFT JOIN tempahan t ON r.tempahan_id = t.tempahan_id
-                WHERE r.tempahan_id = $id AND r.jenis_pembayaran = 'bayaran penuh'";
+                WHERE r.tempahan_id = $tempahan_id AND r.jenis_pembayaran = 'bayaran penuh'";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data
@@ -87,6 +87,7 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
             <p><strong>Nama :</strong> <?php echo $penyewa['nama']; ?> </p>
             <p><strong>Alamat :</strong> <?php echo strtoupper($penyewa['alamat']) ?></p>
             <p><strong>Email :</strong> <?php echo ($penyewa['email'] ?? 'Tiada Email') ?></p>
+            <p><strong>Cara Bayar :</strong> <?php echo $tempahan['cara_bayar'] ?></p>
         </div>
 
         <!-- Table with items -->
@@ -95,7 +96,8 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                 <tr>
                     <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Nama Kerja</th>
                     <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Jam</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Harga (RM)</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Minit</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Harga</th>
                     <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Total (RM)</th>
                 </tr>
             </thead>
@@ -104,8 +106,7 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                 <?php
                 // SQL query to select all tasks for the booking
                 $sqlKerja = "SELECT * FROM `tempahan_kerja` 
-                                        WHERE tempahan_id = $id 
-                                        AND status_kerja NOT IN ('ditolak','dibatalkan')";
+                                        WHERE tempahan_id = $tempahan_id";
 
                 $resultKerja = mysqli_query($conn, $sqlKerja);
 
@@ -124,9 +125,10 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
 
                     <tr>
                         <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_jam'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['jam_anggaran'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['minit_anggaran'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rateharga ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_harga'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['harga_anggaran'] ?></td>
                     </tr>
                 <?php
                    
@@ -138,9 +140,8 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
 
         <!-- Totals Section -->
         <div style="text-align: right;">
-            <p><strong>Subtotal : </strong>RM <?php echo $tempahan['total_harga_sebenar'] ?></p>
-            <p><strong>Deposit : </strong> - RM <?php echo $tempahan['total_deposit'] ?></p>
-            <p><strong>Total : </strong> RM <?php echo $tempahan['total_baki'] ?></p>
+             
+            <p><strong>Total : </strong> RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
         </div>
 
         <!-- Footer Section -->

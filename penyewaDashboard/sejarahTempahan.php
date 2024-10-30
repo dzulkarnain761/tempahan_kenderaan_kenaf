@@ -59,7 +59,7 @@ include 'controller/get_userdata.php';
             $sqlTempahan = "SELECT t.*, p.nama
                     FROM tempahan t
                     INNER JOIN penyewa p ON p.id = t.penyewa_id
-                    WHERE t.status_bayaran = 'selesai' OR t.status_bayaran = 'dibatalkan' AND t.penyewa_id = $id";
+                    WHERE t.status_bayaran = 'selesai' OR t.status_bayaran = 'dibatalkan' AND t.penyewa_id = $user_id";
 
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
@@ -138,7 +138,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                 <span>
-                                  
+
                                 </span>
 
                                 <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->

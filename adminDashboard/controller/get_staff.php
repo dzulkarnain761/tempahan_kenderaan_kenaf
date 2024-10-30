@@ -2,7 +2,7 @@
 include 'connection.php';
 
 
-$limit = 5; // Number of entries to show per page
+$limit = 10; // Number of entries to show per page
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
 

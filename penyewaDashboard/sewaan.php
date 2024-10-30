@@ -59,7 +59,7 @@ include 'controller/get_userdata.php';
             $sqlTempahan = "SELECT t.*, p.nama
 				FROM tempahan t
 				INNER JOIN penyewa p ON p.id = t.penyewa_id
-				WHERE t.status_bayaran NOT IN ('dibatalkan', 'selesai') AND t.penyewa_id = $id;";
+				WHERE t.status_bayaran NOT IN ('dibatalkan', 'selesai') AND t.penyewa_id = $user_id;";
 
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
@@ -110,6 +110,9 @@ include 'controller/get_userdata.php';
                                 case 'refund':
                                     echo '<div class="status badge bg-warning text-dark">Refund</div>';
                                     break;
+                                case 'bayaran tambahan':
+                                    echo '<div class="status badge bg-danger">Bayaran Tambahan</div>';
+                                    break;
                                 case 'selesai':
                                     echo '<div class="status badge bg-success">Selesai</div>';
                                     break;
@@ -124,7 +127,7 @@ include 'controller/get_userdata.php';
 
                         </div><br>
 
-                        
+
 
                         <p><span class="semibold">Senarai Kerja : </span></p>
                         <ol>
@@ -154,14 +157,33 @@ include 'controller/get_userdata.php';
 
                                 </li>
                         <?php
-                                        $counterKerja++;
+
                                     }
+                                    $counterKerja++;
                                 }
                         ?>
                         </ol>
 
                         <hr>
                         <?php
+
+                        $sqlBank = "SELECT no_bank, nama_bank FROM penyewa WHERE id = $user_id";
+                        $resultBank = mysqli_query($conn, $sqlBank);
+
+                        if ($resultBank && mysqli_num_rows($resultBank) > 0) {
+                            $row = mysqli_fetch_assoc($resultBank);
+                            $no_bank = $row['no_bank'];
+                            $nama_bank = $row['nama_bank'];
+
+                            if (empty($no_bank) || empty($nama_bank)) {
+                                $btn = 'btn-warning'; // Button style if bank details are missing
+                            } else {
+                                $btn = 'btn-secondary'; // Button style if bank details are present
+                            }
+                        } else {
+                            // Handle the case where no result is returned
+                            $btn = 'btn-warning'; // Default to warning if no data found
+                        }
                         switch ($statusBayaran) {
                             case 'dalam pengesahan':
                                 echo '<div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -211,17 +233,7 @@ include 'controller/get_userdata.php';
                                 </div>';
                                 break;
 
-                            case 'refund':
-                                echo '<div style="display: flex; justify-content: flex-end; gap: 10px;">
-                            
-                            <span>
-                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button> <!-- View details button -->
-                            </span>
-                        </div>';
-                                break;
-
-
-                            case 'selesai':
+                            case 'selesai bayaran':
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
@@ -231,7 +243,29 @@ include 'controller/get_userdata.php';
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
                                         <span>
-                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?id=' . $tempahanId . '\', \'_blank\')">Lihat Butiran</button>
+                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?id=' . $tempahanId . '\', \'_blank\')">Resit</button>
+                                        </span>
+                                        
+                                        <span>
+                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+                                        </span>
+                                    </div>
+                                </div>';
+                                break;
+
+
+
+                            case 'refund':
+                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                    <!-- Left side: Link to Lihat Sebut Harga -->
+                                    <span>
+                                        <a href="controller/resitPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
+                                    </span>
+
+                                    <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
+                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                        <span>
+                                            <button class="btn ' . $btn . ' btn-sm" type="button" onclick="window.location.href=\'profil.php\'">Kemaskini Butiran Bank</button>
                                         </span>
                                         
                                         <span>
