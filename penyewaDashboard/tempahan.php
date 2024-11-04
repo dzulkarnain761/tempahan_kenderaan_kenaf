@@ -29,7 +29,7 @@ include 'controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
+    <!-- <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -38,7 +38,7 @@ include 'controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
@@ -78,6 +78,10 @@ include 'controller/get_userdata.php';
                         <input type="date" class="form-control" id="tarikh_kerja" name="tarikh_kerja" required>
                     </div>
                     <div class="mb-3">
+                        <label for="keluasan_tanah" class="form-label">Keluasan Tanah (Hektar) :</label>
+                        <input type="number" class="form-control" id="keluasan_tanah" name="keluasan tanah" min="0" step="0.1"  placeholder="Masukkan Keluasan Tanah" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="negeri" class="form-label">Negeri</label>
                         <select id="negeri" class="form-select" name="negeri" required>
                             <option disabled selected value="">--Pilih Negeri--</option>
@@ -92,13 +96,11 @@ include 'controller/get_userdata.php';
                         </select>
                         <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
                     </div>
+                    
+                    
                     <div class="mb-3">
                         <label for="lokasi_kerja" class="form-label">Lokasi Kerja :</label>
-                        <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" placeholder="Masukkan Lokasi Kerja" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="keluasan_tanah" class="form-label">Keluasan Tanah (Hektar) :</label>
-                        <input type="number" class="form-control" id="keluasan_tanah" name="keluasan tanah" min="0" step="0.1"  placeholder="Masukkan Keluasan Tanah" required>
+                        <textarea class="form-control" name="lokasi_kerja" rows="3" placeholder="Masukkan lokasi"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="catatan" class="form-label">Catatan :</label>

@@ -30,22 +30,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $jenis_pembayaran = 'bayaran penuh';
 
         if ($cara_bayar == 'fpx') {
+
             // Sample FPX payment data
-            $fpx_id_transaksi = 'TX123456';
+            $fpx_id_transaksi = 'FPXTK' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
             $fpx_id_bank = 'B001';
             $fpx_nama_bank = 'Maybank';
             $fpx_nama_pembeli = 'Ali Bin Ahmad';
             $fpx_akaun_bank_pembeli = '123456789';
-            $fpx_waktu_transaksi = '2024-10-20 10:00:00';
             $fpx_tandatangan = 'abc123def';
             $fpx_kod_respon = '00';
-            $nombor_rujukan = 'FPXTX1029384756';
-            $alamat_ip = '192.168.0.1';
+            $nombor_rujukan = 'TKBP'. str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
+            $ip = $_SERVER['REMOTE_ADDR'];
             $catatan = 'Payment successful';
 
             // Insert into pembayaran_fpx
-            $sqlFPX = $conn->prepare("INSERT INTO fpx_payments (fpx_id_transaksi, fpx_id_bank, fpx_nama_bank, fpx_nama_pembeli, fpx_akaun_bank_pembeli, fpx_masa_transaksi, fpx_tandatangan, fpx_kod_respon, nombor_rujukan, alamat_ip, catatan, jumlah_bayaran) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $sqlFPX->bind_param("sssssssssssd", $fpx_id_transaksi, $fpx_id_bank, $fpx_nama_bank, $fpx_nama_pembeli, $fpx_akaun_bank_pembeli, $fpx_waktu_transaksi, $fpx_tandatangan, $fpx_kod_respon, $nombor_rujukan, $alamat_ip, $catatan, $jumlah_bayaran);
+            $sqlFPX = $conn->prepare("INSERT INTO fpx_payments (fpx_id_transaksi, fpx_id_bank, fpx_nama_bank, fpx_nama_pembeli, fpx_akaun_bank_pembeli, fpx_tandatangan, fpx_kod_respon, nombor_rujukan, alamat_ip, catatan, jumlah_bayaran) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $sqlFPX->bind_param("ssssssssssd", $fpx_id_transaksi, $fpx_id_bank, $fpx_nama_bank, $fpx_nama_pembeli, $fpx_akaun_bank_pembeli, $fpx_tandatangan, $fpx_kod_respon, $nombor_rujukan, $alamat_ip, $catatan, $jumlah_bayaran);
             if (!$sqlFPX->execute()) {
                 throw new Exception("FPX gagal: " . $sqlFPX->error);
             }

@@ -233,13 +233,13 @@ include 'controller/session.php';
                 <div class="input-group mb-2">
                     
                     <span class="input-group-text">Jam</span>
-                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" >
+                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" readonly>
                     <span class="input-group-text">Minit</span>
-                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" >
+                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" readonly>
                 </div>
                 <div class="input-group mb-2">
                     <span class="input-group-text">Harga (RM)</span>
-                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" >
+                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" readonly>
                 </div>
 
 

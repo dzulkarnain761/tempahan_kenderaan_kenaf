@@ -155,13 +155,13 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
                                         <span>
-                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?id=' . $tempahanId . '\', \'_blank\')">Resit</button>
+                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?tempahan_id=' . $tempahanId . '\', \'_blank\')">Resit</button>
                                         </span>
                                         
                                         <span>
@@ -176,7 +176,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                 <span>
-                                    <a href="controller/quotationPDF_fullpayment.php?id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                    <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                 </span>
 
                                 <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->

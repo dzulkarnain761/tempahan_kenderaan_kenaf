@@ -48,13 +48,14 @@ include 'controller/session.php';
 
             // Get the ID from the URL query string
             $tempahan_id = $_GET['tempahan_id'];
+            $resit_id = $_GET['resit_id'];
 
             // Query to get the necessary details
             $sqlTempahan = "SELECT t.tempahan_id,t.lokasi_kerja,t.luas_tanah,t.status_tempahan, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.nombor_rujukan
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE t.tempahan_id = $tempahan_id";
+                WHERE r.resit_id = $resit_id";
 
             // Execute the query
             $result = $conn->query($sqlTempahan);
@@ -146,16 +147,31 @@ include 'controller/session.php';
                             <span class="input-group-text">Tarikh Kerja</span>
                             <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['tarikh_kerja_cadangan']); ?>" readonly>
                         </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">Jam </span>
-                            <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                            <span class="input-group-text">Minit </span>
-                            <input type="text" class="form-control output_price" value="<?php echo htmlspecialchars($row['minit_anggaran']); ?>" readonly>
-                        </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">Harga </span>
-                            <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
-                        </div><br>
+
+                        <?php if ($tempahan['jenis_pembayaran'] == 'bayaran penuh'): ?>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Jam </span>
+                                <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
+                                <span class="input-group-text">Minit </span>
+                                <input type="text" class="form-control output_price" value="<?php echo htmlspecialchars($row['minit_anggaran']); ?>" readonly>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Harga </span>
+                                <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
+                            </div><br>
+                        <?php else: ?>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Jam </span>
+                                <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['total_jam']); ?>" readonly>
+                                <span class="input-group-text">Minit </span>
+                                <input type="text" class="form-control output_price" value="<?php echo htmlspecialchars($row['total_minit']); ?>" readonly>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Harga </span>
+                                <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['total_harga']); ?>" readonly>
+                            </div><br>
+
+                        <?php endif ?>
 
                 <?php
 
@@ -171,6 +187,7 @@ include 'controller/session.php';
                 </div><br>
                 <?php if ($tempahan['status_tempahan'] == 'penjanaan resit') { ?>
                     <form method="post" enctype="multipart/form-data" id="janaResitForm">
+                        <input type="hidden" name="resit_id" value="<?php echo $resit_id ?>">
                         <input type="hidden" name="tempahan_id" value="<?php echo $tempahan_id ?>">
                         <div class="mb-3">
                             <label for="tarikhKerja" class="form-label">Bukti Resit : </label>
@@ -178,7 +195,11 @@ include 'controller/session.php';
                         </div>
                         <div class="modal-footer d-flex justify-content-between">
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                                <?php if ($tempahan['jenis_pembayaran'] == 'bayaran penuh'): ?>
+                                    <button type="button" class="btn btn-primary" onclick="window.open('controller/quotationPDF_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                                <?php else: ?>
+                                    <button type="button" class="btn btn-primary" onclick="window.open('controller/quotationPDF_extrapayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                                <?php endif ?>
                             </div>
                             <div>
 

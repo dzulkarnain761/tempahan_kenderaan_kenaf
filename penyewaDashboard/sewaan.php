@@ -215,12 +215,31 @@ include 'controller/get_userdata.php';
                                     </div>
                                 </div>';
                                 break;
+                            case 'bayaran tambahan':
+                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                        <!-- Left side: Link to Lihat Sebut Harga -->
+                                        <span>
+                                            <a href="controller/quotationPDF_extrapayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        </span>
+    
+                                        <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
+                                        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                            <span>
+                                                <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#extraPaymentModal_' . $tempahanId . '">Bayar Tambahan</button>
+                                            </span>
+                                            
+                                            <span>
+                                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+                                            </span>
+                                        </div>
+                                    </div>';
+                                break;
 
                             case 'bayaran diproses':
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -274,7 +293,6 @@ include 'controller/get_userdata.php';
                                     </div>
                                 </div>';
                                 break;
-
 
                             default:
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
@@ -430,7 +448,47 @@ include 'controller/get_userdata.php';
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" onclick="submitPaymentForm('<?php echo $tempahanId; ?>')">I Choose U</button>
+                                        <button type="button" class="btn btn-secondary" onclick="submitPaymentForm('<?php echo $tempahanId; ?>')">Bayar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="extraPaymentModal_<?php echo $tempahanId; ?>" tabindex="-1" aria-labelledby="extraPaymentModalLabel_<?php echo $tempahanId; ?>" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel_<?php echo $tempahanId; ?>">Pilih Cara Pembayaran</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <form id="extraPaymentForm_<?php echo $tempahanId; ?>">
+                                    <div class="modal-body">
+                                        <input type="hidden" name="id" value="<?php echo $tempahanId; ?>">
+                                        <div class="payment-options">
+                                            <div class="option-wrapper">
+                                                <input type="radio" name="cara_bayaran" class="hidden-radio" checked value="tunai" id="extraPayment_tunai_<?php echo $tempahanId; ?>">
+                                                <label class="option-label" for="extraPayment_tunai_<?php echo $tempahanId; ?>">
+                                                    <div class="option-content">
+                                                        <div class="card-details">Secara Tunai</div>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="option-wrapper">
+                                                <input type="radio" name="cara_bayaran" class="hidden-radio" value="fpx" id="extraPayment_online_<?php echo $tempahanId; ?>">
+                                                <label class="option-label" for="extraPayment_online_<?php echo $tempahanId; ?>">
+                                                    <div class="option-content">
+                                                        <div class="card-details">Secara Atas Talian</div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" onclick="extraPaymentForm('<?php echo $tempahanId; ?>')">Bayar</button>
                                     </div>
                                 </form>
                             </div>
@@ -565,7 +623,48 @@ include 'controller/get_userdata.php';
 
             // Perform AJAX request
             $.ajax({
-                url: 'controller/bayarPenuh.php',
+                url: 'controller/bayar_penuh.php',
+                type: 'POST',
+                data: {
+                    tempahan_id: tempahanId,
+                    cara_bayaran: selectedPayment
+                },
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            title: "Berjaya",
+                            text: res.message,
+                            icon: "success"
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Ralat!",
+                            text: res.message || "Terdapat ralat semasa membuat pembayaran.",
+                            icon: "error"
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Ralat!",
+                        text: "Ralat berlaku semasa membuat pembayaran.",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+
+        function extraPaymentForm(tempahanId) {
+            var form = $('#extraPaymentForm_' + tempahanId);
+            var selectedPayment = form.find('input[name="cara_bayaran"]:checked').val();
+            var url = '';
+
+            // Perform AJAX request
+            $.ajax({
+                url: 'controller/bayar_tambahan.php',
                 type: 'POST',
                 data: {
                     tempahan_id: tempahanId,

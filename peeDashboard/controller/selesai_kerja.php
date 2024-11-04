@@ -62,11 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Update tempahan table with the actual cost, balance, and status
         $updateTempahan = "
             UPDATE tempahan
-            SET total_harga_sebenar = ?, total_baki = ?, status_tempahan = ?
+            SET total_harga_sebenar = ?, total_baki = ?, status_tempahan = ?, status_bayaran = ?
             WHERE tempahan_id = ?
         ";
         $stmt = $conn->prepare($updateTempahan);
-        $stmt->bind_param('ddsi', $total_harga_sebenar, $total_baki, $status_tempahan, $tempahan_id);
+        $stmt->bind_param('ddssi', $total_harga_sebenar, $total_baki, $status_tempahan, $status_bayaran, $tempahan_id);
 
         if (!$stmt->execute()) {
             throw new Exception("Gagal Kemaskini Tempahan");

@@ -10,7 +10,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
 
 // SQL query to select pemandu with pagination
-$sqlTempahan = "SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar, r.status_resit,r.bukti_resit_path
+$sqlTempahan = "SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar, r.status_resit,r.bukti_resit_path,r.resit_id
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id

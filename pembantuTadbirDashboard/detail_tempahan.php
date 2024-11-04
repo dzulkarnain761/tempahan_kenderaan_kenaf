@@ -56,13 +56,14 @@ include 'controller/session.php';
 
             // Get the ID from the URL query string
             $tempahan_id = $_GET['tempahan_id'];
+            $resit_id = $_GET['resit_id'];
 
             // Query to get the necessary details
             $sqlTempahan = "SELECT t.tempahan_id,t.lokasi_kerja,t.luas_tanah, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.nombor_rujukan
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE t.tempahan_id = $tempahan_id";
+                WHERE r.resit_id = $resit_id";
 
             // Execute the query
             $result = $conn->query($sqlTempahan);
@@ -133,7 +134,9 @@ include 'controller/session.php';
                                 </div>
                                 <?php
 
-                                $sqlFPX = "SELECT `fpx_id_transaksi`, `fpx_id_bank`, `fpx_nama_bank`, `fpx_nama_pembeli`, `fpx_akaun_bank_pembeli`, `jumlah_bayaran`, `fpx_masa_transaksi`, `fpx_kod_respon`, `nombor_rujukan`, `catatan` FROM `fpx_payments` WHERE 1";
+                                $nombor_rujukan = $tempahan['nombor_rujukan'];
+
+                                $sqlFPX = "SELECT * FROM `fpx_payments` WHERE nombor_rujukan = '$nombor_rujukan'";
 
                                 $result = mysqli_query($conn, $sqlFPX);
 
@@ -238,65 +241,94 @@ include 'controller/session.php';
                 </div>
 
                 <?php
-                // Prepare the first statement to get total_harga_anggaran and total_harga_sebenar
-                $sql1 = $conn->prepare("SELECT total_harga_anggaran, total_harga_sebenar FROM tempahan WHERE tempahan_id = ?");
+                $jenis_pembayaran = $tempahan['jenis_pembayaran'];
+                // Prepare the first statement to get total_harga_anggaran, total_harga_sebenar, and total_baki
+                $sql1 = $conn->prepare("SELECT total_harga_anggaran, total_harga_sebenar, total_baki FROM tempahan WHERE tempahan_id = ?");
                 $sql1->bind_param("s", $tempahan_id);
                 $sql1->execute();
-                $sql1->bind_result($total_harga_anggaran, $total_harga_sebenar);
-                $sql1->fetch(); // Fetch the result
-
-                // Close the first statement
+                $sql1->bind_result($total_harga_anggaran, $total_harga_sebenar, $total_baki);
+                $sql1->fetch();
                 $sql1->close();
 
-                // Prepare the second statement for tempahan_kerja
+                // Fetch tempahan_kerja records
                 $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_id = ?");
                 $sqlkerja->bind_param("s", $tempahan_id);
                 $sqlkerja->execute();
-                $result = $sqlkerja->get_result(); // Get the result set from the prepared statement
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-
+                $result = $sqlkerja->get_result();
                 ?>
+
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
                         <div class="input-group mb-2">
                             <span class="input-group-text">Nama Kerja</span>
-                            <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
+                            <input type="text" class="form-control" value="<?= htmlspecialchars($row['nama_kerja']); ?>" readonly>
                             <span class="input-group-text">Tarikh Kerja</span>
-                            <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['tarikh_kerja_cadangan']); ?>" readonly>
+                            <input type="text" class="form-control" value="<?= htmlspecialchars(date('d/m/Y', strtotime($row['tarikh_kerja_cadangan']))); ?>" readonly>
                         </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">Jam </span>
-                            <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                            <span class="input-group-text">Minit </span>
-                            <input type="text" class="form-control output_price" value="<?php echo htmlspecialchars($row['minit_anggaran']); ?>" readonly>
-                        </div>
-                        <div class="input-group mb-2">  
-                            <span class="input-group-text">Harga </span>
-                            <input type="number" class="form-control input_hours" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
-                        </div><br>
 
-                <?php
+                        <?php if ($jenis_pembayaran == 'bayaran penuh'): ?>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Jam</span>
+                                <input type="number" class="form-control" value="<?= htmlspecialchars($row['jam_anggaran']); ?>" readonly>
+                                <span class="input-group-text">Minit</span>
+                                <input type="text" class="form-control" value="<?= htmlspecialchars($row['minit_anggaran']); ?>" readonly>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Harga</span>
+                                <input type="number" class="form-control" value="<?= htmlspecialchars($row['harga_anggaran']); ?>" readonly>
+                            </div>
+                        <?php else: ?>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Jam</span>
+                                <input type="number" class="form-control" value="<?= htmlspecialchars($row['total_jam']); ?>" readonly>
+                                <span class="input-group-text">Minit</span>
+                                <input type="text" class="form-control" value="<?= htmlspecialchars($row['total_minit']); ?>" readonly>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Harga</span>
+                                <input type="number" class="form-control" value="<?= htmlspecialchars($row['total_harga']); ?>" readonly>
+                            </div>
+                        <?php endif; ?>
+                        <br>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p>No work found for this order.</p>
+                <?php endif; ?>
 
-                    }
-                } else {
-                    echo "<p>No work found for this order.</p>";
-                }
-                ?>
-
-                <div class="input-group mb-2 align-self-end">
-                    <span class="input-group-text">Total Anggaran (RM)</span>
-                    <input type="text" class="form-control output_price" value="<?php echo $total_harga_anggaran ?? '0'; ?>" readonly>
-                </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <div>
-                        <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                <?php if ($jenis_pembayaran == 'bayaran penuh'): ?>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">Harga (RM)</span>
+                        <input type="text" class="form-control" value="<?= $total_harga_anggaran ?? '0'; ?>" readonly>
                     </div>
+                <?php else: ?>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">Harga (RM)</span>
+                        <input type="text" class="form-control" value="<?= $total_harga_sebenar ?? '0'; ?>" readonly>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">Sudah Bayar (RM)</span>
+                        <input type="text" class="form-control" value="<?= $total_harga_anggaran ?? '0'; ?>" readonly>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">Total Baki (RM)</span>
+                        <input type="text" class="form-control" value="<?= $total_baki ?? '0'; ?>" readonly>
+                    </div>
+                <?php endif; ?>
+
+                <div class="modal-footer d-flex justify-content-between">
+                    <?php if ($jenis_pembayaran == 'bayaran penuh'): ?>
+                        <button type="button" class="btn btn-primary" onclick="window.open('controller/quotationPDF_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                    <?php else: ?>
+                        <button type="button" class="btn btn-primary" onclick="window.open('controller/quotationPDF_extrapayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+
+                    <?php endif; ?>
                     <div>
                         <button type="button" class="btn btn-danger cancelTempahan" value="<?= $tempahan_id ?>">Batal Tempahan</button>
                         <button type="button" class="btn btn-success terimaBayaran" value="<?= $tempahan_id ?>">Hantar Ke Pengarah</button>
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>

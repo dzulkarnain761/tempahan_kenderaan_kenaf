@@ -125,11 +125,7 @@ include 'controller/session.php';
                             let caraBayaran = item.cara_bayaran;
                             let statusBayaran = item.status_bayaran;
 
-                            // Common 'Lihat Butiran' button
-                            const lihatButiranButton = `
-                                <button class="btn btn-primary" onclick="window.location.href='butiran_tempahan.php?tempahan_id=${item.tempahan_id}'">
-                                    Lihat Butiran
-                                </button>`;
+                            
 
                             // Decide button based on status_bayaran
                             if (item.status_bayaran === 'selesai') {
@@ -145,12 +141,10 @@ include 'controller/session.php';
                                         <td>${kerjaList}</td>
                                         <td>${item.cara_bayar}</td>
                                         <td>${item.jenis_pembayaran}</td>  
-                                        <td><button class="btn btn-primary" onclick="window.location.href='jana_resit.php?tempahan_id=${item.tempahan_id}'">
+                                        <td><button class="btn btn-primary" onclick="window.location.href='jana_resit.php?tempahan_id=${item.tempahan_id}&resit_id=${item.resit_id}'">
                                                 Butiran
                                             </button>
-                                            <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')">
-                                                Quotation
-                                            </button>
+                                            
                                             <button class="btn btn-primary" onclick="window.open('../bukti_resit/${item.bukti_resit_path}', '_blank')">
                                                 Resit
                                             </button>
