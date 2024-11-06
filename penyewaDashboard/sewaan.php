@@ -105,7 +105,7 @@ include 'controller/get_userdata.php';
                                     echo '<div class="status badge bg-info text-dark">Bayaran Diproses</div>';
                                     break;
                                 case 'selesai bayaran':
-                                    echo '<div class="status badge bg-danger">Selesai Bayaran</div>';
+                                    echo '<div class="status badge bg-success">Selesai Bayaran</div>';
                                     break;
                                 case 'refund':
                                     echo '<div class="status badge bg-warning text-dark">Refund</div>';
@@ -262,7 +262,7 @@ include 'controller/get_userdata.php';
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
                                         <span>
-                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?id=' . $tempahanId . '\', \'_blank\')">Resit</button>
+                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?tempahan_id=' . $tempahanId . '\', \'_blank\')">Resit</button>
                                         </span>
                                         
                                         <span>
