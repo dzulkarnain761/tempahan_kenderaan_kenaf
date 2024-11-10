@@ -20,10 +20,7 @@ include 'controller/session.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <style>
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 </head>
 
@@ -50,12 +47,8 @@ include 'controller/session.php';
                 <li class="breadcrumb-item active" aria-current="page">Maklumat Tempahan</li>
             </ol>
         </nav>
-        <div class="recentOrders">
-            <div class="cardHeader">
-                <h2>MAKLUMAT TEMPAHAN</h2>
-            </div>
 
-            <?php
+        <?php
             $tempahan_id = $_GET['tempahan_id'];
 
             // Ensure you escape the ID to prevent SQL injection
@@ -74,40 +67,54 @@ include 'controller/session.php';
                 echo "Tiada Tempahan Dijumpai";
                 exit;
             }
+        ?>
 
-            ?>
-
+        <div class="recentOrders px-5">
+            <div class="cardHeader">
+            <h2>MAKLUMAT TEMPAHAN</h2>
+            </div>
 
             <input type="hidden" name="tempahan_id" value="<?php echo htmlspecialchars($tempahan['tempahan_id']) ?>">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo date('Y-m-d', strtotime($tempahan['created_at'])) ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['nama']) ?>"
-                    disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Tarikh Cadangan:</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_kerja']) ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['luas_tanah']) ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?>" disabled>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="namaPemohon" class="form-label fw-bold mt-2 mb-1">Nama Pemohon</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="namaPemohon"><?php echo htmlspecialchars($tempahan['nama']); ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label for="tarikhPermohonan" class="form-label fw-bold mt-2 mb-1">Tarikh Permohonan</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhPermohonan"> <?php echo date('d/m/Y', strtotime($tempahan['created_at'])) ?> </p>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['catatan']) ?>" disabled>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="tarikhCadangan" class="form-label fw-bold mt-2 mb-1">Tarikh Cadangan</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhCadangan"> <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])) ?> </p>
+                </div>
+                <div class="col-md-6">
+                    <label for="luasTanah" class="form-label fw-bold mt-2 mb-1">Keluasan Tanah (Hektar)</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="luasTanah"> <?php echo htmlspecialchars($tempahan['luas_tanah']) ?> </p>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="lokasiKerja" class="form-label fw-bold mt-2 mb-1">Lokasi Kerja</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="lokasiKerja"> <?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?> </p>
+                </div>
+                <div class="col-md-6">
+                    <label for="catatan" class="form-label fw-bold mt-2">Catatan</label>
+                        <?php if (empty($tempahan['catatan'])): ?>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan">Tiada catatan</p>
+                        <?php else: ?>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan"><?php echo htmlspecialchars($tempahan['catatan']) ?></p>
+                        <?php endif; ?>
+                </div>
             </div>
         </div>
 
-        <div class="recentOrders">
+        <div class="recentOrders" style="background-color: #caf0f8;">
             <div class="cardHeader">
                 <h2>PENGESAHAN TEMPAHAN</h2>
             </div>
@@ -141,81 +148,91 @@ include 'controller/session.php';
                                 $rateharga = $fetchTugasan['harga_per_jam'];
                             }
                     ?>
-                            <div class="mb-5" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
+                            <div class="mb-4 p-3 border rounded bg-light">
+                                <div class="mb-3" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
 
 
-
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text" id="basic-addon1">Nama Kerja</span>
-                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled>
-                                </div>
-
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text">Tarikh Kerja</span>
-                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" disabled>
-                                </div>
-
-                                <label for="exampleFormControlInput1" class="form-label">Masa & Harga Pengesahan :</label>
-                                <div class="input-group mb-2">
-                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                                    <span class="input-group-text">Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" max="6" disabled>
-                                    <span class="input-group-text">Minit</span>
-                                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['minit_anggaran']); ?>" min="0" max="55" step="5" disabled>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text">Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" disabled>
-                                </div>
-                                <label for="exampleFormControlInput1" class="form-label">Masa & Harga Jobsheet :</label>
-                                <div class="input-group mb-2">
-
-                                    <span class="input-group-text">Jam</span>
-                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" disabled>
-                                    <span class="input-group-text">Minit</span>
-                                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" disabled>
-                                </div>
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text">Harga (RM)</span>
-                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" disabled>
-                                </div>
-
-                                <?php
-
-                                $tempahan_kerja_id = $rowKerja['tempahan_kerja_id'];
-
-                                // First query: count all jobsheets for the given `tempahan_kerja_id`
-                                $sqlJobsheetCount = "SELECT COUNT(*) AS count FROM jobsheet WHERE tempahan_kerja_id = $tempahan_kerja_id";
-                                $resultJobsheetCount = mysqli_query($conn, $sqlJobsheetCount);
-
-                                $totalJobsheets = 0;
-                                if ($resultJobsheetCount) {
-                                    $row = mysqli_fetch_assoc($resultJobsheetCount);
-                                    $totalJobsheets = $row['count'];
-                                }
-
-                                // Second query: count jobsheets with specific status
-                                $sqlStatusCount = "SELECT COUNT(*) AS count FROM jobsheet WHERE tempahan_kerja_id = $tempahan_kerja_id AND status_jobsheet IN ('pengesahan', 'dijalankan')";
-                                $resultStatusCount = mysqli_query($conn, $sqlStatusCount);
-
-                                $statusCount = 0;
-                                if ($resultStatusCount) {
-                                    $row = mysqli_fetch_assoc($resultStatusCount);
-                                    $statusCount = $row['count'];
-                                }
-
-                                // Set button class based on the conditions
-                                if ($statusCount > 0 || $totalJobsheets == 0) {
-                                    $btn = 'btn-warning';
-                                } else {
-                                    $btn = 'btn-secondary';
-                                }
                                 
-                                ?>
-                                <div class="d-flex justify-content-end ">
-                                    <button class="btn <?= $btn ?>" type="button" onclick="window.location.href='kemaskini_jobsheet.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini Jobsheet</button>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text" id="basic-addon1"  style="width: 125px;">Nama Kerja</span>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled style="flex: 1;">
                                 </div>
 
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-text" style="width: 125px;">Tarikh Kerja</span>
+                                        <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" disabled>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-4 p-3 border rounded custom-bg-color">
+                                                <label for="exampleFormControlInput1" class="form-label">Masa & Harga Pengesahan :</label>
+                                                <div class="input-group mb-2">
+                                                    <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
+                                                    <span class="input-group-text" style="width: 75px;">Jam</span>
+                                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" max="6" disabled>
+                                                    <span class="input-group-text" style="width: 75px;">Minit</span>
+                                                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['minit_anggaran']); ?>" min="0" max="55" step="5" disabled>
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-text" style="width: 75px;">RM</span>
+                                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-4 p-3 border rounded custom-bg-color">
+                                                <label for="exampleFormControlInput1" class="form-label">Masa & Harga Jobsheet :</label>
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-text" style="width: 75px;">Jam</span>
+                                                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" disabled>
+                                                    <span class="input-group-text" style="width: 75px;">Minit</span>
+                                                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" disabled>
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-text" style="width: 75px;">RM</span>
+                                                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php
+
+                                    $tempahan_kerja_id = $rowKerja['tempahan_kerja_id'];
+
+                                    // First query: count all jobsheets for the given `tempahan_kerja_id`
+                                    $sqlJobsheetCount = "SELECT COUNT(*) AS count FROM jobsheet WHERE tempahan_kerja_id = $tempahan_kerja_id";
+                                    $resultJobsheetCount = mysqli_query($conn, $sqlJobsheetCount);
+
+                                    $totalJobsheets = 0;
+                                    if ($resultJobsheetCount) {
+                                        $row = mysqli_fetch_assoc($resultJobsheetCount);
+                                        $totalJobsheets = $row['count'];
+                                    }
+
+                                    // Second query: count jobsheets with specific status
+                                    $sqlStatusCount = "SELECT COUNT(*) AS count FROM jobsheet WHERE tempahan_kerja_id = $tempahan_kerja_id AND status_jobsheet IN ('pengesahan', 'dijalankan')";
+                                    $resultStatusCount = mysqli_query($conn, $sqlStatusCount);
+
+                                    $statusCount = 0;
+                                    if ($resultStatusCount) {
+                                        $row = mysqli_fetch_assoc($resultStatusCount);
+                                        $statusCount = $row['count'];
+                                    }
+
+                                    // Set button class based on the conditions
+                                    if ($statusCount > 0 || $totalJobsheets == 0) {
+                                        $btn = 'btn-warning';
+                                    } else {
+                                        $btn = 'btn-secondary';
+                                    }
+                                    
+                                    ?>
+                                    <div class="d-flex justify-content-end ">
+                                        <button class="btn <?= $btn ?>" type="button" onclick="window.location.href='kemaskini_jobsheet.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini Jobsheet</button>
+                                    </div>
+                                </div>
                             </div>
                         <?php
 

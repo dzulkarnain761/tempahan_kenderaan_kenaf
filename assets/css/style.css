@@ -564,3 +564,7 @@ a:hover {
     width: 15%;
 	text-align: right;
 }
+
+.custom-bg-color {
+    background-color: #63c5da;
+    }
