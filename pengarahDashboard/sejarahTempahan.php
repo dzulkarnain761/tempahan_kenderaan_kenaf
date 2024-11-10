@@ -52,11 +52,13 @@ include 'controller/session.php';
 
                 <table id="tempahanTable">
                     <thead>
-                        <tr>
+                    <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
+                            <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
-                            
+                            <td>Cara Bayar</td>
+                            <td>Jenis Pembayaran</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -119,31 +121,19 @@ include 'controller/session.php';
                             });
 
 
-                            let actionButton = '';
-                            let caraBayaran = item.cara_bayaran;
-                            let statusBayaran = item.status_bayaran;
-
-                            // Common 'Lihat Butiran' button
-                            const lihatButiranButton = `
-                                <button class="btn btn-primary" onclick="window.location.href='butiran_tempahan.php?tempahan_id=${item.tempahan_id}'">
-                                    Lihat Butiran
-                                </button>`;
-
-                            // Decide button based on status_bayaran
-                            if (item.status_bayaran === 'selesai') {
-                                actionButton = lihatButiranButton;
-							}
-
                             // Append the row to tbody
                             tbody.append(`
                                     <tr>
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
+                                        <td>${new Date(item.tarikh_kerja).getDate().toString().padStart(2, '0')}/${(new Date(item.tarikh_kerja).getMonth() + 1).toString().padStart(2, '0')}/${new Date(item.tarikh_kerja).getFullYear()}</td>
                                         <td>${kerjaList}</td>
-                                        
-                                        <td>${actionButton}</td>
+                                        <td>${item.cara_bayar}</td>
+                                        <td>${item.jenis_pembayaran}</td>  
+                                        <td><button class="btn btn-primary" onclick="window.location.href='detail_tempahan.php?tempahan_id=${item.tempahan_id}&resit_id=${item.resit_id}'">
+                                    Lihat Butiran
+                                </button></td>
                                     </tr>
-
                                 `);
                         });
 

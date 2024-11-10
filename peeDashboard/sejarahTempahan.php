@@ -55,7 +55,9 @@ include 'controller/session.php';
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
+                            <td>Tarikh Permohonan</td>
                             <td>Jenis Kerja</td>
+
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -115,31 +117,22 @@ include 'controller/session.php';
                                     kerjaList += (kerjaIndex + 1) + '. ' + kerjaItem.nama_kerja + '<br>';
                                 });
 
-                                let actionButtons = '';
-
-                                if (item.status_tempahan != 'pengesahan kpp') {
-                                    actionButtons = `
-                                    <td>
-										<a href="sejarahButiran.php?tempahan_id=${item.tempahan_id}">
-											<ion-icon name="document-text-outline" size="large"></ion-icon>
-										</a>
-
-										<a href="controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}" target="_blank">
-											<ion-icon name="print-outline" size="large"></ion-icon>
-										</a>
-									</td>
 
 
-                                `;
-								
-                                }
+
 
                                 tbody.append(`
                                     <tr data-id="${item.tempahan_id}">
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
+                                        <td>${new Date(item.created_at).toLocaleDateString()}</td>
                                         <td>${kerjaList}</td>
-                                        ${actionButtons}
+                                        
+                                        <td>
+                                        <button onclick="window.location.href = 'sejarahButiran.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
+                                            Lihat Butiran
+                                        </button>
+                                    </td>
                                     </tr>
                                 `);
 
@@ -163,7 +156,7 @@ include 'controller/session.php';
                                         <a class="page-link" href="#" onclick="loadPage(${i})">${i}</a>
                                     </li>
                                 `);
-                                }
+                            }
 
                             // Next button
                             pagination.append(`
@@ -178,7 +171,6 @@ include 'controller/session.php';
 
             // Load the first page by default
             loadPage(1);
-
         </script>
     </div>
 </body>

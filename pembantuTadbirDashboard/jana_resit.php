@@ -51,7 +51,7 @@ include 'controller/session.php';
             $resit_id = $_GET['resit_id'];
 
             // Query to get the necessary details
-            $sqlTempahan = "SELECT t.tempahan_id,t.lokasi_kerja,t.luas_tanah,t.status_tempahan, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.nombor_rujukan
+            $sqlTempahan = "SELECT t.*, p.nama, r.jenis_pembayaran, r.cara_bayar,r.nombor_rujukan
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
@@ -94,8 +94,6 @@ include 'controller/session.php';
                         <label for="tarikhCadangan" class="form-label fw-bold mt-2 mb-1">Tarikh Cadangan</label>
                         <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhCadangan"> <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])) ?> </p>
                     </div>
-
-
 
                 </div>
 
@@ -267,15 +265,7 @@ include 'controller/session.php';
                 </div>
 
                 <?php
-                // Prepare the first statement to get total_harga_anggaran and total_harga_sebenar
-                $sql1 = $conn->prepare("SELECT total_harga_anggaran, total_harga_sebenar FROM tempahan WHERE tempahan_id = ?");
-                $sql1->bind_param("s", $tempahan_id);
-                $sql1->execute();
-                $sql1->bind_result($total_harga_anggaran, $total_harga_sebenar);
-                $sql1->fetch(); // Fetch the result
 
-                // Close the first statement
-                $sql1->close();
 
                 // Prepare the second statement for tempahan_kerja
                 $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_id = ?");
@@ -346,10 +336,24 @@ include 'controller/session.php';
                 }
                 ?>
 
-                <div class="input-group mb-2 align-self-end">
-                    <span class="input-group-text">Total Harga (RM)</span>
-                    <input type="text" class="form-control output_price" value="<?php echo $total_harga_anggaran ?? '0'; ?>" readonly>
-                </div><br>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="harga_anggaran" class="form-label fw-bold mt-2 mb-1">Harga Pengesahan</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_anggaran">RM <?php echo htmlspecialchars($tempahan['total_harga_anggaran']); ?></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="harga_jobsheet" class="form-label fw-bold mt-2 mb-1">Harga Jobsheet</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_jobsheet">RM <?php echo htmlspecialchars($tempahan['total_harga_sebenar']); ?></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="harga_baki" class="form-label fw-bold mt-2 mb-1">Baki</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_baki">RM <?php echo htmlspecialchars($tempahan['total_baki']); ?></p>
+                    </div>
+                </div>
+
+
                 <?php if ($tempahan['status_tempahan'] == 'penjanaan resit') { ?>
                     <form method="post" enctype="multipart/form-data" id="janaResitForm">
                         <input type="hidden" name="resit_id" value="<?php echo $resit_id ?>">
@@ -367,12 +371,11 @@ include 'controller/session.php';
                                 <?php endif ?>
                             </div>
                             <div>
-
                                 <button type="submit" class="btn btn-success janaResit">Jana Resit</button>
                             </div>
                         </div>
                     </form>
-                <?php }?>
+                <?php } ?>
 
             </div>
 

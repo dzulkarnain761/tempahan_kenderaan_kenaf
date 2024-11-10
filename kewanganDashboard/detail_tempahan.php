@@ -159,7 +159,7 @@ include 'controller/session.php';
                         <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_baki">RM <?php echo htmlspecialchars($tempahan['total_baki']); ?></p>
                     </div><br>
 
-                    
+
 
 
 
@@ -275,8 +275,8 @@ include 'controller/session.php';
 
                 <div class="modal-footer d-flex justify-content-between">
                     <div>
-                        <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
-                        <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_resit_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Resit</button>
+                        <!-- <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
+                        <button type="button" class="btn btn-primary" onclick="window.open('controller/getPDF_resit_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Resit</button> -->
                     </div>
                     <?php if ($tempahan['status_tempahan'] == 'refund kewangan') { ?>
                         <div>

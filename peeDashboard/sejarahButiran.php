@@ -84,28 +84,44 @@ include 'controller/session.php';
 
                 <form>
 
-                    <div class="mb-3">
-                        <label for="namaPenyewa" class="form-label">Tempahan ID :</label>
-                        <input type="text" class="form-control" id="namaPenyewa" value="<?php echo $tempahan['tempahan_id'] ?>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Nama Penyewa :</label>
-                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['nama'] ?>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Lokasi Kerja :</label>
-                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['lokasi_kerja'] ?>" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Luas Tanah (Hektar) :</label>
-                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['luas_tanah'] ?>" readonly>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="namaPemohon" class="form-label fw-bold mt-2 mb-1">Nama Pemohon</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="namaPemohon"><?php echo htmlspecialchars($tempahan['nama']); ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tarikhPermohonan" class="form-label fw-bold mt-2 mb-1">Tarikh Permohonan</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhPermohonan"> <?php echo date('d/m/Y', strtotime($tempahan['created_at'])) ?> </p>
+                        </div>
                     </div>
 
-                    <label for="depositKerja" class="form-label">Deposit (RM) :</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="depositKerja" value="<?php echo htmlspecialchars($tempahan['total_deposit']); ?>" readonly>
-                        <button class="btn btn-outline-secondary" type="button" onclick="window.open('controller/getPDF_quotation_deposit.php?id=<?php echo $tempahan['tempahan_id']; ?>', '_blank')">Lihat Resit</button>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="tarikhCadangan" class="form-label fw-bold mt-2 mb-1">Tarikh Cadangan</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhCadangan"> <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])) ?> </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="luasTanah" class="form-label fw-bold mt-2 mb-1">Keluasan Tanah (Hektar)</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="luasTanah"> <?php echo htmlspecialchars($tempahan['luas_tanah']) ?> </p>
+                        </div>
                     </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="lokasiKerja" class="form-label fw-bold mt-2 mb-1">Lokasi Kerja</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="lokasiKerja"> <?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?> </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="catatan" class="form-label fw-bold mt-2">Catatan</label>
+                            <?php if (empty($tempahan['catatan'])): ?>
+                                <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan">Tiada catatan</p>
+                            <?php else: ?>
+                                <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan"><?php echo htmlspecialchars($tempahan['catatan']) ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+
 
                 </form>
 
@@ -128,26 +144,65 @@ include 'controller/session.php';
                 $sql1->close();
 
                 // Prepare the second statement for tempahan_kerja
-                $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE status_kerja NOT IN ('dibatalkan', 'ditolak') AND tempahan_id = ?");
+                $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_id = ?");
                 $sqlkerja->bind_param("s", $tempahan_id);
                 $sqlkerja->execute();
                 $result = $sqlkerja->get_result(); // Get the result set from the prepared statement
 
                 if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                    while ($rowKerja = $result->fetch_assoc()) {
 
                 ?>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text">Nama Kerja</span>
-                            <input type="text" class="form-control" id="namaPenyewa" value="<?php echo htmlspecialchars($row['nama_kerja']); ?>" readonly>
+                        <div class="mb-4 p-3 border rounded bg-light">
+                            <div class="mb-3" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text" id="basic-addon1" style="width: 125px;">Nama Kerja</span>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled style="flex: 1;">
+                                </div>
+
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text" style="width: 125px;">Tarikh Kerja</span>
+                                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" disabled>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-4 p-3 border rounded custom-bg-color">
+                                            <label for="exampleFormControlInput1" class="form-label">Masa & Harga Pengesahan :</label>
+                                            <div class="input-group mb-2">
+                                                <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
+                                                <span class="input-group-text" style="width: 75px;">Jam</span>
+                                                <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" max="6" disabled>
+                                                <span class="input-group-text" style="width: 75px;">Minit</span>
+                                                <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['minit_anggaran']); ?>" min="0" max="55" step="5" disabled>
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text" style="width: 75px;">RM</span>
+                                                <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4 p-3 border rounded custom-bg-color">
+                                            <label for="exampleFormControlInput1" class="form-label">Masa & Harga Jobsheet :</label>
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text" style="width: 75px;">Jam</span>
+                                                <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" disabled>
+                                                <span class="input-group-text" style="width: 75px;">Minit</span>
+                                                <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" disabled>
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text" style="width: 75px;">RM</span>
+                                                <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
                         </div>
-                        <div class="input-group mb-2">
-                            <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                            <span class="input-group-text">Jam Anggaran</span>
-                            <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($row['jam_anggaran']); ?>" readonly>
-                            <span class="input-group-text">Harga Anggaran (RM)</span>
-                            <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($row['harga_anggaran']); ?>" readonly>
-                        </div><br>
 
                 <?php
 
@@ -157,15 +212,12 @@ include 'controller/session.php';
                 }
                 ?>
 
-                <div class="input-group mb-2 align-self-end">
-                    <span class="input-group-text">Total Anggaran (RM)</span>
-                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo $total_harga_anggaran ?? '0'; ?>" readonly>
-                </div>
+                
             </div>
 
-           
-                
-            
+
+
+
 
         </div>
     </div>

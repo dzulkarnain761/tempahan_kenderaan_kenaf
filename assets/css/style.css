@@ -336,10 +336,6 @@ table tbody {
     border-radius: .25rem;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
 
 .modal-footer {
     display: flex;

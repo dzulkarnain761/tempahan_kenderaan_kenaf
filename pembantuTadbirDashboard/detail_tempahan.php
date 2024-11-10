@@ -351,25 +351,20 @@ include 'controller/session.php';
                     <p>No work found for this order.</p>
                 <?php endif; ?>
 
-                <?php if ($jenis_pembayaran == 'bayaran penuh'): ?>
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Harga (RM)</span>
-                        <input type="text" class="form-control" value="<?= $total_harga_anggaran ?? '0'; ?>" readonly>
+                <div class="col-md-6">
+                        <label for="harga_anggaran" class="form-label fw-bold mt-2 mb-1">Harga Pengesahan</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_anggaran">RM <?php echo htmlspecialchars($tempahan['total_harga_anggaran']); ?></p>
                     </div>
-                <?php else: ?>
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Harga (RM)</span>
-                        <input type="text" class="form-control" value="<?= $total_harga_sebenar ?? '0'; ?>" readonly>
+
+                    <div class="col-md-6">
+                        <label for="harga_jobsheet" class="form-label fw-bold mt-2 mb-1">Harga Jobsheet</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_jobsheet">RM <?php echo htmlspecialchars($tempahan['total_harga_sebenar']); ?></p>
                     </div>
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Sudah Bayar (RM)</span>
-                        <input type="text" class="form-control" value="<?= $total_harga_anggaran ?? '0'; ?>" readonly>
+
+                    <div class="col-md-6">
+                        <label for="harga_baki" class="form-label fw-bold mt-2 mb-1">Baki</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_baki">RM <?php echo htmlspecialchars($tempahan['total_baki']); ?></p>
                     </div>
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Total Baki (RM)</span>
-                        <input type="text" class="form-control" value="<?= $total_baki ?? '0'; ?>" readonly>
-                    </div>
-                <?php endif; ?>
 
                 <div class="modal-footer d-flex justify-content-between">
                     <?php if ($jenis_pembayaran == 'bayaran penuh'): ?>

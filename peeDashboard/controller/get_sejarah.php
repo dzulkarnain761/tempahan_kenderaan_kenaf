@@ -8,7 +8,7 @@ $offset = ($page - 1) * $limit;
 // SQL query to select only 'selesai' tempahan with pagination
 $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 WHERE t.status_tempahan = 'selesai'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
@@ -16,8 +16,8 @@ $resultTempahan = mysqli_query($conn, $sqlTempahan);
 // Fetch total number of records with 'selesai' status
 $sqlTotal = "SELECT COUNT(*) as total 
              FROM tempahan t
-             INNER JOIN penyewa p ON p.id = t.penyewa_id
-             WHERE t.status_tempahan = 'selesai'";
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                WHERE t.status_tempahan = 'selesai'";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];
@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_assoc($resultTempahan)) {
     $tempahanId = $row['tempahan_id'];
 
     // Fetch related 'tempahan_kerja' data with 'selesai' status
-    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'selesai'";
+    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
     $resultKerja = mysqli_query($conn, $sqlKerja);
 
     $kerjaData = [];
@@ -50,4 +50,3 @@ $response = [
 ];
 
 echo json_encode($response);
-?>

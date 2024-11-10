@@ -54,7 +54,9 @@ include 'controller/session.php';
                         <tr>
                             <td>Bil</td>
                             <td>Nama Pemohon</td>
+                            <td>Tarikh Cadangan</td>
                             <td>Jenis Kerja</td>
+                            <td>Disahkan Oleh</td>
                             <td>Tindakan</td>
                         </tr>
                     </thead>
@@ -115,20 +117,19 @@ include 'controller/session.php';
                             });
 
                             tbody.append(`
-                            <tr>
-								<td>${(response.currentPage - 1) * 5 + index + 1}</td>
-								<td>${item.nama}</td>
-								<td>${kerjaList}</td>
-								<td>
-									<a href="sejarahButiran.php?tempahan_id=${item.tempahan_id}">
-										<ion-icon name="document-text-outline" size="large"></ion-icon>
-									</a>
-
-									<a href="controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}" target="_blank">
-										<ion-icon name="print-outline" size="large"></ion-icon>
-									</a>
-								</td>
-							</tr>
+                            <tr >
+                            <td>${(response.currentPage - 1) * 5 + index + 1}</td>
+                            <td>${item.nama}</td>
+                            <td>${new Date(item.tarikh_kerja).getDate().toString().padStart(2, '0')}/${(new Date(item.tarikh_kerja).getMonth() + 1).toString().padStart(2, '0')}/${new Date(item.tarikh_kerja).getFullYear()}</td>
+                            <td>${kerjaList}</td>
+                            <td>${item.disahkan_oleh}</td>
+                            <td>
+                                <button onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
+                                    Lihat Quotation
+                                </button>
+                                
+                            </td>
+                        </tr>
                     `);
                         });
 

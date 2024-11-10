@@ -10,17 +10,20 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
 
 // SQL query to select pemandu with pagination
-$sqlTempahan = "SELECT t.*, p.nama 
+$sqlTempahan = "SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.resit_id
                 FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE t.status_bayaran = 'selesai' AND t.negeri = '$negeri'
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
+                WHERE r.status_resit = 'selesai' AND r.jenis_pembayaran != 'refund'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch total number of records
-$sqlTotal = "SELECT COUNT(*) as total FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id
-                WHERE t.status_bayaran = 'selesai' AND t.negeri = '$negeri'";
+$sqlTotal = "SELECT COUNT(*) as total 
+                FROM tempahan t
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
+                WHERE r.status_resit = 'selesai' AND r.jenis_pembayaran != 'refund'";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 $total = $rowTotal['total'];
@@ -31,7 +34,7 @@ while ($row = mysqli_fetch_assoc($resultTempahan)) {
     $tempahanId = $row['tempahan_id'];
 
     // Fetch related 'tempahan_kerja' data
-    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId AND status_kerja = 'selesai'";
+    $sqlKerja = "SELECT * FROM tempahan_kerja WHERE tempahan_id = $tempahanId";
     $resultKerja = mysqli_query($conn, $sqlKerja);
 
     $kerjaData = [];

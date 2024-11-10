@@ -8,14 +8,14 @@ $offset = ($page - 1) * $limit;
 // SQL query to select pemandu with pagination
 $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 WHERE t.status_tempahan = 'pengesahan jobsheet'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch total number of records
 $sqlTotal = "SELECT COUNT(*) as total FROM tempahan t
-                INNER JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 WHERE t.status_tempahan = 'pengesahan jobsheet'";
 $resultTotal = mysqli_query($conn, $sqlTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
