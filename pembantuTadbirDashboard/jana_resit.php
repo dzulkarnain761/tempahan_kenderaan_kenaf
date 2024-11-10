@@ -149,17 +149,114 @@ include 'controller/session.php';
 
                 </div>
 
-                <div class="row mb-3">
-                    <?php if ($tempahan['cara_bayar'] == 'fpx') { ?>
-                        <div class="col-md-6">
-                            <label for="nomborRujukan" class="form-label fw-bold mt-2 mb-1">Nombor Rujukan :</label>
-                            <div class="d-flex align-items-center">
-                                <p class="form-control-plaintext ps-2 border rounded bg-light mb-0 me-2 flex-shrink-1" id="nomborRujukan"><?php echo htmlspecialchars($tempahan['nombor_rujukan']); ?></p>
-                                <button type="button" class="btn btn-outline-secondary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#fpxDetails">Lihat Butiran</button>
+                <!-- Modal FPX-->
+                <div class="modal fade" id="fpxDetails" tabindex="-1" aria-labelledby="fpxDetailsLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="fpxDetailsLabel">Butiran FPX</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <?php
+
+                            $nombor_rujukan = $tempahan['nombor_rujukan'];
+
+                            $sqlFPX = "SELECT * FROM `fpx_payments` WHERE nombor_rujukan = '$nombor_rujukan'";
+
+                            $result = mysqli_query($conn, $sqlFPX);
+
+                            // Check if there are results
+                            if (mysqli_num_rows($result) > 0) {
+                                // Fetch the data into an associative array
+                                $row = mysqli_fetch_assoc($result);
+
+                                // Extracting values
+                                $fpx_id_transaksi = $row['fpx_id_transaksi'];
+                                $fpx_id_bank = $row['fpx_id_bank'];
+                                $fpx_nama_bank = $row['fpx_nama_bank'];
+                                $fpx_nama_pembeli = $row['fpx_nama_pembeli'];
+                                $fpx_akaun_bank_pembeli = $row['fpx_akaun_bank_pembeli'];
+                                $jumlah_bayaran = $row['jumlah_bayaran'];
+                                $fpx_masa_transaksi = $row['fpx_masa_transaksi'];
+                                $fpx_kod_respon = $row['fpx_kod_respon'];
+                                $nombor_rujukan = $row['nombor_rujukan'];
+                                $catatan = $row['catatan'];
+                            }
+                            ?>
+                            <div class="modal-body">
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        FPX ID
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $fpx_id_transaksi; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Bank Name
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $fpx_nama_bank; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Buyer Name
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $fpx_nama_pembeli; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Amount Paid
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $jumlah_bayaran; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Transaction Time
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $fpx_masa_transaksi; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Reference Number
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $nombor_rujukan; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        FPX respons kod
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $fpx_kod_respon; ?>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: small;">
+                                        Notes
+                                    </span><br>
+                                    <span style="font-size: large;">
+                                        <?php echo $catatan; ?>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                             </div>
                         </div>
-                    <?php } ?>
+                    </div>
                 </div>
+
 
 
             </div>
