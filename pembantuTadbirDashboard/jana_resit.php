@@ -372,7 +372,8 @@ include 'controller/session.php';
                             </div>
                         </div>
                     </form>
-                <?php } ?>
+                <?php }?>
+
             </div>
 
         </div>

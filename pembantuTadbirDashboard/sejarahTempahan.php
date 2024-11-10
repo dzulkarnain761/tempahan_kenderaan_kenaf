@@ -121,15 +121,11 @@ include 'controller/session.php';
                             });
 
 
-                            let actionButton = '';
-                            let caraBayaran = item.cara_bayaran;
-                            let statusBayaran = item.status_bayaran;
+                            buktiButton = '';
 
-                            
 
-                            // Decide button based on status_bayaran
-                            if (item.status_bayaran === 'selesai') {
-                                actionButton = lihatButiranButton;
+                            if (item.cara_bayar === 'fpx') {
+                                buktiButton = 'disabled';
                             }
 
                             // Append the row to tbody
@@ -141,12 +137,13 @@ include 'controller/session.php';
                                         <td>${kerjaList}</td>
                                         <td>${item.cara_bayar}</td>
                                         <td>${item.jenis_pembayaran}</td>  
-                                        <td><button class="btn btn-primary" onclick="window.location.href='jana_resit.php?tempahan_id=${item.tempahan_id}&resit_id=${item.resit_id}'">
+                                        <td>
+                                            <button class="btn btn-primary" onclick="window.location.href='jana_resit.php?tempahan_id=${item.tempahan_id}&resit_id=${item.resit_id}'">
                                                 Butiran
                                             </button>
                                             
-                                            <button class="btn btn-primary" onclick="window.open('../bukti_resit/${item.bukti_resit_path}', '_blank')">
-                                                Resit
+                                            <button class="btn btn-primary" onclick="window.open('../bukti_resit/${item.bukti_resit_path}', '_blank')" ${buktiButton}>
+                                                Bukti
                                             </button>
                                         </td>
                                     </tr>
