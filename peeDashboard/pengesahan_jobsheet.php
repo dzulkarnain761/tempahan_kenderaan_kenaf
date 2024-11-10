@@ -49,29 +49,29 @@ include 'controller/session.php';
         </nav>
 
         <?php
-            $tempahan_id = $_GET['tempahan_id'];
+        $tempahan_id = $_GET['tempahan_id'];
 
-            // Ensure you escape the ID to prevent SQL injection
-            $tempahan_id = mysqli_real_escape_string($conn, $tempahan_id);
+        // Ensure you escape the ID to prevent SQL injection
+        $tempahan_id = mysqli_real_escape_string($conn, $tempahan_id);
 
-            $sqlTempahan = "SELECT t.*, p.nama 
+        $sqlTempahan = "SELECT t.*, p.nama 
                 FROM tempahan t
                 INNER JOIN penyewa p ON p.id = t.penyewa_id WHERE t.tempahan_id = $tempahan_id";
-            $resultTempahan = mysqli_query($conn, $sqlTempahan);
+        $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
-            // Fetch the Pemandu member's data
-            if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
-                $tempahan = mysqli_fetch_assoc($resultTempahan);
-            } else {
-                // Handle the case where no Pemandu member is found
-                echo "Tiada Tempahan Dijumpai";
-                exit;
-            }
+        // Fetch the Pemandu member's data
+        if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
+            $tempahan = mysqli_fetch_assoc($resultTempahan);
+        } else {
+            // Handle the case where no Pemandu member is found
+            echo "Tiada Tempahan Dijumpai";
+            exit;
+        }
         ?>
 
         <div class="recentOrders px-5">
             <div class="cardHeader">
-            <h2>MAKLUMAT TEMPAHAN</h2>
+                <h2>MAKLUMAT TEMPAHAN</h2>
             </div>
 
             <input type="hidden" name="tempahan_id" value="<?php echo htmlspecialchars($tempahan['tempahan_id']) ?>">
@@ -97,7 +97,7 @@ include 'controller/session.php';
                     <p class="form-control-plaintext ps-2 border rounded bg-light" id="luasTanah"> <?php echo htmlspecialchars($tempahan['luas_tanah']) ?> </p>
                 </div>
             </div>
-            
+
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="lokasiKerja" class="form-label fw-bold mt-2 mb-1">Lokasi Kerja</label>
@@ -105,11 +105,11 @@ include 'controller/session.php';
                 </div>
                 <div class="col-md-6">
                     <label for="catatan" class="form-label fw-bold mt-2">Catatan</label>
-                        <?php if (empty($tempahan['catatan'])): ?>
+                    <?php if (empty($tempahan['catatan'])): ?>
                         <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan">Tiada catatan</p>
-                        <?php else: ?>
+                    <?php else: ?>
                         <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan"><?php echo htmlspecialchars($tempahan['catatan']) ?></p>
-                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -150,19 +150,16 @@ include 'controller/session.php';
                     ?>
                             <div class="mb-4 p-3 border rounded bg-light">
                                 <div class="mb-3" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
-
-
-                                
-                                <div class="input-group mb-2">
-                                    <span class="input-group-text" id="basic-addon1"  style="width: 125px;">Nama Kerja</span>
-                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled style="flex: 1;">
-                                </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 125px;">Nama Kerja</span>
+                                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled style="flex: 1;">
+                                    </div>
 
                                     <div class="input-group mb-4">
                                         <span class="input-group-text" style="width: 125px;">Tarikh Kerja</span>
                                         <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" disabled>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-4 p-3 border rounded custom-bg-color">
@@ -227,7 +224,7 @@ include 'controller/session.php';
                                     } else {
                                         $btn = 'btn-secondary';
                                     }
-                                    
+
                                     ?>
                                     <div class="d-flex justify-content-end ">
                                         <button class="btn <?= $btn ?>" type="button" onclick="window.location.href='kemaskini_jobsheet.php?tempahan_id=<?php echo $tempahan_id ?>&tempahan_kerja_id=<?php echo htmlspecialchars($rowKerja['tempahan_kerja_id']); ?>'">Kemaskini Jobsheet</button>

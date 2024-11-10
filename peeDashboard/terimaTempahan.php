@@ -79,31 +79,49 @@ include 'controller/session.php';
 
 
             <input type="hidden" name="tempahan_id" value="<?php echo htmlspecialchars($tempahan['tempahan_id']) ?>">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Tarikh Permohonan:</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo date('Y-m-d', strtotime($tempahan['created_at'])) ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Nama Pemohon:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['nama']) ?>"
-                    disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Tarikh Cadangan:</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['tarikh_kerja']) ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Keluasan Tanah(Hektar):</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['luas_tanah']) ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Lokasi Kerja:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?>" disabled>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="namaPemohon" class="form-label fw-bold mt-2 mb-1">Nama Pemohon</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="namaPemohon"><?php echo htmlspecialchars($tempahan['nama']); ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label for="tarikhTempahan" class="form-label fw-bold mt-2 mb-1">Tarikh Tempahan</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhTempahan"> <?php echo date('d/m/Y', strtotime($tempahan['created_at'])) ?> </p>
+                </div>
+
+
             </div>
 
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Catatan:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($tempahan['catatan']) ?>" disabled>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="lokasiKerja" class="form-label fw-bold mt-2 mb-1">Lokasi Kerja</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="lokasiKerja"> <?php echo htmlspecialchars($tempahan['lokasi_kerja']) ?> </p>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="tarikhCadangan" class="form-label fw-bold mt-2 mb-1">Tarikh Cadangan</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="tarikhCadangan"> <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])) ?> </p>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="luasTanah" class="form-label fw-bold mt-2 mb-1">Keluasan Tanah (Hektar)</label>
+                    <p class="form-control-plaintext ps-2 border rounded bg-light" id="luasTanah"> <?php echo htmlspecialchars($tempahan['luas_tanah']) ?> </p>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="catatan" class="form-label fw-bold mt-2">Catatan</label>
+                    <?php if (empty($tempahan['catatan'])): ?>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan">Tiada catatan</p>
+                    <?php else: ?>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light mb-1" id="catatan"><?php echo htmlspecialchars($tempahan['catatan']) ?></p>
+                    <?php endif; ?>
+                </div>
+
+
             </div>
         </div>
 

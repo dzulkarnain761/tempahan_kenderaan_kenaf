@@ -47,7 +47,7 @@ include 'controller/session.php';
 
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>SENARAI TEMPAHAN SELESAI</h2>
+                    <h2>SENARAI SELESAI BAYARAN</h2>
                 </div>
 
                 <table id="tempahanTable">

@@ -81,42 +81,34 @@ include 'controller/session.php';
                     <h2>Butiran Penyewa</h2>
                 </div>
 
-                <div class="mb-3">
-                    <label for="tarikhKerja" class="form-label">Nama Penyewa :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['nama'] ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="tarikhKerja" class="form-label">No. Tel :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['contact_no'] ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="tarikhKerja" class="form-label">Email :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['email'] ?? 'Tiada Email' ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="tarikhKerja" class="form-label">Alamat :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['alamat'] ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="tarikhKerja" class="form-label">Nama Bank :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['nama_bank'] ?? 'Tiada' ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="tarikhKerja" class="form-label">No Bank :</label>
-                    <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['no_bank'] ?? 'Tiada' ?>" disabled>
-                </div>
-
-
-                <?php if ($tempahan['cara_bayar'] == 'fpx') { ?>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Nombor Rujukan :</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="<?php echo $tempahan['nombor_rujukan'] ?>" readonly>
-                            <button type="button" class="btn btn-outline-secondary " data-bs-toggle="modal" data-bs-target="#fpxDetails">Lihat Butiran</button>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="penyewa_name" class="form-label fw-bold mt-2 mb-1">Nama Penyewa</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="penyewa_name"><?php echo htmlspecialchars($tempahan['nama']); ?></p>
                     </div>
-                <?php } ?>
+                    <div class="col-md-6">
+                        <label for="nama_bank" class="form-label fw-bold mt-2 mb-1">Nama Bank</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="nama_bank"><?php echo htmlspecialchars($tempahan['nama_bank']); ?></p>
+                    </div>
 
+                    <div class="col-md-6">
+                        <label for="no_tel" class="form-label fw-bold mt-2 mb-1">No Tel</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="no_tel"><?php echo htmlspecialchars($tempahan['contact_no']); ?></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="no_bank" class="form-label fw-bold mt-2 mb-1">No Bank</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="no_bank"><?php echo htmlspecialchars($tempahan['no_bank']); ?></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="alamat" class="form-label fw-bold mt-2 mb-1">Alamat</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="alamat"><?php echo htmlspecialchars($tempahan['alamat']); ?></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label fw-bold mt-2 mb-1">Email</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="email"><?php echo htmlspecialchars($tempahan['email'] ?? 'Tiada Email'); ?></p>
+                    </div>
+
+                </div>
             </div>
 
             <div class="recentOrders">
@@ -127,55 +119,47 @@ include 'controller/session.php';
 
 
                 <form>
-                    <div class="mb-3">
-                        <label for="namaPenyewa" class="form-label">Tempahan ID :</label>
-                        <input type="text" class="form-control" id="namaPenyewa" value="<?php echo $tempahan['tempahan_id'] ?>" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Nama Penyewa :</label>
-                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['nama'] ?>" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Lokasi Kerja :</label>
-                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['lokasi_kerja'] ?>" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tarikhKerja" class="form-label">Luas Tanah (Hektar) :</label>
-                        <input type="text" class="form-control" id="tarikhKerja" value="<?php echo $tempahan['luas_tanah'] ?>" disabled>
-                    </div>
 
-
-                    <?php if ($tempahan['cara_bayar'] == 'fpx') { ?>
-                        <div class="mb-3">
-                            <label for="tarikhKerja" class="form-label">Nombor Rujukan :</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" value="<?php echo $tempahan['nombor_rujukan'] ?>" readonly>
-                                <button type="button" class="btn btn-outline-secondary " data-bs-toggle="modal" data-bs-target="#fpxDetails">Lihat Butiran</button>
-                            </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="tempahan_id" class="form-label fw-bold mt-2 mb-1">Tempahan ID</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="tempahan_id"><?php echo htmlspecialchars($tempahan['tempahan_id']); ?></p>
                         </div>
-                    <?php } ?>
+                        <div class="col-md-6">
+                            <label for="lokasi_kerja" class="form-label fw-bold mt-2 mb-1">Lokasi Kerja</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="lokasi_kerja"><?php echo htmlspecialchars($tempahan['lokasi_kerja']); ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nama_penyewa" class="form-label fw-bold mt-2 mb-1">Nama Penyewa</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="nama_penyewa"><?php echo htmlspecialchars($tempahan['nama']); ?></p>
+                        </div>
 
 
-                    <label for="exampleFormControlInput1" class="form-label">Harga Pengesahan :</label>
+                        <div class="col-md-6">
+                            <label for="luas_tanah" class="form-label fw-bold mt-2 mb-1">Luas Tanah</label>
+                            <p class="form-control-plaintext ps-2 border rounded bg-light" id="luas_tanah"><?php echo htmlspecialchars($tempahan['luas_tanah']); ?></p>
+                        </div>
 
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Harga (RM)</span>
-                        <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($tempahan['total_harga_anggaran']); ?>" disabled>
+
                     </div>
 
-                    <label for="exampleFormControlInput1" class="form-label">Harga Jobsheet :</label>
 
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Harga (RM)</span>
-                        <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($tempahan['total_harga_sebenar']); ?>" disabled>
+                    <div class="col-md-6">
+                        <label for="harga_anggaran" class="form-label fw-bold mt-2 mb-1">Harga Pengesahan</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_anggaran">RM <?php echo htmlspecialchars($tempahan['total_harga_anggaran']); ?></p>
                     </div>
 
-                    <label for="exampleFormControlInput1" class="form-label">Baki :</label>
-
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">Harga (RM)</span>
-                        <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($tempahan['total_baki']); ?>" disabled>
+                    <div class="col-md-6">
+                        <label for="harga_jobsheet" class="form-label fw-bold mt-2 mb-1">Harga Jobsheet</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_jobsheet">RM <?php echo htmlspecialchars($tempahan['total_harga_sebenar']); ?></p>
                     </div>
+
+                    <div class="col-md-6">
+                        <label for="harga_baki" class="form-label fw-bold mt-2 mb-1">Baki</label>
+                        <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_baki">RM <?php echo htmlspecialchars($tempahan['total_baki']); ?></p>
+                    </div><br>
+
+                    
 
 
 

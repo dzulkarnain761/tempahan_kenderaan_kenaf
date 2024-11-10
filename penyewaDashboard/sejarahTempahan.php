@@ -26,7 +26,6 @@ include 'controller/get_userdata.php';
     <link rel="stylesheet" href="../assets/css/owl.css">
 
     <style>
-        
         .rental-item .status {
             float: right;
         }
@@ -118,11 +117,11 @@ include 'controller/get_userdata.php';
                             <?php
                             $counterKerja = 1; // Initialize a counter for task numbering
                             while ($kerja = mysqli_fetch_assoc($resultKerja)) {
-                                ?>
-                                    <!-- Display task list for statuses other than 'pengesahan pee' -->
-                                    <li style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span><?php echo $counterKerja . '. ' . $kerja['nama_kerja']; ?></span> <!-- Display task name with numbering -->
-                                    </li>
+                            ?>
+                                <!-- Display task list for statuses other than 'pengesahan pee' -->
+                                <li style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span><?php echo $counterKerja . '. ' . $kerja['nama_kerja']; ?></span> <!-- Display task name with numbering -->
+                                </li>
                             <?php
                                 // Increment the counter after each task
                                 $counterKerja++;
@@ -133,64 +132,62 @@ include 'controller/get_userdata.php';
                         <hr>
                         <?php
                         switch ($statusBayaran) {
-
                             case 'dibatalkan':
-                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        ?>
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
-                                <span>
+                                    <span></span>
 
-                                </span>
-
-                                <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
-                                <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                    
-                                    
-                                    <span>
-                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
-                                    </span>
+                                    <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
+                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                        <span>
+                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>';
+                            <?php
                                 break;
+
                             case 'selesai':
-                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                            ?>
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                    
+                                    <span>
+                                        <a href="controller/resitPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
+                                    </span>
+
+                                    <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
+                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                        
+
+                                        <span>
+                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            <?php
+                                break;
+
+                            default:
+                            ?>
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
                                         <span>
-                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?tempahan_id=' . $tempahanId . '\', \'_blank\')">Resit</button>
-                                        </span>
-                                        
-                                        <span>
-                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
                                         </span>
                                     </div>
-                                </div>';
-                                break;
-
-
-                            default:
-                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
-                                    <!-- Left side: Link to Lihat Sebut Harga -->
-                                <span>
-                                    <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
-                                </span>
-
-                                <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
-                                <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                    
-                                    
-                                    <span>
-                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
-                                    </span>
                                 </div>
-                            </div>';
+                        <?php
                                 break;
                         }
                         ?>
+
                     </div>
                     <!-- Modal Detail for each booking with unique ID -->
                     <div class="modal fade" id="detailModal_<?php echo $tempahanId; ?>" tabindex="-1" aria-labelledby="detailModalLabel_<?php echo $tempahanId; ?>" aria-hidden="true">

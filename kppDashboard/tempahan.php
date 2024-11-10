@@ -125,7 +125,7 @@ include 'controller/session.php';
                             <td>${item.disahkan_oleh}</td>
                             <td>
                                 <button onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">
-                                    Lihat Butiran
+                                    Lihat Quotation
                                 </button>
                                 <button  class="btn btn-success btn-sm terimaTempahan" value="${item.tempahan_id}">
                                     Terima

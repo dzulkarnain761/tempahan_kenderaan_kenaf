@@ -79,32 +79,55 @@ include 'controller/session.php';
                 <h2>BUTIRAN KERJA</h2>
             </div>
 
-            <?php
+            
+            <div class="mb-3" id="row-<?php echo $rowKerja['tempahan_kerja_id']; ?>">
+                <div class="input-group mb-2">
+                    <span class="input-group-text" id="basic-addon1" style="width: 125px;">Nama Kerja</span>
+                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($rowKerja['nama_kerja']); ?>" disabled style="flex: 1;">
+                </div>
+
+                <div class="input-group mb-4">
+                    <span class="input-group-text" style="width: 125px;">Tarikh Kerja</span>
+                    <input type="date" class="form-control input_date" name="input_date[]" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']); ?>" disabled>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4 p-3 border rounded custom-bg-color">
+                            <label for="exampleFormControlInput1" class="form-label">Masa & Harga Pengesahan :</label>
+                            <div class="input-group mb-2">
+                                <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
+                                <span class="input-group-text" style="width: 75px;">Jam</span>
+                                <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" min="0" max="6" disabled>
+                                <span class="input-group-text" style="width: 75px;">Minit</span>
+                                <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['minit_anggaran']); ?>" min="0" max="55" step="5" disabled>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" style="width: 75px;">RM</span>
+                                <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4 p-3 border rounded custom-bg-color">
+                            <label for="exampleFormControlInput1" class="form-label">Masa & Harga Jobsheet :</label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" style="width: 75px;">Jam</span>
+                                <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" disabled>
+                                <span class="input-group-text" style="width: 75px;">Minit</span>
+                                <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" disabled>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" style="width: 75px;">RM</span>
+                                <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-            ?>
+            </div>
 
-
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Nama Kerja :</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" value="<?php echo $rowKerja['nama_kerja']; ?>" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Tarikh Kerja:</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1" value="<?php echo htmlspecialchars($rowKerja['tarikh_kerja_cadangan']) ?>" disabled>
-            </div>
-            <label for="exampleFormControlInput1" class="form-label">Masa & Harga Pengesahan :</label>
-            <div class="input-group mb-2">
-                <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rateharga; ?>">
-                <span class="input-group-text">Jam</span>
-                <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['jam_anggaran']); ?>" disabled>
-                <span class="input-group-text">Minit</span>
-                <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['minit_anggaran']); ?>"  disabled>
-            </div>
-            <div class="input-group mb-2">
-                <span class="input-group-text">Harga (RM)</span>
-                <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['harga_anggaran']); ?>" disabled>
-            </div>
 
 
         </div>
@@ -229,18 +252,7 @@ include 'controller/session.php';
                 ?>
 
 
-                <label for="exampleFormControlInput1" class="form-label">Masa & Harga Jobsheet :</label>
-                <div class="input-group mb-2">
-                    
-                    <span class="input-group-text">Jam</span>
-                    <input type="number" class="form-control input_hours" name="input_hours[]" value="<?php echo htmlspecialchars($rowKerja['total_jam']); ?>" readonly>
-                    <span class="input-group-text">Minit</span>
-                    <input type="number" class="form-control input_minutes" name="input_minutes[]" value="<?php echo htmlspecialchars($rowKerja['total_minit']); ?>" readonly>
-                </div>
-                <div class="input-group mb-2">
-                    <span class="input-group-text">Harga (RM)</span>
-                    <input type="text" class="form-control output_price" name="input_price[]" value="<?php echo htmlspecialchars($rowKerja['total_harga']); ?>" readonly>
-                </div>
+
 
 
 
