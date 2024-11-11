@@ -151,7 +151,7 @@ include 'controller/get_userdata.php';
                             case 'selesai':
                             ?>
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
-                                    
+
                                     <span>
                                         <a href="controller/resitPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
                                     </span>

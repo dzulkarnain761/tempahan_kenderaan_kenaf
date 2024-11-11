@@ -28,9 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmtTempahan->close();
 
         $jenis_pembayaran = 'bayaran penuh';
-
         if ($cara_bayar == 'fpx') {
-
             // Sample FPX payment data
             $fpx_id_transaksi = 'FPXTK' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
             $fpx_id_bank = 'B001';

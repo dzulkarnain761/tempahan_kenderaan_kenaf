@@ -121,7 +121,7 @@ include 'controller/session.php';
                             <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                             <td>${item.nama}</td>
                             <td>${new Date(item.tarikh_kerja).getDate().toString().padStart(2, '0')}/${(new Date(item.tarikh_kerja).getMonth() + 1).toString().padStart(2, '0')}/${new Date(item.tarikh_kerja).getFullYear()}</td>
-                            <td>${kerjaList}</td>
+                            <td style="text-align: left;">${kerjaList}</td>
                             <td>${item.disahkan_oleh}</td>
                             <td>
                                 <button onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')" class="btn btn-primary btn-sm">

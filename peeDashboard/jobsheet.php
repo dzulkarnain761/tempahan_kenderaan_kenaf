@@ -122,7 +122,7 @@ include 'controller/session.php';
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
                                         <td>${new Date(item.tarikh_kerja).getDate().toString().padStart(2, '0')}/${(new Date(item.tarikh_kerja).getMonth() + 1).toString().padStart(2, '0')}/${new Date(item.tarikh_kerja).getFullYear()}</td>
-                                        <td>${kerjaList}</td>
+                                        <td style="text-align: left;">${kerjaList}</td>
                                         
                                         <td>
                                         <button onclick="window.location.href = 'pengesahan_jobsheet.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">

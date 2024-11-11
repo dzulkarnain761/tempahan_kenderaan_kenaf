@@ -126,7 +126,7 @@ include 'controller/session.php';
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
                                         <td>${item.nama}</td>
                                         <td>${new Date(item.created_at).toLocaleDateString()}</td>
-                                        <td>${kerjaList}</td>
+                                        <td style="text-align: left;">${kerjaList}</td>
                                         
                                         <td>
                                         <button onclick="window.location.href = 'sejarahButiran.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
