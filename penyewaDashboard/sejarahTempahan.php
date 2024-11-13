@@ -151,18 +151,46 @@ include 'controller/get_userdata.php';
                             case 'selesai':
                             ?>
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                    <?php
+                                    // Query for all receipts with the given tempahan_id
+                                    $sqlResit = "SELECT jenis_pembayaran FROM resit_pembayaran WHERE tempahan_id = $tempahanId";
+                                    $result = mysqli_query($conn, $sqlResit);
 
-                                    <span>
-                                        <a href="controller/resitPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
-                                    </span>
+                                    // Initialize variables to track if each type exists
+                                    $existsBayaranPenuh = false;
+                                    $existsBayaranTambahan = false;
+                                    $existsRefund = false;
 
-                                    <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
-                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                        
+                                    // Loop through the results and set flags based on jenis_pembayaran
+                                    while ($resit = mysqli_fetch_assoc($result)) {
+                                        if ($resit['jenis_pembayaran'] === 'bayaran penuh') {
+                                            $existsBayaranPenuh = true;
+                                        } elseif ($resit['jenis_pembayaran'] === 'bayaran tambahan') {
+                                            $existsBayaranTambahan = true;
+                                        } elseif ($resit['jenis_pembayaran'] === 'refund') {
+                                            $existsRefund = true;
+                                        }
+                                    }
+                                    ?>
 
-                                        <span>
-                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
-                                        </span>
+                                    <div>
+                                        <?php if ($existsBayaranPenuh) { ?>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/resitPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>')" type="button">Resit 1</button>
+                                        <?php } ?>
+
+                                        <?php if ($existsBayaranTambahan) { ?>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/resitPDF_extrapayment.php?tempahan_id=<?php echo $tempahanId; ?>')" type="button">Resit 2</button>
+                                        <?php } ?>
+
+                                        <?php if ($existsRefund) { ?>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/resitPDF_refund.php?tempahan_id=<?php echo $tempahanId; ?>')" type="button">Resit Refund</button>
+                                        <?php } ?>
+                                    </div>
+
+
+
+                                    <div style="gap: 10px;">
+                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
                                     </div>
                                 </div>
                             <?php
@@ -171,16 +199,14 @@ include 'controller/get_userdata.php';
                             default:
                             ?>
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
-                                    <!-- Left side: Link to Lihat Sebut Harga -->
-                                    <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
-                                    </span>
+
+
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
-                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                        <span>
-                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
-                                        </span>
+                                    <div style="gap: 10px;">
+
+                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_<?php echo $tempahanId; ?>">Lihat Butiran</button>
+
                                     </div>
                                 </div>
                         <?php

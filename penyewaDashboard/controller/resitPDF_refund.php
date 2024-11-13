@@ -13,7 +13,7 @@
 	$dompdf = new Dompdf($options);
 
 	ob_start();
-	require('../../resitPDF_deposit.php');
+	require('../../resitPDF_refund.php');
 	$html = ob_get_clean();
 	$dompdf->loadHtml($html);
 
