@@ -16,15 +16,15 @@ if (!$conn) {
 
 
 
-$tempahan_id = $_GET['tempahan_id'];
+$resit_id = $_GET['resit_id'];
 
 
 // Ensure you escape the ID to prevent SQL injection
-$tempahan_id = mysqli_real_escape_string($conn, $tempahan_id);
+$resit_id = mysqli_real_escape_string($conn, $resit_id);
 
 $sqlTempahan = "SELECT r.*,t.* FROM resit_pembayaran r
                 LEFT JOIN tempahan t ON r.tempahan_id = t.tempahan_id
-                WHERE r.tempahan_id = $tempahan_id AND r.jenis_pembayaran = 'bayaran penuh'";
+                WHERE r.resit_id = $resit_id";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
 // Fetch the Pemandu member's data
@@ -105,6 +105,8 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
             <tbody>
 
                 <?php
+
+                $tempahan_id = $tempahan['tempahan_id'];
                 // SQL query to select all tasks for the booking
                 $sqlKerja = "SELECT * FROM `tempahan_kerja` 
                                         WHERE tempahan_id = $tempahan_id";

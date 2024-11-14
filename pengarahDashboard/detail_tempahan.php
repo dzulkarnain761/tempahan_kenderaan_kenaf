@@ -271,7 +271,6 @@ include 'controller/session.php';
                 </div>
 
                 <?php
-
                 // Fetch tempahan_kerja records
                 $sqlkerja = $conn->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_id = ?");
                 $sqlkerja->bind_param("s", $tempahan_id);
@@ -339,12 +338,10 @@ include 'controller/session.php';
                         <label for="harga_anggaran" class="form-label fw-bold mt-2 mb-1">Harga Pengesahan</label>
                         <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_anggaran">RM <?php echo htmlspecialchars($tempahan['total_harga_anggaran']); ?></p>
                     </div>
-
                     <div class="col-md-6">
                         <label for="harga_jobsheet" class="form-label fw-bold mt-2 mb-1">Harga Jobsheet</label>
                         <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_jobsheet">RM <?php echo htmlspecialchars($tempahan['total_harga_sebenar']); ?></p>
                     </div>
-
                     <div class="col-md-6">
                         <label for="harga_baki" class="form-label fw-bold mt-2 mb-1">Baki</label>
                         <p class="form-control-plaintext ps-2 border rounded bg-light" id="harga_baki">RM <?php echo htmlspecialchars($tempahan['total_baki']); ?></p>
@@ -357,9 +354,7 @@ include 'controller/session.php';
                         <button type="button" class="btn btn-primary" onclick="window.open('controller/quotationPDF_fullpayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
                     <?php else: ?>
                         <button type="button" class="btn btn-primary" onclick="window.open('controller/quotationPDF_extrapayment.php?tempahan_id=<?= $tempahan_id ?>', '_blank')">Lihat Sebut Harga</button>
-
                     <?php endif; ?>
-
                         <div>
                             <button type="button" class="btn btn-danger cancelTempahan" value="<?= $tempahan_id ?>">Batal Tempahan</button>
                             <button type="button" class="btn btn-success terimaBayaran" value="<?= $resit_id ?>">Terima Bayaran</button>

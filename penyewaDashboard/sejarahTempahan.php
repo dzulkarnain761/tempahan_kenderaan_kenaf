@@ -153,10 +153,12 @@ include 'controller/get_userdata.php';
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <?php
                                     // Query for all receipts with the given tempahan_id
-                                    $sqlResit = "SELECT jenis_pembayaran FROM resit_pembayaran WHERE tempahan_id = $tempahanId";
+                                    $sqlResit = "SELECT jenis_pembayaran, resit_id FROM resit_pembayaran WHERE tempahan_id = $tempahanId";
                                     $result = mysqli_query($conn, $sqlResit);
 
-                                    // Initialize variables to track if each type exists
+
+                                     
+                                    
                                     $existsBayaranPenuh = false;
                                     $existsBayaranTambahan = false;
                                     $existsRefund = false;
@@ -164,10 +166,13 @@ include 'controller/get_userdata.php';
                                     // Loop through the results and set flags based on jenis_pembayaran
                                     while ($resit = mysqli_fetch_assoc($result)) {
                                         if ($resit['jenis_pembayaran'] === 'bayaran penuh') {
+                                            $resitIdBayaranPenuh = $resit['resit_id'];
                                             $existsBayaranPenuh = true;
                                         } elseif ($resit['jenis_pembayaran'] === 'bayaran tambahan') {
+                                            $resitIdBayaranTambahan = $resit['resit_id'];
                                             $existsBayaranTambahan = true;
                                         } elseif ($resit['jenis_pembayaran'] === 'refund') {
+                                            $resitIdRefund = $resit['resit_id'];
                                             $existsRefund = true;
                                         }
                                     }
@@ -175,15 +180,15 @@ include 'controller/get_userdata.php';
 
                                     <div>
                                         <?php if ($existsBayaranPenuh) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/resitPDF_fullpayment.php?tempahan_id=<?php echo $tempahanId; ?>')" type="button">Resit 1</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/view_resitPDF.php?resit_id=<?php echo $resitIdBayaranPenuh ?>')" type="button">Resit 1</button>
                                         <?php } ?>
 
                                         <?php if ($existsBayaranTambahan) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/resitPDF_extrapayment.php?tempahan_id=<?php echo $tempahanId; ?>')" type="button">Resit 2</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/view_resitPDF.php?resit_id=<?php echo $resitIdBayaranTambahan ?>')" type="button">Resit 2</button>
                                         <?php } ?>
 
                                         <?php if ($existsRefund) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/resitPDF_refund.php?tempahan_id=<?php echo $tempahanId; ?>')" type="button">Resit Refund</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/view_resitPDF.php?resit_id=<?php echo $resitIdRefund; ?>')" type="button">Resit Refund</button>
                                         <?php } ?>
                                     </div>
 

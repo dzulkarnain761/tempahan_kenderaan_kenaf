@@ -1,0 +1,50 @@
+<?php
+
+
+class Admin extends Account
+{
+
+    private $kumpulan;
+    private $negeri;
+    
+    // CREATE: Method to insert a new user
+    public function create($nama, $no_kp, $contact_no, $kumpulan, $negeri, $password)
+    {
+        $stmt = $this->db->prepare("INSERT INTO admin (nama, no_kp, contact_no, kumpulan, negeri, password) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $nama, $no_kp, $contact_no, $kumpulan, $negeri, $password);
+        return $stmt->execute();
+    }
+
+    // READ: Method to get user by ID
+    public function findById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM admin WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    // UPDATE: Method to update user details
+    public function update($id, $nama, $no_kp, $contact_no, $kumpulan, $negeri, $password)
+    {
+        $stmt = $this->db->prepare("UPDATE admin SET nama = ?, no_kp = ?, contact_no = ?, kumpulan = ?, negeri = ?, password = ? WHERE id = ?");
+        $stmt->bind_param("sssssssi", $nama, $no_kp, $contact_no, $kumpulan, $negeri, $password, $id);
+        return $stmt->execute();
+    }
+
+    // DELETE: Method to delete a user by ID
+    public function delete($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM admin WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    // Method to get all users
+    public function all()
+    {
+        $result = $this->db->query("SELECT * FROM admin");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+}

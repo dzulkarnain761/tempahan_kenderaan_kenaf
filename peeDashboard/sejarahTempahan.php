@@ -118,9 +118,6 @@ include 'controller/session.php';
                                 });
 
 
-
-
-
                                 tbody.append(`
                                     <tr data-id="${item.tempahan_id}">
                                         <td>${(response.currentPage - 1) * 5 + index + 1}</td>
