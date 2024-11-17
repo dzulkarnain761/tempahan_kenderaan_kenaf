@@ -125,7 +125,7 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                         $rateharga = $fetchTugasan['harga_per_jam'];
                     }
                 ?>
-
+					<?php if($tempahan['jenis_pembayaran'] == 'bayaran penuh'){ ?>
                     <tr>
                         <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['jam_anggaran'] ?></td>
@@ -133,6 +133,16 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rateharga ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['harga_anggaran'] ?></td>
                     </tr>
+					<?php }else{ ?>
+					<tr>
+                        <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_jam'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_minit'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rateharga ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_harga'] ?></td>
+                    </tr>
+					<?php } ?>
+					
                 <?php
                    
                 }
@@ -143,8 +153,16 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
 
         <!-- Totals Section -->
         <div style="text-align: right;">
-             
+             <?php if($tempahan['jenis_pembayaran'] == 'bayaran penuh'){ ?> 
             <p><strong>Total : </strong> RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
+			 <?php }elseif($tempahan['jenis_pembayaran'] == 'bayaran tambahan'){ ?>
+			<p><strong>Total: </strong> RM <?php echo $tempahan['total_harga_sebenar'] ?></p>
+			<?php }else{ ?>
+			<p><strong>Total: </strong> RM <?php echo $tempahan['total_harga_sebenar'] ?></p>
+			<p><strong>Sudah Bayar: </strong> RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
+			<p><strong>Total Refund: </strong> RM <?php echo $tempahan['total_baki'] ?></p>
+			
+			<?php } ?>
         </div>
 
         <!-- Footer Section -->
