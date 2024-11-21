@@ -398,7 +398,7 @@ include 'controller/get_userdata.php';
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Nama Kerja</th>
-                                                <th>Cadangan Tarikh</th>
+                                                <th>Tarikh</th>
                                             </tr>
                                         </thead>
                                         <tbody>

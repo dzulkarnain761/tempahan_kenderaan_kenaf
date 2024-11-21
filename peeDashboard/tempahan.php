@@ -24,8 +24,6 @@ include 'controller/session.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-    </style>
 </head>
 
 <body>
@@ -82,8 +80,6 @@ include 'controller/session.php';
         <!-- ====== ionicons ======= -->
         <script src="../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
         <script src="../vendor/jquery/jquery-3.7.1.min.js"></script>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-        <!-- <script src="assets/js/main.js"></script> -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
@@ -121,36 +117,41 @@ include 'controller/session.php';
 
                                 if (item.status_tempahan == 'pengesahan pee') {
                                     actionButtons = `
-                                    <td>
-                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-primary">
-                                            Lihat Butiran
-                                        </button>
-
-                                    </td>
-                                `;
+                                        <td>
+                                            <button 
+                                                onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" 
+                                                class="btn btn-primary" 
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top" 
+                                                title="Lihat butiran tempahan">
+                                                <i class="fa fa-eye"></i> 
+                                            </button>
+                                        </td>
+                                        `;
                                 } else if (item.status_tempahan == 'pengesahan kpp') {
                                     actionButtons = `
-                                    <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')">
-                                            Lihat Sebut Harga
-                                        </button>
-                                        <button onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" class="btn btn-secondary">
-                                            Lihat Butiran
-                                        </button>
-                                    </td>
-                                `;
-                                } else {
-                                    actionButtons = `
-                                    <td>
-                                        <button class="btn btn-primary" onclick="window.open('controller/getPDF_quotation_deposit.php?id=${item.tempahan_id}', '_blank')">
-                                            Lihat Butiran
-                                        </button>
-                                        <button onclick="window.location.href = 'kemaskiniKerja.php?tempahan_id=${item.tempahan_id}'" class="btn btn-warning">
-                                            Kemaskini
-                                        </button>
-                                    </td>
-                                `;
+                                        <td>
+                                            <button 
+                                                class="btn btn-primary" 
+                                                onclick="window.open('../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=${item.tempahan_id}', '_blank')" 
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top" 
+                                                title="Muat turun sebut harga penuh">
+                                                <i class="fa fa-file-pdf"></i> 
+                                            </button>
+                                            <button 
+                                                onclick="window.location.href = 'terimaTempahan.php?tempahan_id=${item.tempahan_id}'" 
+                                                class="btn btn-secondary" 
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top" 
+                                                title="Lihat butiran tempahan">
+                                                <i class="fa fa-eye"></i> 
+                                            </button>
+                                        </td>
+                                        `;
                                 }
+
+
 
                                 tbody.append(`
                                     <tr data-id="${item.tempahan_id}">
@@ -197,8 +198,6 @@ include 'controller/session.php';
 
             // Load the first page by default
             loadPage(1);
-
-
 
             
         </script>

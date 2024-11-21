@@ -28,6 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmtTempahan->close();
 
         $jenis_pembayaran = 'bayaran penuh';
+
+        $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+        $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
+
         if ($cara_bayar == 'fpx') {
             // Sample FPX payment data
             $fpx_id_transaksi = 'FPXTK' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
@@ -37,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fpx_akaun_bank_pembeli = '123456789';
             $fpx_tandatangan = 'abc123def';
             $fpx_kod_respon = '00';
-            $nombor_rujukan = 'TKBP'. str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
+            $nombor_rujukan = 'TKBP' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
             $ip = $_SERVER['REMOTE_ADDR'];
             $catatan = 'Payment successful';
 
@@ -51,14 +55,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Only generate resit when the FPX response code is '00'
             if ($fpx_kod_respon == '00') {
-                $status_resit = 'pengesahan';
+                $status_resit = 'selesai';
                 $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, nombor_rujukan, status_resit) VALUES (?, ?, ?, ?, ?, ?)");
                 $sqlResit->bind_param("isdsss", $tempahan_id, $jenis_pembayaran, $jumlah_bayaran, $cara_bayar, $nombor_rujukan, $status_resit);
+
+                $status_tempahan = 'bayaran selesai';
+                $status_bayaran = 'selesai bayaran';
+
+                if (!$sqlUpdateTempahan->execute()) {
+                    throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
+                }
+                $sqlUpdateTempahan->close();
             }
         } else {
+
+            $status_tempahan = 'pengesahan pt';
+            $status_bayaran = 'bayaran diproses';
             $status_resit = 'pengesahan';
             $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, status_resit) VALUES (?, ?, ?, ?, ?)");
             $sqlResit->bind_param("isdss", $tempahan_id, $jenis_pembayaran, $jumlah_bayaran, $cara_bayar, $status_resit);
+
+
+            $status_tempahan = 'pengesahan pt';
+            $status_bayaran = 'bayaran diproses';
+
+            if (!$sqlUpdateTempahan->execute()) {
+                throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
+            }
+            $sqlUpdateTempahan->close();
         }
 
         if (!$sqlResit->execute()) {
@@ -67,26 +91,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlResit->close();
 
         // Update tempahan status
-        $status_tempahan = 'pengesahan pt';
-        $status_bayaran = 'bayaran diproses';
-        $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-        $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
 
-        if (!$sqlUpdateTempahan->execute()) {
-            throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
-        }
-        $sqlUpdateTempahan->close();
+
+
+
 
         // Commit transaction
         $conn->commit();
 
         // Return success message
         if ($cara_bayar == 'fpx') {
-            echo json_encode(['success' => true, 'message' => 'Bayaran Akan Diproses']);
+            echo json_encode(['success' => true, 'message' => 'Bayaran Selesai. Sila Cetak Resit Pembayaran']);
         } else {
             echo json_encode(['success' => true, 'message' => 'Sila Hadir Ke Kaunter LKTN untuk Pengesahan Bayaran']);
         }
-
     } catch (Exception $e) {
         // Rollback transaction if any error occurs
         $conn->rollback();
@@ -96,4 +114,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close the connection
     $conn->close();
 }
-

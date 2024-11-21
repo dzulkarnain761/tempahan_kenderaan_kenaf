@@ -34,15 +34,11 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
   exit;
 }
 
-
-
-
 // Convert image to base64
 $imageData2 = base64_encode(file_get_contents('../../assets/images/logo.jpeg'));
 
 // Prepare base64 image source
 $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
-
 
 ?>
 

@@ -350,7 +350,7 @@ include 'controller/session.php';
                     let res = JSON.parse(response);
                     if (res.success) {
                         // Use backticks to interpolate `id` into the URL
-                        window.open(`controller/getPDF_quotation_fullpayment.php?tempahan_id=${tempahan_id}`, '_blank');
+                        window.open(`../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=${tempahan_id}`, '_blank');
                     } else {
                         // Show error message if failure
                         Swal.fire({

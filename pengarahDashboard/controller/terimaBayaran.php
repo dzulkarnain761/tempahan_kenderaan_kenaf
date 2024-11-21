@@ -19,46 +19,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlTempahan->fetch();
         $sqlTempahan->close();
 
-        // Check the result of cara_bayar
-        if ($cara_bayar == 'fpx') {
+        // Update status_resit for FPX payments
+        $status_resit = 'selesai';
+        $sqlResit = $conn->prepare("UPDATE resit_pembayaran SET status_resit = ? WHERE resit_id = ?");
+        $sqlResit->bind_param("si", $status_resit, $resit_id);
 
-            if ($jenis_pembayaran == 'bayaran penuh') {
-                $status_tempahan = 'pengesahan jobsheet';
-                $status_bayaran = 'selesai bayaran';
-            }else{
-                $status_tempahan = 'selesai';
-                $status_bayaran = 'selesai';
-            }
-
-            // Prepare the UPDATE query for tempahan status and status_bayaran
-            $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-            $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
-
-            if (!$sqlUpdateTempahan->execute()) {
-                throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
-            }
-            $sqlUpdateTempahan->close();
-
-            // Update status_resit for FPX payments
-            $status_resit = 'selesai';
-            $sqlResit = $conn->prepare("UPDATE resit_pembayaran SET status_resit = ? WHERE resit_id = ?");
-            $sqlResit->bind_param("si", $status_resit, $resit_id);
-
-            if (!$sqlResit->execute()) {
-                throw new Exception("Resit gagal: " . $sqlResit->error);
-            }
-            $sqlResit->close();
-        } else {
-            // Update status_tempahan for non-FPX payments
-            $status_tempahan = 'penjanaan resit';
-            $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ? WHERE tempahan_id = ?");
-            $sqlUpdateTempahan->bind_param("si", $status_tempahan, $tempahan_id);
-
-            if (!$sqlUpdateTempahan->execute()) {
-                throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
-            }
-            $sqlUpdateTempahan->close();
+        if (!$sqlResit->execute()) {
+            throw new Exception("Resit gagal: " . $sqlResit->error);
         }
+        $sqlResit->close();
+
+        // Update status_tempahan for non-FPX payments
+        $status_tempahan = 'pengesahan jobsheet';
+        $status_bayaran = 'selesai bayaran';
+        $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+        $sqlUpdateTempahan->bind_param("si", $status_tempahan, $tempahan_id);
+
+        if (!$sqlUpdateTempahan->execute()) {
+            throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
+        }
+        $sqlUpdateTempahan->close();
 
         // Commit the transaction
         $conn->commit();

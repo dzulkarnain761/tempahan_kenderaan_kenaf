@@ -14,8 +14,6 @@ if (!$conn) {
     echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
 }
 
-
-
 $resit_id = $_GET['resit_id'];
 
 

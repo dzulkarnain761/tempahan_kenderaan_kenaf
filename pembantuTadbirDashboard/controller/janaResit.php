@@ -71,33 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                              SET bukti_resit_path = '$new_image_name', status_resit = 'selesai'
                              WHERE resit_id = $resit_id";
 
-                if ($conn->query($sqlResit) === TRUE) {
-
-                    // Execute the second query to update 'tempahan'
-                    if ($jenis_pembayaran == 'bayaran penuh') {
-                        $sqlTempahan = "UPDATE tempahan 
-                                    SET status_tempahan = 'pengesahan jobsheet', status_bayaran = 'selesai bayaran' 
-                                    WHERE tempahan_id = $tempahan_id";
-                    }else{
-                        $sqlTempahan = "UPDATE tempahan 
-                                    SET status_tempahan = 'selesai', status_bayaran = 'selesai' 
-                                    WHERE tempahan_id = $tempahan_id";
-                    }
-
-                    if ($conn->query($sqlTempahan) === TRUE) {
-                        // Commit the transaction if both queries succeed
-                        $conn->commit();
-                        echo json_encode(['success' => true, 'message' => 'The file has been uploaded and both updates are successful.']);
-                    } else {
-                        // Rollback transaction in case of a database error in the second query
-                        $conn->rollback();
-                        echo json_encode(['success' => false, 'message' => 'Database error in tempahan update: ' . $conn->error]);
-                    }
-                } else {
-                    // Rollback transaction in case of database error in the first query
-                    $conn->rollback();
-                    echo json_encode(['success' => false, 'message' => 'Database error in resit update: ' . $conn->error]);
-                }
             } else {
                 // Rollback transaction in case of file upload error
                 $conn->rollback();

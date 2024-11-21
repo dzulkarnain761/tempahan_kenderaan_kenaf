@@ -354,7 +354,7 @@ include 'controller/session.php';
                 </div>
 
 
-                <?php if ($tempahan['status_tempahan'] == 'penjanaan resit') { ?>
+                
                     <form method="post" enctype="multipart/form-data" id="janaResitForm">
                         <input type="hidden" name="resit_id" value="<?php echo $resit_id ?>">
                         <input type="hidden" name="tempahan_id" value="<?php echo $tempahan_id ?>">
@@ -375,7 +375,7 @@ include 'controller/session.php';
                             </div>
                         </div>
                     </form>
-                <?php } ?>
+                
 
             </div>
 
