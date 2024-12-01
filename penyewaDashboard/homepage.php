@@ -30,7 +30,7 @@ include 'controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
+    <!-- <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -39,7 +39,7 @@ include 'controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
