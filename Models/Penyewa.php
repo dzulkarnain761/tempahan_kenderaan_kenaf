@@ -17,15 +17,7 @@ class User extends Account
         return $stmt->execute();
     }
 
-    // READ: Method to get user by ID
-    public function findById($id)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM penyewa WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
-    }
+    
 
     // UPDATE: Method to update user details
     public function update($id, $nama, $no_kp, $contact_no, $alamat, $nama_bank, $no_bank, $password)
@@ -48,5 +40,15 @@ class User extends Account
     {
         $result = $this->db->query("SELECT * FROM penyewa");
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    // READ: Method to get user by ID
+    public function findById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM penyewa WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 }

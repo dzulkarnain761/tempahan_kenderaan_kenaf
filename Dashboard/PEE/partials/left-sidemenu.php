@@ -41,7 +41,7 @@
                             <div class="collapse" id="sidebarTempahan">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="tempahan.php">Pengesahan Tarikh</a>
+                                        <a href="tempahan.php">Pengesahan Tarikh dan Harga</a>
                                     </li>
                                     <li>
                                         <a href="tempahan_2.php">Pengesahan KPP</a>

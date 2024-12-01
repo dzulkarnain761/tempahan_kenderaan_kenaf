@@ -60,7 +60,13 @@ class Tempahan
     // Method to get all bookings
     public function all()
     {
-        $result = $this->db->query("SELECT * FROM tempahan t LEFT JOIN penyewa p ON p.id = t.penyewa_id");
+        $result = $this->db->query("SELECT * FROM tempahan");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getAllWithStatusTempahan($status_tempahan)
+    {
+        $result = $this->db->query("SELECT * FROM tempahan WHERE status_tempahan = '$status_tempahan'");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 

@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Tempahan</h4>
+                                <h4 class="page-title">Pengesahan Tarikh & Harga</h4>
                             </div>
                         </div>
                     </div>
@@ -52,16 +52,22 @@
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->all();
+                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan pee');
+                                                
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $booking['nama']; ?></td>
+                                                        <td><?php 
+                                                            require_once '../../Models/Penyewa.php';
+                                                            $penyewa = new User();
+                                                            $user = $penyewa->findById($booking['penyewa_id']);
+                                                            echo $user['nama'];
+                                                        ?></td>
                                                         <td><?php echo $booking['created_at']; ?></td>
                                                         <td><?php echo $booking['tarikh_kerja']; ?></td>
                                                         <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Tempahan"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Tarikh & Harga Kerja"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                             <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Padam Tempahan"> <i class="mdi mdi-delete"></i></a>
                                                         </td>
                                                     </tr>
