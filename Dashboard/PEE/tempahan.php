@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Pemandu</h4>
+                                <h4 class="page-title">Tempahan</h4>
                             </div>
                         </div>
                     </div>
@@ -37,45 +37,32 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                <div class="row mb-2">
-                                        <div class="col-sm-5">
-                                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Staff</a>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <div class="text-sm-end">
-                                                <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                                <button type="button" class="btn btn-light mb-2">Export</button>
-                                            </div>
-                                        </div><!-- end col-->
-                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Nama</th>
-                                                    <th>Email</th>
-                                                    <th>No Kad Pengenalan</th>
-                                                    <th>No Panggilan</th>
+                                                    <th>Nama Penyewa</th>
+                                                    <th>Tarikh & Masa Tempahan</th>
+                                                    <th>Tarikh Kerja Dipilih</th>
+                                                    <th>Status</th>
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Admin.php';
-                                                $pemandu = new Admin();
-                                                $drivers = $pemandu->getPemandu();
+                                                require_once '../../Models/Tempahan.php';
+                                                $tempahan = new Tempahan();
+                                                $bookings = $tempahan->all();
 
-                                                foreach ($drivers as $driver) { ?>
+                                                foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $driver['nama']; ?></td>
-                                                        <td><?php echo $driver['email']; ?></td>
-                                                        <td><?php echo $driver['no_kp']; ?></td>
-                                                        <td><?php echo $driver['contact_no']; ?></td>
+                                                        <td><?php echo $booking['nama']; ?></td>
+                                                        <td><?php echo $booking['created_at']; ?></td>
+                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
+                                                        <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Tempahan"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Padam Tempahan"> <i class="mdi mdi-delete"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

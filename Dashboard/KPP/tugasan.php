@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Kenderaan</h4>
+                                <h4 class="page-title">Tugasan</h4>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                                 <div class="card-body">
                                 <div class="row mb-2">
                                         <div class="col-sm-5">
-                                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Staff</a>
+                                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Tugasan</a>
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="text-sm-end">
@@ -53,32 +53,23 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>No Aset</th>
-                                                    <th>No Pendaftaran</th>
+                                                    <th>Nama Kerja</th>
+                                                    <th>Harga Per Jam</th>
                                                     <th>Kategori Kenderaan</th>
-                                                    <th>Tahun Daftar</th>
-                                                    <th>Negeri Penempatan</th>
-                                                    <th>Kawasan Penempatan</th>
-                                                    <th>Catatan</th>
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Kenderaan.php';
-                                                $kenderaan = new Kenderaan();
-                                                $vehicles = $kenderaan->getAllKenderaan();
+                                                require_once '../../Models/Tugasan.php';
+                                                $tugasan = new Tugasan();
+                                                $tasks = $tugasan->all();
 
-                                                foreach ($vehicles as $vehicle) { ?>
+                                                foreach ($tasks as $task) { ?>
                                                     <tr>
-                                                        <td><?php echo $vehicle['no_aset']; ?></td>
-                                                        <td><?php echo $vehicle['no_pendaftaran']; ?></td>
-                                                        <td><?php echo $vehicle['kategori_kenderaan']; ?></td>
-                                                        <td><?php echo $vehicle['tahun_daftar']; ?></td>
-                                                        <td><?php echo $vehicle['negeri_penempatan']; ?></td>
-                                                        <td><?php echo $vehicle['kawasan_penempatan']; ?></td>
-                                                        <td><?php echo $vehicle['catatan']; ?></td>
-                                                        
+                                                        <td><?php echo $task['kerja']; ?></td>
+                                                        <td>RM<?php echo number_format($task['harga_per_jam'], 2); ?></td>
+                                                        <td><?php echo $task['kategori_kenderaan']; ?></td>
                                                         <td class="table-action">
                                                             <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
                                                             <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
@@ -88,6 +79,7 @@
                                                 <?php } ?>
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -109,7 +101,9 @@
     <!-- END wrapper -->
 
 
+
     <?php include 'partials/script.php'; ?>
+   
 
 </body>
 
