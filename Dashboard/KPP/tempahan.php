@@ -52,17 +52,23 @@
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->all();
+                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $booking['nama']; ?></td>
+                                                        <td><?php
+                                                            require_once '../../Models/Penyewa.php';
+                                                            $penyewa = new User();
+                                                            $user = $penyewa->findById($booking['penyewa_id']);
+                                                            echo $user['nama'];
+                                                            ?></td>
                                                         <td><?php echo $booking['created_at']; ?></td>
                                                         <td><?php echo $booking['tarikh_kerja']; ?></td>
                                                         <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Tempahan"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Padam Tempahan"> <i class="mdi mdi-delete"></i></a>
+                                                            <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Terima Tempahan" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Tolak Tempahan" onclick="rejectTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-close"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -90,6 +96,112 @@
 
 
     <?php include 'partials/script.php'; ?>
+
+    <script>
+        function terimaTempahan(id) {
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Tempahan ini akan diterima",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6", 
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, terima tempahan!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('controller/terima_tempahan.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `tempahan_id=${id}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                title: "Berjaya",
+                                text: "Tempahan telah diterima",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.href = 'tempahan.php';
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Gagal", 
+                                text: data.message || "Ralat tidak diketahui",
+                                icon: "error"
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: "Ralat",
+                            text: "Ralat memproses respons pelayan",
+                            icon: "error"
+                        });
+                    });
+                }
+            });
+        }
+
+        function rejectTempahan(id) {
+            Swal.fire({
+                title: "Adakah anda pasti?",
+                text: "Tempahan ini akan ditolak",
+                icon: "warning",
+                input: 'textarea',
+                inputLabel: 'Sebab Penolakan',
+                inputPlaceholder: 'Sila masukkan sebab penolakan',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Sila masukkan sebab penolakan!'
+                    }
+                },
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, tolak tempahan!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('controller/reject_tempahan.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `tempahan_id=${id}&sebab_ditolak=${encodeURIComponent(result.value)}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: "Berjaya",
+                                    text: "Tempahan telah ditolak",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Gagal",
+                                    text: data.message || "Ralat tidak diketahui",
+                                    icon: "error"
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: "Ralat",
+                                text: "Ralat memproses respons pelayan",
+                                icon: "error"
+                            });
+                        });
+                }
+            });
+        }
+    </script>
 
 </body>
 

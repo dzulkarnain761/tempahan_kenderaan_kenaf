@@ -49,6 +49,13 @@ class Tempahan
         return $stmt->execute();
     }
 
+    public function changeBothStatus($status_tempahan, $status_bayaran, $tempahan_id)
+    {
+        $stmt = $this->db->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+        $stmt->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
+        return $stmt->execute();
+    }
+
     // DELETE: Method to delete a booking by ID
     public function delete($id)
     {
