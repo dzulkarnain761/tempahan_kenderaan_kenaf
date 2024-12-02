@@ -41,6 +41,16 @@ class Tempahan
         return $result->fetch_assoc();
     }
 
+
+    public function getHarga($harga, $tempahan_id)
+    {
+        $stmt = $this->db->prepare("SELECT '$harga' FROM tempahan WHERE tempahan_id = ?");
+        $stmt->bind_param("i", $tempahan_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
     // UPDATE: Method to update booking details
     public function pengesahanPEE($total_harga_anggaran, $disahkan_oleh, $status_tempahan, $tempahan_id)
     {

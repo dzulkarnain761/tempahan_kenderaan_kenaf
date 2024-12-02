@@ -214,7 +214,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                             <!-- Left side: Link to Lihat Sebut Harga -->
                                             <span>
-                                                <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                                <a href="../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                             </span>
                                 
                                             <!-- Right side: Buttons (Batal Tempahan, Bayar Penuh, Lihat Butiran) -->
@@ -234,7 +234,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                             <!-- Left side: Link to Lihat Sebut Harga -->
                                             <span>
-                                                <a href="controller/quotationPDF_extrapayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                                <a href="../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
                                             </span>
                                 
                                             <!-- Right side: Buttons (Batal Tempahan, Bayar Tambahan, Lihat Butiran) -->
@@ -271,7 +271,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
 									<!-- Left side: Link to Lihat Sebut Harga -->
 									<span>
-										 <button class="btn btn-secondary btn-sm" onclick="window.open(\'controller/view_resitPDF.php?resit_id=' . $resit_id . '\')" type="button">Resit 1</button>
+										 <button class="btn btn-secondary btn-sm" onclick="window.open(\'../Controller/pdf/getPDF_resit_fullpayment.php?resit_id=' . $resit_id . '\')" type="button">Resit 1</button>
 									</span>
 
 									<!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->

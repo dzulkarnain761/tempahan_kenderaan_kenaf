@@ -1,8 +1,7 @@
 <?php
 
-include 'connection.php';
 
-// Check if form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Safely handle input
@@ -13,24 +12,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->begin_transaction();
 
     try {
-        // Retrieve total deposit
-        $sqlTempahan = "SELECT total_harga_anggaran FROM tempahan WHERE tempahan_id = ?";
-        $stmtTempahan = $conn->prepare($sqlTempahan);
-        $stmtTempahan->bind_param("i", $tempahan_id);
-        $stmtTempahan->execute();
-        $resultTempahan = $stmtTempahan->get_result();
+        $tempahan = new Tempahan();
+        $rowTempahan = $tempahan->getHarga('total_harga_anggaran', $tempahan_id);
 
-        if ($rowTempahan = $resultTempahan->fetch_assoc()) {
+        if ($rowTempahan) {
             $jumlah_bayaran = $rowTempahan['total_harga_anggaran'];
         } else {
             throw new Exception("Tempahan tidak dijumpai");
         }
-        $stmtTempahan->close();
 
         $jenis_pembayaran = 'bayaran penuh';
 
-        $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-        $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
+
 
         if ($cara_bayar == 'fpx') {
             // Sample FPX payment data
@@ -59,8 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, nombor_rujukan, status_resit) VALUES (?, ?, ?, ?, ?, ?)");
                 $sqlResit->bind_param("isdsss", $tempahan_id, $jenis_pembayaran, $jumlah_bayaran, $cara_bayar, $nombor_rujukan, $status_resit);
 
-                $status_tempahan = 'bayaran selesai';
+                $status_tempahan = 'jobsheet';
                 $status_bayaran = 'selesai bayaran';
+                $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+                $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
 
                 if (!$sqlUpdateTempahan->execute()) {
                     throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
@@ -91,10 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlResit->close();
 
         // Update tempahan status
-
-
-
-
 
         // Commit transaction
         $conn->commit();
