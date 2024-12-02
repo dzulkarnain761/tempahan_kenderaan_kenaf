@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Pengesahan Tarikh & Harga</h4>
+                                <h4 class="page-title">Pengesahan Tempahan</h4>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan pee');
+                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
                                                 
 
                                                 foreach ($bookings as $booking) { ?>
@@ -67,8 +67,8 @@
                                                         <td><?php echo $booking['tarikh_kerja']; ?></td>
                                                         <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Tarikh & Harga Kerja"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Padam Tempahan"> <i class="mdi mdi-delete"></i></a>
+                                                            <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
+                                                            
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -90,7 +90,7 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+       
     </div>
     <!-- END wrapper -->
 

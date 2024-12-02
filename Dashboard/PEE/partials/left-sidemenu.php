@@ -41,14 +41,20 @@
                             <div class="collapse" id="sidebarTempahan">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="tempahan.php">Pengesahan Tarikh dan Harga</a>
+                                        <a href="tempahan_pee.php">Pengesahan</a>
                                     </li>
                                     <li>
-                                        <a href="tempahan_2.php">Pengesahan KPP</a>
+                                        <a href="tempahan_kpp.php">Selesai Pengesahan</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+                        <li class="side-nav-item">
+							<a href="jobsheet.php" class="side-nav-link">
+								<i class="uil-file-alt"></i>
+								<span> Jobsheet </span>
+							</a>
+						</li>
 
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarSejarah" aria-expanded="false" aria-controls="sidebarSejarah" class="side-nav-link">
@@ -68,12 +74,7 @@
                             </div>
                         </li>
 						
-						<li class="side-nav-item">
-							<a href="jobsheet.php" class="side-nav-link">
-								<i class="uil-file-alt"></i>
-								<span> Jobsheet </span>
-							</a>
-						</li>
+						
                        
                        
 						

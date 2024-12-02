@@ -1,8 +1,8 @@
 <?php
 
-require_once 'databaseModel.php';
+require_once 'Database.php';
 
-class TempahanKerja
+class Kerja
 {
     // Define properties that map to table columns
     private $tempahan_kerja_id;
@@ -27,29 +27,26 @@ class TempahanKerja
         $this->db = Database::getConnection();
     }
 
-    // CREATE: Method to insert a new booking (tempahan_kerja)
-    public function create($tempahan_id, $nama_kerja)
-    {
-        $stmt = $this->db->prepare("INSERT INTO tempahan_kerja (tempahan_id, nama_kerja) VALUES (?, ?)");
-        $stmt->bind_param("isss", $user_id, $booking_date, $luas_tanah, $catatan);
-        return $stmt->execute();
-    }
+    // // CREATE: Method to insert a new booking (tempahan_kerja)
+    // public function create($tempahan_id, $nama_kerja)
+    // {
+    //     $stmt = $this->db->prepare("INSERT INTO tempahan_kerja (tempahan_id, nama_kerja) VALUES (?, ?)");
+    //     $stmt->bind_param("isss", $user_id, $booking_date, $luas_tanah, $catatan);
+    //     return $stmt->execute();
+    // }
 
     // READ: Method to get booking by ID
     public function findByTempahanId($tempahan_id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_id = ?");
-        $stmt->bind_param("i", $tempahan_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+        $result = $this->db->query("SELECT * FROM tempahan_kerja WHERE tempahan_id = '$tempahan_id'");
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     // UPDATE: Method to update booking details
-    public function update($total_harga_anggaran, $total_harga_sebenar, $total_baki, $status)
+    public function updateByKerjaId($jam_anggaran, $minit_anggaran, $harga_anggaran, $tempahan_kerja_id)
     {
-        $stmt = $this->db->prepare("UPDATE tempahan_kerja SET jam_anggaran = ?, total_harga_sebenar = ?, total_baki = ?, status = ? WHERE tempahan_id = ?");
-        $stmt->bind_param("dddis", $total_harga_anggaran, $total_harga_sebenar, $total_baki, $status, $tempahan_id);
+        $stmt = $this->db->prepare("UPDATE tempahan_kerja SET jam_anggaran = ?, minit_anggaran = ?, harga_anggaran = ? WHERE tempahan_kerja_id = ?");
+        $stmt->bind_param("iidi", $jam_anggaran, $minit_anggaran, $harga_anggaran, $tempahan_kerja_id);
         return $stmt->execute();
     }
 

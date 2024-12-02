@@ -1,7 +1,7 @@
 <?php
 // Include database connection
-include 'connection.php'; // Adjust path as needed
-
+require_once '../../../Models/Database.php';
+$conn = Database::getConnection();
 $response = array('success' => false, 'message' => ''); // Default response
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

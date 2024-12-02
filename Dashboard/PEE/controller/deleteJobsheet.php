@@ -1,6 +1,7 @@
 <?php
 
-include 'connection.php';
+require_once '../../../Models/Database.php';
+$conn = Database::getConnection();
 
 if (isset($_POST['jobsheet_id'])) { // Corrected to 'jobsheet_id'
     $jobsheet_id = intval($_POST['jobsheet_id']); 

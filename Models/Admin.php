@@ -51,6 +51,13 @@ class Admin extends Account
     }
 
     // Method to get all users
+    public function getPEE()
+    {
+        $result = $this->db->query("SELECT * FROM admin WHERE kumpulan = 'D'");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Method to get all users
     public function getPemandu()
     {
         $result = $this->db->query("SELECT * FROM admin WHERE kumpulan = 'Y'");

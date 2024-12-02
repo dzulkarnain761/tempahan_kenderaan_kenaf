@@ -1,9 +1,10 @@
 <?php
 
-include 'connection.php';
+require_once '../../../Models/Database.php';
+$conn = Database::getConnection();
 
-if (isset($_POST['id'])) {
-    $tempahan_kerja_id = intval($_POST['id']);
+if (isset($_POST['tempahan_kerja_id'])) {
+    $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']);
     $statusKerja = 'ditolak';
 
     // Prepare the first SQL statement to get tempahan_id
@@ -48,7 +49,7 @@ if (isset($_POST['id'])) {
             if (!$stmt->execute()) {
                 throw new Exception('Failed to delete kerja : ' . $stmt->error);
             }
-            echo json_encode(['success' => true, 'message' => 'Berjaya Tolak']);
+            echo json_encode(['success' => true, 'message' => 'Berjaya Tolak', 'id' => $tempahan_kerja_id]);
             $stmt->close();
         } else {
             throw new Exception('Failed to prepare statement for updating kerja status: ' . $conn->error);

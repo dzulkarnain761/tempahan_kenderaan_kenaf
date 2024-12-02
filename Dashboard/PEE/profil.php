@@ -110,7 +110,7 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+        
     </div>
     <!-- END wrapper -->
 

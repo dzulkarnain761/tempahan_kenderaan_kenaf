@@ -42,10 +42,10 @@ class Tempahan
     }
 
     // UPDATE: Method to update booking details
-    public function update($tempahan_id, $total_harga_anggaran, $total_harga_sebenar, $total_baki, $status)
+    public function pengesahanPEE($total_harga_anggaran, $disahkan_oleh, $status_tempahan, $tempahan_id)
     {
-        $stmt = $this->db->prepare("UPDATE tempahan SET total_harga_anggaran = ?, total_harga_sebenar = ?, total_baki = ?, status = ? WHERE tempahan_id = ?");
-        $stmt->bind_param("dddis", $total_harga_anggaran, $total_harga_sebenar, $total_baki, $status, $tempahan_id);
+        $stmt = $this->db->prepare("UPDATE tempahan SET total_harga_anggaran = ?, disahkan_oleh = ?, status_tempahan = ? WHERE tempahan_id = ?");
+        $stmt->bind_param("sisi", $total_harga_anggaran, $disahkan_oleh, $status_tempahan, $tempahan_id);
         return $stmt->execute();
     }
 
