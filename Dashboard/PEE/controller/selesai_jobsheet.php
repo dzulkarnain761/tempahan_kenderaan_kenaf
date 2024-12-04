@@ -1,20 +1,21 @@
 <?php
 
-include 'connection.php';
+require_once '../../../Models/Database.php';
+$conn = Database::getConnection();
 
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jobsheet_id = intval($_POST['jobsheet_id']);
-    $tarikh_kerja_dijalankan = $_POST['tarikh_kerja'];
+    $tarikh_kerja_dijalankan = $_POST['tarikh_kerja_dijalankan'];
     $jam = intval($_POST['input_hours']);
     $minit = intval($_POST['input_minutes']);
     $harga = floatval($_POST['input_price']);
-    $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']); // Assuming tempahan_kerja_id is passed in POST data
+    $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']); 
 
     // Validate input fields
     if ($harga == 0.00 || empty($harga)) {
-        echo json_encode(["success" => false, "message" => "Pastikan Harga Kosong"]);
+        echo json_encode(["success" => false, "message" => "Pastikan Harga Tidak Kosong"]);
         exit; // Stop script execution if validation fails
     }
 

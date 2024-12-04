@@ -163,14 +163,23 @@
                                                             </td>
 
                                                             <td>
-                                                                <a href="pengesahan_jobsheet.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>&tempahan_kerja_id=<?php echo $work['tempahan_kerja_id']; ?>" class="btn btn-primary" title="Pengesahan Jobsheet"><i class="mdi mdi-plus"></i></a>
-                                                            </td>
+                                                                <a href="pengesahan_jobsheet.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>&tempahan_kerja_id=<?php echo $work['tempahan_kerja_id']; ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"><i class="mdi mdi-square-edit-outline"></i></a>
 
                                                         </tr>
                                                     <?php } ?>
 
                                                 </tbody>
                                             </table>
+                                        </div>
+
+                                        <div class="text-start">
+                                            <button type="button"
+                                                class="btn btn-success"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                title="Selesai Tempahan">
+                                                Selesai Tempahan
+                                            </button>
                                         </div>
 
 

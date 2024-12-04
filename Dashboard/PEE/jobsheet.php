@@ -44,7 +44,7 @@
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
                                                     <th>Tarikh Kerja Dipilih</th>
-                                                    <th>Status</th>
+                                                    <th>Jenis Tugasan</th>    
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
@@ -58,9 +58,20 @@
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
                                                         <td><?php echo $booking['nama']; ?></td>
-                                                        <td><?php echo $booking['created_at']; ?></td>
-                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
-                                                        <td><?php echo $booking['status_tempahan']; ?></td>
+                                                        <td><?php echo date('d/m/Y, H:i', strtotime($booking['created_at'])); ?></td>
+                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        <td><?php 
+                                                        require_once '../../Models/Kerja.php';
+                                                        $kerja = new Kerja();
+                                                        $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                        $count = 1;
+                                                        
+                                                        foreach($works as $work){
+                                                            echo $count . '. '. $work['nama_kerja'] . '<br>';
+                                                            $count++;
+                                                        }
+                                                        ?></td>
+                                                        
                                                         <td class="table-action">
                                                             <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"> <i class="mdi mdi-square-edit-outline"></i></a>
 

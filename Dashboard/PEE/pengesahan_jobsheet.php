@@ -28,7 +28,7 @@
                                         <li class="breadcrumb-item active">Butiran Kerja</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Butiran Jobsheet</h4>
+                                <h4 class="page-title">Butiran Kerja</h4>
                             </div>
                         </div>
                     </div>
@@ -63,8 +63,6 @@
                                         </div>
                                     </div>
 
-
-
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div> <!-- end col -->
@@ -74,7 +72,7 @@
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 class="page-title">Butiran Kerja</h4>
+                                <h4 class="page-title">Jobsheet</h4>
                             </div>
                         </div>
                     </div>
@@ -115,7 +113,7 @@
 
                                                     <tr>
 
-                                                        
+
                                                         <td>
                                                             <?php
                                                             require_once '../../Models/Admin.php';
@@ -146,8 +144,27 @@
                                                             <?php echo htmlspecialchars($jobs['harga']); ?>
                                                         </td>
                                                         <td>
-                                                            <a href="kemaskini_jobsheet.php?jobsheet_id=<?php echo $jobs['jobsheet_id'] ?> " class="btn btn-success">Sahkan Pemandu</a>
-                                                            <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Buang Jobsheet" onclick="deleteJobsheet(<?php echo $jobs['jobsheet_id'] ?>)"><i class="mdi mdi-trash-can"></i></button>
+                                                            <?php if ($jobs['status_jobsheet'] == 'selesai') { ?>
+                                                                Selesai
+                                                            <?php } else { ?>
+                                                                <a href="kemaskini_jobsheet.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&tempahan_kerja_id=<?php echo $_GET['tempahan_kerja_id']; ?>&jobsheet_id=<?php echo $jobs['jobsheet_id'] ?>"
+                                                                    class="btn btn-success"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title="Kemaskini Jobsheet">
+                                                                    <i class="mdi mdi-pencil"></i>
+                                                                </a>
+                                                                <button type="button"
+                                                                    class="btn btn-danger"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title="Buang Jobsheet"
+                                                                    onclick="deleteJobsheet(<?php echo $jobs['jobsheet_id'] ?>)">
+                                                                    <i class="mdi mdi-trash-can"></i>
+                                                                </button>
+
+                                                            <?php } ?>
+
                                                         </td>
 
                                                     </tr>
