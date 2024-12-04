@@ -1,6 +1,8 @@
 <?php
 
-
+require_once '../../Models/Database.php';
+require_once '../../Models/Tempahan.php';
+$conn = Database::getConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -22,6 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $jenis_pembayaran = 'bayaran penuh';
+
+        $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
+        $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
 
 
 
@@ -52,11 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, nombor_rujukan, status_resit) VALUES (?, ?, ?, ?, ?, ?)");
                 $sqlResit->bind_param("isdsss", $tempahan_id, $jenis_pembayaran, $jumlah_bayaran, $cara_bayar, $nombor_rujukan, $status_resit);
 
-                $status_tempahan = 'jobsheet';
+                $status_tempahan = 'pengesahan jobsheet';
                 $status_bayaran = 'selesai bayaran';
-                $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
-                $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
-
+                
                 if (!$sqlUpdateTempahan->execute()) {
                     throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);
                 }
@@ -73,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $status_tempahan = 'pengesahan pt';
             $status_bayaran = 'bayaran diproses';
+
 
             if (!$sqlUpdateTempahan->execute()) {
                 throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);

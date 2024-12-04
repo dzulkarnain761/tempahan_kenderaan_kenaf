@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Pengesahan Jobsheet</h4>
+                                <h4 class="page-title">Jobsheet</h4>
                             </div>
                         </div>
                     </div>
@@ -53,22 +53,17 @@
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
                                                 $bookings = $tempahan->getAllWithStatusTempahan('pengesahan jobsheet');
-                                                
+
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php 
-                                                            require_once '../../Models/Penyewa.php';
-                                                            $penyewa = new User();
-                                                            $user = $penyewa->findById($booking['penyewa_id']);
-                                                            echo $user['nama'];
-                                                        ?></td>
+                                                        <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo $booking['created_at']; ?></td>
                                                         <td><?php echo $booking['tarikh_kerja']; ?></td>
                                                         <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="pengesahan_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            
+                                                            <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"> <i class="mdi mdi-square-edit-outline"></i></a>
+
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -90,7 +85,7 @@
 
         </div>
 
-       
+
     </div>
     <!-- END wrapper -->
 

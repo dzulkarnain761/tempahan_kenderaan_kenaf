@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Tempahan</h4>
+                                <h4 class="page-title">Sejaran Penerimaan Tunai</h4>
                             </div>
                         </div>
                     </div>
@@ -52,22 +52,21 @@
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
-                                                
+                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan pt');
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php 
+                                                        <td><?php
                                                             require_once '../../Models/Penyewa.php';
                                                             $penyewa = new User();
                                                             $user = $penyewa->findById($booking['penyewa_id']);
                                                             echo $user['nama'];
-                                                        ?></td>
+                                                            ?></td>
                                                         <td><?php echo $booking['created_at']; ?></td>
                                                         <td><?php echo $booking['tarikh_kerja']; ?></td>
                                                         <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="action-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
+                                                            <a href="penerimaan_tunai.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>
                                                             
                                                         </td>
                                                     </tr>
@@ -90,12 +89,18 @@
 
         </div>
 
-       
+        
     </div>
     <!-- END wrapper -->
 
 
     <?php include 'partials/script.php'; ?>
+
+    <script>
+        
+
+        
+    </script>
 
 </body>
 

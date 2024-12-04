@@ -25,9 +25,17 @@ class Tugasan
     }
 
     // Get tugasan by ID
-    public function findByName($nama_kerja)
+    public function getRateByName($nama_kerja)
     {
         $stmt = $this->db->prepare("SELECT harga_per_jam FROM tugasan WHERE kerja = ?");
+        $stmt->bind_param("s", $nama_kerja);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+    public function getCategoryByName($nama_kerja)
+    {
+        $stmt = $this->db->prepare("SELECT kategori_kenderaan FROM tugasan WHERE kerja = ?");
         $stmt->bind_param("s", $nama_kerja);
         $stmt->execute();
         $result = $stmt->get_result();

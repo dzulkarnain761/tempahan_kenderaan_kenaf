@@ -74,4 +74,13 @@ class Kerja
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function findByTempahanKerjaId($tempahan_kerja_id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM tempahan_kerja WHERE tempahan_kerja_id = ?");
+        $stmt->bind_param("i", $tempahan_kerja_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }

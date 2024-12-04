@@ -148,7 +148,7 @@
                                                                 <input type="date" class="form-control" value="<?php echo $work['tarikh_kerja_cadangan']; ?>" name="input_date[]">
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control inpur_hours" value="<?php echo $work['jam_anggaran']; ?>" name="input_hours[]" min="0" style="min-width: 100px;">
+                                                                <input type="number" class="form-control input_hours" value="<?php echo $work['jam_anggaran']; ?>" name="input_hours[]" min="0" style="min-width: 100px;">
                                                             </td>
                                                             <td>
                                                                 <input type="number" class="form-control input_minutes" value="<?php echo $work['minit_anggaran']; ?>" name="input_minutes[]" min="0" max="45" step="15" style="min-width: 100px;">
@@ -156,7 +156,7 @@
                                                             <?php
                                                             require_once '../../Models/Tugasan.php';
                                                             $tugasan = new Tugasan();
-                                                            $task = $tugasan->findByName($work['nama_kerja']);
+                                                            $task = $tugasan->getRateByName($work['nama_kerja']);
                                                             $rate_per_hour = $task['harga_per_jam'];
                                                             ?>
                                                             <input type="hidden" class="form-control rate_per_hour" value="<?php echo $rate_per_hour; ?>">
@@ -344,7 +344,7 @@
         $(document).ready(function() {
             // Function to calculate price
             function calculatePrice(row) {
-                const hours = parseFloat($(row).find('.inpur_hours').val()) || 0;
+                const hours = parseFloat($(row).find('.input_hours').val()) || 0;
                 const minutes = parseFloat($(row).find('.input_minutes').val()) || 0;
                 const ratePerHour = parseFloat($(row).find('.rate_per_hour').val()) || 0;
 
@@ -359,7 +359,7 @@
             }
 
             // Add event listeners for hours and minutes inputs
-            $('.inpur_hours, .input_minutes').on('input', function() {
+            $('.input_hours, .input_minutes').on('input', function() {
                 calculatePrice($(this).closest('tr'));
             });
         });

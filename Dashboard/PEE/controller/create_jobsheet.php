@@ -1,6 +1,7 @@
 <?php
 
-include 'connection.php';
+require_once '../../../Models/Database.php';
+$conn = Database::getConnection();
 
 if (isset($_POST['tempahan_kerja_id'])) {
     $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']); 

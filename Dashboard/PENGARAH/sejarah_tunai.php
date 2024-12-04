@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Jobsheet</h4>
+                                <h4 class="page-title">Sejaran Penerimaan Tunai</h4>
                             </div>
                         </div>
                     </div>
@@ -37,34 +37,37 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Nama</th>
-                                                    <th>Email</th>
-                                                    <th>No Kad Pengenalan</th>
-                                                    <th>No Panggilan</th>
+                                                    <th>Nama Penyewa</th>
+                                                    <th>Tarikh & Masa Tempahan</th>
+                                                    <th>Tarikh Kerja Dipilih</th>
+                                                    <th>Status</th>
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Admin.php';
-                                                $pemandu = new Admin();
-                                                $drivers = $pemandu->getPemandu();
+                                                require_once '../../Models/Tempahan.php';
+                                                $tempahan = new Tempahan();
+                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan pt');
 
-                                                foreach ($drivers as $driver) { ?>
+                                                foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $driver['nama']; ?></td>
-                                                        <td><?php echo $driver['email']; ?></td>
-                                                        <td><?php echo $driver['no_kp']; ?></td>
-                                                        <td><?php echo $driver['contact_no']; ?></td>
+                                                        <td><?php
+                                                            require_once '../../Models/Penyewa.php';
+                                                            $penyewa = new User();
+                                                            $user = $penyewa->findById($booking['penyewa_id']);
+                                                            echo $user['nama'];
+                                                            ?></td>
+                                                        <td><?php echo $booking['created_at']; ?></td>
+                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
+                                                        <td><?php echo $booking['status_tempahan']; ?></td>
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                            <a href="penerimaan_tunai.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>
+                                                            
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -86,12 +89,18 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+        
     </div>
     <!-- END wrapper -->
 
 
     <?php include 'partials/script.php'; ?>
+
+    <script>
+        
+
+        
+    </script>
 
 </body>
 

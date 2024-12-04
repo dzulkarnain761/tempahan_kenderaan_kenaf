@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Tugasan</h4>
+                                <h4 class="page-title">Tempahan</h4>
                             </div>
                         </div>
                     </div>
@@ -37,49 +37,38 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                <div class="row mb-2">
-                                        <div class="col-sm-5">
-                                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Tugasan</a>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <div class="text-sm-end">
-                                                <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                                <button type="button" class="btn btn-light mb-2">Export</button>
-                                            </div>
-                                        </div><!-- end col-->
-                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Nama Kerja</th>
-                                                    <th>Harga Per Jam</th>
-                                                    <th>Kategori Kenderaan</th>
+                                                    <th>Nama Penyewa</th>
+                                                    <th>Tarikh Kerja</th>
+                                                    <th>Jenis Pembayaran</th>
+
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tugasan.php';
-                                                $tugasan = new Tugasan();
-                                                $tasks = $tugasan->all();
+                                                require_once '../../Models/Tempahan.php';
+                                                $tempahan = new Tempahan();
+                                                $bookings = $tempahan->getAllResitWithStatusTempahan('pengesahan pengarah');
 
-                                                foreach ($tasks as $task) { ?>
+                                                foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $task['kerja']; ?></td>
-                                                        <td>RM<?php echo number_format($task['harga_per_jam'], 2); ?></td>
-                                                        <td><?php echo $task['kategori_kenderaan']; ?></td>
+                                                        <td><?php echo $booking['nama']; ?></td>
+                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
+                                                        <td><?php echo $booking['jenis_pembayaran']; ?></td>
+
+
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&resit_id=<?php echo $booking['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" > <i class="mdi mdi-check"></i></a>
+
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -96,14 +85,14 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+
     </div>
     <!-- END wrapper -->
 
 
-
     <?php include 'partials/script.php'; ?>
-   
+
+  
 
 </body>
 

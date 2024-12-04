@@ -51,4 +51,13 @@ class Kenderaan {
         $result = $this->db->query("SELECT * FROM kenderaan");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    // Method to get all vehicles
+    public function getAllKenderaanByType($kategori_kenderaan) {
+        $stmt = $this->db->prepare("SELECT * FROM kenderaan WHERE kategori_kenderaan = ?");
+        $stmt->bind_param("s", $kategori_kenderaan);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

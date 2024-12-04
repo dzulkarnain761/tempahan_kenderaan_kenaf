@@ -12,7 +12,7 @@ $sqlTempahan = "SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE r.bukti_resit_path = ''
+                WHERE r.bukti_resit_path = '' AND cara_bayar = 'tunai'
                 LIMIT $limit OFFSET $offset";
 $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
