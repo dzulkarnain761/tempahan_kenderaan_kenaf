@@ -27,7 +27,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Jobsheet</h4>
+                                <h4 class="page-title">Tempahan</h4>
                             </div>
                         </div>
                     </div>
@@ -43,21 +43,28 @@
                                                 <tr>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Cadangan Tarikh Kerja</th>
-                                                    <th>Tugasan</th>    
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th>Tarikh Kerja Dipilih</th>
+                                                    <th>Tugasan</th>
+
+                                                    
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan jobsheet');
-
+                                                $bookings = $tempahan->getAllWithStatusTempahan('refund kewangan');
+                                                
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $booking['nama']; ?></td>
+                                                        <td><?php 
+                                                            require_once '../../Models/Penyewa.php';
+                                                            $penyewa = new User();
+                                                            $user = $penyewa->findById($booking['penyewa_id']);
+                                                            echo $user['nama'];
+                                                        ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
                                                         <td><?php 
@@ -71,10 +78,9 @@
                                                             $count++;
                                                         }
                                                         ?></td>
-                                                        
-                                                        <td class="table-action">
-                                                            <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"> <i class="mdi mdi-square-edit-outline"></i></a>
-
+                                                        <td class="table-action text-center">
+                                                            <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Butiran Tempahan"> <i class="mdi mdi-eye"></i></a>
+                                                            
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -96,7 +102,7 @@
 
         </div>
 
-
+       
     </div>
     <!-- END wrapper -->
 

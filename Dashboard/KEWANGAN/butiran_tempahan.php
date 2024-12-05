@@ -23,7 +23,7 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="jobsheet.php">Tempahan Jobsheet</a></li>
+                                        <li class="breadcrumb-item"><a href="tempahan.php">Tempahan</a></li>
                                         <li class="breadcrumb-item active">Butiran Tempahan</li>
                                     </ol>
                                 </div>
@@ -107,7 +107,7 @@
                                         <li class="breadcrumb-item active">Kemaskini Staff</li>
                                     </ol>
                                 </div> -->
-                                <h4 class="page-title">Butiran Kerja</h4>
+                                <h4 class="page-title">Butiran Harga</h4>
                             </div>
                         </div>
                     </div>
@@ -125,8 +125,8 @@
                                                         <th>Tarikh Kerja</th>
                                                         <th>Harga Pengesahan</th>
                                                         <th>Harga Jobsheet</th>
-                                                        <th>Total Jobsheet</th>
-                                                        <th>Tindakan</th>
+                                                        
+
                                                     </tr>
                                                 </thead>
 
@@ -152,17 +152,9 @@
                                                             <td>
                                                                 RM <?php echo $work['total_harga']; ?>
                                                             </td>
-                                                            <?php
-                                                            require_once '../../Models/Jobsheet.php';
-                                                            $jobsheet = new Jobsheet();
-                                                            $total_jobsheets = $jobsheet->totalJobsheetByKerja($work['tempahan_kerja_id']);
-                                                            ?>
-                                                            <td>
-                                                                <?php echo $total_jobsheets ?>
-                                                            </td>
+                                                            
 
-                                                            <td>
-                                                                <a href="pengesahan_jobsheet.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>&tempahan_kerja_id=<?php echo $work['tempahan_kerja_id']; ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"><i class="mdi mdi-square-edit-outline"></i></a>
+                                                            
 
                                                         </tr>
                                                     <?php } ?>
@@ -171,16 +163,32 @@
                                             </table>
                                         </div>
 
-                                        <div class="text-start">
+                                        <div class="row mb-3">
+                                        <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control"  value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control"  value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control"  value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                        </div>
+                                    </div>
+
+                                        <div class="text-end">
                                             <button type="button"
                                                 class="btn btn-success"
-                                                onclick="selesaiTempahan(<?php echo $_GET['tempahan_id'] ?>)">
-                                                Selesai Tempahan
+                                                onclick="selesaiRefund(<?php echo $_GET['tempahan_id'] ?>)">
+                                                Selesai Refund
                                             </button>
                                         </div>
-
-
-
 
                                     </form>
 
@@ -207,19 +215,19 @@
     <?php include 'partials/script.php'; ?>
 
     <script>
-        function selesaiTempahan(tempahan_id){
+        function selesaiRefund(tempahan_id) {
             Swal.fire({
-                title: 'Selesai Tempahan Kerja',
+                title: 'Selesai Refund',
                 text: "Tindakan ini tidak boleh dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Selesai Kerja',
+                confirmButtonText: 'Selesai',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch('controller/selesai_tempahan_kerja.php', {
+                    fetch('controller/refund_kewangan.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -231,10 +239,10 @@
                             if (data.success) {
                                 Swal.fire({
                                     title: "Berjaya",
-                                    text: "Tempahan Kerja Telah Selesai",
+                                    text: "Refund Telah Selesai",
                                     icon: "success"
                                 }).then(() => {
-                                    window.location.href = "jobsheet.php";
+                                    window.location.href = "tempahan.php";
                                 });
                             } else {
                                 Swal.fire({
@@ -255,7 +263,6 @@
             });
 
         }
-
     </script>
 
 </body>
