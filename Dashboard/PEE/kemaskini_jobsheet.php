@@ -1,3 +1,7 @@
+<?php
+session_start(); // Start the session before any output
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,14 +146,14 @@
                                         <div class="row mb-3">
                                             <label for="price" class="col-3 col-form-label">Harga</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control input_price" name="input_price" value="0.00" readonly>
+                                                <input type="text" class="form-control input_price" name="input_price" value="0.00" min="1" readonly>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="tempahan_id" value="<?php echo $_GET['tempahan_id']; ?>">
                                         <input type="hidden" name="tempahan_kerja_id" value="<?php echo $_GET['tempahan_kerja_id']; ?>">
                                         <div class="justify-content-end row">
                                             <div class="col-9">
                                                 <?php
-
                                                 if ($jobsheets['status_jobsheet'] === 'pengesahan') { ?>
                                                     <input type="submit" class="btn btn-success" value="Kemaskini Jobsheet">
                                                 <?php } else if ($jobsheets['status_jobsheet'] === 'dijalankan') { ?>
@@ -179,6 +183,27 @@
 
     <?php include 'partials/script.php'; ?>
 
+    <?php
+    
+
+    // Check for success or error messages
+    if (isset($_SESSION['error_message'])) {
+        echo "
+        <script>
+        window.onload = function(){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: '" . htmlspecialchars($_SESSION['error_message']) . "',
+                showConfirmButton: false,
+                timer: 2000
+            });
+    }
+        </script>";
+        unset($_SESSION['error_message']); // Clear the message after displaying
+    }
+    ?>
+
 
     <script>
         $(document).ready(function() {
@@ -204,6 +229,7 @@
             });
         });
     </script>
+
 
 
 

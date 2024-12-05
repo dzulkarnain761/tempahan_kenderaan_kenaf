@@ -3,20 +3,23 @@
 require_once '../../../Models/Database.php';
 $conn = Database::getConnection();
 
-$response = [];
+session_start(); // Start the session
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sanitize and validate inputs
     $jobsheet_id = intval($_POST['jobsheet_id']);
     $tarikh_kerja_dijalankan = $_POST['tarikh_kerja_dijalankan'];
     $jam = intval($_POST['input_hours']);
     $minit = intval($_POST['input_minutes']);
     $harga = floatval($_POST['input_price']);
-    $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']); 
+    $tempahan_id = intval($_POST['tempahan_id']);
+    $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']);
 
     // Validate input fields
     if ($harga == 0.00 || empty($harga)) {
-        echo json_encode(["success" => false, "message" => "Pastikan Harga Tidak Kosong"]);
-        exit; // Stop script execution if validation fails
+        $_SESSION['error_message'] = "Pastikan Harga Tidak Kosong";
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
 
     // Begin transaction
@@ -26,6 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Update jobsheet
         $updateQuery = "UPDATE `jobsheet` SET tarikh_kerja_dijalankan = ?, jam = ?, minit = ?, harga = ?, status_jobsheet = 'selesai' WHERE jobsheet_id = ?";
         $stmt = $conn->prepare($updateQuery);
+
+        if ($stmt === false) {
+            throw new Exception("Failed to prepare jobsheet update query.");
+        }
+
         $stmt->bind_param('siidi', $tarikh_kerja_dijalankan, $jam, $minit, $harga, $jobsheet_id);
 
         if (!$stmt->execute()) {
@@ -42,6 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE tempahan_kerja_id = ?
         ";
         $stmt = $conn->prepare($sqlSums);
+
+        if ($stmt === false) {
+            throw new Exception("Failed to prepare jobsheet sum query.");
+        }
+
         $stmt->bind_param('i', $tempahan_kerja_id);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
@@ -68,6 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE tempahan_kerja_id = ?
         ";
         $stmt = $conn->prepare($updateTempahanKerja);
+
+        if ($stmt === false) {
+            throw new Exception("Failed to prepare tempahan_kerja update query.");
+        }
+
         $stmt->bind_param('iidi', $total_jam, $total_minit, $total_harga, $tempahan_kerja_id);
 
         if (!$stmt->execute()) {
@@ -76,18 +94,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Commit transaction
         $conn->commit();
-        echo json_encode(["success" => true, "message" => "Berjaya Kemaskini Jobsheet dan Tempahan Kerja"]);
+        $_SESSION['success_message'] = "Berjaya Kemaskini Jobsheet";
+        header("Location: ../pengesahan_jobsheet.php?tempahan_id=$tempahan_id&tempahan_kerja_id=$tempahan_kerja_id");
+        exit();
 
     } catch (Exception $e) {
         // Rollback transaction if any query fails
         $conn->rollback();
-        echo json_encode(["success" => false, "message" => $e->getMessage()]);
+        $_SESSION['error_message'] = $e->getMessage();
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
 
     // Close the statement
     $stmt->close();
 } else {
-    echo json_encode(["success" => false, "message" => "Invalid request method"]);
+    $_SESSION['error_message'] = "Invalid request method";
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 // Close the connection

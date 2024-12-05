@@ -1,3 +1,6 @@
+<?php
+session_start(); // Start the session before any output
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -141,7 +144,7 @@
                                                             <?php echo htmlspecialchars($jobs['minit']); ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo htmlspecialchars($jobs['harga']); ?>
+                                                            RM <?php echo htmlspecialchars($jobs['harga']); ?>
                                                         </td>
                                                         <td>
                                                             <?php if ($jobs['status_jobsheet'] == 'selesai') { ?>
@@ -192,10 +195,33 @@
 
 
     </div>
+
     <!-- END wrapper -->
 
 
+
+
+
     <?php include 'partials/script.php'; ?>
+    <?php
+   
+
+    if (isset($_SESSION['success_message'])) {
+        echo "
+    <script>
+        window.onload = function() {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '" . htmlspecialchars($_SESSION['success_message']) . "',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+    </script>";
+        unset($_SESSION['success_message']); // Clear the message after displaying
+    }
+    ?>
 
 
     <script>

@@ -52,7 +52,5 @@ class Jobsheet
         return $stmt->execute();
     }
 
-
-
     // Getters and Setters for each property can be added here
 }

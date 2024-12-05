@@ -76,13 +76,13 @@
                                     <div class="row mb-3">
                                         <label for="created_at" class="col-3 col-form-label">Tarikh Tempahan</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo $booking['created_at']; ?>" readonly>
+                                            <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
+                                        <label for="tarikh_kerja" class="col-3 col-form-label">Cadangan Tarikh Kerja </label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo $booking['tarikh_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
 
@@ -144,9 +144,8 @@
                                                                 <?php echo $work['nama_kerja']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $work['tarikh_kerja_cadangan']; ?>
+                                                                <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
                                                             </td>
-
                                                             <td>
                                                                 RM <?php echo $work['harga_anggaran']; ?>
                                                             </td>
@@ -175,9 +174,7 @@
                                         <div class="text-start">
                                             <button type="button"
                                                 class="btn btn-success"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="top"
-                                                title="Selesai Tempahan">
+                                                onclick="">
                                                 Selesai Tempahan
                                             </button>
                                         </div>
