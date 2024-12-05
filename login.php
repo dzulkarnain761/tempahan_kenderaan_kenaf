@@ -1,17 +1,3 @@
-<?php
-session_start();
-
-// if (isset($_SESSION["kumpulan"])) {
-//     if ($_SESSION['kumpulan'] === 'G') {
-//         header("Location: penyewaDashboard/homepage.php");
-//         exit();
-//     } elseif ($_SESSION['kumpulan'] === 'A') {
-//         header("Location: adminDashboard/dashboard.php");
-//         exit();
-//     }
-// }
-
-?>
 
 <!DOCTYPE html>
 <html lang="en" style="height: 100%;">

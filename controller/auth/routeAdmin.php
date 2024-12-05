@@ -14,7 +14,7 @@ $kumpulan = $_SESSION['kumpulan'];
 switch ($kumpulan) {
     case 'A':
         // Redirect to page for label2
-        header('Location: ../../kppDashboard/tempahan.php');
+        header('Location: ../../Dashboard/KPP/tempahan.php');
         break;
     case 'B':
         // Redirect to page KETUA UNIT PEMBAIKIAN (KUP)
@@ -26,27 +26,27 @@ switch ($kumpulan) {
         break;
     case 'D':
         // Redirect to page for PEMBANTU EHWAL EKONOMI (PEE)
-        header('Location: ../../peeDashboard/tempahan.php');
+        header('Location: ../../Dashboard/PEE/tempahan.php');
         break;
     case 'E':
         // Redirect to page for KETUA PENGARAH
-        header('Location: ../../pengarahDashboard/tempahan.php');
+        header('Location: ../../Dashboard/PENGARAH/tempahan_resit.php');
         break;
     case 'F':
         // Redirect to page for PEMBANTU TADBIR
-        header('Location: ../../pembantuTadbirDashboard/tempahan.php');
+        header('Location: ../../Dashboard/PT/tempahan_resit.php');
         break;
     case 'G':
-        // Redirect to page for PEMBANTU TADBIR
-        header('Location: ../../kewanganDashboard/tempahan.php');
+        // Redirect to page for KEWANGAN
+        header('Location: ../../Dashboard/KEWANGAN/tempahan.php');
         break;
     case 'Y':
         // Redirect to page for PEMANDU
-        header('Location: ../../pemanduDashboard/tempahan.php');
+        header('Location: ../../');
         break;
     case 'Z':
         // Redirect to SUPER ADMIN
-        header('Location: ../../adminDashboard/dashboard.php');
+        header('Location: ../../Dashboard/SUPER_ADMIN/index.php');
         break;
     default:
         // Redirect to a default page if 'kumpulan' is not recognized

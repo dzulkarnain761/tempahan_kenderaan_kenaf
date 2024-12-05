@@ -46,6 +46,7 @@
                                                     <th>Tugasan</th>
                                                     <th>Jenis Pembayaran</th>
                                                     
+
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
@@ -58,7 +59,7 @@
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
                                                         <td><?php echo $booking['nama']; ?></td>
-                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
+                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
                                                         <td><?php 
                                                         require_once '../../Models/Kerja.php';
                                                         $kerja = new Kerja();

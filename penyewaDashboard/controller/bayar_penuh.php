@@ -14,14 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->begin_transaction();
 
     try {
-        $tempahan = new Tempahan();
-        $rowTempahan = $tempahan->getHarga('total_harga_anggaran', $tempahan_id);
+        $sqlTempahan = "SELECT total_harga_anggaran FROM tempahan WHERE tempahan_id = ?";
+        $stmtTempahan = $conn->prepare($sqlTempahan);
+        $stmtTempahan->bind_param("i", $tempahan_id);
+        $stmtTempahan->execute();
+        $resultTempahan = $stmtTempahan->get_result();
 
-        if ($rowTempahan) {
+        if ($rowTempahan = $resultTempahan->fetch_assoc()) {
             $jumlah_bayaran = $rowTempahan['total_harga_anggaran'];
         } else {
             throw new Exception("Tempahan tidak dijumpai");
         }
+        $stmtTempahan->close();
 
         $jenis_pembayaran = 'bayaran penuh';
 
