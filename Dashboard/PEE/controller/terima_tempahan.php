@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input_hours = $_POST['input_hours'];
     $input_minutes = $_POST['input_minutes'];
     $input_price = $_POST['input_price'];
-    $pengesahan_pee = $_POST['pengesahan_pee'];
+    $disahkan_oleh = $_POST['disahkan_oleh'];
     $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
 
     // Validate that all input hours and prices are valid
@@ -52,9 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tempahan = new Tempahan();
         $status_tempahan = 'pengesahan kpp';
         
-        if (!$tempahan->pengesahanPEE($total_harga_anggaran, $pengesahan_pee, $status_tempahan, $tempahan_id)) {
+        if (!$tempahan->pengesahanPEE($total_harga_anggaran, $disahkan_oleh, $status_tempahan, $tempahan_id)) {
             throw new Exception("Error updating tempahan");
         }
+        echo $disahkan_oleh;
 
         // Commit the transaction if no errors
         $conn->commit();

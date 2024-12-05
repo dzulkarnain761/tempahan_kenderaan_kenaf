@@ -8,9 +8,7 @@
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
-
         <?php include 'partials/left-sidemenu.php'; ?>
-
         <div class="content-page">
             <div class="content">
 
@@ -23,13 +21,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <div class="page-title-right">
+                                <!-- <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="staff.php">Staff</a></li>
                                         <li class="breadcrumb-item active">Kemaskini Staff</li>
                                     </ol>
-                                </div>
-                                <h4 class="page-title">Kemaskini Staff</h4>
+                                </div> -->
+                                <h4 class="page-title">Profil</h4>
                             </div>
                         </div>
                     </div>
@@ -39,11 +37,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <?php
-                                    require_once '../../Models/Admin.php';
-                                    $admin = new Admin();
-                                    $staff = $admin->findById($_GET['id']);
-                                    ?>
+                                    
                                     <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
                                         <div class="row mb-3">
                                             <label for="id" class="col-3 col-form-label">Staff ID</label>

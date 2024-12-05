@@ -59,6 +59,13 @@
                                 </ul>
                             </div>
                         </li>
+
+                        <li class="side-nav-item">
+							<a href="profil.php" class="side-nav-link">
+								<i class="uil-user"></i>
+								<span> Profil </span>
+							</a>
+						</li>
 						
 						
                        

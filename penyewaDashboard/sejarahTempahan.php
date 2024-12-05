@@ -156,9 +156,6 @@ include 'controller/get_userdata.php';
                                     $sqlResit = "SELECT jenis_pembayaran, resit_id FROM resit_pembayaran WHERE tempahan_id = $tempahanId";
                                     $result = mysqli_query($conn, $sqlResit);
 
-
-                                     
-                                    
                                     $existsBayaranPenuh = false;
                                     $existsBayaranTambahan = false;
                                     $existsRefund = false;
@@ -180,7 +177,7 @@ include 'controller/get_userdata.php';
 
                                     <div>
                                         <?php if ($existsBayaranPenuh) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/view_resitPDF.php?resit_id=<?php echo $resitIdBayaranPenuh ?>')" type="button">Resit 1</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('../Controller/pdf/getPDF_resit_fullpayment.php?resit_id=<?php echo $resitIdBayaranPenuh ?>')" type="button">Resit 1</button>
                                         <?php } ?>
 
                                         <?php if ($existsBayaranTambahan) { ?>

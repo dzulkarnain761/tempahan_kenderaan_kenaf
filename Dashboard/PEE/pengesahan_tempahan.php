@@ -181,7 +181,7 @@
                                         <div class="row mb-3">
                                             <label for="luas_tanah" class="col-3 col-form-label">Disahkan Oleh</label>
                                             <div class="col-9">
-                                                <select name="pengesahan_pee" class="form-select" required>
+                                                <select name="disahkan_oleh" class="form-select" required>
                                                     <option value="">Sila Pilih</option>
                                                     <?php
                                                     require_once '../../Models/Admin.php';
@@ -189,7 +189,7 @@
                                                     $admins = $admin->getPEE();
 
                                                     foreach ($admins as $admin) {
-                                                        echo "<option value='" . $admin['nama'] . "'>" . $admin['nama'] . "</option>";
+                                                        echo "<option value='". $admin['nama']."'>" . $admin['nama'] . "</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -199,7 +199,7 @@
                                         <div class="justify-content-start row">
                                             <div class="col-9">
                                                 <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Tolak Tempahan</button>
-                                                <button type="submit" onclick="submitForm()" class="btn btn-success">Selesai & Hantar</button>
+                                                <button type="submit" onclick="submitForm()" class="btn btn-success">Hasilkan Sebut Harga</button>
                                             </div>
                                         </div>
 
@@ -338,9 +338,6 @@
             });
         }
 
-
-
-
         $(document).ready(function() {
             // Function to calculate price
             function calculatePrice(row) {
@@ -378,9 +375,10 @@
                 return;
             }
 
+
             Swal.fire({
-                title: "Hantar Ke KPP",
-                text: "Adakah anda pasti untuk menghantar tempahan ini?",
+                title: "Hasilkan Sebut Harga?",
+                text: "Adakah anda pasti?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -404,7 +402,7 @@
                                 title: 'Berjaya',
                                 text: data.message || 'Tempahan telah dihantar ke KPP',
                             }).then(() => {
-                                window.location.href = 'tempahan_pee.php';
+                                window.location.href = 'tempahan.php';
                             });
                         } else {
                             Swal.fire({

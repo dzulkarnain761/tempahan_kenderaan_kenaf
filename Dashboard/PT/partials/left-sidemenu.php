@@ -38,6 +38,7 @@
 								<span> Resit </span>
 							</a>
 						</li>
+                        
                         <!-- <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarTempahan" aria-expanded="false" aria-controls="sidebarTempahan" class="side-nav-link">
                                 <i class="uil-clipboard-notes"></i>
@@ -73,6 +74,12 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="side-nav-item">
+							<a href="profil.php" class="side-nav-link">
+								<i class="uil-user"></i>
+								<span> Profil </span>
+							</a>
+						</li>
 						
 						
                        

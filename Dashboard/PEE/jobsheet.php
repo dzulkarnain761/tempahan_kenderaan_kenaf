@@ -45,7 +45,7 @@
                                                     <th>Tarikh & Masa Tempahan</th>
                                                     <th>Cadangan Tarikh Kerja</th>
                                                     <th>Tugasan</th>    
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -72,9 +72,8 @@
                                                         }
                                                         ?></td>
                                                         
-                                                        <td class="table-action">
+                                                        <td class="table-action text-center">
                                                             <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"> <i class="mdi mdi-square-edit-outline"></i></a>
-
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

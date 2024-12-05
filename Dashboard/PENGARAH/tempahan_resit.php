@@ -43,8 +43,9 @@
                                                 <tr>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh Kerja</th>
+                                                    <th>Tugasan</th>
                                                     <th>Jenis Pembayaran</th>
-
+                                                    
                                                     <th class="non-sortable">Tindakan</th>
                                                 </tr>
                                             </thead>
@@ -58,8 +59,18 @@
                                                     <tr>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo $booking['tarikh_kerja']; ?></td>
+                                                        <td><?php 
+                                                        require_once '../../Models/Kerja.php';
+                                                        $kerja = new Kerja();
+                                                        $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                        $count = 1;
+                                                        
+                                                        foreach($works as $work){
+                                                            echo $count . '. '. $work['nama_kerja'] . '<br>';
+                                                            $count++;
+                                                        }
+                                                        ?></td>
                                                         <td><?php echo $booking['jenis_pembayaran']; ?></td>
-
 
                                                         <td class="table-action">
                                                             <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&resit_id=<?php echo $booking['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" > <i class="mdi mdi-check"></i></a>
