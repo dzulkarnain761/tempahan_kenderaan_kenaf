@@ -46,6 +46,7 @@
                                                     <th>Tarikh & Masa Tempahan</th>
                                                     <th>Cadangan Tarikh Kerja</th>
                                                     <th>Tugasan</th>
+                                                    <th>Disahkan Oleh</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
@@ -76,6 +77,7 @@
                                                             $count++;
                                                         }
                                                         ?></td>
+                                                        <td><?php echo $booking['disahkan_oleh']; ?></td>
                                                         <td class="table-action text-center">
                                                             <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
                                                             <a href="javascript:void(0);" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Terima Tempahan" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>

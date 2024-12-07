@@ -79,7 +79,7 @@
                                                         ?></td>
                                                         <td class="table-action text-center">
                                                             <a href="pengesahan_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Tarikh & Harga Kerja"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Padam Tempahan"> <i class="mdi mdi-delete"></i></a>
+                                                            
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

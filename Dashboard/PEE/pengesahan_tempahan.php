@@ -77,13 +77,13 @@
                                     <div class="row mb-3">
                                         <label for="created_at" class="col-3 col-form-label">Tarikh Tempahan</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo $booking['created_at']; ?>" readonly>
+                                            <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo $booking['tarikh_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
 
@@ -190,19 +190,19 @@
                                                     $admins = $admin->getPEE();
 
                                                     foreach ($admins as $admin) {
-                                                        echo "<option value='". $admin['nama']."'>" . $admin['nama'] . "</option>";
+                                                        echo "<option value='" . $admin['nama'] . "'>" . $admin['nama'] . "</option>";
                                                     }
                                                     ?>
                                                 </select>
                                             </div>
                                         </div>
-                                            <input type="hidden" name="tempahan_id" value="<?php echo $_GET['tempahan_id'] ?>">
-                                        <div class="justify-content-start row">
-                                            <div class="col-9">
-                                                <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Tolak Tempahan</button>
-                                                <button type="submit" onclick="submitForm()" class="btn btn-success">Hasilkan Sebut Harga</button>
-                                            </div>
+                                        <input type="hidden" name="tempahan_id" value="<?php echo $_GET['tempahan_id'] ?>">
+
+                                        <div class="text-end">
+                                            <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Tolak Tempahan</button>
+                                            <button type="submit" onclick="submitForm()" class="btn btn-success">Hasilkan Sebut Harga</button>
                                         </div>
+
 
                                     </form>
 
@@ -227,13 +227,11 @@
 
 
     <?php include 'partials/script.php'; ?>
-    
-    
+
+
 
 
     <script>
-
-        
         function cancelButton(id) {
             Swal.fire({
                 title: 'Anda pasti?',
@@ -247,37 +245,37 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/cancel_kerja.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `tempahan_kerja_id=${id}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `tempahan_kerja_id=${id}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: "Berjaya dipadam",
+                                    text: "Kerja telah ditolak",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Gagal Padam",
+                                    text: data.message || "Ralat tidak diketahui",
+                                    icon: "error"
+                                });
+                            }
+                        })
+                        .catch(error => {
                             Swal.fire({
-                                title: "Berjaya dipadam",
-                                text: "Kerja telah ditolak",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        } else {
-                            Swal.fire({
-                                title: "Gagal Padam",
-                                text: data.message || "Ralat tidak diketahui",
+                                title: "Ralat",
+                                text: "Ralat memproses respons pelayan",
                                 icon: "error"
                             });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            title: "Ralat",
-                            text: "Ralat memproses respons pelayan",
-                            icon: "error"
                         });
-                    });
                 }
             });
         }
@@ -304,37 +302,37 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/reject_tempahan.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `tempahan_id=${id}&sebab_ditolak=${encodeURIComponent(result.value)}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `tempahan_id=${id}&sebab_ditolak=${encodeURIComponent(result.value)}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: "Berjaya",
+                                    text: "Tempahan telah ditolak",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Gagal",
+                                    text: data.message || "Ralat tidak diketahui",
+                                    icon: "error"
+                                });
+                            }
+                        })
+                        .catch(error => {
                             Swal.fire({
-                                title: "Berjaya",
-                                text: "Tempahan telah ditolak",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.href = 'tempahan.php';
-                            });
-                        } else {
-                            Swal.fire({
-                                title: "Gagal",
-                                text: data.message || "Ralat tidak diketahui",
+                                title: "Ralat",
+                                text: "Ralat memproses respons pelayan",
                                 icon: "error"
                             });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            title: "Ralat",
-                            text: "Ralat memproses respons pelayan",
-                            icon: "error"
                         });
-                    });
                 }
             });
         }
@@ -363,19 +361,14 @@
         });
 
         function submitForm() {
-            event.preventDefault();
+            const form = document.getElementById('terimaTempahan');
 
-            // Check if PEE is selected
-            const peeSelection = document.querySelector('select[name="pengesahan_pee"]').value;
-            if (!peeSelection) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ralat',
-                    text: 'Sila pilih pengesahan terlebih dahulu',
-                });
-                return;
+            // Validate required fields
+            if (!form.checkValidity()) {
+                form.reportValidity(); // This will highlight invalid fields and show default messages
+                return; // Stop execution if the form is invalid
             }
-
+            event.preventDefault();
 
             Swal.fire({
                 title: "Hasilkan Sebut Harga?",
@@ -388,38 +381,37 @@
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const form = document.getElementById('terimaTempahan');
                     const formData = new FormData(form);
 
                     fetch('controller/terima_tempahan.php', {
-                        method: 'POST',
-                        body: new URLSearchParams(formData)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berjaya',
-                                text: data.message || 'Tempahan telah dihantar ke KPP',
-                            }).then(() => {
-                                window.location.href = 'tempahan.php';
-                            });
-                        } else {
+                            method: 'POST',
+                            body: new URLSearchParams(formData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.message || 'Tempahan telah dihantar ke KPP',
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.message || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Ralat',
-                                text: data.message || 'Ralat tidak diketahui',
+                                text: 'Ralat memproses respons pelayan',
                             });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Ralat',
-                            text: 'Ralat memproses respons pelayan',
                         });
-                    });
                 }
             });
         }

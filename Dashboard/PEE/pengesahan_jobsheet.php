@@ -45,20 +45,26 @@
                                     $work = $kerja->findByTempahanKerjaId($_GET['tempahan_kerja_id']);
                                     ?>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Nama Kerja</label>
+                                        <label for="nama_kerja" class="col-3 col-form-label">Nama Kerja</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" value="<?php echo $work['nama_kerja']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="luas_tanah" class="col-3 col-form-label">Harga Pengesahan</label>
+                                        <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="harga_pengesahan" class="col-3 col-form-label">Harga Pengesahan</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" value="RM <?php echo $work['harga_anggaran']; ?>" readonly>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Harga Jobsheet</label>
+                                        <label for="harga_jobsheet" class="col-3 col-form-label">Harga Jobsheet</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" value="RM <?php echo $work['total_harga']; ?>" readonly>
                                         </div>

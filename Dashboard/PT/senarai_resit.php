@@ -58,7 +58,7 @@
                                                 foreach ($resits as $resit) { ?>
                                                     <tr>
                                                         <td><?php echo $resit['nama']; ?></td>
-                                                        <td><?php echo $resit['tarikh_kerja']; ?></td>
+                                                        <td><?php echo date('d/m/Y', strtotime($resit['tarikh_kerja'])); ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
 
 

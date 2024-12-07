@@ -34,8 +34,8 @@
 						</li>
                         <li class="side-nav-item">
 							<a href="senarai_resit.php" class="side-nav-link">
-								<i class="uil-file-alt"></i> <!-- Fixed icon -->
-								<span> Resit </span>
+								<i class="uil-upload"></i> <!-- Fixed icon -->
+								<span>Upload Resit </span>
 							</a>
 						</li>
                         

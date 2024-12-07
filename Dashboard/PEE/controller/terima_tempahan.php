@@ -1,21 +1,20 @@
 <?php
-require_once '../../../Models/Database.php';
-require_once '../../../Models/Tempahan.php';
-require_once '../../../Models/Kerja.php';
+// Include database connection
 
+require_once '../../../Models/Database.php';
+$conn = Database::getConnection();
 
 $response = array('success' => false, 'message' => ''); // Default response
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize form data
     $tempahan_kerja_id = $_POST['tempahan_kerja_id'];
-    $disahkan_oleh = $_POST['disahkan_oleh'];
-    $tempahan_id = $_POST['tempahan_id']; 
     $input_date = $_POST['input_date'];
     $input_hours = $_POST['input_hours'];
     $input_minutes = $_POST['input_minutes'];
     $input_price = $_POST['input_price'];
-    
+    $pengesahan_pee = $_POST['disahkan_oleh'];
+    $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
 
     // Validate that all input hours and prices are valid
     foreach ($input_price as $price) {
@@ -27,35 +26,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Begin transaction
-    $conn = Database::getConnection();
     $conn->begin_transaction();
     $success = true;
     $total_harga_anggaran = 0;
 
     try {
-        
+        // Prepare the update query for tempahan_kerja
+        $updateKerjaQuery = "UPDATE tempahan_kerja SET jam_anggaran = ?, minit_anggaran = ?, harga_anggaran = ?, tarikh_kerja_cadangan = ? WHERE tempahan_kerja_id = ?";
+        $stmt = $conn->prepare($updateKerjaQuery);
 
-        // Iterate over each entry and update
-        foreach ($tempahan_kerja_id as $index => $value) {
-            $hours = htmlspecialchars($input_hours[$index]);
-            $minutes = htmlspecialchars($input_minutes[$index]);
-            $price = htmlspecialchars($input_price[$index]); 
-            $total_harga_anggaran += $price; // Calculate total estimated price
+        if ($stmt) {
+            // Iterate over each entry and bind parameters
+            foreach ($tempahan_kerja_id as $index => $value) {
+                $dates = htmlspecialchars($input_date[$index]);
+                $hours = htmlspecialchars($input_hours[$index]);
+                $minutes = htmlspecialchars($input_minutes[$index]);
+                $price = htmlspecialchars($input_price[$index]);
+                $total_harga_anggaran += $price; // Calculate total estimated price
 
-            // Update using model method
-            if (!$kerja->updateByKerjaId($hours, $minutes, $price, $value)) {
-                throw new Exception("Error updating tempahan_kerja");
+                $stmt->bind_param('iidsi', $hours, $minutes, $price, $dates, $value);
+
+                // Execute the statement
+                if (!$stmt->execute()) {
+                    throw new Exception("Error updating tempahan_kerja: " . $stmt->error);
+                }
             }
+            $stmt->close();
+        } else {
+            throw new Exception("Error preparing tempahan_kerja update statement: " . $conn->error);
         }
 
-        // Update tempahan using model method
-        $tempahan = new Tempahan();
+        // Prepare the update query for tempahan
+        $updateTempahanQuery = "UPDATE tempahan SET total_harga_anggaran = ?, status_tempahan = ?, disahkan_oleh = ? WHERE tempahan_id = ?";
+        $stmt = $conn->prepare($updateTempahanQuery);
         $status_tempahan = 'pengesahan kpp';
-        
-        if (!$tempahan->pengesahanPEE($total_harga_anggaran, $disahkan_oleh, $status_tempahan, $tempahan_id)) {
-            throw new Exception("Error updating tempahan");
+
+        if ($stmt) {
+            $stmt->bind_param('dssi', $total_harga_anggaran, $status_tempahan, $pengesahan_pee, $tempahan_id);
+
+            // Execute the statement
+            if (!$stmt->execute()) {
+                throw new Exception("Error updating tempahan: " . $stmt->error);
+            }
+            $stmt->close();
+        } else {
+            throw new Exception("Error preparing tempahan update statement: " . $conn->error);
         }
-        echo $disahkan_oleh;
 
         // Commit the transaction if no errors
         $conn->commit();

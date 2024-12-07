@@ -77,7 +77,7 @@
                                     <div class="row mb-3">
                                         <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo $booking['tarikh_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
 
@@ -140,7 +140,7 @@
                                                                 <?php echo $work['nama_kerja']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $work['tarikh_kerja_cadangan']; ?>
+                                                                <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
                                                             </td>
                                                             <td>
                                                                 <?php echo $work['jam_anggaran']; ?>

@@ -106,4 +106,7 @@ class Tempahan
                 WHERE t.status_tempahan = '$status_tempahan' AND r.status_resit != 'selesai'");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+
+   
 }

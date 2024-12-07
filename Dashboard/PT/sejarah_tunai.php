@@ -28,7 +28,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Sejaran Penerimaan Tunai</h4>
+                                <h4 class="page-title">Sejarah Penerimaan Tunai</h4>
                             </div>
                         </div>
                     </div>
@@ -43,32 +43,26 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Nama Penyewa</th>
-                                                    <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Tarikh Kerja Dipilih</th>
-                                                    <th>Status</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Jenis Pembayaran</th>
+                                                    <th>Tarikh Bayaran</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tempahan.php';
-                                                $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan pt');
+                                                require_once '../../Models/Resit.php';
+                                                $resit = new Resit();
+                                                $resits = $resit->getAllResit();
 
-                                                foreach ($bookings as $booking) { ?>
+                                                foreach ($resits as $resit) { ?>
                                                     <tr>
-                                                        <td><?php
-                                                            require_once '../../Models/Penyewa.php';
-                                                            $penyewa = new User();
-                                                            $user = $penyewa->findById($booking['penyewa_id']);
-                                                            echo $user['nama'];
-                                                            ?></td>
-                                                        <td><?php echo $booking['created_at']; ?></td>
-                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
-                                                        <td><?php echo $booking['status_tempahan']; ?></td>
-                                                        <td class="table-action">
-                                                            <a href="penerimaan_tunai.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>
-                                                            
+                                                        <td><?php echo $resit['nama']; ?></td>
+                                                        <td><?php echo $resit['jumlah']; ?></td>
+                                                        <td><?php echo $resit['jenis_pembayaran']; ?></td>
+                                                        <td><?php echo date('d/m/Y', strtotime($resit['created_at'])); ?></td>
+                                                        <td class="table-action text-center">
+                                                            <a href="controller/lihat_resit.php?path=<?php echo $resit['bukti_resit_path']; ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Resit"> <i class="mdi mdi-eye"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
