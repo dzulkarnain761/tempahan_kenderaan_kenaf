@@ -1,6 +1,4 @@
-<?php
-session_start(); // Start the session before any output
-?>
+<?php include 'controller/session.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">

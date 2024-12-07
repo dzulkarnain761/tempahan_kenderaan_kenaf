@@ -7,7 +7,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 // Optional: Check if the user has the right role for the page
-if ($_SESSION['kumpulan'] != 'A') {
+if ($_SESSION['kumpulan'] != 'D') {
     echo "Access denied.";
     exit;
 }

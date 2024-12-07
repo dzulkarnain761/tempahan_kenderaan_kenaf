@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
 
 
-
         if ($cara_bayar == 'fpx') {
             // Sample FPX payment data
             $fpx_id_transaksi = 'FPXTK' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
@@ -71,12 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
 
-            $status_tempahan = 'pengesahan pt';
-            $status_bayaran = 'bayaran diproses';
             $status_resit = 'pengesahan';
             $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, status_resit) VALUES (?, ?, ?, ?, ?)");
             $sqlResit->bind_param("isdss", $tempahan_id, $jenis_pembayaran, $jumlah_bayaran, $cara_bayar, $status_resit);
-
 
             $status_tempahan = 'pengesahan pt';
             $status_bayaran = 'bayaran diproses';

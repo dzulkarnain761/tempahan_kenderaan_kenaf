@@ -18,7 +18,7 @@
                 <span class="account-user-avatar">
                     <img src="../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" height="35">
                 </span>
-                <span class="account-user-name ms-2">Admin</span>
+                <span class="account-user-name ms-2"><?php echo $first_name ?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
                 <!-- item-->

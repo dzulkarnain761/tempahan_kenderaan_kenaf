@@ -9,12 +9,13 @@ $response = array('success' => false, 'message' => ''); // Default response
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize form data
     $tempahan_kerja_id = $_POST['tempahan_kerja_id'];
+    $disahkan_oleh = $_POST['disahkan_oleh'];
+    $tempahan_id = $_POST['tempahan_id']; 
     $input_date = $_POST['input_date'];
     $input_hours = $_POST['input_hours'];
     $input_minutes = $_POST['input_minutes'];
     $input_price = $_POST['input_price'];
-    $disahkan_oleh = $_POST['disahkan_oleh'];
-    $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
+    
 
     // Validate that all input hours and prices are valid
     foreach ($input_price as $price) {
@@ -32,8 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_harga_anggaran = 0;
 
     try {
-        // Create Kerja instance
-        $kerja = new Kerja();
+        
 
         // Iterate over each entry and update
         foreach ($tempahan_kerja_id as $index => $value) {
