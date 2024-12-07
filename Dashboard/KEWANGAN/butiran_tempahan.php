@@ -87,12 +87,70 @@
                                         </div>
                                     </div>
 
+
+
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+
+                                <h4 class="page-title">Butiran Penyewa</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <?php
+                                    require_once '../../Models/Tempahan.php';
+                                    $tempahan = new Tempahan();
+                                    $booking = $tempahan->findByTempahanId($_GET['tempahan_id']);
+                                    ?>
+
+
                                     <div class="row mb-3">
-                                        <label for="catatan" class="col-3 col-form-label">Catatan</label>
+                                        <label for="nama_penyewa" class="col-3 col-form-label">Nama Penyewa</label>
                                         <div class="col-9">
-                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo $booking['catatan']; ?></textarea>
+                                            <?php
+                                            require_once '../../Models/Penyewa.php';
+                                            $penyewa = new User();
+                                            $user = $penyewa->findById($booking['penyewa_id']);
+                                            ?>
+                                            <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="<?php echo $user['nama']; ?>" readonly>
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label for="Alamat" class="col-3 col-form-label">Alamat</label>
+                                        <div class="col-9">
+                                            <input type="email" class="form-control"  value="<?php echo $user['alamat']; ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="contact_no" class="col-3 col-form-label">No Panggilan</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control"  value="<?php echo $user['contact_no']; ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="nama_bank" class="col-3 col-form-label">Nama Bank</label>
+                                        <div class="col-9">
+                                            <input type="email" class="form-control"  value="<?php echo $user['nama_bank']; ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="no_bank" class="col-3 col-form-label">No Bank</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control"  value="<?php echo $user['no_bank']; ?>" required>
+                                        </div>
+                                    </div>
+
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -126,8 +184,6 @@
                                                         <th>Tarikh Kerja</th>
                                                         <th>Harga Pengesahan</th>
                                                         <th>Harga Jobsheet</th>
-                                                        
-
                                                     </tr>
                                                 </thead>
 
@@ -153,9 +209,9 @@
                                                             <td>
                                                                 RM <?php echo $work['total_harga']; ?>
                                                             </td>
-                                                            
 
-                                                            
+
+
 
                                                         </tr>
                                                     <?php } ?>
@@ -165,23 +221,23 @@
                                         </div>
 
                                         <div class="row mb-3">
-                                        <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control"  value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
+                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control"  value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                        <div class="row mb-3">
+                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control"  value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                        <div class="row mb-3">
+                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
                                         <div class="text-end">
                                             <button type="button"

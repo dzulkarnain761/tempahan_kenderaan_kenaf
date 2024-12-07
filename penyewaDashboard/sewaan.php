@@ -271,7 +271,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
 									<!-- Left side: Link to Lihat Sebut Harga -->
 									<span>
-										 <button class="btn btn-secondary btn-sm" onclick="window.open(\'../Controller/pdf/getPDF_resit_fullpayment.php?resit_id=' . $resit_id . '\')" type="button">Resit 1</button>
+										 <button class="btn btn-secondary btn-sm" onclick="window.open(\'../Controller/pdf/getPDF_resit.php?resit_id=' . $resit_id . '\')" type="button">Resit 1</button>
 									</span>
 
 									<!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -287,7 +287,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/resitPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
+                                        <a href="controller/pdf/resitPDF.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->

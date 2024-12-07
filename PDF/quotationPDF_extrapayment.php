@@ -34,11 +34,9 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
   exit;
 }
 
-// Convert image to base64
-$imageData2 = base64_encode(file_get_contents('../../assets/images/logo.jpeg'));
-
-// Prepare base64 image source
-$imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
+$imagePath = '../../assets/images/logo_tempahan_kenderaan.png'; // Path to your PNG file
+$imageData = base64_encode(file_get_contents($imagePath)); // Encode the image
+$imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
 
 ?>
 
@@ -150,7 +148,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                             <td style="width: 50%">
 
 
-                              <img align="left" src="<?php echo $imgSrc2 ?>" width="50%" style="max-width: 160px" />
+                              <img align="left" src="<?php echo $imgSrc ?>" width="50%" style="max-width: 160px" />
                             </td>
                             <td style="width: 50%">
                               <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> SEBUT HARGA </div>
@@ -376,7 +374,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['tarikh_kerja_cadangan'] ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo date('d/m/Y', strtotime($rowKerja['tarikh_kerja_cadangan'])); ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['total_jam'] ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['total_minit'] ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['total_harga'] ?></td>

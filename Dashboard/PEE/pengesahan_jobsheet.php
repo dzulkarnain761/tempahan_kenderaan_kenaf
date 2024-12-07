@@ -139,7 +139,12 @@
                                                             <?php echo $vehicle['no_pendaftaran'] ?? 'Sila Pilih Kenderaan'; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo htmlspecialchars($jobs['tarikh_kerja_dijalankan'] ?? 'Tiada Tarikh'); ?>
+                                                            <?php
+                                                            echo isset($jobs['tarikh_kerja_dijalankan'])
+                                                                ? date('d/m/Y', strtotime($jobs['tarikh_kerja_dijalankan']))
+                                                                : 'Tiada Tarikh';
+                                                            ?>
+
                                                         </td>
                                                         <td>
                                                             <?php echo htmlspecialchars($jobs['jam']); ?>
@@ -208,7 +213,7 @@
 
     <?php include 'partials/script.php'; ?>
     <?php
-   
+
 
     if (isset($_SESSION['success_message'])) {
         echo "

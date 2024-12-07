@@ -179,10 +179,14 @@
                                                 <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="text-end">
-                                        <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                        
+                                            <?php if ($booking['total_baki'] > 0) { ?>
+                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                            <?php } else { ?>
+                                                <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                            <?php } ?>
+
                                             <button type="button"
                                                 class="btn btn-success"
                                                 onclick="terimaTunai(<?php echo $_GET['tempahan_id'] ?>)">

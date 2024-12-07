@@ -34,8 +34,6 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
     exit;
 }
 
-
-
 $penyewa_id = $tempahan['penyewa_id'];
 
 $sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewa_id";
@@ -48,9 +46,6 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
     echo "Tiada Penyewa Dijumpai";
     exit;
 }
-
-
-
 
 ?>
 
@@ -96,8 +91,8 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                     <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Nama Kerja</th>
                     <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Jam</th>
                     <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Minit</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Harga</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Total (RM)</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Harga/Jam</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -128,16 +123,16 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                         <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['jam_anggaran'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['minit_anggaran'] ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rateharga ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['harga_anggaran'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">RM <?php echo $rateharga ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">RM <?php echo $rowKerja['harga_anggaran'] ?></td>
                     </tr>
 					<?php }else{ ?>
 					<tr>
                         <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_jam'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_minit'] ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rateharga ?></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['total_harga'] ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">RM <?php echo $rateharga ?></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">RM <?php echo $rowKerja['total_harga'] ?></td>
                     </tr>
 					<?php } ?>
 					

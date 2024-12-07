@@ -177,15 +177,15 @@ include 'controller/get_userdata.php';
 
                                     <div>
                                         <?php if ($existsBayaranPenuh) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('../Controller/pdf/getPDF_resit_fullpayment.php?resit_id=<?php echo $resitIdBayaranPenuh ?>')" type="button">Resit 1</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('../Controller/pdf/getPDF_resit.php?resit_id=<?php echo $resitIdBayaranPenuh ?>')" type="button">Resit 1</button>
                                         <?php } ?>
 
                                         <?php if ($existsBayaranTambahan) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/view_resitPDF.php?resit_id=<?php echo $resitIdBayaranTambahan ?>')" type="button">Resit 2</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('../Controller/pdf/getPDF_resit.php?resit_id=<?php echo $resitIdBayaranTambahan ?>')" type="button">Resit 2</button>
                                         <?php } ?>
 
                                         <?php if ($existsRefund) { ?>
-                                            <button class="btn btn-secondary btn-sm" onclick="window.open('controller/view_resitPDF.php?resit_id=<?php echo $resitIdRefund; ?>')" type="button">Resit Refund</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="window.open('../Controller/pdf/getPDF_resit.php?resit_id=<?php echo $resitIdRefund; ?>')" type="button">Resit Refund</button>
                                         <?php } ?>
                                     </div>
 

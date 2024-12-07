@@ -33,14 +33,9 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
   exit;
 }
 
-
-
-
-// Convert image to base64
-$imageData2 = base64_encode(file_get_contents('../../assets/images/logo.jpeg'));
-
-// Prepare base64 image source
-$imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
+$imagePath = '../../assets/images/logo_tempahan_kenderaan.png'; // Path to your PNG file
+$imageData = base64_encode(file_get_contents($imagePath)); // Encode the image
+$imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
 
 
 ?>
@@ -153,7 +148,7 @@ $imgSrc2 = 'data:image/jpeg;base64,' . $imageData2;
                             <td style="width: 50%">
 
 
-                              <img align="left" src="<?php echo $imgSrc2 ?>" width="50%" style="max-width: 160px" />
+                              <img align="left" src="<?php echo $imgSrc ?>" width="50%" style="max-width: 160px" />
                             </td>
                             <td style="width: 50%">
                               <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> SEBUT HARGA </div>
