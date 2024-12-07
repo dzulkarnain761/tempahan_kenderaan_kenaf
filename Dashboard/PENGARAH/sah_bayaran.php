@@ -118,16 +118,14 @@
                                                     <tr>
                                                         <th>Nama Kerja</th>
                                                         <th>Tarikh Kerja</th>
-                                                        <th>Jam</th>
-                                                        <th>Minit</th>
+                                                        <th>Harga Pengesahan</th>
+                                                        <th>Harga Jobsheet</th>
 
-                                                        <th>Harga</th>
 
                                                     </tr>
                                                 </thead>
 
                                                 <tbody>
-
                                                     <?php
                                                     require_once '../../Models/Kerja.php';
                                                     $tempahan_kerja = new Kerja();
@@ -143,14 +141,10 @@
                                                                 <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $work['jam_anggaran']; ?>
+                                                                RM <?php echo $work['harga_anggaran']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo $work['minit_anggaran']; ?>
-                                                            </td>
-
-                                                            <td>
-                                                                <?php echo $work['harga_anggaran']; ?>
+                                                                RM <?php echo $work['total_harga']; ?>
                                                             </td>
 
                                                         </tr>
@@ -160,16 +154,38 @@
                                             </table>
                                         </div>
 
-
-                                        <input type="hidden" name="resit_id" value="<?php echo $_GET['resit_id'] ?>">
-                                        <div class="justify-content-start row">
+                                        <div class="row mb-3">
+                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
                                             <div class="col-9">
-
-                                                <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
-                                                <button type="button" onclick="window.open('../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>', '_blank')" class="btn btn-primary">Lihat Sebut Harga</button>
-                                                <button type="submit" onclick="submitForm()" class="btn btn-success">Sah Bayaran</button>
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
                                             </div>
                                         </div>
+                                        <div class="row mb-3">
+                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="resit_id" value="<?php echo $_GET['resit_id'] ?>">
+                                        
+                                            <div class="text-end">
+
+                                                <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
+                                                <?php if ($booking['total_baki'] > 0) { ?>
+                                                    <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                                <?php } else { ?>
+                                                    <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                                <?php } ?>
+                                                <button type="submit" onclick="submitForm()" class="btn btn-success">Sah Bayaran</button>
+                                            </div>
+                                        
+
 
                                     </form>
 
@@ -194,6 +210,9 @@
 
 
     <?php include 'partials/script.php'; ?>
+
+
+
 
 
 
