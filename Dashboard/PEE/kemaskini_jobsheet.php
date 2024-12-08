@@ -56,7 +56,7 @@
                                     }
 
                                     ?>
-                                    <form action="controller/update_jobsheet.php" method="POST">
+                                    <form action="controller/update_jobsheet.php" method="POST" id="jobsheetForm">
 
                                         <div class="row mb-3">
                                             <label for="jobsheet_id" class="col-3 col-form-label">Jobsheet ID</label>
@@ -153,9 +153,9 @@
                                             <div class="col-9">
                                                 <?php
                                                 if ($jobsheets['status_jobsheet'] === 'pengesahan') { ?>
-                                                    <input type="submit" class="btn btn-success" value="Kemaskini Jobsheet">
+                                                    <input type="submit" onclick="updateJobsheet()" class="btn btn-success" value="Kemaskini Jobsheet">
                                                 <?php } else if ($jobsheets['status_jobsheet'] === 'dijalankan') { ?>
-                                                    <input type="submit" class="btn btn-success" formaction="controller/selesai_jobsheet.php" value="Selesai Jobsheet">
+                                                    <input type="submit" onclick="selesaiJobsheet()" class="btn btn-success" formaction="controller/selesai_jobsheet.php" value="Selesai Jobsheet">
                                                 <?php  } ?>
                                             </div>
                                         </div>
@@ -181,26 +181,6 @@
 
     <?php include 'partials/script.php'; ?>
 
-    <?php
-    
-
-    // Check for success or error messages
-    if (isset($_SESSION['error_message'])) {
-        echo "
-        <script>
-        window.onload = function(){
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: '" . htmlspecialchars($_SESSION['error_message']) . "',
-                showConfirmButton: false,
-                timer: 2000
-            });
-    }
-        </script>";
-        unset($_SESSION['error_message']); // Clear the message after displaying
-    }
-    ?>
 
 
     <script>
@@ -226,6 +206,133 @@
                 calculatePrice($(this).closest('form'));
             });
         });
+
+
+        function updateJobsheet() {
+            const form = document.getElementById('jobsheetForm');
+
+            // Validate required fields
+            if (!form.checkValidity()) {
+                form.reportValidity(); // This will highlight invalid fields and show default messages
+                return; // Stop execution if the form is invalid
+            }
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Kemaskini Pemandu & Kenderaan",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(form);
+
+                    fetch('controller/update_jobsheet.php', {
+                            method: 'POST',
+                            body: new URLSearchParams(formData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.message || 'Berjaya Kemaskini',
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.message || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: 'Ralat memproses respons pelayan',
+                            });
+                        });
+                }
+            });
+        }
+
+
+        function selesaiJobsheet() {
+            const form = document.getElementById('jobsheetForm');
+
+            // Validate required fields
+            if (!form.checkValidity()) {
+                form.reportValidity(); // This will highlight invalid fields and show default messages
+                return; // Stop execution if the form is invalid
+            }
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Kemaskini Tarikh & Harga",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(form);
+
+                    fetch('controller/selesai_jobsheet.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams(formData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.message || 'Berjaya Kemaskini',
+                                }).then(() => {
+                                    if (data.tempahan_id && data.tempahan_kerja_id) {
+                                        window.location.href = `pengesahan_jobsheet.php?tempahan_id=${data.tempahan_id}&tempahan_kerja_id=${data.tempahan_kerja_id}`;
+                                    } else {
+                                        window.location.reload(); // Fallback in case data is missing
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.message || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: `Ralat memproses respons pelayan: ${error.message}`,
+                            });
+                        });
+
+                }
+            });
+        }
     </script>
 
 

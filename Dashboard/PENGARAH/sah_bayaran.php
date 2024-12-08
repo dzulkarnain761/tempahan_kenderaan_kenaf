@@ -184,9 +184,7 @@
                                                 <?php } ?>
                                                 <button type="submit" onclick="submitForm()" class="btn btn-success">Sah Bayaran</button>
                                             </div>
-                                        
-
-
+                                    
                                     </form>
 
                                 </div> <!-- end card-body-->

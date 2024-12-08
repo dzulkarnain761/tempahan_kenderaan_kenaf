@@ -150,9 +150,11 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
             <p><strong>Total : </strong> RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
 			 <?php }elseif($tempahan['jenis_pembayaran'] == 'bayaran tambahan'){ ?>
 			<p><strong>Total: </strong> RM <?php echo $tempahan['total_harga_sebenar'] ?></p>
+            <p><strong>Sudah Bayar: </strong>- RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
+            <p><strong>Total Bayaran: </strong> RM <?php echo $tempahan['total_baki'] ?></p>
 			<?php }else{ ?>
 			<p><strong>Total: </strong> RM <?php echo $tempahan['total_harga_sebenar'] ?></p>
-			<p><strong>Sudah Bayar: </strong> RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
+			<p><strong>Sudah Bayar: </strong>- RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
 			<p><strong>Total Refund: </strong> RM <?php echo $tempahan['total_baki'] ?></p>
 			
 			<?php } ?>

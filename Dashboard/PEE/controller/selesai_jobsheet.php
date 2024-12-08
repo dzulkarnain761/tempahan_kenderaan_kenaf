@@ -1,9 +1,8 @@
 <?php
 
 require_once '../../../Models/Database.php';
-$conn = Database::getConnection();
 
-session_start(); // Start the session
+$conn = Database::getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and validate inputs
@@ -17,8 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate input fields
     if ($harga == 0.00 || empty($harga)) {
-        $_SESSION['error_message'] = "Pastikan Harga Tidak Kosong";
-        header("Location: " . $_SERVER['PHP_SELF']);
+        echo json_encode(["success" => false, "message" => "Pastikan Harga Tidak Kosong"]);
         exit();
     }
 
@@ -94,23 +92,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Commit transaction
         $conn->commit();
-        $_SESSION['success_message'] = "Berjaya Kemaskini Jobsheet";
-        header("Location: ../pengesahan_jobsheet.php?tempahan_id=$tempahan_id&tempahan_kerja_id=$tempahan_kerja_id");
+        echo json_encode(["success" => true, "message" => "Berjaya Kemaskini Jobsheet", "tempahan_id" => $tempahan_id, "tempahan_kerja_id" => $tempahan_kerja_id]);
         exit();
 
     } catch (Exception $e) {
         // Rollback transaction if any query fails
         $conn->rollback();
-        $_SESSION['error_message'] = $e->getMessage();
-        header("Location: " . $_SERVER['PHP_SELF']);
+        echo json_encode(["success" => false, "message" => $e->getMessage()]);
         exit();
+    } finally {
+        // Close the statement if it exists
+        if (isset($stmt)) {
+            $stmt->close();
+        }
     }
-
-    // Close the statement
-    $stmt->close();
 } else {
-    $_SESSION['error_message'] = "Invalid request method";
-    header("Location: " . $_SERVER['PHP_SELF']);
+    echo json_encode(["success" => false, "message" => "Invalid request method"]);
     exit();
 }
 
