@@ -42,6 +42,7 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
                                                     <th>Cadangan Tarikh Kerja</th>
@@ -58,6 +59,7 @@
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
+                                                        <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php
                                                             require_once '../../Models/Penyewa.php';
                                                             $penyewa = new User();
@@ -66,17 +68,17 @@
                                                             ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
-                                                        <td><?php 
-                                                        require_once '../../Models/Kerja.php';
-                                                        $kerja = new Kerja();
-                                                        $works = $kerja->findByTempahanId($booking['tempahan_id']);
-                                                        $count = 1;
-                                                        
-                                                        foreach($works as $work){
-                                                            echo $count . '. '. $work['nama_kerja'] . '<br>';
-                                                            $count++;
-                                                        }
-                                                        ?></td>
+                                                        <td><?php
+                                                            require_once '../../Models/Kerja.php';
+                                                            $kerja = new Kerja();
+                                                            $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                            $count = 1;
+
+                                                            foreach ($works as $work) {
+                                                                echo $count . '. ' . $work['nama_kerja'] . '<br>';
+                                                                $count++;
+                                                            }
+                                                            ?></td>
                                                         <td><?php echo $booking['disahkan_oleh']; ?></td>
                                                         <td class="table-action text-center">
                                                             <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
@@ -117,44 +119,44 @@
                 text: "Tempahan ini akan diterima",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6", 
+                confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Ya, terima tempahan!",
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/terima_tempahan.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `tempahan_id=${id}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `tempahan_id=${id}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: "Berjaya",
+                                    text: "Tempahan telah diterima",
+                                    icon: "success"
+                                }).then(() => {
+                                    window.location.href = 'tempahan.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Gagal",
+                                    text: data.message || "Ralat tidak diketahui",
+                                    icon: "error"
+                                });
+                            }
+                        })
+                        .catch(error => {
                             Swal.fire({
-                                title: "Berjaya",
-                                text: "Tempahan telah diterima",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.href = 'tempahan.php';
-                            });
-                        } else {
-                            Swal.fire({
-                                title: "Gagal", 
-                                text: data.message || "Ralat tidak diketahui",
+                                title: "Ralat",
+                                text: "Ralat memproses respons pelayan",
                                 icon: "error"
                             });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            title: "Ralat",
-                            text: "Ralat memproses respons pelayan",
-                            icon: "error"
                         });
-                    });
                 }
             });
         }

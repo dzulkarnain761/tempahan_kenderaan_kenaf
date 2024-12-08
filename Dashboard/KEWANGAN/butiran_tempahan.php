@@ -86,6 +86,24 @@
                                             <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                        </div>
+                                    </div>
 
 
 
@@ -129,25 +147,25 @@
                                     <div class="row mb-3">
                                         <label for="Alamat" class="col-3 col-form-label">Alamat</label>
                                         <div class="col-9">
-                                            <input type="email" class="form-control"  value="<?php echo $user['alamat']; ?>" required>
+                                            <input type="email" class="form-control" value="<?php echo $user['alamat']; ?>" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="contact_no" class="col-3 col-form-label">No Panggilan</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control"  value="<?php echo $user['contact_no']; ?>" required>
+                                            <input type="text" class="form-control" value="<?php echo $user['contact_no']; ?>" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="nama_bank" class="col-3 col-form-label">Nama Bank</label>
                                         <div class="col-9">
-                                            <input type="email" class="form-control"  value="<?php echo $user['nama_bank']; ?>" required>
+                                            <input type="email" class="form-control" value="<?php echo $user['nama_bank']; ?>" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="no_bank" class="col-3 col-form-label">No Bank</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control"  value="<?php echo $user['no_bank']; ?>" required>
+                                            <input type="text" class="form-control" value="<?php echo $user['no_bank']; ?>" required>
                                         </div>
                                     </div>
 
@@ -220,24 +238,7 @@
                                             </table>
                                         </div>
 
-                                        <div class="row mb-3">
-                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
-                                            </div>
-                                        </div>
+
 
                                         <div class="text-end">
                                             <button type="button"

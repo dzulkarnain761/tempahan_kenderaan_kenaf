@@ -56,7 +56,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                     <div class="right-nav">
 						<a href="profil.php" class="profile-link">
-							<span><?php echo htmlspecialchars($nama); ?></span>
+							<span><?php echo htmlspecialchars($first_name); ?></span>
 						</a>
 						<div class="log-out-button">
 							<span id="logoutButton"><ion-icon name="log-out-outline"></ion-icon></span>
@@ -78,7 +78,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <ion-icon name="ellipsis-vertical"></ion-icon>
                         </button>
                         <div id="myDropdown" class="dropdown-content">
-                            <a><span><?php echo htmlspecialchars($nama);?><hr></span></a>
+                            <a><span><?php echo htmlspecialchars($first_name);?><hr></span></a>
                             <a href="homepage.php">Laman Utama</a>
                             <a href="tempahan.php">Tempah</a>
                             <a href="sewaan.php">Sewaan</a>

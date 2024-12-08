@@ -22,12 +22,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
+                                <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
+                                        <li class="breadcrumb-item"><a href="tempahan_resit.php">Sah Bayaran</a></li>
+                                        <li class="breadcrumb-item active">Butiran</li>
                                     </ol>
-                                </div> -->
+                                </div>
                                 <h4 class="page-title">Butiran Tempahan</h4>
                             </div>
                         </div>
@@ -88,6 +88,25 @@
                                         </div>
                                     </div>
 
+                                    <div class="row mb-3">
+                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                            </div>
+                                        </div>
+
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div> <!-- end col -->
@@ -96,12 +115,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
-                                    </ol>
-                                </div> -->
+                                
                                 <h4 class="page-title">Butiran Kerja</h4>
                             </div>
                         </div>
@@ -111,11 +125,13 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
+                                    
                                     <form id="terimaTunai">
                                         <div class="table-responsive">
                                             <table class="table table-centered w-100 dt-responsive nowrap">
                                                 <thead class="table-light">
                                                     <tr>
+                                                        <th>Tempahan ID</th>
                                                         <th>Nama Kerja</th>
                                                         <th>Tarikh Kerja</th>
                                                         <th>Harga Pengesahan</th>
@@ -133,6 +149,9 @@
 
                                                     foreach ($works as $work) { ?>
                                                         <tr>
+                                                            <td>
+                                                                <?php echo $work['tempahan_id']; ?>
+                                                            </td>
 
                                                             <td>
                                                                 <?php echo $work['nama_kerja']; ?>
@@ -154,37 +173,20 @@
                                             </table>
                                         </div>
 
-                                        <div class="row mb-3">
-                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="resit_id" value="<?php echo $_GET['resit_id'] ?>">
                                         
-                                            <div class="text-end">
+                                        <input type="hidden" name="resit_id" value="<?php echo $_GET['resit_id'] ?>">
 
-                                                <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
-                                                <?php if ($booking['total_baki'] > 0) { ?>
-                                                    <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                                <?php } else { ?>
-                                                    <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                                <?php } ?>
-                                                <button type="submit" onclick="submitForm()" class="btn btn-success">Sah Bayaran</button>
-                                            </div>
-                                    
+                                        <div class="text-end">
+
+                                            <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
+                                            <?php if ($booking['total_baki'] > 0) { ?>
+                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                            <?php } else { ?>
+                                                <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                            <?php } ?>
+                                            <button type="submit" onclick="submitForm()" class="btn btn-success">Sah Bayaran</button>
+                                        </div>
+
                                     </form>
 
                                 </div> <!-- end card-body-->

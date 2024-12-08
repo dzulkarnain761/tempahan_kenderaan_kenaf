@@ -108,5 +108,12 @@ class Tempahan
     }
 
 
+    public function sejarahPengesahanKPP()
+    {
+        $result = $this->db->query("SELECT * FROM tempahan t LEFT JOIN penyewa p ON p.id = t.penyewa_id WHERE status_tempahan NOT IN ('pengesahan pee','pengesahan kpp','selesai')");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
    
 }

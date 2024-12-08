@@ -288,7 +288,7 @@ include 'controller/get_userdata.php';
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/pdf/resitPDF.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
+                                        <a href="../Controller/pdf/getPDF_resit.php?resit_id=' . $resit_id . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->

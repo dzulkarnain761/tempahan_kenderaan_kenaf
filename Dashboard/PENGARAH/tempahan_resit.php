@@ -22,13 +22,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Tempahan</li>
-                                        </ol>
-                                    </div> -->
-                                <h4 class="page-title">Tempahan</h4>
+
+                                <h4 class="page-title">Sah Bayaran</h4>
                             </div>
                         </div>
                     </div>
@@ -42,13 +37,14 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh Kerja</th>
                                                     <th>Tugasan</th>
                                                     <th>Jenis Pembayaran</th>
-                                                    
 
-                                                    <th class="non-sortable">Tindakan</th>
+
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,23 +55,24 @@
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
+                                                        <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
-                                                        <td><?php 
-                                                        require_once '../../Models/Kerja.php';
-                                                        $kerja = new Kerja();
-                                                        $works = $kerja->findByTempahanId($booking['tempahan_id']);
-                                                        $count = 1;
-                                                        
-                                                        foreach($works as $work){
-                                                            echo $count . '. '. $work['nama_kerja'] . '<br>';
-                                                            $count++;
-                                                        }
-                                                        ?></td>
+                                                        <td><?php
+                                                            require_once '../../Models/Kerja.php';
+                                                            $kerja = new Kerja();
+                                                            $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                            $count = 1;
+
+                                                            foreach ($works as $work) {
+                                                                echo $count . '. ' . $work['nama_kerja'] . '<br>';
+                                                                $count++;
+                                                            }
+                                                            ?></td>
                                                         <td><?php echo $booking['jenis_pembayaran']; ?></td>
 
-                                                        <td class="table-action">
-                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&resit_id=<?php echo $booking['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" > <i class="mdi mdi-check"></i></a>
+                                                        <td class="table-action text-center">
+                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&resit_id=<?php echo $booking['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai"> <i class="mdi mdi-check"></i></a>
 
                                                         </td>
                                                     </tr>
@@ -105,7 +102,7 @@
 
     <?php include 'partials/script.php'; ?>
 
-  
+
 
 </body>
 

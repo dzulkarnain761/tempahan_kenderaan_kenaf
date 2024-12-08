@@ -24,8 +24,8 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="jobsheet.php">Tempahan</a></li>
-                                        <li class="breadcrumb-item"><a href="butiran_tempahan.php?tempahan_id=<?php echo $_GET['tempahan_id'] ?>">Butiran Tempahan</a></li>
+                                        <li class="breadcrumb-item"><a href="sejarah_tempahan.php">Sejarah Tempahan</a></li>
+                                        <li class="breadcrumb-item"><a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $_GET['tempahan_id'] ?>">Butiran Tempahan</a></li>
                                         <li class="breadcrumb-item active">Butiran Kerja</li>
                                     </ol>
                                 </div>
@@ -90,10 +90,6 @@
                                 <div class="card-body">
                                     <div class="row mb-2">
 
-                                        <div class="col-sm-5">
-                                            <button onclick="createJobsheet(<?php echo $_GET['tempahan_id']; ?>, <?php echo $_GET['tempahan_kerja_id']; ?>)" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Jobsheet</button>
-                                        </div>
-
                                     </div>
 
                                     <div class="table-responsive">
@@ -106,7 +102,7 @@
                                                     <th>Jam</th>
                                                     <th>Minit</th>
                                                     <th>Harga</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    
                                                 </tr>
                                             </thead>
 
@@ -119,7 +115,6 @@
                                                 foreach ($jobsheets as $jobs) { ?>
 
                                                     <tr>
-
 
                                                         <td>
                                                             <?php
@@ -155,29 +150,7 @@
                                                         <td>
                                                             RM <?php echo htmlspecialchars($jobs['harga']); ?>
                                                         </td>
-                                                        <td>
-                                                            <?php if ($jobs['status_jobsheet'] == 'selesai') { ?>
-                                                                Selesai
-                                                            <?php } else { ?>
-                                                                <a href="kemaskini_jobsheet.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&tempahan_kerja_id=<?php echo $_GET['tempahan_kerja_id']; ?>&jobsheet_id=<?php echo $jobs['jobsheet_id'] ?>"
-                                                                    class="btn btn-success"
-                                                                    data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top"
-                                                                    title="Kemaskini Jobsheet">
-                                                                    <i class="mdi mdi-pencil"></i>
-                                                                </a>
-                                                                <button type="button"
-                                                                    class="btn btn-danger"
-                                                                    data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top"
-                                                                    title="Buang Jobsheet"
-                                                                    onclick="deleteJobsheet(<?php echo $jobs['jobsheet_id'] ?>)">
-                                                                    <i class="mdi mdi-trash-can"></i>
-                                                                </button>
-
-                                                            <?php } ?>
-
-                                                        </td>
+                                                       
 
                                                     </tr>
 
@@ -212,129 +185,10 @@
 
 
     <?php include 'partials/script.php'; ?>
+ 
 
 
-
-    <script>
-        $(document).ready(function() {
-            // Function to calculate price
-            function calculatePrice(row) {
-                const hours = parseFloat($(row).find('.input_hours').val()) || 0;
-                const minutes = parseFloat($(row).find('.input_minutes').val()) || 0;
-                const ratePerHour = parseFloat($(row).find('.rate_per_hour').val()) || 0;
-
-                // Convert minutes to hours (e.g., 30 minutes = 0.5 hours)
-                const totalHours = hours + (minutes / 60);
-
-                // Calculate total price
-                const totalPrice = totalHours * ratePerHour;
-
-                // Update the price field with 2 decimal places
-                $(row).find('.input_price').val(totalPrice.toFixed(2));
-            }
-
-            // Add event listeners for hours and minutes inputs
-            $('.input_hours, .input_minutes').on('input', function() {
-                calculatePrice($(this).closest('tr'));
-            });
-        });
-
-        function createJobsheet(tempahan_id, tempahan_kerja_Id) {
-            Swal.fire({
-                title: 'Anda pasti?',
-                text: "Tindakan ini tidak boleh dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, buat jobsheet!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch('controller/create_jobsheet.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `tempahan_id=${tempahan_id}&tempahan_kerja_id=${tempahan_kerja_Id}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire({
-                                    title: "Berjaya",
-                                    text: "Jobsheet telah berjaya dibuat",
-                                    icon: "success"
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: "Gagal",
-                                    text: data.message || "Ralat tidak diketahui",
-                                    icon: "error"
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            Swal.fire({
-                                title: "Ralat",
-                                text: "Ralat memproses respons pelayan",
-                                icon: "error"
-                            });
-                        });
-                }
-            });
-        }
-
-        function deleteJobsheet(jobsheet_id) {
-            Swal.fire({
-                title: 'Anda pasti?',
-                text: "Tindakan ini tidak boleh dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, tolak!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch('controller/delete_jobsheet.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `jobsheet_id=${jobsheet_id}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire({
-                                    title: "Berjaya dipadam",
-                                    text: "Jobsheet telah ditolak",
-                                    icon: "success"
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: "Gagal Padam",
-                                    text: data.message || "Ralat tidak diketahui",
-                                    icon: "error"
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            Swal.fire({
-                                title: "Ralat",
-                                text: "Ralat memproses respons pelayan",
-                                icon: "error"
-                            });
-                        });
-                }
-            });
-        }
-    </script>
+    
 
 
 

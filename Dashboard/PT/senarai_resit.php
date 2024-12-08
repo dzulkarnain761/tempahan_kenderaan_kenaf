@@ -28,7 +28,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Tempahan</h4>
+                                <h4 class="page-title">Senarai Resit</h4>
                             </div>
                         </div>
                     </div>
@@ -42,11 +42,13 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th>Resit ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh Kerja</th>
+                                                    <th>Jumlah</th>
                                                     <th>Jenis Pembayaran</th>
 
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -57,12 +59,14 @@
 
                                                 foreach ($resits as $resit) { ?>
                                                     <tr>
+                                                        <td><?php echo $resit['resit_id']; ?></td>
                                                         <td><?php echo $resit['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($resit['tarikh_kerja'])); ?></td>
+                                                        <td><?php echo $resit['jumlah']; ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
 
 
-                                                        <td class="table-action">
+                                                        <td class="table-action text-center">
                                                             <a href="upload_resit.php?tempahan_id=<?php echo $resit['tempahan_id'] ?>&resit_id=<?php echo $resit['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Muat Naik Resit" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-upload"></i></a>
                                                         </td>
                                                     </tr>

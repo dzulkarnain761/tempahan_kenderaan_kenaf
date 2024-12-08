@@ -77,7 +77,7 @@ class Resit
 
     public function getResitsWithoutProof()
     {
-        $stmt = $this->db->prepare("SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.resit_id
+        $stmt = $this->db->prepare("SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.resit_id, r.jumlah
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
@@ -94,6 +94,16 @@ class Resit
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
                 WHERE r.status_resit = 'selesai' AND r.cara_bayar = 'tunai'");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getResitRefund()
+    {
+        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.resit_id, r.created_at,r.jumlah, r.bukti_resit_path, r.created_at
+                FROM tempahan t
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
+                WHERE r.status_resit = 'selesai' AND jenis_pembayaran = 'refund'");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 }

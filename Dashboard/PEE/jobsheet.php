@@ -42,10 +42,11 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
                                                     <th>Cadangan Tarikh Kerja</th>
-                                                    <th>Tugasan</th>    
+                                                    <th>Tugasan</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
@@ -58,21 +59,22 @@
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
+                                                        <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
-                                                        <td><?php 
-                                                        require_once '../../Models/Kerja.php';
-                                                        $kerja = new Kerja();
-                                                        $works = $kerja->findByTempahanId($booking['tempahan_id']);
-                                                        $count = 1;
-                                                        
-                                                        foreach($works as $work){
-                                                            echo $count . '. '. $work['nama_kerja'] . '<br>';
-                                                            $count++;
-                                                        }
-                                                        ?></td>
-                                                        
+                                                        <td><?php
+                                                            require_once '../../Models/Kerja.php';
+                                                            $kerja = new Kerja();
+                                                            $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                            $count = 1;
+
+                                                            foreach ($works as $work) {
+                                                                echo $count . '. ' . $work['nama_kerja'] . '<br>';
+                                                                $count++;
+                                                            }
+                                                            ?></td>
+
                                                         <td class="table-action text-center">
                                                             <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Pengesahan Jobsheet"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                         </td>

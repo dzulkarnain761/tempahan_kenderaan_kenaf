@@ -20,27 +20,11 @@
 						
 						<li class="side-nav-item">
 							<a href="tempahan_resit.php" class="side-nav-link">
-								<i class="uil-money-bill"></i> <!-- Updated icon -->
+								<i class="uil-check"></i> <!-- Updated icon -->
 								<span> Sah Bayaran </span>
 							</a>
 						</li>
-                        <!-- <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarTempahan" aria-expanded="false" aria-controls="sidebarTempahan" class="side-nav-link">
-                                <i class="uil-clipboard-notes"></i>
-                                <span> Tempahan </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarTempahan">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="tempahan.php">Pengesahan Tarikh</a>
-                                    </li>
-                                    <li>
-                                        <a href="tempahan_2.php">Pengesahan KPP</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> -->
+                        
 
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarSejarah" aria-expanded="false" aria-controls="sidebarSejarah" class="side-nav-link">
@@ -51,7 +35,7 @@
                             <div class="collapse" id="sidebarSejarah">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="sejarah_tunai.php">Penerimaan Tunai</a>
+                                        <a href="sejarah_sah_bayaran.php">Sah Bayaran</a>
                                     </li>
                                     <li>
                                         <a href="sejarah_tempahan.php">Tempahan</a>
@@ -66,12 +50,6 @@
 								<span> Profil </span>
 							</a>
 						</li>
-						
-						
-                       
-						
-						
-						
 						
 						
 					</ul>

@@ -54,7 +54,7 @@
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
+                                                $bookings = $tempahan->sejarahPengesahanKPP();
 
 
                                                 foreach ($bookings as $booking) { ?>
@@ -88,14 +88,7 @@
                                                                 title="Lihat Sebut Harga">
                                                                 <i class="mdi mdi-eye"></i>
                                                             </a>
-                                                            <a href="sejarah_butiran_pengesahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-
-                                                                class="btn btn-info"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="top"
-                                                                title="Lihat Butiran">
-                                                                <i class="mdi mdi-file-document-outline"></i>
-                                                            </a>
+                                                            
 
                                                         </td>
                                                     </tr>

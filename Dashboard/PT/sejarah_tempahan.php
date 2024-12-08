@@ -54,12 +54,12 @@
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
+                                                $bookings = $tempahan->getAllWithStatusTempahan('selesai');
 
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                    <td><?php echo $booking['tempahan_id']; ?></td>
+                                                        <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php
                                                             require_once '../../Models/Penyewa.php';
                                                             $penyewa = new User();
@@ -80,16 +80,8 @@
                                                             }
                                                             ?></td>
                                                         <td class="table-action text-center">
-                                                            <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-                                                                target="_blank"
-                                                                class="btn btn-primary"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="top"
-                                                                title="Lihat Sebut Harga">
-                                                                <i class="mdi mdi-eye"></i>
-                                                            </a>
-                                                            <a href="sejarah_butiran_pengesahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-
+                                                        
+                                                            <a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
                                                                 class="btn btn-info"
                                                                 data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"

@@ -21,7 +21,7 @@
 						<li class="side-nav-item">
 							<a href="tempahan.php" class="side-nav-link">
 								<i class="uil-clipboard-notes"></i>
-								<span> Tempahan </span>
+								<span> Pengesahan </span>
 							</a>
 						</li>
                         
@@ -43,9 +43,10 @@
                                     <li>
                                         <a href="sejarah_pengesahan.php">Pengesahan</a>
                                     </li>
-                                    <!-- <li>
+                                    
+                                    <li>
                                         <a href="sejarah_tempahan.php">Tempahan</a>
-                                    </li> -->
+                                    </li>
                                 </ul>
                             </div>
                         </li>

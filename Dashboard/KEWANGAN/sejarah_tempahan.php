@@ -28,7 +28,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Sejaran Penerimaan Tunai</h4>
+                                <h4 class="page-title">Tempahan</h4>
                             </div>
                         </div>
                     </div>
@@ -42,33 +42,53 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Tarikh Kerja Dipilih</th>
-                                                    <th>Status</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th>Cadangan Tarikh kerja</th>
+                                                    <th>Tugasan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 require_once '../../Models/Tempahan.php';
                                                 $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan pt');
+                                                $bookings = $tempahan->getAllWithStatusTempahan('selesai');
+
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
+                                                        <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php
                                                             require_once '../../Models/Penyewa.php';
                                                             $penyewa = new User();
                                                             $user = $penyewa->findById($booking['penyewa_id']);
                                                             echo $user['nama'];
                                                             ?></td>
-                                                        <td><?php echo $booking['created_at']; ?></td>
-                                                        <td><?php echo $booking['tarikh_kerja']; ?></td>
-                                                        <td><?php echo $booking['status_tempahan']; ?></td>
-                                                        <td class="table-action">
-                                                            <a href="penerimaan_tunai.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>
-                                                            
+                                                        <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
+                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        <td><?php
+                                                            require_once '../../Models/Kerja.php';
+                                                            $kerja = new Kerja();
+                                                            $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                            $count = 1;
+
+                                                            foreach ($works as $work) {
+                                                                echo $count . '. ' . $work['nama_kerja'] . '<br>';
+                                                                $count++;
+                                                            }
+                                                            ?></td>
+                                                        <td class="table-action text-center">
+                                                        
+                                                            <a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
+                                                                class="btn btn-info"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="Lihat Butiran">
+                                                                <i class="mdi mdi-file-document-outline"></i>
+                                                            </a>
+
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -90,18 +110,12 @@
 
         </div>
 
-        
+
     </div>
     <!-- END wrapper -->
 
 
     <?php include 'partials/script.php'; ?>
-
-    <script>
-        
-
-        
-    </script>
 
 </body>
 

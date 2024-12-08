@@ -28,7 +28,7 @@
                                             <li class="breadcrumb-item active">Tempahan</li>
                                         </ol>
                                     </div> -->
-                                <h4 class="page-title">Tempahan</h4>
+                                <h4 class="page-title">Sejarah Penerimaan Tunai</h4>
                             </div>
                         </div>
                     </div>
@@ -44,34 +44,27 @@
                                                 <tr>
                                                     <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
-                                                    <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Cadangan Tarikh kerja</th>
                                                     <th>Tugasan</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Jenis Pembayaran</th>
+                                                    <th>Tarikh Bayaran</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tempahan.php';
-                                                $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
+                                                require_once '../../Models/Resit.php';
+                                                $resit = new Resit();
+                                                $resits = $resit->getAllResit();
 
-
-                                                foreach ($bookings as $booking) { ?>
+                                                foreach ($resits as $resit) { ?>
                                                     <tr>
-                                                    <td><?php echo $booking['tempahan_id']; ?></td>
-                                                        <td><?php
-                                                            require_once '../../Models/Penyewa.php';
-                                                            $penyewa = new User();
-                                                            $user = $penyewa->findById($booking['penyewa_id']);
-                                                            echo $user['nama'];
-                                                            ?></td>
-                                                        <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        <td><?php echo $resit['tempahan_id']; ?></td>
+                                                        <td><?php echo $resit['nama']; ?></td>
                                                         <td><?php
                                                             require_once '../../Models/Kerja.php';
                                                             $kerja = new Kerja();
-                                                            $works = $kerja->findByTempahanId($booking['tempahan_id']);
+                                                            $works = $kerja->findByTempahanId($resit['tempahan_id']);
                                                             $count = 1;
 
                                                             foreach ($works as $work) {
@@ -79,23 +72,18 @@
                                                                 $count++;
                                                             }
                                                             ?></td>
+                                                        <td><?php echo $resit['jumlah']; ?></td>
+                                                        <td><?php echo $resit['jenis_pembayaran']; ?></td>
+                                                        <td><?php echo date('d/m/Y', strtotime($resit['created_at'])); ?></td>
                                                         <td class="table-action text-center">
-                                                            <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-                                                                target="_blank"
+                                                            <button
                                                                 class="btn btn-primary"
+                                                                onclick="lihatResit('<?php echo addslashes($resit['bukti_resit_path']); ?>')"
                                                                 data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"
-                                                                title="Lihat Sebut Harga">
+                                                                title="Lihat Resit">
                                                                 <i class="mdi mdi-eye"></i>
-                                                            </a>
-                                                            <a href="sejarah_butiran_pengesahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-
-                                                                class="btn btn-info"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="top"
-                                                                title="Lihat Butiran">
-                                                                <i class="mdi mdi-file-document-outline"></i>
-                                                            </a>
+                                                            </button>
 
                                                         </td>
                                                     </tr>
@@ -124,6 +112,23 @@
 
 
     <?php include 'partials/script.php'; ?>
+
+    <script>
+        function lihatResit(path) {
+            if (path && path.trim() !== "") {
+                Swal.fire({
+                    imageUrl: "../../bukti_resit/" + path, // Ensure the slash is included
+                    
+                    imageAlt: "resit",
+                });
+            } else {
+                Swal.fire({
+                    title: "Tiada Resit",
+                    icon: "warning", // Add an icon for better UX
+                });
+            }
+        }
+    </script>
 
 </body>
 

@@ -22,12 +22,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
+                                <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="tempahan.php">Tempahan</a></li>
+                                        <li class="breadcrumb-item"><a href="tempahan_resit.php">Terima Tunai</a></li>
                                         <li class="breadcrumb-item active">Butiran Tempahan</li>
                                     </ol>
-                                </div> -->
+                                </div>
                                 <h4 class="page-title">Butiran Tempahan</h4>
                             </div>
                         </div>
@@ -102,12 +102,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
-                                    </ol>
-                                </div> -->
+                               
                                 <h4 class="page-title">Butiran Harga</h4>
                             </div>
                         </div>
