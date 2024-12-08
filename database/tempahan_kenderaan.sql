@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 02:45 AM
+-- Generation Time: Dec 08, 2024 at 03:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -488,6 +488,7 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:50:10', '::1'),
 ('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:51:25', '::1'),
 ('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 01:13:00', '::1'),
+('14', 'Log masuk sebagai ADMIN (Y)', '2024-12-07 19:50:33', '::1'),
 ('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:38:47', '::1'),
 ('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:39:23', '::1'),
 ('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:42:53', '::1'),
@@ -721,6 +722,8 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:03:58', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:06:57', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:32:20', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:57:01', '::1'),
+('3', 'Log masuk sebagai PENYEWA', '2024-12-07 19:31:39', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:01:33', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:13:30', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 18:57:38', '::1'),
@@ -890,6 +893,9 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:07:11', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:09:15', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:24:10', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:52:28', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:57:24', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 19:44:49', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-09-18 01:47:28', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-09-19 00:09:42', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-09-22 20:27:27', '::1'),
@@ -949,7 +955,8 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 05:22:32', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 06:00:10', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 06:00:26', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 18:06:20', '::1');
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 18:06:20', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 18:52:45', '::1');
 
 -- --------------------------------------------------------
 
@@ -986,14 +993,14 @@ INSERT INTO `negeri` (`id_negeri`, `nama_negeri`) VALUES
 
 CREATE TABLE `penyewa` (
   `id` int(11) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `no_kp` varchar(20) NOT NULL,
-  `contact_no` varchar(15) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `no_kp` varchar(20) DEFAULT NULL,
+  `contact_no` varchar(15) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `nama_bank` varchar(100) DEFAULT NULL,
   `no_bank` varchar(30) DEFAULT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1001,7 +1008,9 @@ CREATE TABLE `penyewa` (
 --
 
 INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `nama_bank`, `no_bank`, `password`) VALUES
-(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', NULL, 'pengkalan batu, pasir mas,', 'Maybank', '212132132', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC');
+(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', NULL, 'pengkalan batu, pasir mas,', 'Maybank', '212132132', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC'),
+(3, 'AHMAD ABU BIN ALI', '010530030311', '01311112222', NULL, 'sebelah rumah ali', NULL, NULL, '$2y$10$Jbbj79TVWkg4BQl023q5J.E7uxKnUanxGgEZaWY7Y6bIlcjniIyI.'),
+(4, 'DASDASDSASDSADA', '777777777777', '77777777777', NULL, 'asdasdasdasdasd', NULL, NULL, '$2y$10$D/VIWAV5/LdxQQ1FAeJLY..61PvX5eAbqu4xUXEqyb.CuDsoovQ8S');
 
 -- --------------------------------------------------------
 
@@ -1067,7 +1076,8 @@ INSERT INTO `tempahan` (`tempahan_id`, `penyewa_id`, `tarikh_kerja`, `negeri`, `
 (67, 2, '2024-12-14', 'NEGERI KELANTAN', 'pasir mas', 2.0, 200.00, 200.00, 0.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 08:41:56', '2024-12-07 10:24:30'),
 (68, 2, '2024-12-14', 'NEGERI KELANTAN', 'pasir mas', 1.0, 450.00, 200.00, -250.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 12:21:28', '2024-12-07 12:50:19'),
 (69, 2, '2024-12-14', 'NEGERI KELANTAN', 'asdasd', 1.0, 200.00, 500.00, 300.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 12:59:30', '2024-12-07 13:39:05'),
-(70, 2, '2024-12-11', 'NEGERI KELANTAN', 'kampung 12 ,pasir putih', 1.0, 600.00, 1000.00, 400.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-08 01:05:27', '2024-12-08 01:32:50');
+(70, 2, '2024-12-11', 'NEGERI KELANTAN', 'kampung 12 ,pasir putih', 1.0, 600.00, 1000.00, 400.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-08 01:05:27', '2024-12-08 01:32:50'),
+(71, 2, '2024-12-17', 'NEGERI KELANTAN', 'adsad', 2.0, 0.00, 0.00, 0.00, '', NULL, 'pengesahan pee', 'dalam pengesahan', '', '2024-12-08 01:57:16', '2024-12-08 01:57:16');
 
 -- --------------------------------------------------------
 
@@ -1085,7 +1095,7 @@ CREATE TABLE `tempahan_kerja` (
   `total_jam` int(5) NOT NULL DEFAULT 0,
   `total_minit` int(5) NOT NULL DEFAULT 0,
   `total_harga` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `tarikh_kerja_cadangan` date DEFAULT current_timestamp(),
+  `tarikh_kerja_cadangan` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1099,7 +1109,8 @@ INSERT INTO `tempahan_kerja` (`tempahan_kerja_id`, `tempahan_id`, `nama_kerja`, 
 (122, 68, 'Piring', 4, 30, 450.00, 2, 0, 200.00, '2024-12-14', '2024-12-07 12:21:28', '2024-12-07 12:31:02'),
 (123, 69, 'Piring', 2, 0, 200.00, 5, 0, 500.00, '2024-12-14', '2024-12-07 12:59:30', '2024-12-07 13:14:57'),
 (124, 70, 'Piring', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:30:30'),
-(125, 70, 'Piring Batas Besar', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:31:30');
+(125, 70, 'Piring Batas Besar', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:31:30'),
+(126, 71, 'Piring', 0, 0, 0.00, 0, 0, 0.00, '2024-12-17', '2024-12-08 01:57:16', '2024-12-08 01:57:16');
 
 -- --------------------------------------------------------
 
@@ -1288,7 +1299,7 @@ ALTER TABLE `negeri`
 -- AUTO_INCREMENT for table `penyewa`
 --
 ALTER TABLE `penyewa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `resit_pembayaran`
@@ -1300,13 +1311,13 @@ ALTER TABLE `resit_pembayaran`
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `tugasan`

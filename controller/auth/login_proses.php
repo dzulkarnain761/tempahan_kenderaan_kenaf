@@ -45,16 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
                     $_SESSION['no_kp'] = $no_kp;
 
-                    // Rekod audit trail
-                    $action = "Log masuk sebagai PENYEWA";
-                    $date_created = date('Y-m-d H:i:s');
-
-                    // Simpan alamat IP pengguna dalam rekod logs
-                    $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
-                    $stmtAudit = $conn->prepare($sqlAuditTrail);
-                    $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
-                    $stmtAudit->execute();
-
                     echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'penyewaDashboard/homepage.php']);
                     exit();
                 } else {
@@ -79,16 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
                     $_SESSION['no_kp'] = $no_kp;
                     $_SESSION['negeri'] = $negeri;
-
-                    // Rekod audit trail
-                    $action = "Log masuk sebagai ADMIN ($kumpulan)";
-                    $date_created = date('Y-m-d H:i:s');
-
-                    // Simpan alamat IP pengguna dalam rekod logs
-                    $sqlAuditTrail = "INSERT INTO logs (pengguna_id, action, date_created, ip_address) VALUES (?, ?, ?, ?)";
-                    $stmtAudit = $conn->prepare($sqlAuditTrail);
-                    $stmtAudit->bind_param('ssss', $pengguna_id, $action, $date_created, $ip_address);
-                    $stmtAudit->execute();
 
                     echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'controller/auth/routeAdmin.php']);
                     exit();

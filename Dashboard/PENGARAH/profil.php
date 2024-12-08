@@ -40,11 +40,17 @@
                                     
                                     ?>
                                     
-                                    <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+                                    <form  method="post" id="updateProfil">
                                         <div class="row mb-3">
                                             <label for="id" class="col-3 col-form-label">Staff ID</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="id" name="id" value="<?php echo $userdata['id']; ?>" readonly>
+                                                <input type="text" class="form-control" id="id" name="staff_id" value="<?php echo $userdata['id']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="no_kp" class="col-3 col-form-label">No Kad Pengenalan</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="no_kp" name="no_kp" value="<?php echo $userdata['no_kp']; ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -53,12 +59,7 @@
                                                 <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $userdata['nama']; ?>" required>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="no_kp" class="col-3 col-form-label">No Kad Pengenalan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" id="no_kp" name="no_kp" value="<?php echo $userdata['no_kp']; ?>" required>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row mb-3">
                                             <label for="email" class="col-3 col-form-label">Email</label>
                                             <div class="col-9">
@@ -71,23 +72,10 @@
                                                 <input type="text" class="form-control" id="contact_no" name="contact_no" value="<?php echo $userdata['contact_no']; ?>" required>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="kumpulan" class="col-3 col-form-label">Kumpulan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" id="kumpulan" name="kumpulan" value="<?php echo $userdata['kumpulan']; ?>" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="negeri" class="col-3 col-form-label">Negeri</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" id="negeri" name="negeri" value="<?php echo $userdata['negeri']; ?>" required>
-                                            </div>
-                                        </div>
                                         
-                                    
                                         <div class="justify-content-end row">
                                             <div class="col-9">
-                                                <button type="submit" class="btn btn-primary">Kemaskini</button>
+                                                <button type="submit" onclick="updateProfil()" class="btn btn-primary">Kemaskini Profil</button>
                                             </div>
                                         </div>
                                     </form>
@@ -112,6 +100,65 @@
 
 
     <?php include 'partials/script.php'; ?>
+
+
+    <script>
+        function updateProfil() {
+            const form = document.getElementById('updateProfil');
+
+            // Validate required fields
+            if (!form.checkValidity()) {
+                form.reportValidity(); // This will highlight invalid fields and show default messages
+                return; // Stop execution if the form is invalid
+            }
+            event.preventDefault();
+            Swal.fire({
+                title: "Kemaskini Profil",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(form);
+
+                    fetch('controller/update_profil.php', {
+                            method: 'POST',
+                            body: new URLSearchParams(formData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.message || 'Berjaya Kemaskini',
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.message || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: 'Ralat memproses respons pelayan',
+                            });
+                        });
+                }
+            });
+        }
+
+    </script>
 
 </body>
 
