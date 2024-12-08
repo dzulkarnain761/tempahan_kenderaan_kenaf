@@ -59,7 +59,7 @@ include 'controller/get_userdata.php';
             $sqlTempahan = "SELECT t.*, p.nama
 				FROM tempahan t
 				INNER JOIN penyewa p ON p.id = t.penyewa_id
-				WHERE t.status_bayaran NOT IN ('dibatalkan', 'selesai') AND t.penyewa_id = $id;";
+				WHERE t.status_bayaran NOT IN ('dibatalkan', 'selesai') AND t.penyewa_id = $user_id;";
 
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
@@ -105,10 +105,13 @@ include 'controller/get_userdata.php';
                                     echo '<div class="status badge bg-info text-dark">Bayaran Diproses</div>';
                                     break;
                                 case 'selesai bayaran':
-                                    echo '<div class="status badge bg-danger">Selesai Bayaran</div>';
+                                    echo '<div class="status badge bg-success">Selesai Bayaran</div>';
                                     break;
                                 case 'refund':
                                     echo '<div class="status badge bg-warning text-dark">Refund</div>';
+                                    break;
+                                case 'bayaran tambahan':
+                                    echo '<div class="status badge bg-danger">Bayaran Tambahan</div>';
                                     break;
                                 case 'selesai':
                                     echo '<div class="status badge bg-success">Selesai</div>';
@@ -124,7 +127,7 @@ include 'controller/get_userdata.php';
 
                         </div><br>
 
-                        
+
 
                         <p><span class="semibold">Senarai Kerja : </span></p>
                         <ol>
@@ -154,14 +157,47 @@ include 'controller/get_userdata.php';
 
                                 </li>
                         <?php
-                                        $counterKerja++;
+
                                     }
+                                    $counterKerja++;
                                 }
                         ?>
                         </ol>
 
                         <hr>
                         <?php
+
+                        $sqlBank = "SELECT no_bank, nama_bank FROM penyewa WHERE id = $user_id";
+                        $resultBank = mysqli_query($conn, $sqlBank);
+
+                        if ($resultBank && mysqli_num_rows($resultBank) > 0) {
+                            $row = mysqli_fetch_assoc($resultBank);
+                            $no_bank = $row['no_bank'];
+                            $nama_bank = $row['nama_bank'];
+
+                            if (empty($no_bank) || empty($nama_bank)) {
+                                $btn = 'btn-warning'; // Button style if bank details are missing
+                            } else {
+                                $btn = 'btn-secondary'; // Button style if bank details are present
+                            }
+                        } else {
+                            // Handle the case where no result is returned
+                            $btn = 'btn-warning'; // Default to warning if no data found
+                        }
+						
+						
+						
+						
+						$sqlResit = "SELECT resit_id FROM resit_pembayaran WHERE tempahan_id = $tempahanId AND jenis_pembayaran = 'bayaran penuh'";
+						$resultResit = mysqli_query($conn, $sqlResit);
+
+						if ($resultResit && mysqli_num_rows($resultResit) > 0) {
+							$row = mysqli_fetch_assoc($resultResit);
+							$resit_id = $row['resit_id'];
+						} else {
+							$resit_id = null; // No result found
+}
+						
                         switch ($statusBayaran) {
                             case 'dalam pengesahan':
                                 echo '<div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -176,29 +212,49 @@ include 'controller/get_userdata.php';
 
                             case 'belum bayar':
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
-                                    <!-- Left side: Link to Lihat Sebut Harga -->
-                                    <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
-                                    </span>
+                                            <!-- Left side: Link to Lihat Sebut Harga -->
+                                            <span>
+                                                <a href="../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                            </span>
+                                
+                                            <!-- Right side: Buttons (Batal Tempahan, Bayar Penuh, Lihat Butiran) -->
+                                            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                                <span>
+                                                    <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#paymentModal_' . $tempahanId . '" data-payment-type="full">Bayar Penuh</button>
+                                                </span>
+                                                
+                                                <span>
+                                                    <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+                                                </span>
+                                            </div>
+                                        </div>';
+                                break;
 
-                                    <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
-                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                        <span>
-                                            <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#fullpaymentModal_' . $tempahanId . '">Bayar Penuh</button>
-                                        </span>
-                                        
-                                        <span>
-                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
-                                        </span>
-                                    </div>
-                                </div>';
+                            case 'bayaran tambahan':
+                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                                            <!-- Left side: Link to Lihat Sebut Harga -->
+                                            <span>
+                                                <a href="../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                            </span>
+                                
+                                            <!-- Right side: Buttons (Batal Tempahan, Bayar Tambahan, Lihat Butiran) -->
+                                            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                                <span>
+                                                    <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#paymentModal_' . $tempahanId . '" data-payment-type="extra">Bayar Tambahan</button>
+                                                </span>
+                                                
+                                                <span>
+                                                    <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+                                                </span>
+                                            </div>
+                                        </div>';
                                 break;
 
                             case 'bayaran diproses':
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
@@ -209,29 +265,35 @@ include 'controller/get_userdata.php';
                                         </span>
                                     </div>
                                 </div>';
+                                break;
+
+                            case 'selesai bayaran':
+                                echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+									<!-- Left side: Link to Lihat Sebut Harga -->
+									<span>
+										 <button class="btn btn-secondary btn-sm" onclick="window.open(\'../Controller/pdf/getPDF_resit.php?resit_id=' . $resit_id . '\')" type="button">Resit 1</button>
+									</span>
+
+									<!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
+									<div style="display: flex; justify-content: flex-end; gap: 10px;">
+										<span>
+											<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button>
+										</span>
+									</div>
+								</div>';
                                 break;
 
                             case 'refund':
-                                echo '<div style="display: flex; justify-content: flex-end; gap: 10px;">
-                            
-                            <span>
-                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#detailModal_' . $tempahanId . '">Lihat Butiran</button> <!-- View details button -->
-                            </span>
-                        </div>';
-                                break;
-
-
-                            case 'selesai':
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                                     <!-- Left side: Link to Lihat Sebut Harga -->
                                     <span>
-                                        <a href="controller/quotationPDF_fullpayment.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Sebut Harga</a>
+                                        <a href="controller/pdf/resitPDF.php?tempahan_id=' . $tempahanId . '" target="_blank" class="btn btn-link btn-sm" style="text-decoration: none; color: #007bff;">Lihat Resit</a>
                                     </span>
 
                                     <!-- Right side: Buttons (Batal Tempahan, Bayar, Lihat Butiran) -->
                                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
                                         <span>
-                                            <button class="btn btn-success btn-sm " onclick="window.open(\'controller/resitPDF_fullpayment.php?id=' . $tempahanId . '\', \'_blank\')">Lihat Butiran</button>
+                                            <button class="btn ' . $btn . ' btn-sm" type="button" onclick="window.location.href=\'profil.php\'">Kemaskini Butiran Bank</button>
                                         </span>
                                         
                                         <span>
@@ -240,7 +302,6 @@ include 'controller/get_userdata.php';
                                     </div>
                                 </div>';
                                 break;
-
 
                             default:
                                 echo '<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
@@ -337,7 +398,7 @@ include 'controller/get_userdata.php';
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Nama Kerja</th>
-                                                <th>Cadangan Tarikh</th>
+                                                <th>Tarikh</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -363,7 +424,7 @@ include 'controller/get_userdata.php';
                         </div>
                     </div>
 
-                    <div class="modal fade" id="fullpaymentModal_<?php echo $tempahanId; ?>" tabindex="-1" aria-labelledby="paymentModalLabel_<?php echo $tempahanId; ?>" aria-hidden="true">
+                    <div class="modal fade" id="paymentModal_<?php echo $tempahanId; ?>" tabindex="-1" aria-labelledby="paymentModalLabel_<?php echo $tempahanId; ?>" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -371,13 +432,14 @@ include 'controller/get_userdata.php';
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
-                                <form id="fullpaymentForm_<?php echo $tempahanId; ?>">
+                                <form id="paymentForm_<?php echo $tempahanId; ?>">
                                     <div class="modal-body">
                                         <input type="hidden" name="id" value="<?php echo $tempahanId; ?>">
+                                        <input type="hidden" name="payment_type" value="">
                                         <div class="payment-options">
                                             <div class="option-wrapper">
-                                                <input type="radio" name="cara_bayaran" class="hidden-radio" checked value="tunai" id="fullpayment_tunai_<?php echo $tempahanId; ?>">
-                                                <label class="option-label" for="fullpayment_tunai_<?php echo $tempahanId; ?>">
+                                                <input type="radio" name="cara_bayaran" class="hidden-radio" checked value="tunai" id="payment_tunai_<?php echo $tempahanId; ?>">
+                                                <label class="option-label" for="payment_tunai_<?php echo $tempahanId; ?>">
                                                     <div class="option-content">
                                                         <div class="card-details">Secara Tunai</div>
                                                     </div>
@@ -385,8 +447,8 @@ include 'controller/get_userdata.php';
                                             </div>
 
                                             <div class="option-wrapper">
-                                                <input type="radio" name="cara_bayaran" class="hidden-radio" value="fpx" id="fullpayment_online_<?php echo $tempahanId; ?>">
-                                                <label class="option-label" for="fullpayment_online_<?php echo $tempahanId; ?>">
+                                                <input type="radio" name="cara_bayaran" class="hidden-radio" value="fpx" id="payment_online_<?php echo $tempahanId; ?>">
+                                                <label class="option-label" for="payment_online_<?php echo $tempahanId; ?>">
                                                     <div class="option-content">
                                                         <div class="card-details">Secara Atas Talian</div>
                                                     </div>
@@ -396,12 +458,15 @@ include 'controller/get_userdata.php';
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" onclick="submitPaymentForm('<?php echo $tempahanId; ?>')">I Choose U</button>
+                                        <button type="button" class="btn btn-secondary" onclick="submitPayment('<?php echo $tempahanId; ?>')">Bayar</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+                    <!-- Update the button triggers -->
+
+
 
 
                 <?php } ?>
@@ -524,14 +589,22 @@ include 'controller/get_userdata.php';
         });
 
 
-        function submitPaymentForm(tempahanId) {
-            var form = $('#fullpaymentForm_' + tempahanId);
-            var selectedPayment = form.find('input[name="cara_bayaran"]:checked').val();
-            var url = '';
+        $(document).on('show.bs.modal', '[id^="paymentModal_"]', function(event) {
+            const button = $(event.relatedTarget);
+            const paymentType = button.data('payment-type');
+            $(this).find('input[name="payment_type"]').val(paymentType);
+        });
 
-            // Perform AJAX request
+        function submitPayment(tempahanId) {
+            const form = $(`#paymentForm_${tempahanId}`);
+            const selectedPayment = form.find('input[name="cara_bayaran"]:checked').val();
+            const paymentType = form.find('input[name="payment_type"]').val();
+
+            // Determine which controller to use based on payment type
+            const controller = paymentType === 'full' ? 'bayar_penuh.php' : 'bayar_tambahan.php';
+
             $.ajax({
-                url: 'controller/bayarPenuh.php',
+                url: `controller/${controller}`,
                 type: 'POST',
                 data: {
                     tempahan_id: tempahanId,

@@ -1,17 +1,3 @@
-<?php
-session_start();
-
-// if (isset($_SESSION["kumpulan"])) {
-//     if ($_SESSION['kumpulan'] === 'G') {
-//         header("Location: penyewaDashboard/homepage.php");
-//         exit();
-//     } elseif ($_SESSION['kumpulan'] === 'A') {
-//         header("Location: adminDashboard/dashboard.php");
-//         exit();
-//     }
-// }
-
-?>
 
 <!DOCTYPE html>
 <html lang="en" style="height: 100%;">
@@ -35,7 +21,7 @@ session_start();
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Log Masuk</h5>
-                <img src="assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
+                <img src="assets/images/logo_tempahan_kenderaan.png" alt="logoLKTN" style="width: auto; height: 50px;">
             </div>
             <div class="modal-body">
                 <form class="loginForm" novalidate>

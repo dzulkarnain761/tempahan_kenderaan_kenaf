@@ -6,9 +6,6 @@ include 'controller/get_userdata.php';
 
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +44,7 @@ include 'controller/get_userdata.php';
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
-	
+
     <!-- ***** Profile ***** -->
     <div class="page-content page-container d-flex justify-content-center align-items-center wow fadeIn"
         data-wow-duration="0.75s" data-wow-delay="0s" id="page-content" style="min-height: 100vh;">
@@ -98,7 +95,8 @@ include 'controller/get_userdata.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm" method="POST" action="../controller/auth/profile_process.php">
+                    <form id="updateProfile" method="POST">
+                        <input type="hidden" name="penyewa_id" value="<?php echo $user_id ?>">
                         <div class="mb-3">
                             <label for="currentName" class="form-label">Nama Penuh</label>
                             <input type="text" class="form-control" id="currentName" name="nama" value="<?php echo $nama ?>">
@@ -108,15 +106,33 @@ include 'controller/get_userdata.php';
                             <input type="text" class="form-control" id="currentNoKp" name="no_kp" value="<?php echo $no_kp ?>" readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="currentNoTel" class="form-label">Nombor Telefon</label>
+                            <label for="currentNoTel" class="form-label">No. Tel</label>
                             <input type="text" class="form-control" id="currentNoTel" name="contact_no" value="<?php echo $contact_no ?>">
                         </div>
+                        <div class="mb-3">
+                            <label for="currentNoTel" class="form-label">Alamat </label>
+                            <input type="text" class="form-control" id="currentNoTel" name="alamat" value="<?php echo $alamat ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="currentNoTel" class="form-label">Email </label>
+                            <input type="text" class="form-control" id="currentNoTel" name="email" value="<?php echo $email ?>" placeholder="Sila Isi Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="currentNoTel" class="form-label">Nama Bank</label>
+                            <input type="text" class="form-control" id="currentNoTel" name="nama_bank" value="<?php echo $nama_bank ?>" placeholder="Sila Isi Nama Bank">
+                        </div>
+                        <div class="mb-3">
+                            <label for="currentNoTel" class="form-label">No Bank</label>
+                            <input type="text" class="form-control" id="currentNoTel" name="no_bank" value="<?php echo $no_bank ?>" placeholder="Sila Isi No Bank">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        </div>
+
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" form="editForm" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -127,25 +143,68 @@ include 'controller/get_userdata.php';
     <script src="../assets/js/animation.js"></script>
     <script src="../assets/js/imagesloaded.js"></script>
     <script src="../assets/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 
 
-	<script>
-	  function myFunction() {
-	  const dropdown = document.getElementById("myDropdown");
-	  dropdown.classList.toggle("show");
-	  dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
-	}
+    <script>
+        function myFunction() {
+            const dropdown = document.getElementById("myDropdown");
+            dropdown.classList.toggle("show");
+            dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
+        }
 
-	// Close the dropdown if the user clicks outside of it
-	window.onclick = function(event) {
-	  if (!event.target.closest('.dropdown')) {
-		document.getElementById("myDropdown").classList.remove("show");
-	  }
-	};
-	</script>
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.dropdown')) {
+                document.getElementById("myDropdown").classList.remove("show");
+            }
+        };
+
+        $('#updateProfile').on('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: "Kemaskini Profil",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'controller/update_profile.php',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            if (res.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: res.message,
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: res.message,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
 </body>
 
 </html>

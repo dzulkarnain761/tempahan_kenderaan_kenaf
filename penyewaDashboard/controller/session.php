@@ -12,6 +12,4 @@ if (isset($_SESSION["kumpulan"])) {
     exit();
 }
 
-
-
 ?>

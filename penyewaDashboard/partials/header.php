@@ -31,8 +31,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
                     <a href="homepage.php" class="logo">
-                        <img src="../assets/images/logo2.png" alt="logoLKTN" style="width: 70px; height: auto;">
-                        <img src="../assets/images/logo.jpeg" alt="" style="width: 120px; height: auto;">
+                        <img src="../assets/images/logo_tempahan_kenderaan.png" alt="" style="width: auto; height: 40px;">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
