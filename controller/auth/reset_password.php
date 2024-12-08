@@ -1,16 +1,7 @@
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "tempahan_kenderaan";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    echo json_encode(["success" => false, "message" => "Error: " . mysqli_connect_error()]);
-}
+require_once '../../Models/Database.php';
+$conn = Database::getConnection();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

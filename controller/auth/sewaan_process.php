@@ -1,6 +1,7 @@
 <?php
 
-include 'db-connect.php';
+require_once '../../Models/Database.php';
+$conn = Database::getConnection();
 
 session_start();
 

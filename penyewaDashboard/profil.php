@@ -1,6 +1,7 @@
 <?php
 
-include 'controller/connection.php';
+include '../Models/Database.php';
+$conn = Database::getConnection();
 include 'controller/session.php';
 include 'controller/get_userdata.php';
 

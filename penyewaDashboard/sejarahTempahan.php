@@ -1,6 +1,7 @@
 <?php
 
-include 'controller/connection.php';
+include '../Models/Database.php';
+$conn = Database::getConnection();
 include 'controller/session.php';
 include 'controller/get_userdata.php';
 
@@ -58,7 +59,7 @@ include 'controller/get_userdata.php';
             $sqlTempahan = "SELECT t.*, p.nama
                     FROM tempahan t
                     INNER JOIN penyewa p ON p.id = t.penyewa_id
-                    WHERE t.status_bayaran = 'selesai' OR t.status_bayaran = 'dibatalkan' AND t.penyewa_id = $user_id";
+                    WHERE t.penyewa_id = $user_id AND (t.status_bayaran = 'selesai' OR t.status_bayaran = 'dibatalkan')";
 
             $resultTempahan = mysqli_query($conn, $sqlTempahan);
 
