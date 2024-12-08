@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 08:18 AM
+-- Generation Time: Dec 08, 2024 at 02:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,6 +77,24 @@ CREATE TABLE `fpx_payments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `fpx_payments`
+--
+
+INSERT INTO `fpx_payments` (`id`, `fpx_id_transaksi`, `fpx_id_bank`, `fpx_nama_bank`, `fpx_nama_pembeli`, `fpx_akaun_bank_pembeli`, `jumlah_bayaran`, `fpx_masa_transaksi`, `fpx_tandatangan`, `fpx_kod_respon`, `nombor_rujukan`, `alamat_ip`, `tujuan`, `catatan`, `created_at`, `updated_at`) VALUES
+(6, 'FPXTK00057', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 300.00, '2024-11-06 10:44:51', 'abc123def', '00', 'TKBP00057', NULL, 'tempahan kenderaan', 'Payment successful', '2024-11-06 02:44:51', '2024-11-06 02:44:51'),
+(7, 'FPXTK00057', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-11-10 09:57:15', 'abc123def', '00', 'TKBT00057', NULL, 'tempahan kenderaan', 'Payment successful', '2024-11-10 01:57:15', '2024-11-10 01:57:15'),
+(8, 'FPXTK00058', 'B002', 'Bank Islam', 'LKTN', '987654321', 140.00, '2024-11-10 11:57:04', 'xyz789', '00', 'TKR00058', '::1', 'tempahan kenderaan', 'Payment successful', '2024-11-10 03:57:04', '2024-11-10 03:57:04'),
+(9, 'FPXTK00060', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 25.00, '2024-11-20 16:40:47', 'abc123def', '00', 'TKBT00060', NULL, 'tempahan kenderaan', 'Payment successful', '2024-11-20 08:40:47', '2024-11-20 08:40:47'),
+(10, 'FPXTK00064', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 280.00, '2024-12-02 15:29:16', 'abc123def', '00', 'TKBP00064', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-02 07:29:16', '2024-12-02 07:29:16'),
+(11, 'FPXTK00065', 'B002', 'Bank Islam', 'LKTN', '987654321', 100.00, '2024-12-05 11:59:13', 'xyz789', '00', 'TKR00065', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-05 03:59:13', '2024-12-05 03:59:13'),
+(12, 'FPXTK00064', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 510.00, '2024-12-05 12:24:50', 'abc123def', '00', 'TKBT00064', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-05 04:24:50', '2024-12-05 04:24:50'),
+(13, 'FPXTK00068', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 450.00, '2024-12-07 20:30:16', 'abc123def', '00', 'TKBP00068', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-07 12:30:16', '2024-12-07 12:30:16'),
+(14, 'FPXTK00068', 'B002', 'Bank Islam', 'LKTN', '987654321', 250.00, '2024-12-07 20:50:19', 'xyz789', '00', 'TKR00068', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-07 12:50:19', '2024-12-07 12:50:19'),
+(15, 'FPXTK00069', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 200.00, '2024-12-07 21:00:57', 'abc123def', '00', 'TKBP00069', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-07 13:00:57', '2024-12-07 13:00:57'),
+(16, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 600.00, '2024-12-08 09:07:03', 'abc123def', '00', 'TKBP00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:07:03', '2024-12-08 01:07:03'),
+(17, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-12-08 09:32:50', 'abc123def', '00', 'TKBT00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:32:50', '2024-12-08 01:32:50');
+
 -- --------------------------------------------------------
 
 --
@@ -90,13 +108,26 @@ CREATE TABLE `jobsheet` (
   `pemandu_id` int(11) DEFAULT NULL,
   `kenderaan_id` int(11) DEFAULT NULL,
   `tarikh_kerja_dijalankan` date DEFAULT NULL,
-  `jam` int(5) DEFAULT 0,
+  `jam` int(5) NOT NULL DEFAULT 0,
   `minit` int(5) NOT NULL DEFAULT 0,
-  `harga` decimal(10,2) DEFAULT NULL,
+  `harga` decimal(10,2) NOT NULL DEFAULT 0.00,
   `catatan` varchar(100) NOT NULL,
   `status_jobsheet` enum('pengesahan','dijalankan','selesai') NOT NULL DEFAULT 'pengesahan',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jobsheet`
+--
+
+INSERT INTO `jobsheet` (`jobsheet_id`, `tempahan_id`, `tempahan_kerja_id`, `pemandu_id`, `kenderaan_id`, `tarikh_kerja_dijalankan`, `jam`, `minit`, `harga`, `catatan`, `status_jobsheet`, `created_at`) VALUES
+(134, 67, 121, 12, 4, '2024-12-21', 2, 0, 200.00, '', 'selesai', '2024-12-07 10:17:56'),
+(136, 68, 122, 12, 4, '2024-12-14', 2, 0, 200.00, '', 'selesai', '2024-12-07 12:30:37'),
+(138, 69, 123, 12, 4, '2024-12-21', 5, 0, 500.00, '', 'selesai', '2024-12-07 13:13:56'),
+(139, 70, 124, 12, 4, '2024-12-11', 3, 0, 300.00, '', 'selesai', '2024-12-08 01:09:27'),
+(140, 70, 124, 12, 5, '2024-12-11', 2, 0, 200.00, '', 'selesai', '2024-12-08 01:30:00'),
+(141, 70, 125, 12, 4, '2024-12-11', 3, 0, 300.00, '', 'selesai', '2024-12-08 01:30:48'),
+(142, 70, 125, 12, 4, '2024-12-12', 2, 0, 200.00, '', 'selesai', '2024-12-08 01:31:13');
 
 -- --------------------------------------------------------
 
@@ -371,6 +402,30 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('10', 'Log masuk sebagai ADMIN (F)', '2024-11-03 23:30:07', '::1'),
 ('10', 'Log masuk sebagai ADMIN (F)', '2024-11-04 00:10:19', '::1'),
 ('10', 'Log masuk sebagai ADMIN (F)', '2024-11-04 00:11:32', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-05 19:45:03', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 18:57:24', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 19:21:08', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 20:05:03', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 20:16:35', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 21:18:04', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-10 01:15:11', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-10 01:16:35', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-10 01:25:56', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:16:54', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:23:57', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:30:27', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:32:02', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 18:03:34', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-19 23:21:26', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-11-19 23:44:04', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-03 18:40:05', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-03 20:21:40', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-03 20:34:22', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 02:04:32', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 03:05:23', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 05:41:50', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 06:20:04', '::1'),
+('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 18:07:20', '::1'),
 ('11', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:44:02', '::1'),
 ('11', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:47:43', '::1'),
 ('11', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:49:55', '::1'),
@@ -448,6 +503,20 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('15', 'Log masuk sebagai ADMIN (E)', '2024-11-03 20:49:11', '::1'),
 ('15', 'Log masuk sebagai ADMIN (E)', '2024-11-03 23:28:15', '::1'),
 ('15', 'Log masuk sebagai ADMIN (E)', '2024-11-04 00:10:50', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-05 19:45:33', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-09 19:42:01', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-09 20:15:37', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-10 01:15:55', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-10 01:32:29', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-13 02:22:20', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-13 02:31:16', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-11-19 23:22:17', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-12-03 19:34:32', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-12-03 19:56:13', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-12-05 00:26:27', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-12-07 01:33:30', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-12-07 03:03:01', '::1'),
+('15', 'Log masuk sebagai ADMIN (E)', '2024-12-07 06:25:53', '::1'),
 ('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:35:42', '::1'),
 ('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:35:51', '::1'),
 ('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:36:35', '::1'),
@@ -455,6 +524,11 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 18:17:32', '::1'),
 ('16', 'Log masuk sebagai ADMIN (G)', '2024-10-30 01:06:20', '::1'),
 ('16', 'Log masuk sebagai ADMIN (G)', '2024-11-02 19:41:56', '::1'),
+('16', 'Log masuk sebagai ADMIN (G)', '2024-11-09 20:36:15', '::1'),
+('16', 'Log masuk sebagai ADMIN (G)', '2024-11-09 23:35:28', '::1'),
+('16', 'Log masuk sebagai ADMIN (G)', '2024-11-09 23:49:24', '::1'),
+('16', 'Log masuk sebagai ADMIN (G)', '2024-11-13 18:04:37', '::1'),
+('16', 'Log masuk sebagai ADMIN (G)', '2024-12-07 05:43:29', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-09-09 20:16:40', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-09-18 00:16:06', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-09-18 01:17:59', '::1'),
@@ -582,6 +656,71 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('2', 'Log masuk sebagai PENYEWA', '2024-11-03 23:22:04', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-11-03 23:27:19', '::1'),
 ('2', 'Log masuk sebagai PENYEWA', '2024-11-04 00:09:09', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-05 18:53:37', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-05 18:56:35', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-05 19:44:32', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-06 02:28:28', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-09 18:48:46', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-09 19:50:37', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-09 19:51:45', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-09 20:03:53', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-09 20:57:28', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-12 09:17:13', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-12 18:23:32', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 01:09:16', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:10:24', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:29:31', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:30:02', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:32:28', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 18:03:05', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 19:38:29', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 20:53:13', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 20:53:47', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 21:03:00', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-13 21:27:02', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-19 02:12:11', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-19 18:20:15', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-19 19:45:38', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-20 01:40:34', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-30 18:27:16', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-30 18:36:14', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-30 20:17:55', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-30 23:16:27', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-11-30 23:17:37', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 01:22:14', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 01:24:24', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 18:09:14', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 18:09:20', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 18:10:01', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 21:02:26', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-01 23:54:33', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-02 00:23:07', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-02 01:07:57', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-02 01:08:14', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-02 01:08:39', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-03 18:22:47', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-03 20:30:15', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-04 19:58:00', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-04 20:59:45', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-04 21:22:32', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-04 23:26:58', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 00:51:51', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 01:40:11', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 02:03:09', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 03:15:56', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 04:48:04', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 04:54:27', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:13:16', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:15:55', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:19:20', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:29:53', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:35:29', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:50:35', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 06:00:49', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 06:15:27', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:03:58', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:06:57', '::1'),
+('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:32:20', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:01:33', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:13:30', '::1'),
 ('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 18:57:38', '::1'),
@@ -605,6 +744,10 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-23 02:14:33', '::1'),
 ('7', 'Log masuk sebagai ADMIN (Z)', '2024-10-20 21:32:43', '::1'),
 ('7', 'Log masuk sebagai ADMIN (Z)', '2024-10-29 00:04:00', '::1'),
+('7', 'Log masuk sebagai ADMIN (Z)', '2024-11-19 02:43:02', '::1'),
+('7', 'Log masuk sebagai ADMIN (Z)', '2024-11-19 18:37:30', '::1'),
+('7', 'Log masuk sebagai ADMIN (Z)', '2024-11-27 18:40:30', '::1'),
+('7', 'Log masuk sebagai ADMIN (Z)', '2024-12-07 00:52:01', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 00:35:00', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 01:10:40', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 01:41:32', '::1'),
@@ -693,6 +836,60 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-11-02 20:58:03', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-11-03 23:25:18', '::1'),
 ('8', 'Log masuk sebagai ADMIN (D)', '2024-11-04 00:03:55', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-05 18:55:38', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-05 19:43:30', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-05 19:46:15', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-06 19:41:30', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 18:32:39', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 18:34:08', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 19:16:50', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 19:20:54', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 19:51:56', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 20:34:18', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 23:50:57', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-10 01:14:50', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-12 21:52:12', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-13 02:07:56', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-13 02:24:46', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-13 02:30:10', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 02:34:49', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 02:49:05', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 18:23:58', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 18:38:23', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 18:40:21', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 19:41:21', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-20 00:58:50', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-20 01:38:34', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-20 17:57:56', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-30 20:18:08', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-30 23:13:30', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-11-30 23:14:25', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 01:54:13', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 18:09:05', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 18:09:36', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 18:09:49', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 23:54:52', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-02 01:05:21', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-02 01:07:52', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-04 19:58:10', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-04 20:59:37', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 00:51:18', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 00:57:34', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 01:42:13', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 01:59:30', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 03:16:43', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 04:55:12', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:17:26', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:21:47', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:30:30', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:35:00', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:59:39', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 06:03:08', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 06:08:55', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:05:35', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:07:11', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:09:15', '::1'),
+('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:24:10', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-09-18 01:47:28', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-09-19 00:09:42', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-09-22 20:27:27', '::1'),
@@ -736,7 +933,23 @@ INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUE
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 19:40:13', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 20:52:18', '::1'),
 ('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 20:53:54', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-03 23:26:15', '::1');
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-03 23:26:15', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-05 19:43:47', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-09 20:02:13', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-10 00:29:41', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-10 01:15:03', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-13 02:09:45', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-19 18:36:56', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-19 19:45:15', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-11-30 23:13:54', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-01 23:55:12', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 00:51:33', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 01:59:12', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 02:00:13', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 05:22:32', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 06:00:10', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 06:00:26', '::1'),
+('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 18:06:20', '::1');
 
 -- --------------------------------------------------------
 
@@ -808,6 +1021,19 @@ CREATE TABLE `resit_pembayaran` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `resit_pembayaran`
+--
+
+INSERT INTO `resit_pembayaran` (`resit_id`, `tempahan_id`, `jenis_pembayaran`, `jumlah`, `cara_bayar`, `nombor_rujukan`, `bukti_resit_path`, `status_resit`, `created_at`) VALUES
+(52, 67, 'bayaran penuh', 200.00, 'tunai', '', '', 'selesai', '2024-12-07 17:04:01'),
+(53, 68, 'bayaran penuh', 450.00, 'fpx', 'TKBP00068', '', 'selesai', '2024-12-07 20:30:16'),
+(54, 68, 'refund', 250.00, 'fpx', 'TKR00068', '', 'selesai', '2024-12-07 20:50:19'),
+(55, 69, 'bayaran penuh', 200.00, 'fpx', 'TKBP00069', '', 'selesai', '2024-12-07 21:00:57'),
+(56, 69, 'bayaran tambahan', 300.00, 'tunai', '', '', 'selesai', '2024-12-07 21:19:52'),
+(57, 70, 'bayaran penuh', 600.00, 'fpx', 'TKBP00070', '', 'selesai', '2024-12-08 09:07:03'),
+(58, 70, 'bayaran tambahan', 400.00, 'fpx', 'TKBT00070', '', 'selesai', '2024-12-08 09:32:50');
+
 -- --------------------------------------------------------
 
 --
@@ -825,13 +1051,23 @@ CREATE TABLE `tempahan` (
   `total_harga_sebenar` decimal(10,2) NOT NULL DEFAULT 0.00,
   `total_baki` decimal(10,2) NOT NULL DEFAULT 0.00,
   `catatan` varchar(255) DEFAULT NULL,
-  `disahkan_oleh` varchar(100) NOT NULL,
+  `disahkan_oleh` varchar(100) DEFAULT NULL,
   `status_tempahan` enum('pengesahan pee','pengesahan kpp','bayaran penyewa','pengesahan pt','pengesahan pengarah','penjanaan resit','pengesahan jobsheet','kemaskini jobsheet','refund kewangan','ditolak','dibatalkan','selesai') DEFAULT 'pengesahan pee',
   `status_bayaran` enum('dalam pengesahan','belum bayar','bayaran diproses','selesai bayaran','ditolak','dibatalkan','selesai','refund','bayaran tambahan') NOT NULL DEFAULT 'dalam pengesahan',
   `sebab_ditolak` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tempahan`
+--
+
+INSERT INTO `tempahan` (`tempahan_id`, `penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `total_harga_anggaran`, `total_harga_sebenar`, `total_baki`, `catatan`, `disahkan_oleh`, `status_tempahan`, `status_bayaran`, `sebab_ditolak`, `created_at`, `updated_at`) VALUES
+(67, 2, '2024-12-14', 'NEGERI KELANTAN', 'pasir mas', 2.0, 200.00, 200.00, 0.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 08:41:56', '2024-12-07 10:24:30'),
+(68, 2, '2024-12-14', 'NEGERI KELANTAN', 'pasir mas', 1.0, 450.00, 200.00, -250.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 12:21:28', '2024-12-07 12:50:19'),
+(69, 2, '2024-12-14', 'NEGERI KELANTAN', 'asdasd', 1.0, 200.00, 500.00, 300.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 12:59:30', '2024-12-07 13:39:05'),
+(70, 2, '2024-12-11', 'NEGERI KELANTAN', 'kampung 12 ,pasir putih', 1.0, 600.00, 1000.00, 400.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-08 01:05:27', '2024-12-08 01:32:50');
 
 -- --------------------------------------------------------
 
@@ -853,6 +1089,17 @@ CREATE TABLE `tempahan_kerja` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tempahan_kerja`
+--
+
+INSERT INTO `tempahan_kerja` (`tempahan_kerja_id`, `tempahan_id`, `nama_kerja`, `jam_anggaran`, `minit_anggaran`, `harga_anggaran`, `total_jam`, `total_minit`, `total_harga`, `tarikh_kerja_cadangan`, `created_at`, `updated_at`) VALUES
+(121, 67, 'Piring', 2, 0, 200.00, 2, 0, 200.00, '2024-12-21', '2024-12-07 08:41:56', '2024-12-07 10:23:47'),
+(122, 68, 'Piring', 4, 30, 450.00, 2, 0, 200.00, '2024-12-14', '2024-12-07 12:21:28', '2024-12-07 12:31:02'),
+(123, 69, 'Piring', 2, 0, 200.00, 5, 0, 500.00, '2024-12-14', '2024-12-07 12:59:30', '2024-12-07 13:14:57'),
+(124, 70, 'Piring', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:30:30'),
+(125, 70, 'Piring Batas Besar', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:31:30');
 
 -- --------------------------------------------------------
 
@@ -993,13 +1240,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `fpx_payments`
 --
 ALTER TABLE `fpx_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `jobsheet`
 --
 ALTER TABLE `jobsheet`
-  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT for table `kategori_kenderaan`
@@ -1047,19 +1294,19 @@ ALTER TABLE `penyewa`
 -- AUTO_INCREMENT for table `resit_pembayaran`
 --
 ALTER TABLE `resit_pembayaran`
-  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `tugasan`
