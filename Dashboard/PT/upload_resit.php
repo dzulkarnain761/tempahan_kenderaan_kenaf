@@ -164,10 +164,11 @@
 
                                         <div class="text-end">
                                             <?php if ($booking['total_baki'] > 0) { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
                                             <?php } else { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                                <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
                                             <?php } ?>
+                                            <a href="../../Controller/pdf/getPDF_resit.php?resit_id=<?php echo $_GET['resit_id']; ?>" target="_blank" class="btn btn-info">Lihat Resit</a>
                                             <button type="submit" onclick="submitForm(event)" class="btn btn-success">Muat Naik Bukti Resit</button>
                                         </div>
 

@@ -11,6 +11,7 @@
 <!-- third party js ends -->
 
 <script src="../assets/js/pages/demo.products.js"></script>
-<script src="../../vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 

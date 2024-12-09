@@ -1,6 +1,8 @@
 <?php
 
-include '../connection.php';
+require_once '../../../../Models/Database.php';
+$conn = Database::getConnection();
+
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

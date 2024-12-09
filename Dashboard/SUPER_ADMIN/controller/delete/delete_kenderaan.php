@@ -1,6 +1,8 @@
 <?php
 
-include '../connection.php';
+require_once '../../../../Models/Database.php';
+$conn = Database::getConnection();
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the staff ID from the POST request

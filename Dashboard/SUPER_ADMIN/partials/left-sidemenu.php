@@ -1,12 +1,12 @@
 <div class="leftside-menu">
     
                 <!-- LOGO -->
-                <a href="index.php" class="logo text-center logo-light">
+                <a href="tempahan.php" class="logo text-center logo-light">
                     <span class="logo-lg">
-                        <img src="../assets/images/logo/logo1.png" alt="" height="60">
+                        <img src="../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
                     </span>
                     <span class="logo-sm">
-                        <img src="../assets/images/logo/logo2.png" alt="" height="60">
+                        <img src="../assets/images/logo/logo_lktn.png" alt="" height="45">
                     </span>
                 </a>
 
@@ -51,31 +51,6 @@
 							</a>
 						</li>
                        
-						
-						<!-- <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                                <i class="uil-building"></i>
-                                <span class="badge bg-success float-end">4</span>
-                                <span> Fasiliti </span>
-                            </a>
-                            <div class="collapse" id="sidebarDashboards">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="dewan.php">Dewan</a>
-                                    </li>
-                                    <li>
-                                        <a href="penginapan.php">Penginapan</a>
-                                    </li>
-                                    <li>
-                                        <a href="aktiviti.php">Aktiviti</a>
-                                    </li>
-                                    <li>
-                                        <a href="perkahwinan.php">Perkahwinan</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> -->
-						
 						
 						
 					</ul>

@@ -61,7 +61,7 @@
                                                     <th>Negeri Penempatan</th>
                                                     <th>Kawasan Penempatan</th>
                                                     <th>Catatan</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -80,10 +80,9 @@
                                                         <td><?php echo $vehicle['kawasan_penempatan']; ?></td>
                                                         <td><?php echo $vehicle['catatan']; ?></td>
                                                         
-                                                        <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                        <td class="table-action text-center">
+                                                            <a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="mdi mdi-delete"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -105,7 +104,7 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+   
     </div>
     <!-- END wrapper -->
 

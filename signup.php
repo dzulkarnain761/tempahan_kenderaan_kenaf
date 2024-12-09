@@ -98,9 +98,8 @@
 
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
-    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    
 
 
 
@@ -123,25 +122,7 @@
                 }, false)
             })
 
-            // Toggle password visibility
-            // const showPasswordCheckbox = document.getElementById('showPassword');
-            // const passwordInput = document.getElementById('kataLaluan');
-            // const confirmPasswordInput = document.getElementById('confirmPass');
-
-            // showPasswordCheckbox.addEventListener('change', () => {
-            //     const type = showPasswordCheckbox.checked ? 'text' : 'password';
-            //     passwordInput.type = type;
-            //     confirmPasswordInput.type = type;
-            // });
-
-            // function restrictToNumbers(inputId) {
-            //     document.getElementById(inputId).addEventListener('input', function(e) {
-            //         this.value = this.value.replace(/\D/g, '');
-            //     });
-            // }
-
-            // restrictToNumbers('nokp');
-            // restrictToNumbers('contactno');
+            
         })()
 
         $(document).ready(function() {
@@ -156,7 +137,7 @@
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/auth/signup_penyewa_proses.php',
+                    url: 'Controller/auth/signup_penyewa_proses.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

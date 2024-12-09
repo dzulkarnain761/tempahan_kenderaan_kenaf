@@ -1,6 +1,8 @@
 <?php
 
-include '../connection.php';
+require_once '../../../../Models/Database.php';
+$conn = Database::getConnection();
+
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kawasan_penempatan = $_POST['kawasan_penempatan'];
     $catatan = $_POST['catatan'];
  
-
     $sqlNegeri = "SELECT * FROM negeri WHERE id_negeri = $negeri_penempatan";
     $resultNegeri = mysqli_query($conn, $sqlNegeri);
     $rowNegeri = mysqli_fetch_assoc($resultNegeri);
@@ -35,8 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $checkSql->close();
-
-    
 
     // Insert the user into the database using prepared statement
     $sql = $conn->prepare("INSERT INTO kenderaan (kategori_kenderaan, no_aset, no_pendaftaran, tahun_daftar, negeri_penempatan, kawasan_penempatan, catatan) VALUES (?, ?, ?, ?, ?, ?, ?)");

@@ -5,7 +5,7 @@
 
 <?php include 'partials/head.php'; ?>
 
-<body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -26,10 +26,10 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="staff.php">Staff</a></li>
-                                        <li class="breadcrumb-item active">Tam Staff</li>
+                                        <li class="breadcrumb-item active">Tambah Staff</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Tam Staff</h4>
+                                <h4 class="page-title">Tambah Staff</h4>
                             </div>
                         </div>
                     </div>
@@ -40,49 +40,53 @@
                             <div class="card">
                                 <div class="card-body">
 
-                                    <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+                                    <form id="addStaff">
                                         <div class="row mb-3">
-                                            <label for="nama" class="col-3 col-form-label">Nama</label>
+                                            <label for="nama_staff" class="col-3 col-form-label">Nama</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="nama" name="nama" required>
+                                                <input type="text" class="form-control" id="nama_staff" name="nama_staff" required>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="no_kp" class="col-3 col-form-label">No Kad Pengenalan</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="no_kp" name="no_kp" required>
+                                                <input type="text" class="form-control" id="no_kp" name="no_kp" minlength="12" maxlength="12" required>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="email" class="col-3 col-form-label">Email</label>
                                             <div class="col-9">
-                                                <input type="email" class="form-control" id="email" name="email" required>
+                                                <input type="email" class="form-control" id="email" name="email">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="contact_no" class="col-3 col-form-label">No Panggilan</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="contact_no" name="contact_no" required>
+                                                <input type="text" class="form-control" id="contact_no" name="contact_no" minlength="10" maxlength="13" required>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label for="kumpulan" class="col-3 col-form-label">Kumpulan</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="kumpulan" name="kumpulan" required>
+                                                <select class="form-select" name="kumpulan" required>
+                                                    <option value="">Pilih Kumpulan</option>
+                                                    <?php
+                                                    require_once '../../Models/Kumpulan.php';
+                                                    $kumpulan = new Kumpulan();
+                                                    $groups = $kumpulan->getKumpulanStaff();
+
+                                                    foreach($groups as $group){
+                                                        echo '<option value="'. $group['kump_kod'] .'">' .$group['kump_desc'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="negeri" class="col-3 col-form-label">Negeri</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" id="negeri" name="negeri" required>
-                                            </div>
-                                        </div>
-
-
+                                        
                                         <div class="justify-content-end row">
                                             <div class="col-9">
-                                                <button type="submit" class="btn btn-info">Kemaskini</button>
+                                                <button type="submit" onclick="addStaff()" class="btn btn-info">Kemaskini</button>
                                             </div>
                                         </div>
                                     </form>
@@ -101,12 +105,69 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+       
     </div>
     <!-- END wrapper -->
 
 
     <?php include 'partials/script.php'; ?>
+
+    <script>
+        function addStaff() {
+            const form = document.getElementById('addStaff');
+
+            // Validate required fields
+            if (!form.checkValidity()) {
+                form.reportValidity(); // This will highlight invalid fields and show default messages
+                return; // Stop execution if the form is invalid
+            }
+            event.preventDefault();
+            Swal.fire({
+                title: "Tambah Staff",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(form);
+
+                    fetch('controller/add/add_staff.php', {
+                            method: 'POST',
+                            body: new URLSearchParams(formData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.message || 'Berjaya Tambah',
+                                }).then(() => {
+                                    window.location.href="staff.php";
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.message || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: 'Ralat memproses respons pelayan',
+                            });
+                        });
+                }
+            });
+        }
+    </script>
 
 </body>
 

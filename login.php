@@ -56,7 +56,7 @@
 
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
-    <script src="vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <script>
         (() => {
@@ -77,18 +77,9 @@
                 }, false)
             })
 
-            // const showPasswordCheckbox = document.getElementById('showPassword');
-            // const passwordInput = document.getElementById('kataLaluan');
-            // const confirmPasswordInput = document.getElementById('confirmPass');
-
-            // showPasswordCheckbox.addEventListener('change', () => {
-            //     const type = showPasswordCheckbox.checked ? 'text' : 'password';
-            //     passwordInput.type = type;
-            //     confirmPasswordInput.type = type;
-            // });
+            
 
         })()
-
 
 
 
@@ -104,7 +95,7 @@
 
                 // Serialize form data and make AJAX request
                 $.ajax({
-                    url: 'controller/auth/login_proses.php',
+                    url: 'Controller/auth/login_proses.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {

@@ -54,11 +54,13 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th>id</th>
                                                     <th>Nama</th>
                                                     <th>Email</th>
                                                     <th>No Kad Pengenalan</th>
                                                     <th>No Panggilan</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th>Jawatan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -69,14 +71,23 @@
 
                                                 foreach ($staffs as $staff) { ?>
                                                     <tr>
+                                                        <td><?php echo $staff['id']; ?></td>
                                                         <td><?php echo $staff['nama']; ?></td>
-                                                        <td><?php echo $staff['email']; ?></td>
+                                                        <td><?php echo empty($staff['email']) ? 'Tiada Email' : $staff['email']; ?></td>
                                                         <td><?php echo $staff['no_kp']; ?></td>
                                                         <td><?php echo $staff['contact_no']; ?></td>
+                                                        <td><?php
+                                                            require_once '../../Models/Kumpulan.php';
+                                                            $kumpulan = new Kumpulan();
+                                                            $jawatan = $kumpulan->getKumpulanDetail($staff['kumpulan']);
 
-                                                        <td class="table-action">
-                                                            <a href="staff_edit.php?id=<?php echo $staff['id'] ?>" class="action-icon editButton"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon deleteButton"> <i class="mdi mdi-delete"></i></a>
+                                                            echo $jawatan['kump_desc'];
+
+                                                            ?></td>
+
+                                                        <td class="table-action text-center">
+                                                            <a href="staff_edit.php?staff_id=<?php echo $staff['id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <button type="button" class="btn btn-danger" onclick="deleteRow(<?php echo $staff['id'] ?>)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="mdi mdi-delete"></i></button>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -98,12 +109,63 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+
     </div>
     <!-- END wrapper -->
 
 
     <?php include 'partials/script.php'; ?>
+
+    <script>
+        function deleteRow(id) {
+            Swal.fire({
+                title: "Padam Staff",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('controller/delete/delete_staff.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `staff_id=${id}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.success || 'Berjaya Padam',
+                                }).then(() => {
+                                    window.location.href = "staff.php";
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.error || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error); // Debugging
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: 'Ralat memproses respons pelayan',
+                            });
+                        });
+                }
+            });
+        }
+    </script>
 
 </body>
 

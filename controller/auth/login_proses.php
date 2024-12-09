@@ -59,8 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $nama_pengguna = $rowAdmin['nama'];
                 $kumpulan = $rowAdmin['kumpulan'];
                 $no_kp = $rowAdmin['no_kp'];
-                $negeri = $rowAdmin['negeri'];
-
+                
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
                     // ADMIN
@@ -68,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['id'] = $pengguna_id;
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
                     $_SESSION['no_kp'] = $no_kp;
-                    $_SESSION['negeri'] = $negeri;
+                    
 
                     echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'controller/auth/routeAdmin.php']);
                     exit();

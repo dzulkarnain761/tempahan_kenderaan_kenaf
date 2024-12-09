@@ -1,41 +1,49 @@
 <?php
 
-include '../connection.php';
+require_once '../../../../Models/Database.php';
+$conn = Database::getConnection();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['staff_id'])) {
     // Get the staff ID from the POST request
-    $staffId = $_POST['id'];
+    $staffId = $_POST['staff_id'] ?? null;
 
-    // Check if the ID is valid
-    if (empty($staffId) || !is_numeric($staffId)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid ID']);
+    // Validate the staff ID
+    if (empty($staffId) || !ctype_digit($staffId)) {
+        
+        echo json_encode(['error' => 'Invalid ID. Please provide a numeric staff ID.']);
         exit;
     }
 
-    // Prepare the SQL statement
+    // Prepare the SQL statement for deletion
     $sql = "DELETE FROM admin WHERE id = ?";
     $stmt = $conn->prepare($sql);
+
     if ($stmt === false) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Failed to prepare statement']);
+        
+        echo json_encode(['error' => 'Failed to prepare the SQL statement.']);
         exit;
     }
 
     // Bind the parameter and execute the statement
     $stmt->bind_param('i', $staffId);
+
     if ($stmt->execute()) {
-        echo json_encode(['success' => 'Staff member deleted successfully']);
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['success' => 'Staff member deleted successfully.']);
+        } else {
+           
+            echo json_encode(['error' => 'Staff member not found.']);
+        }
     } else {
         http_response_code(500);
-        echo json_encode(['error' => 'Failed to delete staff member']);
+        echo json_encode(['error' => 'Failed to delete the staff member.']);
     }
 
     // Close the statement and connection
     $stmt->close();
     $conn->close();
 } else {
-    http_response_code(405);
-    echo json_encode(['error' => 'Invalid request method']);
+    
+    echo json_encode(['error' => 'Invalid request method. Use POST.']);
 }
 ?>

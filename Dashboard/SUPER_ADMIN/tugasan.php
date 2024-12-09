@@ -57,7 +57,7 @@
                                                     <th>Nama Kerja</th>
                                                     <th>Harga Per Jam</th>
                                                     <th>Kategori Kenderaan</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -71,10 +71,9 @@
                                                         <td><?php echo $task['kerja']; ?></td>
                                                         <td>RM<?php echo number_format($task['harga_per_jam'], 2); ?></td>
                                                         <td><?php echo $task['kategori_kenderaan']; ?></td>
-                                                        <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                        <td class="table-action text-center">
+                                                            <a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="mdi mdi-delete"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -97,7 +96,7 @@
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
+        
     </div>
     <!-- END wrapper -->
 

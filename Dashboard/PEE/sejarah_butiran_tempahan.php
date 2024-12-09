@@ -94,6 +94,25 @@
                                         </div>
                                     </div>
 
+                                    <div class="row mb-3">
+                                        <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                        </div>
+                                    </div>
+
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div> <!-- end col -->
@@ -119,7 +138,7 @@
                                 <div class="card-body">
                                     <form id="terimaTempahan">
                                         <div class="table-responsive">
-                                            <table class="table table-centered w-100 dt-responsive nowrap" >
+                                            <table class="table table-centered w-100 dt-responsive nowrap">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th>Nama Kerja</th>
@@ -174,24 +193,7 @@
 
                                     </form>
 
-                                    <div class="row mb-3">
-                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
-                                            </div>
-                                        </div>
+
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
