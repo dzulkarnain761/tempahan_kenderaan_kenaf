@@ -30,7 +30,7 @@ include 'controller/get_userdata.php';
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <!-- <div id="js-preloader" class="js-preloader">
+    <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
             <div class="dots">
@@ -39,34 +39,15 @@ include 'controller/get_userdata.php';
                 <span></span>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <?php include 'partials/header.php'; ?>
 
-    <!-- ***** Content Start ***** -->
-    <div class="modal-dialog modal-dialog-centered wow fadeIn" data-wow-duration="2s" data-wow-delay="0.5s">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Sila Pilih</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="sewa" class="form-label">Jenis Sewa :</label>
-                        <select id="sewa" class="form-select" name="sewa" required onchange="showForm()">
-                            <option disabled selected>--Pilih Jenis Sewa--</option>
-                            <option value="jam/harian">Per Jam atau Harian</option>
-                            <option value="bulanan">Bulanan</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 
     <!-- ***** Jam Harian ***** -->
-    <div class="modal-dialog modal-dialog-centered" id="form-jam-harian" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" id="form-jam-harian" >
         <div class="modal-content" style="margin-top: 20px; margin-bottom:25px;">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Sewa Per Jam atau Harian</h5>
@@ -80,7 +61,7 @@ include 'controller/get_userdata.php';
                     </div>
                     <div class="mb-3">
                         <label for="keluasan_tanah" class="form-label">Keluasan Tanah (Hektar) :</label>
-                        <input type="number" class="form-control" id="keluasan_tanah" name="keluasan tanah" min="0" step="0.1"  placeholder="Masukkan Keluasan Tanah" required>
+                        <input type="number" class="form-control" id="keluasan_tanah" name="keluasan tanah" min="0" step="0.1" placeholder="Masukkan Keluasan Tanah" required>
                     </div>
                     <div class="mb-3">
                         <label for="negeri" class="form-label">Negeri</label>
@@ -97,8 +78,8 @@ include 'controller/get_userdata.php';
                         </select>
                         <div class="invalid-feedback">Sila pilih negeri penempatan.</div>
                     </div>
-                    
-                    
+
+
                     <div class="mb-3">
                         <label for="lokasi_kerja" class="form-label">Lokasi Kerja :</label>
                         <textarea class="form-control" name="lokasi_kerja" rows="3" placeholder="Masukkan lokasi"></textarea>
@@ -158,39 +139,7 @@ include 'controller/get_userdata.php';
         </div>
     </div>
 
-    <!-- Bulanan -->
-    <div class="modal-dialog modal-dialog-centered" id="form-bulanan" style="display: none;">
-        <div class="modal-content" style="margin-top: 20px;">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Sewa Bulanan</h5>
-            </div>
-            <div class="modal-body">
-                <form action="sewaan.php" method="POST">
-                    <div class="mb-3">
-                        <label for="tarikh_mula" class="form-label">Tarikh Mula :</label>
-                        <input type="date" class="form-control" id="tarikh_mula" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tempoh" class="form-label">Tempoh Sewa :</label>
-                        <input type="number" class="form-control" id="tempoh" min="1" placeholder="Masukkan Tempoh Sewa" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="lokasiKerja" class="form-label">Lokasi Kerja :</label>
-                        <input type="text" class="form-control" id="lokasiKerja" placeholder="Masukkan Lokasi Kerja" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="keluasanTanah" class="form-label">Keluasan Tanah (Hektar) :</label>
-                        <input type="number" class="form-control" id="keluasanTanah" min="0.1" step="0.1" placeholder="Masukkan Keluasan Tanah" required>
-                    </div>
-                    <input type="hidden" value="<?php $_SESSION['id']; ?>">
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Hantar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Content End ***** -->
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -279,84 +228,45 @@ include 'controller/get_userdata.php';
             }
         }
 
-        function showForm() {
-            var sewa = document.getElementById("sewa").value;
-            var formJamHarian = document.getElementById("form-jam-harian");
-            var formBulanan = document.getElementById("form-bulanan");
 
-            formJamHarian.style.display = "none";
-            formBulanan.style.display = "none";
 
-            if (sewa === "jam/harian") {
-                formJamHarian.style.display = "block";
-            } else if (sewa === "bulanan") {
-                formBulanan.style.display = "block";
+        $('.createTempahan').on('submit', function(e) {
+            e.preventDefault();
+
+            // Check if form is valid before making AJAX request
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                return;
             }
-        }
 
-
-        $(document).ready(function() {
-            $('.createTempahan').on('submit', function(e) {
-                e.preventDefault();
-
-                // Check if form is valid before making AJAX request
-                if (!this.checkValidity()) {
-                    e.stopPropagation();
-                    return;
-                }
-
-                // // Log the selected Kerja values
-                // logKerjaData();
-
-                // Serialize form data and make AJAX request
-                $.ajax({
-                    url: 'controller/create_tempahan.php',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        let res = JSON.parse(response);
-                        if (res.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Penambahan Berjaya',
-                            }).then(() => {
-                                window.location.href = 'sewaan.php';
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: res.message,
-                            });
-                        }
+            // Serialize form data and make AJAX request
+            $.ajax({
+                url: 'controller/create_tempahan.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    let res = JSON.parse(response);
+                    if (res.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Penambahan Berjaya',
+                        }).then(() => {
+                            window.location.href = 'sewaan.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.message,
+                        });
                     }
-                });
+                }
             });
         });
 
-        function logKerjaData() {
-            // Collect all values of the kerja fields
-            const kerjaFields = document.querySelectorAll('select[name="kerja[]"]');
-            const kerjaValues = Array.from(kerjaFields).map(select => select.value);
 
-            // Log the values to the console
-            console.log("Selected Kerja values:", kerjaValues);
-        }
-    </script>
-    <script>
-        function myFunction() {
-            const dropdown = document.getElementById("myDropdown");
-            dropdown.classList.toggle("show");
-            dropdown.setAttribute('aria-expanded', dropdown.classList.contains('show'));
-        }
 
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.closest('.dropdown')) {
-                document.getElementById("myDropdown").classList.remove("show");
-            }
-        };
     </script>
 
 </body>

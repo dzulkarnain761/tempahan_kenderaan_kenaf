@@ -43,11 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         }
-
         echo json_encode(["success" => true]);
         $sqlKerja->close(); // Close after loop
     } else {
-        echo json_encode(["success" => false, "message" => "Pendaftaran gagal."]);
+        echo json_encode(["success" => false, "message" => "Gagal Membuat Tempahan"]);
     }
 
     $sqlTempahan->close();
