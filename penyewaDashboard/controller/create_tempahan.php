@@ -14,7 +14,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $keluasan_tanah = $_POST['keluasan_tanah'];
     $catatan = $_POST['catatan'];
 
+    // Prepare the query for inserting into tempahan table
     $sqlTempahan = $conn->prepare("INSERT INTO tempahan (`penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `catatan`) VALUES (?, ?, ?, ?, ?, ?)");
+    
+    if (!$sqlTempahan) {
+        echo json_encode(["success" => false, "message" => "Failed to prepare statement for tempahan: " . $conn->error]);
+        $conn->close();
+        exit();
+    }
+
     $sqlTempahan->bind_param("ssssss", $id, $tarikh_kerja, $negeri, $lokasi_kerja, $keluasan_tanah, $catatan);
 
     if ($sqlTempahan->execute()) {
@@ -23,8 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Prepare the second query
         $sqlKerja = $conn->prepare("INSERT INTO tempahan_kerja (`tempahan_id`, `nama_kerja`, `tarikh_kerja_cadangan`) VALUES (?, ?, ?)");
+        
         if (!$sqlKerja) {
-            echo json_encode(["success" => false, "message" => "Gagal menyediakan pernyataan untuk kerja."]);
+            echo json_encode(["success" => false, "message" => "Failed to prepare statement for kerja: " . $conn->error]);
             $sqlTempahan->close();
             $conn->close();
             exit();
@@ -36,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sqlKerja->bind_param("sss", $tempahan_id, $nama_kerja, $tarikh_kerja);
 
             if (!$sqlKerja->execute()) {
-                echo json_encode(["success" => false, "message" => "Gagal mendaftar kerja."]);
+                echo json_encode(["success" => false, "message" => "Failed to execute kerja query: " . $sqlKerja->error]);
                 $sqlKerja->close();
                 $sqlTempahan->close();
                 $conn->close();
@@ -46,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["success" => true]);
         $sqlKerja->close(); // Close after loop
     } else {
-        echo json_encode(["success" => false, "message" => "Gagal Membuat Tempahan"]);
+        echo json_encode(["success" => false, "message" => "Failed to execute tempahan query: " . $sqlTempahan->error]);
     }
 
     $sqlTempahan->close();

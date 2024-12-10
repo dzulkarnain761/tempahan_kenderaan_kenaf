@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2024 at 07:13 AM
+-- Generation Time: Dec 10, 2024 at 10:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `no_kp` varchar(20) NOT NULL,
-  `contact_no` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `kumpulan` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `nama` varchar(100) DEFAULT NULL,
+  `no_kp` varchar(20) DEFAULT NULL,
+  `contact_no` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `kumpulan` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -95,7 +95,8 @@ INSERT INTO `fpx_payments` (`id`, `fpx_id_transaksi`, `fpx_id_bank`, `fpx_nama_b
 (17, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-12-08 09:32:50', 'abc123def', '00', 'TKBT00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:32:50', '2024-12-08 01:32:50'),
 (18, 'FPXTK00071', 'B002', 'Bank Islam', 'LKTN', '987654321', 200.00, '2024-12-08 17:44:13', 'xyz789', '00', 'TKR00071', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-08 09:44:13', '2024-12-08 09:44:13'),
 (19, 'FPXTK00073', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 550.00, '2024-12-10 14:02:36', 'abc123def', '00', 'TKBP00073', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:02:36', '2024-12-10 06:02:36'),
-(20, 'FPXTK00073', 'B002', 'Bank Islam', 'LKTN', '987654321', 350.00, '2024-12-10 14:10:15', 'xyz789', '00', 'TKR00073', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:10:15', '2024-12-10 06:10:15');
+(20, 'FPXTK00073', 'B002', 'Bank Islam', 'LKTN', '987654321', 350.00, '2024-12-10 14:10:15', 'xyz789', '00', 'TKR00073', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:10:15', '2024-12-10 06:10:15'),
+(21, 'FPXTK00078', 'B002', 'Bank Islam', 'LKTN', '987654321', 200.00, '2024-12-10 17:47:16', 'xyz789', '00', 'TKR00078', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-10 09:47:16', '2024-12-10 09:47:16');
 
 -- --------------------------------------------------------
 
@@ -110,10 +111,10 @@ CREATE TABLE `jobsheet` (
   `pemandu_id` int(11) DEFAULT NULL,
   `kenderaan_id` int(11) DEFAULT NULL,
   `tarikh_kerja_dijalankan` date DEFAULT NULL,
-  `jam` int(5) NOT NULL DEFAULT 0,
-  `minit` int(5) NOT NULL DEFAULT 0,
-  `harga` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `catatan` varchar(100) NOT NULL,
+  `jam` int(5) DEFAULT NULL,
+  `minit` int(5) DEFAULT NULL,
+  `harga` decimal(10,2) DEFAULT NULL,
+  `catatan` varchar(100) DEFAULT NULL,
   `status_jobsheet` enum('pengesahan','dijalankan','selesai') NOT NULL DEFAULT 'pengesahan',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -361,17 +362,17 @@ CREATE TABLE `tempahan` (
   `tempahan_id` int(11) NOT NULL,
   `penyewa_id` int(11) DEFAULT NULL,
   `tarikh_kerja` date DEFAULT NULL,
-  `negeri` varchar(100) NOT NULL,
+  `negeri` varchar(100) DEFAULT NULL,
   `lokasi_kerja` varchar(255) DEFAULT NULL,
-  `luas_tanah` decimal(10,1) DEFAULT 0.0,
-  `total_harga_anggaran` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total_harga_sebenar` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `total_baki` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `luas_tanah` decimal(10,1) DEFAULT NULL,
+  `total_harga_anggaran` decimal(10,2) DEFAULT NULL,
+  `total_harga_sebenar` decimal(10,2) DEFAULT NULL,
+  `total_baki` decimal(10,2) DEFAULT NULL,
   `catatan` varchar(255) DEFAULT NULL,
   `disahkan_oleh` varchar(100) DEFAULT NULL,
   `status_tempahan` enum('pengesahan pee','pengesahan kpp','bayaran penyewa','pengesahan pt','pengesahan pengarah','penjanaan resit','pengesahan jobsheet','kemaskini jobsheet','refund kewangan','ditolak','dibatalkan','selesai') DEFAULT 'pengesahan pee',
   `status_bayaran` enum('dalam pengesahan','belum bayar','bayaran diproses','selesai bayaran','ditolak','dibatalkan','selesai','refund','bayaran tambahan') NOT NULL DEFAULT 'dalam pengesahan',
-  `sebab_ditolak` text NOT NULL,
+  `sebab_ditolak` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -386,12 +387,12 @@ CREATE TABLE `tempahan_kerja` (
   `tempahan_kerja_id` int(11) NOT NULL,
   `tempahan_id` int(11) DEFAULT NULL,
   `nama_kerja` varchar(255) DEFAULT NULL,
-  `jam_anggaran` int(5) NOT NULL DEFAULT 0,
-  `minit_anggaran` int(5) NOT NULL DEFAULT 0,
-  `harga_anggaran` decimal(10,2) DEFAULT 0.00,
-  `total_jam` int(5) NOT NULL DEFAULT 0,
-  `total_minit` int(5) NOT NULL DEFAULT 0,
-  `total_harga` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `jam_anggaran` int(5) DEFAULT NULL,
+  `minit_anggaran` int(5) DEFAULT NULL,
+  `harga_anggaran` decimal(10,2) DEFAULT NULL,
+  `total_jam` int(5) DEFAULT NULL,
+  `total_minit` int(5) DEFAULT NULL,
+  `total_harga` decimal(10,2) DEFAULT NULL,
   `tarikh_kerja_cadangan` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -530,13 +531,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `fpx_payments`
 --
 ALTER TABLE `fpx_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `jobsheet`
 --
 ALTER TABLE `jobsheet`
-  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT for table `kategori_kenderaan`
@@ -584,19 +585,19 @@ ALTER TABLE `penyewa`
 -- AUTO_INCREMENT for table `resit_pembayaran`
 --
 ALTER TABLE `resit_pembayaran`
-  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT for table `tugasan`
