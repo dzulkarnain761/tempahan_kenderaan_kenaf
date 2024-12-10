@@ -82,7 +82,7 @@ include 'controller/get_userdata.php';
 
                     <div class="mb-3">
                         <label for="lokasi_kerja" class="form-label">Lokasi Kerja :</label>
-                        <textarea class="form-control" name="lokasi_kerja" rows="3" placeholder="Masukkan lokasi"></textarea>
+                        <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" placeholder="Masukkan lokasi">
                     </div>
                     <div class="mb-3">
                         <label for="catatan" class="form-label">Catatan :</label>
@@ -143,7 +143,7 @@ include 'controller/get_userdata.php';
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="../assets/js/owl-carousel.js"></script>
     <script src="../assets/js/animation.js"></script>
     <script src="../assets/js/imagesloaded.js"></script>
