@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 03:55 AM
+-- Generation Time: Dec 10, 2024 at 07:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,7 +34,6 @@ CREATE TABLE `admin` (
   `contact_no` varchar(15) NOT NULL,
   `email` varchar(100) NOT NULL,
   `kumpulan` varchar(50) NOT NULL,
-  `negeri` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -42,15 +41,15 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `kumpulan`, `negeri`, `password`) VALUES
-(7, 'SUPERRRR ADMINNNN', '000000000000', '00000000000', '', 'Z', 'NEGERI KELANTAN', '$2y$10$0XDhKgg28va1fQGxtnt.JOKe4KZYnCdAbLmnSL3UNnH8C9a1JN0..'),
-(8, 'AHMAD ABU PEE', '111111111111', '11111111111', 'ahmadabu@gmail.com', 'D', 'NEGERI KELANTAN', '$2y$10$0ip5cb/lRWinJvgG8qq/zOBYgCXtakjQrdE2IJebKoJgpAiXfgZ06'),
-(9, 'MUHD KAMARUL KPP', '222222222222', '22222222222', 'ahmadkamarul@gmail.com', 'A', 'NEGERI KELANTAN', '$2y$10$TrDN27ZVlYsD2cJH358yDOVK0KaCuPglEYBxSrWNSxbqMWe2oBZn2'),
-(10, 'SITI SYAFIQAH PT', '333333333333', '33333333333', 'sitisyafiqah@gmail.com', 'F', 'NEGERI KELANTAN', '$2y$10$Y4L9wiWd9HPbLgStWveiiOBjs/8eg8w0yAqKgpNZB8IkFxdJcCWom'),
-(12, 'MOHD AZMI BIN AB KADIR', '555555555555', '55555555555', 'mazmi@lktn.gov.my', 'Y', '', '$2y$10$xAFM9GpsD.e3/.aPnCJpJugxOKbvvf76c7Ui/qkwfbTQthgWodLfK'),
-(14, 'AZHAR BIN HAMAT', '777777777777', '77777777777', '', 'Y', '', '$2y$10$HHb9tKUCW/7UsaLhGCh4YuxK0daiytaVqz6bYwukLjX5BaFClbPAq'),
-(15, 'PENGARAH PENGARAH', '888888888888', '88888888888', '', 'E', 'NEGERI KELANTAN', '$2y$10$99VpyCBFP/JHbvhxjp3MM.er2iBsqpv3Ad5OkacvUzOsPtvsGcUvm'),
-(16, 'XINWEN LIAU KEWANGAN', '666666666666', '66666666666', '', 'G', 'NEGERI KELANTAN', '$2y$10$uQRo3I9B98HaJaOoG4JUleNogIrScAxX8AtJVTzm5Q8ngt0tZtH1S');
+INSERT INTO `admin` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `kumpulan`, `password`) VALUES
+(7, 'SUPERRRR ADMINNNN', '000000000000', '00000000000', '', 'Z', '$2y$10$0XDhKgg28va1fQGxtnt.JOKe4KZYnCdAbLmnSL3UNnH8C9a1JN0..'),
+(8, 'AHMAD ABU PEE', '111111111111', '11111111111', 'ahmadabu@gmail.com', 'D', '$2y$10$0ip5cb/lRWinJvgG8qq/zOBYgCXtakjQrdE2IJebKoJgpAiXfgZ06'),
+(9, 'MUHD KAMARUL KPP', '222222222222', '22222222222', 'ahmadkamarul@gmail.com', 'A', '$2y$10$TrDN27ZVlYsD2cJH358yDOVK0KaCuPglEYBxSrWNSxbqMWe2oBZn2'),
+(10, 'SITI SYAFIQAH PT', '333333333333', '33333333333', 'sitisyafiqah@gmail.com', 'F', '$2y$10$Y4L9wiWd9HPbLgStWveiiOBjs/8eg8w0yAqKgpNZB8IkFxdJcCWom'),
+(12, 'MOHD AZMI BIN AB KADIR', '555555555555', '55555555555', 'mazmi@lktn.gov.my', 'Y', '$2y$10$xAFM9GpsD.e3/.aPnCJpJugxOKbvvf76c7Ui/qkwfbTQthgWodLfK'),
+(14, 'AZHAR BIN HAMAT', '777777777777', '77777777777', '', 'Y', '$2y$10$HHb9tKUCW/7UsaLhGCh4YuxK0daiytaVqz6bYwukLjX5BaFClbPAq'),
+(15, 'PENGARAH PENGARAH', '888888888888', '88888888888', '', 'E', '$2y$10$99VpyCBFP/JHbvhxjp3MM.er2iBsqpv3Ad5OkacvUzOsPtvsGcUvm'),
+(16, 'XINWEN LIAU KEWANGAN', '666666666666', '66666666666', '', 'G', '$2y$10$uQRo3I9B98HaJaOoG4JUleNogIrScAxX8AtJVTzm5Q8ngt0tZtH1S');
 
 -- --------------------------------------------------------
 
@@ -93,7 +92,10 @@ INSERT INTO `fpx_payments` (`id`, `fpx_id_transaksi`, `fpx_id_bank`, `fpx_nama_b
 (14, 'FPXTK00068', 'B002', 'Bank Islam', 'LKTN', '987654321', 250.00, '2024-12-07 20:50:19', 'xyz789', '00', 'TKR00068', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-07 12:50:19', '2024-12-07 12:50:19'),
 (15, 'FPXTK00069', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 200.00, '2024-12-07 21:00:57', 'abc123def', '00', 'TKBP00069', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-07 13:00:57', '2024-12-07 13:00:57'),
 (16, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 600.00, '2024-12-08 09:07:03', 'abc123def', '00', 'TKBP00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:07:03', '2024-12-08 01:07:03'),
-(17, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-12-08 09:32:50', 'abc123def', '00', 'TKBT00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:32:50', '2024-12-08 01:32:50');
+(17, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-12-08 09:32:50', 'abc123def', '00', 'TKBT00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:32:50', '2024-12-08 01:32:50'),
+(18, 'FPXTK00071', 'B002', 'Bank Islam', 'LKTN', '987654321', 200.00, '2024-12-08 17:44:13', 'xyz789', '00', 'TKR00071', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-08 09:44:13', '2024-12-08 09:44:13'),
+(19, 'FPXTK00073', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 550.00, '2024-12-10 14:02:36', 'abc123def', '00', 'TKBP00073', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:02:36', '2024-12-10 06:02:36'),
+(20, 'FPXTK00073', 'B002', 'Bank Islam', 'LKTN', '987654321', 350.00, '2024-12-10 14:10:15', 'xyz789', '00', 'TKR00073', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:10:15', '2024-12-10 06:10:15');
 
 -- --------------------------------------------------------
 
@@ -115,19 +117,6 @@ CREATE TABLE `jobsheet` (
   `status_jobsheet` enum('pengesahan','dijalankan','selesai') NOT NULL DEFAULT 'pengesahan',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `jobsheet`
---
-
-INSERT INTO `jobsheet` (`jobsheet_id`, `tempahan_id`, `tempahan_kerja_id`, `pemandu_id`, `kenderaan_id`, `tarikh_kerja_dijalankan`, `jam`, `minit`, `harga`, `catatan`, `status_jobsheet`, `created_at`) VALUES
-(134, 67, 121, 12, 4, '2024-12-21', 2, 0, 200.00, '', 'selesai', '2024-12-07 10:17:56'),
-(136, 68, 122, 12, 4, '2024-12-14', 2, 0, 200.00, '', 'selesai', '2024-12-07 12:30:37'),
-(138, 69, 123, 12, 4, '2024-12-21', 5, 0, 500.00, '', 'selesai', '2024-12-07 13:13:56'),
-(139, 70, 124, 12, 4, '2024-12-11', 3, 0, 300.00, '', 'selesai', '2024-12-08 01:09:27'),
-(140, 70, 124, 12, 5, '2024-12-11', 2, 0, 200.00, '', 'selesai', '2024-12-08 01:30:00'),
-(141, 70, 125, 12, 4, '2024-12-11', 3, 0, 300.00, '', 'selesai', '2024-12-08 01:30:48'),
-(142, 70, 125, 12, 4, '2024-12-12', 2, 0, 200.00, '', 'selesai', '2024-12-08 01:31:13');
 
 -- --------------------------------------------------------
 
@@ -259,7 +248,6 @@ CREATE TABLE `kenderaan` (
 --
 
 INSERT INTO `kenderaan` (`id`, `kategori_kenderaan`, `no_aset`, `no_pendaftaran`, `tahun_daftar`, `negeri_penempatan`, `kawasan_penempatan`, `catatan`, `status`) VALUES
-(4, 'Traktor', '001364', 'DAE9475', '1998', 'BKK', '45', 'ROSAKKK', 'Aktif'),
 (5, 'Traktor', 'LKTN/H/11/016737', 'WVD859', '2011', 'BKK', 'BAHAGIAN KEJURUTERAAN DAN KILANG', 'AZHAR', 'Aktif'),
 (6, 'Jengkaut', 'LKTN/H/11/016790', 'WVC1192', '2011', 'BKK', 'BAHAGIAN KEJURUTERAAN DAN KILANG', 'AZMI', 'Aktif');
 
@@ -290,673 +278,6 @@ INSERT INTO `kumpulan` (`kump_id`, `kump_kod`, `kump_desc`, `kump_dash`) VALUES
 (8, 'Y', 'PEMANDU', 'indexY.php'),
 (9, 'Z', 'SUPER ADMIN', 'indexZ.php'),
 (10, 'G', 'KEWANGAN', 'kewangan.php');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `logs`
---
-
-CREATE TABLE `logs` (
-  `pengguna_id` varchar(15) NOT NULL,
-  `action` varchar(255) NOT NULL,
-  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `ip_address` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`pengguna_id`, `action`, `date_created`, `ip_address`) VALUES
-('000000000000', 'Log masuk sebagai ADMIN (Z)', '2024-09-02 01:07:27', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-02 22:48:02', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-02 22:49:07', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-02 22:49:33', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-02 23:07:00', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-04 03:05:55', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-04 19:23:45', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-09 02:08:19', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-09 19:20:25', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-10 01:40:19', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-11 01:09:43', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-11 18:40:27', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-11 20:02:16', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-14 19:17:54', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-17 20:10:53', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-18 01:09:39', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-18 01:12:04', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-09-18 01:17:30', '::1'),
-('1', 'Log masuk sebagai PENYEWA', '2024-10-29 00:35:10', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-18 01:48:52', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-18 02:03:10', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-19 00:50:42', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-21 21:14:02', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:43:51', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:47:32', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:48:30', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:50:04', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-22 22:29:51', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 00:40:30', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 01:04:45', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 01:09:14', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 01:09:52', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 01:37:39', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 01:38:23', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 03:18:06', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 03:24:18', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 03:34:21', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 03:40:17', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 20:13:40', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 20:30:07', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 20:34:28', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 20:46:28', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-23 21:35:24', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-24 02:16:07', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-24 19:03:09', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-24 21:34:30', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-24 21:35:16', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-24 21:57:49', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-25 00:08:16', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-25 00:27:55', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-25 00:38:21', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-09-25 00:42:16', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-02 21:05:32', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-06 19:45:23', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-06 20:28:44', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-06 20:29:37', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-06 20:33:49', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-07 02:13:35', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-07 02:15:21', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-07 22:13:51', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-07 22:53:02', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-08 02:59:58', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-08 03:23:47', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-08 19:20:01', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-08 21:12:07', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-08 21:52:39', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-09 00:47:29', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-09 01:00:21', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-09 01:01:02', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-09 01:11:22', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-09 01:17:09', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-09 14:54:21', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-20 03:28:21', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-20 18:56:59', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-20 22:20:16', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-21 00:22:42', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-21 00:58:24', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-21 01:36:04', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-21 01:40:00', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-21 20:13:46', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-22 02:14:59', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-23 18:57:15', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-28 23:37:59', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-10-28 23:41:02', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-02 19:17:47', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-02 19:39:07', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-02 20:54:11', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-02 20:56:10', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-03 18:47:11', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-03 23:27:40', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-03 23:30:07', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-04 00:10:19', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-04 00:11:32', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-05 19:45:03', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 18:57:24', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 19:21:08', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 20:05:03', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 20:16:35', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-09 21:18:04', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-10 01:15:11', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-10 01:16:35', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-10 01:25:56', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:16:54', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:23:57', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:30:27', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 02:32:02', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-13 18:03:34', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-19 23:21:26', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-11-19 23:44:04', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-03 18:40:05', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-03 20:21:40', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-03 20:34:22', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 02:04:32', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 03:05:23', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 05:41:50', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 06:20:04', '::1'),
-('10', 'Log masuk sebagai ADMIN (F)', '2024-12-07 18:07:20', '::1'),
-('11', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:44:02', '::1'),
-('11', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:47:43', '::1'),
-('11', 'Log masuk sebagai ADMIN (F)', '2024-09-22 21:49:55', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-15 00:05:31', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-18 00:28:55', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-18 02:04:18', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-19 01:17:29', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 01:07:32', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 03:26:08', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 20:02:30', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 20:31:18', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 20:34:02', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 21:45:11', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 21:45:30', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 00:27:54', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 02:14:36', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 02:15:47', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 19:42:34', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 19:43:47', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 20:27:37', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 22:15:05', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 23:01:42', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-08 00:32:06', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-08 02:57:24', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-08 21:18:34', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:50:02', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:51:19', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:51:31', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:52:40', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:53:14', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:55:22', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 01:12:49', '::1'),
-('12', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 18:21:25', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-18 00:16:29', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-18 00:24:13', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-19 01:44:49', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-21 20:50:56', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-21 21:42:15', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-21 22:14:56', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-22 21:55:40', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-22 22:01:21', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 01:05:30', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 20:13:58', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 20:30:32', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 21:08:33', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 21:20:21', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 21:22:57', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-23 21:33:44', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-24 22:22:22', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-24 22:44:02', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-09-25 00:39:59', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 20:03:18', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-06 21:45:18', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 00:09:19', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 19:43:31', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-07 19:44:01', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-08 00:32:14', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-08 02:57:41', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-08 21:18:42', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:50:10', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 00:51:25', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-10-09 01:13:00', '::1'),
-('14', 'Log masuk sebagai ADMIN (Y)', '2024-12-07 19:50:33', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:38:47', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:39:23', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:42:53', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-20 21:43:07', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-21 00:16:30', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-21 00:26:19', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-21 00:56:53', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-21 01:37:55', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-10-28 23:39:03', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-02 19:38:25', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-02 20:54:04', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-02 20:57:24', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-03 20:49:11', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-03 23:28:15', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-04 00:10:50', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-05 19:45:33', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-09 19:42:01', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-09 20:15:37', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-10 01:15:55', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-10 01:32:29', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-13 02:22:20', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-13 02:31:16', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-11-19 23:22:17', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-12-03 19:34:32', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-12-03 19:56:13', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-12-05 00:26:27', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-12-07 01:33:30', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-12-07 03:03:01', '::1'),
-('15', 'Log masuk sebagai ADMIN (E)', '2024-12-07 06:25:53', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:35:42', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:35:51', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:36:35', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 00:36:52', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-10-29 18:17:32', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-10-30 01:06:20', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-11-02 19:41:56', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-11-09 20:36:15', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-11-09 23:35:28', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-11-09 23:49:24', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-11-13 18:04:37', '::1'),
-('16', 'Log masuk sebagai ADMIN (G)', '2024-12-07 05:43:29', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-09 20:16:40', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-18 00:16:06', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-18 01:17:59', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-18 02:03:58', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-18 22:27:09', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-19 00:20:38', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-19 01:46:54', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-21 20:28:46', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-21 21:12:39', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-21 21:12:52', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-21 21:14:18', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-21 21:26:48', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 01:27:58', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 19:11:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 20:29:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 20:51:07', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 21:51:19', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 22:00:02', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 22:02:21', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-22 22:53:05', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 00:52:20', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 00:59:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 01:03:34', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 01:09:35', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 01:25:35', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 01:37:47', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 02:10:22', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 02:52:27', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 02:52:36', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 03:13:08', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 03:16:33', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 03:23:31', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 03:29:46', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 03:40:33', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:10:29', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:13:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:14:44', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:29:36', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:33:08', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:37:41', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 20:46:07', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 21:10:26', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 21:33:29', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 21:34:21', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-23 21:35:50', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-24 00:25:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-24 21:25:57', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-24 21:39:36', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-24 22:25:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-24 22:44:59', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:01:49', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:16:46', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:28:09', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:34:43', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:39:42', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:41:31', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-09-25 00:42:58', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-01 19:36:45', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-01 20:12:17', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-01 21:57:47', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-02 21:05:18', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-02 21:07:34', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-02 21:50:10', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-02 21:54:26', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 03:00:02', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 03:06:32', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 03:15:39', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 03:27:43', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 18:56:38', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 19:33:19', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 19:42:09', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 20:02:54', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 20:17:14', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 20:28:10', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 20:29:09', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-06 20:29:26', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-07 01:30:46', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-07 02:12:43', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-07 19:30:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-07 19:43:01', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-07 22:09:00', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 02:59:19', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 03:01:11', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 20:09:10', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 21:19:35', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 21:32:35', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 21:36:27', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-08 22:07:05', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 00:44:28', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 00:49:42', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 00:51:07', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 00:54:56', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 00:59:48', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:00:52', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:01:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:07:45', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:10:47', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:12:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:16:49', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-09 01:20:33', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-12 19:45:48', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-13 19:21:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-13 20:12:57', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-15 02:10:32', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-15 19:26:43', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-15 19:32:11', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-15 22:27:36', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-15 22:35:30', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-17 01:49:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-17 01:57:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-19 20:11:57', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-20 02:45:58', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-21 01:15:11', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-21 01:21:10', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-21 01:22:28', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-21 01:29:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-21 01:35:24', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-10-29 19:32:00', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-02 18:31:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-02 18:41:34', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-02 20:43:38', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-02 20:54:25', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-02 21:07:23', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-03 18:37:39', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-03 23:22:04', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-03 23:27:19', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-04 00:09:09', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-05 18:53:37', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-05 18:56:35', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-05 19:44:32', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-06 02:28:28', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-09 18:48:46', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-09 19:50:37', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-09 19:51:45', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-09 20:03:53', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-09 20:57:28', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-12 09:17:13', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-12 18:23:32', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 01:09:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:10:24', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:29:31', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:30:02', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 02:32:28', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 18:03:05', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 19:38:29', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 20:53:13', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 20:53:47', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 21:03:00', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-13 21:27:02', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-19 02:12:11', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-19 18:20:15', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-19 19:45:38', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-20 01:40:34', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-30 18:27:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-30 18:36:14', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-30 20:17:55', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-30 23:16:27', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-11-30 23:17:37', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 01:22:14', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 01:24:24', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 18:09:14', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 18:09:20', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 18:10:01', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 21:02:26', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-01 23:54:33', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-02 00:23:07', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-02 01:07:57', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-02 01:08:14', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-02 01:08:39', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-03 18:22:47', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-03 20:30:15', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-04 19:58:00', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-04 20:59:45', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-04 21:22:32', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-04 23:26:58', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 00:51:51', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 01:40:11', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 02:03:09', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 03:15:56', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 04:48:04', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 04:54:27', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:13:16', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:15:55', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:19:20', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:29:53', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:35:29', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 05:50:35', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 06:00:49', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 06:15:27', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:03:58', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:06:57', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:32:20', '::1'),
-('2', 'Log masuk sebagai PENYEWA', '2024-12-07 18:57:01', '::1'),
-('3', 'Log masuk sebagai PENYEWA', '2024-12-07 19:31:39', '::1'),
-('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:01:33', '::1'),
-('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 01:13:30', '::1'),
-('666666666666', 'Log masuk sebagai PENYEWA', '2024-09-02 18:57:38', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-17 22:55:21', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-18 00:22:09', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-18 00:31:51', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-18 01:19:00', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-18 01:34:26', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-18 22:25:10', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-19 01:46:09', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 19:12:33', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 19:14:00', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 19:48:29', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 20:29:42', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 21:08:42', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 21:17:20', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 21:37:20', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 21:46:39', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-21 22:31:28', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-23 02:11:57', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-09-23 02:14:33', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-10-20 21:32:43', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-10-29 00:04:00', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-11-19 02:43:02', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-11-19 18:37:30', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-11-27 18:40:30', '::1'),
-('7', 'Log masuk sebagai ADMIN (Z)', '2024-12-07 00:52:01', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 00:35:00', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 01:10:40', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 01:41:32', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-18 22:56:53', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-21 19:13:26', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-21 21:10:12', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-21 21:12:14', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-21 21:16:20', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-22 20:21:09', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 00:56:38', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 01:00:12', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 01:36:46', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 03:11:49', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 03:13:25', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 03:18:14', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 20:11:40', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 20:27:13', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 20:27:31', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-23 20:45:27', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-24 00:23:52', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-24 21:29:20', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-25 00:00:42', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-25 00:25:47', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-09-25 00:33:54', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-01 19:40:41', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-01 20:13:44', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-01 20:42:50', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-01 22:06:43', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-02 21:05:47', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-02 21:07:24', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-02 21:13:07', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-02 21:52:10', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-02 21:54:09', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-02 21:55:16', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-05 19:37:08', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 03:04:01', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 03:09:28', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 03:26:55', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 03:28:51', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 18:58:48', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 19:34:20', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-06 20:19:00', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 01:20:15', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 01:31:20', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 03:12:34', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 22:10:16', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 22:12:58', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 22:31:37', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-07 23:01:58', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-08 00:24:11', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-08 19:18:51', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-08 20:36:52', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-08 21:50:05', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-09 00:42:32', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-09 00:55:12', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-09 01:01:15', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-09 01:08:16', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-09 18:01:56', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-09 18:11:01', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-12 20:12:47', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-13 19:21:33', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-14 21:07:58', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-15 19:07:43', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-15 19:26:33', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-15 19:28:12', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-15 19:32:05', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-15 19:32:37', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-15 22:36:02', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-16 00:23:50', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-16 01:08:13', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-16 19:17:46', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-17 01:57:04', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-19 20:10:16', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-21 00:58:45', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-21 01:14:58', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-21 01:17:35', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-21 01:32:05', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-22 01:22:26', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-23 00:11:09', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-23 18:57:29', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-23 20:14:35', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-10-28 17:58:15', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-02 18:39:54', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-02 19:40:21', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-02 20:51:18', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-02 20:58:03', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-03 23:25:18', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-04 00:03:55', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-05 18:55:38', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-05 19:43:30', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-05 19:46:15', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-06 19:41:30', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 18:32:39', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 18:34:08', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 19:16:50', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 19:20:54', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 19:51:56', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 20:34:18', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-09 23:50:57', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-10 01:14:50', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-12 21:52:12', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-13 02:07:56', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-13 02:24:46', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-13 02:30:10', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 02:34:49', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 02:49:05', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 18:23:58', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 18:38:23', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 18:40:21', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-19 19:41:21', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-20 00:58:50', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-20 01:38:34', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-20 17:57:56', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-30 20:18:08', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-30 23:13:30', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-11-30 23:14:25', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 01:54:13', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 18:09:05', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 18:09:36', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 18:09:49', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-01 23:54:52', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-02 01:05:21', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-02 01:07:52', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-04 19:58:10', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-04 20:59:37', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 00:51:18', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 00:57:34', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 01:42:13', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 01:59:30', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 03:16:43', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 04:55:12', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:17:26', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:21:47', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:30:30', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:35:00', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 05:59:39', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 06:03:08', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 06:08:55', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:05:35', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:07:11', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:09:15', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:24:10', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:52:28', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 18:57:24', '::1'),
-('8', 'Log masuk sebagai ADMIN (D)', '2024-12-07 19:44:49', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-18 01:47:28', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-19 00:09:42', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-22 20:27:27', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-22 20:50:34', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 00:57:57', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 01:01:27', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 01:37:23', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 03:21:02', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 20:12:28', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 20:29:15', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-23 20:45:52', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-24 00:24:56', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-24 21:34:01', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-25 00:01:34', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-25 00:27:33', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-09-25 00:34:23', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-06 03:13:42', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-06 19:01:27', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-06 19:40:41', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-06 20:28:33', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-06 20:29:03', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-07 02:12:04', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-07 22:13:08', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-08 21:11:59', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-08 21:52:46', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-09 00:43:45', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-09 01:10:03', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-09 18:08:45', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-09 18:18:11', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-16 00:03:04', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-16 00:23:41', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-16 00:46:59', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-16 01:34:41', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-16 19:18:17', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-17 01:56:34', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-19 20:10:29', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-21 01:21:45', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-21 01:23:18', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-10-21 01:34:46', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 18:40:56', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 19:40:13', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 20:52:18', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-02 20:53:54', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-03 23:26:15', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-05 19:43:47', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-09 20:02:13', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-10 00:29:41', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-10 01:15:03', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-13 02:09:45', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-19 18:36:56', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-19 19:45:15', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-11-30 23:13:54', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-01 23:55:12', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 00:51:33', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 01:59:12', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 02:00:13', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 05:22:32', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 06:00:10', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 06:00:26', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 18:06:20', '::1'),
-('9', 'Log masuk sebagai ADMIN (A)', '2024-12-07 18:52:45', '::1');
 
 -- --------------------------------------------------------
 
@@ -1021,27 +342,14 @@ INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `
 CREATE TABLE `resit_pembayaran` (
   `resit_id` int(11) NOT NULL,
   `tempahan_id` int(11) NOT NULL,
-  `jenis_pembayaran` enum('bayaran penuh','refund','bayaran tambahan') NOT NULL,
-  `jumlah` decimal(10,2) NOT NULL,
+  `jenis_pembayaran` enum('bayaran penuh','refund','bayaran tambahan') DEFAULT NULL,
+  `jumlah` decimal(10,2) DEFAULT NULL,
   `cara_bayar` enum('tunai','fpx') DEFAULT NULL,
-  `nombor_rujukan` varchar(255) NOT NULL,
-  `bukti_resit_path` varchar(255) NOT NULL,
+  `nombor_rujukan` varchar(255) DEFAULT NULL,
+  `bukti_resit_path` varchar(255) DEFAULT NULL,
   `status_resit` enum('pengesahan','selesai') NOT NULL DEFAULT 'pengesahan',
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `resit_pembayaran`
---
-
-INSERT INTO `resit_pembayaran` (`resit_id`, `tempahan_id`, `jenis_pembayaran`, `jumlah`, `cara_bayar`, `nombor_rujukan`, `bukti_resit_path`, `status_resit`, `created_at`) VALUES
-(52, 67, 'bayaran penuh', 200.00, 'tunai', '', '', 'selesai', '2024-12-07 17:04:01'),
-(53, 68, 'bayaran penuh', 450.00, 'fpx', 'TKBP00068', '', 'selesai', '2024-12-07 20:30:16'),
-(54, 68, 'refund', 250.00, 'fpx', 'TKR00068', '', 'selesai', '2024-12-07 20:50:19'),
-(55, 69, 'bayaran penuh', 200.00, 'fpx', 'TKBP00069', '', 'selesai', '2024-12-07 21:00:57'),
-(56, 69, 'bayaran tambahan', 300.00, 'tunai', '', '', 'selesai', '2024-12-07 21:19:52'),
-(57, 70, 'bayaran penuh', 600.00, 'fpx', 'TKBP00070', '', 'selesai', '2024-12-08 09:07:03'),
-(58, 70, 'bayaran tambahan', 400.00, 'fpx', 'TKBT00070', '', 'selesai', '2024-12-08 09:32:50');
 
 -- --------------------------------------------------------
 
@@ -1068,17 +376,6 @@ CREATE TABLE `tempahan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tempahan`
---
-
-INSERT INTO `tempahan` (`tempahan_id`, `penyewa_id`, `tarikh_kerja`, `negeri`, `lokasi_kerja`, `luas_tanah`, `total_harga_anggaran`, `total_harga_sebenar`, `total_baki`, `catatan`, `disahkan_oleh`, `status_tempahan`, `status_bayaran`, `sebab_ditolak`, `created_at`, `updated_at`) VALUES
-(67, 2, '2024-12-14', 'NEGERI KELANTAN', 'pasir mas', 2.0, 200.00, 200.00, 0.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 08:41:56', '2024-12-07 10:24:30'),
-(68, 2, '2024-12-14', 'NEGERI KELANTAN', 'pasir mas', 1.0, 450.00, 200.00, -250.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 12:21:28', '2024-12-07 12:50:19'),
-(69, 2, '2024-12-14', 'NEGERI KELANTAN', 'asdasd', 1.0, 200.00, 500.00, 300.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-07 12:59:30', '2024-12-07 13:39:05'),
-(70, 2, '2024-12-11', 'NEGERI KELANTAN', 'kampung 12 ,pasir putih', 1.0, 600.00, 1000.00, 400.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', '', '2024-12-08 01:05:27', '2024-12-08 01:32:50'),
-(71, 2, '2024-12-17', 'NEGERI KELANTAN', 'adsad', 2.0, 0.00, 0.00, 0.00, '', NULL, 'pengesahan pee', 'dalam pengesahan', '', '2024-12-08 01:57:16', '2024-12-08 01:57:16');
-
 -- --------------------------------------------------------
 
 --
@@ -1099,18 +396,6 @@ CREATE TABLE `tempahan_kerja` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tempahan_kerja`
---
-
-INSERT INTO `tempahan_kerja` (`tempahan_kerja_id`, `tempahan_id`, `nama_kerja`, `jam_anggaran`, `minit_anggaran`, `harga_anggaran`, `total_jam`, `total_minit`, `total_harga`, `tarikh_kerja_cadangan`, `created_at`, `updated_at`) VALUES
-(121, 67, 'Piring', 2, 0, 200.00, 2, 0, 200.00, '2024-12-21', '2024-12-07 08:41:56', '2024-12-07 10:23:47'),
-(122, 68, 'Piring', 4, 30, 450.00, 2, 0, 200.00, '2024-12-14', '2024-12-07 12:21:28', '2024-12-07 12:31:02'),
-(123, 69, 'Piring', 2, 0, 200.00, 5, 0, 500.00, '2024-12-14', '2024-12-07 12:59:30', '2024-12-07 13:14:57'),
-(124, 70, 'Piring', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:30:30'),
-(125, 70, 'Piring Batas Besar', 3, 0, 300.00, 5, 0, 500.00, '2024-12-11', '2024-12-08 01:05:27', '2024-12-08 01:31:30'),
-(126, 71, 'Piring', 0, 0, 0.00, 0, 0, 0.00, '2024-12-17', '2024-12-08 01:57:16', '2024-12-08 01:57:16');
 
 -- --------------------------------------------------------
 
@@ -1193,12 +478,6 @@ ALTER TABLE `kumpulan`
   ADD PRIMARY KEY (`kump_id`);
 
 --
--- Indexes for table `logs`
---
-ALTER TABLE `logs`
-  ADD PRIMARY KEY (`pengguna_id`,`date_created`);
-
---
 -- Indexes for table `negeri`
 --
 ALTER TABLE `negeri`
@@ -1245,19 +524,19 @@ ALTER TABLE `tugasan`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `fpx_payments`
 --
 ALTER TABLE `fpx_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `jobsheet`
 --
 ALTER TABLE `jobsheet`
-  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `kategori_kenderaan`
@@ -1281,7 +560,7 @@ ALTER TABLE `kawasan`
 -- AUTO_INCREMENT for table `kenderaan`
 --
 ALTER TABLE `kenderaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kumpulan`
@@ -1305,25 +584,25 @@ ALTER TABLE `penyewa`
 -- AUTO_INCREMENT for table `resit_pembayaran`
 --
 ALTER TABLE `resit_pembayaran`
-  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `tugasan`
 --
 ALTER TABLE `tugasan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
