@@ -59,13 +59,8 @@
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                    <td><?php echo $booking['tempahan_id']; ?></td>
-                                                        <td><?php
-                                                            require_once '../../Models/Penyewa.php';
-                                                            $penyewa = new User();
-                                                            $user = $penyewa->findById($booking['penyewa_id']);
-                                                            echo $user['nama'];
-                                                            ?></td>
+                                                        <td><?php echo $booking['tempahan_id']; ?></td>
+                                                        <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
                                                         <td><?php

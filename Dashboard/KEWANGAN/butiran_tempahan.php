@@ -55,7 +55,7 @@
                                         <div class="col-9">
                                             <?php
                                             require_once '../../Models/Penyewa.php';
-                                            $penyewa = new User();
+                                            $penyewa = new Penyewa();
                                             $user = $penyewa->findById($booking['penyewa_id']);
                                             ?>
                                             <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="<?php echo $user['nama']; ?>" readonly>
@@ -138,7 +138,7 @@
                                         <div class="col-9">
                                             <?php
                                             require_once '../../Models/Penyewa.php';
-                                            $penyewa = new User();
+                                            $penyewa = new Penyewa();
                                             $user = $penyewa->findById($booking['penyewa_id']);
                                             ?>
                                             <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="<?php echo $user['nama']; ?>" readonly>
@@ -178,13 +178,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
-                                    </ol>
-                                </div> -->
-                                <h4 class="page-title">Butiran Harga</h4>
+                             
+                                <h4 class="page-title">Butiran Kerja</h4>
                             </div>
                         </div>
                     </div>

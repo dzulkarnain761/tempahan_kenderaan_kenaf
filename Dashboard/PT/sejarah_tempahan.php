@@ -62,7 +62,7 @@
                                                         <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php
                                                             require_once '../../Models/Penyewa.php';
-                                                            $penyewa = new User();
+                                                            $penyewa = new Penyewa();
                                                             $user = $penyewa->findById($booking['penyewa_id']);
                                                             echo $user['nama'];
                                                             ?></td>

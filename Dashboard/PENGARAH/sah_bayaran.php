@@ -55,7 +55,7 @@
                                         <div class="col-9">
                                             <?php
                                             require_once '../../Models/Penyewa.php';
-                                            $penyewa = new User();
+                                            $penyewa = new Penyewa();
                                             $user = $penyewa->findById($booking['penyewa_id']);
                                             ?>
                                             <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="<?php echo $user['nama']; ?>" readonly>

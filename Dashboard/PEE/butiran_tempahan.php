@@ -55,7 +55,7 @@
                                         <div class="col-9">
                                             <?php
                                             require_once '../../Models/Penyewa.php';
-                                            $penyewa = new User();
+                                            $penyewa = new Penyewa();
                                             $user = $penyewa->findById($booking['penyewa_id']);
                                             ?>
                                             <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="<?php echo $user['nama']; ?>" readonly>
@@ -172,7 +172,7 @@
                                             </table>
                                         </div>
 
-                                        <div class="text-start">
+                                        <div class="text-end">
                                             <button type="button"
                                                 class="btn btn-success"
                                                 onclick="selesaiTempahan(<?php echo $_GET['tempahan_id'] ?>)">
@@ -216,7 +216,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Selesai Kerja',
+                confirmButtonText: 'Selesai Tempahan',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
