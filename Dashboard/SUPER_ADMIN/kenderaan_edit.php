@@ -1,4 +1,3 @@
-
 <?php include 'controller/session.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,11 +24,11 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Staff</a></li>
-                                        <li class="breadcrumb-item active">Tambah Staff</li>
+                                        <li class="breadcrumb-item"><a href="kenderaan.php">Kenderaan</a></li>
+                                        <li class="breadcrumb-item active">Kemaskini Kenderaan</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Tambah Staff</h4>
+                                <h4 class="page-title">Kemaskini Kenderaan</h4>
                             </div>
                         </div>
                     </div>
@@ -40,56 +39,68 @@
                             <div class="card">
                                 <div class="card-body">
 
-                                    <form id="addStaff">
-                                        <div class="row mb-3">
-                                            <label for="nama_staff" class="col-3 col-form-label">Nama</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" id="nama_staff" name="nama_staff" required>
-                                            </div>
-                                        </div>
+                                    <?php
+                                    require_once '../../Models/Kenderaan.php';
+                                    $kenderaan = new Kenderaan();
+                                    $vehicle = $kenderaan->findById($_GET['kenderaan_id']);
+                                    ?>
 
+                                    <form id="updateKenderaan">
                                         <div class="row mb-3">
-                                            <label for="no_kp" class="col-3 col-form-label">No Kad Pengenalan</label>
+                                            <label for="kategori_kenderaan" class="col-3 col-form-label">Kategori Kenderaan</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="no_kp" name="no_kp" minlength="12" maxlength="12" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="email" class="col-3 col-form-label">Email</label>
-                                            <div class="col-9">
-                                                <input type="email" class="form-control" id="email" name="email">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="contact_no" class="col-3 col-form-label">No Panggilan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" id="contact_no" name="contact_no" minlength="10" maxlength="13" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="kumpulan" class="col-3 col-form-label">Kumpulan</label>
-                                            <div class="col-9">
-                                                <select class="form-select" name="kumpulan" required>
-                                                    <option value="">Pilih Kumpulan</option>
+                                                <select class="form-select" name="kategori_kenderaan" id="kategori_kenderaan" required>
+
                                                     <?php
-                                                    require_once '../../Models/Kumpulan.php';
-                                                    $kumpulan = new Kumpulan();
-                                                    $groups = $kumpulan->getKumpulanStaff();
+                                                    require_once '../../Models/Kenderaan.php';
+                                                    $kenderaan = new Kenderaan();
+                                                    $categories = $kenderaan->getKategoriKenderaan();
 
-                                                    foreach($groups as $group){
-                                                        echo '<option value="'. $group['kump_kod'] .'">' .$group['kump_desc'] . '</option>';
+                                                    foreach ($categories as $category) {
+                                                        $selected = ($category['kategori'] == $vehicle['kategori_kenderaan'] ? 'selected' : '');
+                                                        echo '<option value="' . $category['kategori'] . '" ' . $selected . '>' . $category['kategori'] . '</option>';
                                                     }
                                                     ?>
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
+                                        <div class="row mb-3">
+                                            <label for="no_aset" class="col-3 col-form-label">No Aset</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="no_aset" name="no_aset" value="<?php echo $vehicle['no_aset'] ?>" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="no_pendaftaran" class="col-3 col-form-label">No Pendaftaran</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="no_pendaftaran" name="no_pendaftaran" value="<?php echo $vehicle['no_pendaftaran'] ?>" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="tahun_daftar" class="col-3 col-form-label">Tahun Daftar</label>
+                                            <div class="col-9">
+                                                <input type="number" class="form-control" id="tahun_daftar" name="tahun_daftar" value="<?php echo $vehicle['tahun_daftar'] ?>" maxlength="4" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="catatan" class="col-3 col-form-label">Catatan</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="catatan" name="catatan" value="<?php echo $vehicle['catatan'] ?>" >
+                                                
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="kenderaan_id" value="<?php echo $vehicle['id']; ?>">
                                         <div class="justify-content-end row">
                                             <div class="col-9">
-                                                <button type="submit" onclick="addStaff()" class="btn btn-info">Tambah Staff</button>
+                                                <button type="submit" onclick="updateKenderaan()" class="btn btn-info">Kemaskini</button>
                                             </div>
                                         </div>
                                     </form>
+
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div> <!-- end col -->
@@ -105,7 +116,7 @@
 
         </div>
 
-       
+
     </div>
     <!-- END wrapper -->
 
@@ -113,8 +124,8 @@
     <?php include 'partials/script.php'; ?>
 
     <script>
-        function addStaff() {
-            const form = document.getElementById('addStaff');
+        function updateKenderaan() {
+            const form = document.getElementById('updateKenderaan');
 
             // Validate required fields
             if (!form.checkValidity()) {
@@ -123,7 +134,7 @@
             }
             event.preventDefault();
             Swal.fire({
-                title: "Tambah Staff",
+                title: "Kemaskini Kenderaan",
                 text: "Adakah anda pasti?",
                 icon: "warning",
                 showCancelButton: true,
@@ -135,7 +146,7 @@
                 if (result.isConfirmed) {
                     const formData = new FormData(form);
 
-                    fetch('controller/add/add_staff.php', {
+                    fetch('controller/edit/edit_kenderaan.php', {
                             method: 'POST',
                             body: new URLSearchParams(formData)
                         })
@@ -145,9 +156,9 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berjaya',
-                                    text: data.message || 'Berjaya Tambah',
+                                    text: data.message || 'Berjaya Kemaskini',
                                 }).then(() => {
-                                    window.location.href="staff.php";
+                                    window.location.href = "kenderaan.php";
                                 });
                             } else {
                                 Swal.fire({

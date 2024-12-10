@@ -42,19 +42,13 @@
                                         <div class="col-sm-5">
                                             <a href="staff_add.php" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Staff</a>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <div class="text-sm-end">
-                                                <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                                <button type="button" class="btn btn-light mb-2">Export</button>
-                                            </div>
-                                        </div><!-- end col-->
+                                        
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>id</th>
+                                                   
                                                     <th>Nama</th>
                                                     <th>Email</th>
                                                     <th>No Kad Pengenalan</th>
@@ -71,7 +65,7 @@
 
                                                 foreach ($staffs as $staff) { ?>
                                                     <tr>
-                                                        <td><?php echo $staff['id']; ?></td>
+                                                        
                                                         <td><?php echo $staff['nama']; ?></td>
                                                         <td><?php echo empty($staff['email']) ? 'Tiada Email' : $staff['email']; ?></td>
                                                         <td><?php echo $staff['no_kp']; ?></td>
@@ -144,7 +138,7 @@
                                     title: 'Berjaya',
                                     text: data.success || 'Berjaya Padam',
                                 }).then(() => {
-                                    window.location.href = "staff.php";
+                                    window.location.reload();
                                 });
                             } else {
                                 Swal.fire({

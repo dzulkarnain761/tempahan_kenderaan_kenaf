@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Database.php';
 require_once 'Account.php';
 
 class Admin extends Account
@@ -46,7 +45,7 @@ class Admin extends Account
     // Method to get all users
     public function getAdmin()
     {
-        $result = $this->db->query("SELECT * FROM admin WHERE kumpulan NOT IN ('Y', 'Z')");
+        $result = $this->db->query("SELECT * FROM admin");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -62,5 +61,13 @@ class Admin extends Account
     {
         $result = $this->db->query("SELECT * FROM admin WHERE kumpulan = 'Y'");
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Method to get total row
+    public function getTotalStaff()
+    {
+        $result = $this->db->query("SELECT COUNT(*) as total FROM admin");
+        $row = $result->fetch_assoc();
+        return $row['total'];
     }
 }

@@ -114,6 +114,14 @@ class Tempahan
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Method to get the total number of bookings
+    public function getTotalTempahan()
+    {
+        $result = $this->db->query("SELECT COUNT(*) AS total_tempahan FROM tempahan");
+        $row = $result->fetch_assoc();
+        return $row['total_tempahan'];
+    }
+
 
    
 }

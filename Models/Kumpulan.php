@@ -13,7 +13,7 @@ class Kumpulan {
 
     public function getKumpulanStaff()
     {
-        $result = $this->db->query("SELECT * FROM kumpulan WHERE kump_kod NOT IN ('Y','Z')");
+        $result = $this->db->query("SELECT * FROM kumpulan");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 

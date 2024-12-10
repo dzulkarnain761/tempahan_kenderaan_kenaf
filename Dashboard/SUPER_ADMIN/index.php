@@ -34,34 +34,15 @@
 							<div class="card widget-flat">
 								<div class="card-body">
 									<div class="float-end">
-										<i class="mdi mdi-account-group-outline widget-icon"></i>
+										<i class="mdi mdi-account-multiple widget-icon"></i> <!-- Icon for staff -->
 									</div>
-									<h5 class="text-muted fw-normal mt-0" title="Pengguna yang sedang aktif">Total Staff</h5>
-									<h3 class="mt-3 mb-3">6</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="card widget-flat">
-								<div class="card-body">
-									<div class="float-end">
-										<i class="uil uil-users-alt widget-icon"></i>
-									</div>
-									<h5 class="text-muted fw-normal mt-0" title="Bilangan Pelanggan">Total Penyewa</h5>
-									<h3 class="mt-3 mb-3">36</h3>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="col-sm-3">
-							<div class="card widget-flat">
-								<div class="card-body">
-									<div class="float-end">
-										<i class="uil uil-clipboard-alt widget-icon"></i>
-									</div>
-									<h5 class="text-muted fw-normal mt-0" title="Bilangan Tempahan">Total Tempahan</h5>
-									<h3 class="mt-3 mb-3">5</h3>
+									<h5 class="text-muted fw-normal mt-0" title="Bilangan Staff">Bilangan Staff</h5>
+									<h3 class="mt-3 mb-3"><?php
+															require_once '../../Models/Admin.php';
+															$staff = new Admin();
+															$total_staffs = $staff->getTotalStaff();
+															echo $total_staffs;
+															?></h3>
 								</div>
 							</div>
 						</div>
@@ -70,16 +51,54 @@
 							<div class="card widget-flat">
 								<div class="card-body">
 									<div class="float-end">
-										<i class="mdi mdi-cash-multiple widget-icon"></i>
+										<i class="mdi mdi-car widget-icon"></i> <!-- Icon for vehicles -->
 									</div>
-									<h5 class="text-muted fw-normal mt-0" title="Jumlah Pendapatan">Total Pendapatan</h5>
-									<h3 class="mt-3 mb-3">3</h3>
+									<h5 class="text-muted fw-normal mt-0" title="Bilangan Kenderaan">Bilangan Kenderaan</h5>
+									<h3 class="mt-3 mb-3"><?php
+															require_once '../../Models/Kenderaan.php';
+															$kenderaan = new Kenderaan();
+															$total_kenderaan = $kenderaan->getTotalKenderaan();
+															echo $total_kenderaan;
+															?></h3>
 								</div>
 							</div>
 						</div>
 
+						<div class="col-sm-3">
+							<div class="card widget-flat">
+								<div class="card-body">
+									<div class="float-end">
+										<i class="mdi mdi-clipboard-check widget-icon"></i> <!-- Icon for tasks -->
+									</div>
+									<h5 class="text-muted fw-normal mt-0" title="Bilangan Tugasan">Bilangan Tugasan</h5>
+									<h3 class="mt-3 mb-3"><?php
+															require_once '../../Models/Tugasan.php';
+															$tugasan = new Tugasan();
+															$total_tugasan = $tugasan->getTotalTugasan();
+															echo $total_tugasan;
+															?></h3>
+								</div>
+							</div>
+						</div>
 
-					</div> <!-- end row -->
+						<div class="col-sm-3">
+							<div class="card widget-flat">
+								<div class="card-body">
+									<div class="float-end">
+										<i class="mdi mdi-text-box-multiple-outline widget-icon"></i> <!-- Icon for bookings -->
+									</div>
+									<h5 class="text-muted fw-normal mt-0" title="Total Tempahan">Total Tempahan</h5>
+									<h3 class="mt-3 mb-3"><?php
+															require_once '../../Models/Tempahan.php';
+															$tempahan = new Tempahan();
+															$total_tempahan = $tempahan->getTotalTempahan();
+															echo $total_tempahan;
+															?></h3>
+								</div>
+							</div>
+						</div>
+					</div>
+
 
 
 					<div class="row">
@@ -119,17 +138,15 @@
 														<td><?php echo $booking['tempahan_id']; ?></td>
 														<td><?php
 															require_once '../../Models/Penyewa.php';
-															$penyewa = new User();
+															$penyewa = new Penyewa();
 															$user = $penyewa->findById($booking['penyewa_id']);
 															echo $user['nama'];
 															?></td>
-
 														<td><?php
 															require_once '../../Models/Kerja.php';
 															$kerja = new Kerja();
 															$works = $kerja->findByTempahanId($booking['tempahan_id']);
 															$count = 1;
-
 															foreach ($works as $work) {
 																echo $count . '. ' . $work['nama_kerja'] . '<br>';
 																$count++;
@@ -160,7 +177,7 @@
 	</div>
 	<!-- END wrapper -->
 
-	
+
 
 
 	<?php include 'partials/script.php'; ?>

@@ -40,15 +40,9 @@
                                 <div class="card-body">
                                 <div class="row mb-2">
                                         <div class="col-sm-5">
-                                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Staff</a>
+                                            <a href="kenderaan_add.php" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Tambah Kenderaan</a>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <div class="text-sm-end">
-                                                <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                                                <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                                <button type="button" class="btn btn-light mb-2">Export</button>
-                                            </div>
-                                        </div><!-- end col-->
+                                        
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
@@ -58,8 +52,6 @@
                                                     <th>No Pendaftaran</th>
                                                     <th>Kategori Kenderaan</th>
                                                     <th>Tahun Daftar</th>
-                                                    <th>Negeri Penempatan</th>
-                                                    <th>Kawasan Penempatan</th>
                                                     <th>Catatan</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
@@ -76,13 +68,11 @@
                                                         <td><?php echo $vehicle['no_pendaftaran']; ?></td>
                                                         <td><?php echo $vehicle['kategori_kenderaan']; ?></td>
                                                         <td><?php echo $vehicle['tahun_daftar']; ?></td>
-                                                        <td><?php echo $vehicle['negeri_penempatan']; ?></td>
-                                                        <td><?php echo $vehicle['kawasan_penempatan']; ?></td>
                                                         <td><?php echo $vehicle['catatan']; ?></td>
                                                         
                                                         <td class="table-action text-center">
-                                                            <a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="mdi mdi-delete"></i></a>
+                                                        <a href="kenderaan_edit.php?kenderaan_id=<?php echo $vehicle['id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <button type="button" class="btn btn-danger" onclick="deleteRow(<?php echo $vehicle['id'] ?>)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="mdi mdi-delete"></i></button>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -110,6 +100,56 @@
 
 
     <?php include 'partials/script.php'; ?>
+    <script>
+        function deleteRow(id) {
+            Swal.fire({
+                title: "Padam Kenderaan",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('controller/delete/delete_kenderaan.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `kenderaan_id=${id}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.success || 'Berjaya Padam',
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.error || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error); // Debugging
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: 'Ralat memproses respons pelayan',
+                            });
+                        });
+                }
+            });
+        }
+    </script>
 
 </body>
 

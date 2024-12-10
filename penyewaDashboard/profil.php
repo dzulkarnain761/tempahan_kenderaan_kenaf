@@ -10,24 +10,7 @@ include 'controller/get_userdata.php';
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <title>eBooking</title>
-    <link rel="icon" type="image/x-icon" href="../assets/images/logo2.png">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/fontawesome.css">
-    <link rel="stylesheet" href="../assets/css/animated.css">
-    <link rel="stylesheet" href="../assets/css/owl.css">
-    <style>
-    </style>
-</head>
+<?php include 'partials/head.php'; ?>
 
 <body>
 

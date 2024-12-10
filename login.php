@@ -21,7 +21,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Log Masuk</h5>
-                <img src="assets/images/logo_tempahan_kenderaan.png" alt="logoLKTN" style="width: auto; height: 50px;">
+                <img src="assets/images/logo_tempahan_kenderaan_black.png" alt="logoLKTN" style="width: auto; height: 50px;">
             </div>
             <div class="modal-body">
                 <form class="loginForm" novalidate>

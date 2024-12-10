@@ -24,7 +24,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Daftar Masuk</h5>
-                <img src="assets/images/logo_tempahan_kenderaan.png" alt="logoLKTN" style="width: auto; height: 50px;">
+                <img src="assets/images/logo_tempahan_kenderaan_black.png" alt="logoLKTN" style="width: auto; height: 50px;">
             </div>
             <div class="modal-body">
                 <form class="signupForm" novalidate>
@@ -67,24 +67,7 @@
                     </div>
 
                     
-                    <!-- <div class="mb-3">
-                        <label for="kataLaluan" class="form-label">Kata Laluan :</label>
-                        <input type="password" class="form-control" id="kataLaluan" name="kataLaluan" placeholder="Masukkan Kata Laluan" minlength="5" required>
-                        <div class="invalid-feedback">
-                            Sila Pastikan Kata Laluan Melebihi 5 Aksara.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmPass" class="form-label">Sahkan Kata Laluan :</label>
-                        <input type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="Sahkan Kata Laluan" minlength="5" required>
-                        <div class="invalid-feedback">
-                            Sila sahkan kata laluan.
-                        </div>
-                    </div> -->
-                    <!-- <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="showPassword">
-                        <label class="form-check-label" for="showPassword">Lihat Kata Laluan</label>
-                    </div> -->
+                    
                     <div class="modal-footer">
                         <button id="signupButton" type="submit" class="btn btn-primary">Daftar Masuk</button>
                     </div>

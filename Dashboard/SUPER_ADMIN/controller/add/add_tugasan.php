@@ -9,10 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $kategori_kenderaan = $_POST['kategori_kenderaan'];
     $nama_kerja = $_POST['nama_kerja'];
-    $kadar_per_jam = $_POST['kadar_per_jam'];
+    $harga_per_jam = $_POST['harga_per_jam'];
     
 
-    if (empty($kadar_per_jam) || !is_numeric($kadar_per_jam)) {
+    if (empty($harga_per_jam) || !is_numeric($harga_per_jam)) {
         echo json_encode(["success" => false, "message" => "Pastikan Nombor Sahaja."]);
         exit();
     }
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insert the user into the database using prepared statement
     $sql = $conn->prepare("INSERT INTO tugasan (kerja, harga_per_jam, kategori_kenderaan) VALUES (?, ?, ?)");
 
-    $sql->bind_param("sss", $nama_kerja, $kadar_per_jam,$kategori_kenderaan);
+    $sql->bind_param("sss", $nama_kerja, $harga_per_jam,$kategori_kenderaan);
 
     if ($sql->execute() === TRUE) {
         echo json_encode(["success" => true]);

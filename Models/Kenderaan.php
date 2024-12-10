@@ -60,4 +60,16 @@ class Kenderaan {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getKategoriKenderaan() {
+        $result = $this->db->query("SELECT * FROM kategori_kenderaan");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Method to get the total number of rows in the kenderaan table
+    public function getTotalKenderaan() {
+        $result = $this->db->query("SELECT COUNT(*) AS total_rows FROM kenderaan");
+        $row = $result->fetch_assoc();
+        return $row['total_rows'];
+    }
 }

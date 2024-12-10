@@ -33,6 +33,18 @@ class Tugasan
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+
+    public function findById($tugasan_id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM tugasan WHERE id = ?");
+        $stmt->bind_param("i", $tugasan_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+
+
     public function getCategoryByName($nama_kerja)
     {
         $stmt = $this->db->prepare("SELECT kategori_kenderaan FROM tugasan WHERE kerja = ?");
@@ -63,5 +75,13 @@ class Tugasan
         $stmt = $this->db->prepare("DELETE FROM tugasan WHERE id = ?");
         $stmt->bind_param("i", $id);
         return $stmt->execute();
+    }
+
+    // Method to get the total number of tugasan
+    public function getTotalTugasan()
+    {
+        $result = $this->db->query("SELECT COUNT(*) AS total_tugasan FROM tugasan");
+        $row = $result->fetch_assoc();
+        return $row['total_tugasan'];
     }
 }

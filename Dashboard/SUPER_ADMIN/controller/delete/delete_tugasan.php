@@ -3,41 +3,36 @@
 require_once '../../../../Models/Database.php';
 $conn = Database::getConnection();
 
+if (isset($_POST['tugasan_id'])) {
+    // Dapatkan ID staff dari permintaan POST
+    $tugasan_id = $_POST['tugasan_id'] ?? null;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the staff ID from the POST request
-    $tugasanId = $_POST['id'];
-
-    // Check if the ID is valid
-    if (empty($tugasanId) || !is_numeric($tugasanId)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid ID', 'id' => $tugasanId]);
-        exit;
-    }
-
-    // Prepare the SQL statement
+    // Sediakan pernyataan SQL untuk penghapusan
     $sql = "DELETE FROM tugasan WHERE id = ?";
     $stmt = $conn->prepare($sql);
+
     if ($stmt === false) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Failed to prepare statement']);
+        echo json_encode(['error' => 'Gagal menyediakan pernyataan SQL.']);
         exit;
     }
 
-    // Bind the parameter and execute the statement
-    $stmt->bind_param('i', $tugasanId);
+    // Ikat parameter dan laksanakan pernyataan
+    $stmt->bind_param('i', $tugasan_id);
+
     if ($stmt->execute()) {
-        echo json_encode(['success' => 'Staff member deleted successfully']);
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['success' => 'Staf berjaya dipadamkan.']);
+        } else {
+            echo json_encode(['error' => 'Staf tidak dijumpai.']);
+        }
     } else {
-        http_response_code(500);
-        echo json_encode(['error' => 'Failed to delete staff member']);
+        echo json_encode(['error' => 'Gagal menghapuskan staf.']);
     }
 
-    // Close the statement and connection
+    // Tutup pernyataan dan sambungan
     $stmt->close();
     $conn->close();
 } else {
-    http_response_code(405);
-    echo json_encode(['error' => 'Invalid request method']);
+    echo json_encode(['error' => 'Tiada ID disediakan.']);
 }
 ?>

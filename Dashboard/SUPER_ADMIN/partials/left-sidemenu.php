@@ -31,12 +31,7 @@
 								<span> Staff </span>
 							</a>
 						</li>
-                        <li class="side-nav-item">
-							<a href="pemandu.php" class="side-nav-link">
-								<i class="uil-user"></i>
-								<span> Pemandu </span>
-							</a>
-						</li>
+                       
                         <li class="side-nav-item">
 							<a href="kenderaan.php" class="side-nav-link">
 								<i class="uil-car"></i>

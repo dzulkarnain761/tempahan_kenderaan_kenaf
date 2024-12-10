@@ -1,8 +1,8 @@
 <?php
 
-include 'Account.php';
+require_once 'Account.php';
 
-class User extends Account
+class Penyewa extends Account
 {
 
     private $alamat;
@@ -16,8 +16,6 @@ class User extends Account
         $stmt->bind_param("sssssss", $nama, $no_kp, $contact_no, $alamat, $nama_bank, $no_bank, $password);
         return $stmt->execute();
     }
-
-    
 
     // UPDATE: Method to update user details
     public function update($id, $nama, $no_kp, $contact_no, $alamat, $nama_bank, $no_bank, $password)
