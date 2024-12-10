@@ -2,6 +2,7 @@
 
 require_once '../../Models/Database.php';
 $conn = Database::getConnection();
+
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -20,13 +21,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get the last inserted ID from tempahan table
         $tempahan_id = $conn->insert_id;
 
-        // Insert into table tempahan_kerja
+        // Prepare the second query
+        $sqlKerja = $conn->prepare("INSERT INTO tempahan_kerja (`tempahan_id`, `nama_kerja`, `tarikh_kerja_cadangan`) VALUES (?, ?, ?)");
+        if (!$sqlKerja) {
+            echo json_encode(["success" => false, "message" => "Gagal menyediakan pernyataan untuk kerja."]);
+            $sqlTempahan->close();
+            $conn->close();
+            exit();
+        }
+
         $kerja = $_POST['kerja'];
 
-        $sqlKerja = $conn->prepare("INSERT INTO tempahan_kerja (`tempahan_id`, `nama_kerja`, `tarikh_kerja_cadangan`) VALUES (?, ?, ?)");
-        $sqlKerja->bind_param("sss", $tempahan_id, $nama_kerja, $tarikh_kerja);
-
         foreach ($kerja as $nama_kerja) {
+            $sqlKerja->bind_param("sss", $tempahan_id, $nama_kerja, $tarikh_kerja);
+
             if (!$sqlKerja->execute()) {
                 echo json_encode(["success" => false, "message" => "Gagal mendaftar kerja."]);
                 $sqlKerja->close();
@@ -37,11 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         echo json_encode(["success" => true]);
+        $sqlKerja->close(); // Close after loop
     } else {
         echo json_encode(["success" => false, "message" => "Pendaftaran gagal."]);
     }
 
-    $sqlKerja->close();
     $sqlTempahan->close();
     $conn->close();
 }
