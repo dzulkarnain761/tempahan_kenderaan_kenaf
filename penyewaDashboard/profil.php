@@ -25,9 +25,6 @@ include 'controller/get_userdata.php';
 	<link rel="stylesheet" href="../assets/css/animated.css">
 	<link rel="stylesheet" href="../assets/css/owl.css">
 
-	<style>
-
-	</style>
 </head>
 
 <body>
