@@ -1,64 +1,32 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
-    <link href="penyewaDashboard/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/animated.css">
-
-    <style>
-        
-    </style>
+	<meta charset="utf-8" />
+	<title>eTempahan BKK</title>
+	<link rel="icon" type="image/x-icon" href="assets/images/logo/logo2.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 </head>
-<body class="background-custom">
-  <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-6 align-self-center">
-                        <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h6>Selamat Datang!</h6>
-                                    <h2>TEMPAHAN KENDERAAN LEMBAGA KENAF DAN TEMBAKAU</h2>
-                                    <p>Selamat datang ke laman tempahan kenderaan kami! Kami menawarkan pelbagai pilihan kenderaan untuk memenuhi keperluan anda. Terima kasih.</p>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="border-first-button scroll-to-section">
-                                        <a href="login.php">Log Masuk</a>
-                                    </div>                                  
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                            <img src="assets/images/farm-tractor-concept-illustration.png" alt="Farm Tractor">
-                        </div>
-                    </div>
-                </div>
+<body style="background-color: #d8e6ff; min-height: 100vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <!-- Left Text Section -->
+            <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0 px-4">
+                <h3 class="text-primary fw-bold">SELAMAT DATANG!</h6>
+                <h1 class="fw-bold mb-3">SISTEM eTEMPAHAN JENTERA</h1>
+                <p style="font-size: 1.2rem;" class="pe-1">Selamat datang ke laman tempahan kenderaan kami! Kami menawarkan pelbagai pilihan kenderaan untuk memenuhi keperluan anda. Terima kasih.</p>
+                <a href="login.php" class="btn btn-primary px-4 py-2">Log Masuk</a>
+            </div>
+
+            <!-- Right Image Section -->
+            <div class="col-12 col-md-6 text-center">
+                <img src="assets/images/illustration/farm-tractor-illustration.png" alt="Tractor Image" style="width: 100%; max-width: 600px; height: auto;">
             </div>
         </div>
     </div>
 
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-<script>new WOW().init();</script>
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="assets/js/owl-carousel.js"></script>
-<script src="assets/js/animation.js"></script>
-<script src="assets/js/imagesloaded.js"></script>
-<script src="assets/js/custom.js"></script>
-
+    
 </body>
 </html>
