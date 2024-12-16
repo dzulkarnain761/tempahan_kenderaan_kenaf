@@ -13,7 +13,7 @@
 <body class="d-flex flex-column align-items-center justify-content-center vh-100 bg-light">
     <!-- Logo -->
     <div class="mb-4">
-        <img src="assets/img/logo_tempahan_kenderaan_black.png" alt="Logo" class="img-fluid" style="width: 200px; height:auto;">
+        <img src="assets/images/logo/logo_tempahan_kenderaan_black.png" alt="Logo" class="img-fluid" style="width: 200px; height:auto;">
     </div>
 
     <!-- Login Form Container -->
@@ -45,7 +45,7 @@
         <p class="mt-3 text-center">Sudah Daftar? <a href="login.php">Log Masuk</a></p>
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 
 <?php include 'partials/head.php'; ?>
 
-<body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
         <?php include 'partials/left-sidemenu.php'; ?>

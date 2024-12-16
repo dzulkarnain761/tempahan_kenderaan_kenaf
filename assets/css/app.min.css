@@ -211,7 +211,7 @@
 }
 
 body[data-leftbar-theme=dark] {
-    --ct-bg-leftbar: #313a46;
+    --ct-bg-leftbar: #133E87;
     --ct-dark-menu-item: #8391a2;
     --ct-dark-menu-item-hover: #bccee4;
     --ct-dark-menu-item-active: #fff
