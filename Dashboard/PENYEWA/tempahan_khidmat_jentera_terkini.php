@@ -101,7 +101,7 @@
                                                                 break;
                                                             case 'bayaran tambahan';
                                                                 $badgecolor = 'danger';
-                                                                break;     
+                                                                break;
                                                             default:
                                                                 $badgecolor = 'danger';
                                                                 break;
@@ -109,11 +109,34 @@
 
                                                         ?>
                                                         <td class="text-center"><?php
-
                                                                                 echo '<span class="badge bg-' . $badgecolor . '">' . strtoupper($booking['status_bayaran']) . '</span>';
                                                                                 ?></td>
-
                                                         <td class="table-action text-center">
+
+
+                                                            <?php
+                                                            $tempahan_id = htmlspecialchars($booking['tempahan_id']); // Sanitize input
+                                                            require_once '../../Models/Quotation.php';
+                                                            $quotation = new Quotation();
+                                                            $bayaran_muka = $quotation->checkQuotationExist($tempahan_id, 'bayaran muka');
+
+                                                            if ($bayaran_muka) { ?>
+                                                                <a href="../../Controller/pdf/getPDF_quotation_firstpayment.php?quotation_id=<?php echo urlencode($bayaran_muka['quotation_id']); ?>&tempahan_id=<?php echo urlencode($tempahan_id); ?>" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title="Lihat Sebut Harga" class="btn btn-secondary" target="_blank">
+                                                                    <i class="mdi mdi-file"></i>
+                                                                </a>
+
+                                                                <button onclick="bayarMuka(<?php echo $tempahan_id ?>)"
+                                                                    class="btn btn-success"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title="Bayar">
+                                                                    <i class="mdi mdi-check"></i>
+                                                                </button>
+                                                            <?php }
+                                                            ?>
+
                                                             <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
                                                                 class="btn btn-primary"
                                                                 data-bs-toggle="tooltip"
@@ -207,6 +230,53 @@
                                 icon: "error"
                             });
                         });
+                }
+            });
+        }
+
+        function bayarMuka(tempahan_id) {
+            Swal.fire({
+                title: 'Pilih Kaedah Pembayaran',
+                html: `
+                <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" checked>
+<label class="btn" for="option5">Checked</label>
+
+<input type="radio" class="btn-check" name="options-base" id="option6" autocomplete="off">
+<label class="btn" for="option6">Radio</label>
+
+
+
+<input type="radio" class="btn-check" name="options-base" id="option8" autocomplete="off">
+<label class="btn" for="option8">Radio</label>
+            `,
+                confirmButtonText: 'Teruskan',
+                preConfirm: () => {
+                    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
+                    if (!selectedMethod) {
+                        Swal.showValidationMessage('Sila pilih kaedah pembayaran!');
+                        return false;
+                    }
+                    return selectedMethod.value;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const paymentMethod = result.value;
+                    if (paymentMethod === 'cash') {
+                        Swal.fire(
+                            'Bayar Tunai',
+                            'Anda telah memilih untuk membayar secara tunai.',
+                            'success'
+                        );
+                        console.log('Cash payment for Tempahan ID:', tempahan_id);
+                    } else if (paymentMethod === 'fpx') {
+                        Swal.fire(
+                            'Bayar FPX',
+                            'Anda akan diteruskan ke halaman pembayaran FPX.',
+                            'info'
+                        );
+                        console.log('FPX payment for Tempahan ID:', tempahan_id);
+                        window.location.href = `/fpx-payment?tempahan_id=${tempahan_id}`;
+                    }
                 }
             });
         }

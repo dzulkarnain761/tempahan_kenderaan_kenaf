@@ -104,7 +104,6 @@
                                                                 <i class="mdi mdi-eye"></i>
                                                             </a>
                                                             <?php
-
                                                             if ($booking['status_bayaran'] == 'dalam pengesahan' || $booking['status_bayaran'] == 'belum bayar') { ?>
                                                                 <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Tempahan"><i class="mdi mdi-delete"></i></button>
                                                             <?php } ?>

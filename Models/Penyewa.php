@@ -17,7 +17,7 @@ class Penyewa extends Account
         return $stmt->execute();
     }
 
-    // UPDATE: Method to update user details
+    
     public function update($id, $nama, $no_kp, $contact_no, $alamat, $nama_bank, $no_bank, $password)
     {
         $stmt = $this->db->prepare("UPDATE penyewa SET nama = ?, no_kp = ?, contact_no = ?, alamat = ?, nama_bank = ?, no_bank = ?, password = ? WHERE id = ?");
@@ -40,7 +40,6 @@ class Penyewa extends Account
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     
-    // READ: Method to get user by ID
     public function findById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM penyewa WHERE id = ?");

@@ -26,27 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Tempahan tidak dijumpai");
         }
         $stmtTempahan->close();
-
         $jenis_pembayaran = 'bayaran penuh';
 
         $sqlUpdateTempahan = $conn->prepare("UPDATE tempahan SET status_tempahan = ?, status_bayaran = ? WHERE tempahan_id = ?");
         $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
 
-
+        //fpx payment
         if ($cara_bayar == 'fpx') {
-            // Sample FPX payment data
-            $fpx_id_transaksi = 'FPXTK' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
-            $fpx_id_bank = 'B001';
-            $fpx_nama_bank = 'Maybank';
-            $fpx_nama_pembeli = 'Ali Bin Ahmad';
-            $fpx_akaun_bank_pembeli = '123456789';
-            $fpx_tandatangan = 'abc123def';
-            $fpx_kod_respon = '00';
-            $nombor_rujukan = 'TKBP' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $catatan = 'Payment successful';
 
-            // Insert into pembayaran_fpx
             $sqlFPX = $conn->prepare("INSERT INTO fpx_payments (fpx_id_transaksi, fpx_id_bank, fpx_nama_bank, fpx_nama_pembeli, fpx_akaun_bank_pembeli, fpx_tandatangan, fpx_kod_respon, nombor_rujukan, alamat_ip, catatan, jumlah_bayaran) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $sqlFPX->bind_param("ssssssssssd", $fpx_id_transaksi, $fpx_id_bank, $fpx_nama_bank, $fpx_nama_pembeli, $fpx_akaun_bank_pembeli, $fpx_tandatangan, $fpx_kod_respon, $nombor_rujukan, $alamat_ip, $catatan, $jumlah_bayaran);
             if (!$sqlFPX->execute()) {
@@ -73,10 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $status_resit = 'pengesahan';
             $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, status_resit) VALUES (?, ?, ?, ?, ?)");
             $sqlResit->bind_param("isdss", $tempahan_id, $jenis_pembayaran, $jumlah_bayaran, $cara_bayar, $status_resit);
-
             $status_tempahan = 'pengesahan pt';
             $status_bayaran = 'bayaran diproses';
-
 
             if (!$sqlUpdateTempahan->execute()) {
                 throw new Exception("Kemaskini tempahan gagal: " . $sqlUpdateTempahan->error);

@@ -4,20 +4,7 @@ require_once 'Database.php';
 
 class Kerja
 {
-    // Define properties that map to table columns
-    private $tempahan_kerja_id;
-    private $tempahan_id;
-    private $nama_kerja;
-    private $jam_anggaran;
-    private $minit_anggaran;
-    private $harga_anggaran;
-    private $total_jam;
-    private $total_minit;
-    private $total_harga;
-    private $tarikh_kerja_cadangan;
-    private $created_at;
-    private $updated_at;
-
+    
     // Store the database connection
     private $db;
 

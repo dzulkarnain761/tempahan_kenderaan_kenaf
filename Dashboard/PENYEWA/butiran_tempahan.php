@@ -96,55 +96,65 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    
-                                        <div class="table-responsive">
-                                            <table class="table table-centered w-100 dt-responsive nowrap">
-                                                <thead class="table-light">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-centered w-100 dt-responsive nowrap">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Nama Kerja</th>
+                                                    <th>Tarikh Kerja</th>
+                                                    <?php if ($booking['status_tempahan'] == 'pengesahan pee') {
+                                                        echo '<th class="text-center">Tindakan</th>';
+                                                    } ?>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                <?php
+                                                require_once '../../Models/Kerja.php';
+                                                $tempahan_kerja = new Kerja();
+                                                $works = $tempahan_kerja->findByTempahanId($_GET['tempahan_id']);
+
+                                                foreach ($works as $work) { ?>
                                                     <tr>
-                                                        <th>Nama Kerja</th>
-                                                        <th>Tarikh Kerja</th>
-                                                        <?php if ($booking['status_tempahan'] == 'pengesahan pee') {
-                                                            echo '<th class="text-center">Tindakan</th>';
-                                                        } ?>
-                                                    </tr>
-                                                </thead>
 
-                                                <tbody>
+                                                        <td>
+                                                            <?php echo $work['nama_kerja']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
+                                                        </td>
 
-                                                    <?php
-                                                    require_once '../../Models/Kerja.php';
-                                                    $tempahan_kerja = new Kerja();
-                                                    $works = $tempahan_kerja->findByTempahanId($_GET['tempahan_id']);
-
-                                                    foreach ($works as $work) { ?>
-                                                        <tr>
-
-                                                            <td>
-                                                                <?php echo $work['nama_kerja']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
-                                                            </td>
-
-                                                            <?php if ($booking['status_tempahan'] == 'pengesahan pee') { ?>
-                                                                <td class="text-center">
-                                                                    <button class="btn btn-danger" onclick="batalKerja(<?php echo $work['tempahan_kerja_id'] ?>)" data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Kerja"><i class="mdi mdi-delete"></i></button>
-                                                                </td>
+                                                        <?php if ($booking['status_tempahan'] == 'pengesahan pee') { ?>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-danger" onclick="batalKerja(<?php echo $work['tempahan_kerja_id'] . ',' . $booking['tempahan_id'] ?>)"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Kerja">
+                                                                    <i class="mdi mdi-delete"></i>
+                                                                </button>
                                                             <?php } ?>
 
+                                                    </tr>
+                                                <?php } ?>
 
-                                                        </tr>
-                                                    <?php } ?>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div> <!-- end col -->
                     </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-2 text-end">
+                            
+                            </div>
+                        </div>
+                    </div>
                 </div> <!-- container -->
+
 
             </div> <!-- content -->
 
@@ -162,15 +172,15 @@
 
     <?php include 'partials/script.php'; ?>
     <script>
-        function batalKerja(tempahan_kerja_id) {
+        function batalKerja(tempahan_kerja_id, tempahan_id) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Batal Kerja",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Batal Kerja"
+                confirmButtonText: "Ya, Batal Kerja",
+                cancelButtonText: "Tidak"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/cancel_kerja.php', {
@@ -178,31 +188,31 @@
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `tempahan_kerja_id=${tempahan_kerja_id}`
+                            body: `tempahan_kerja_id=${tempahan_kerja_id}&tempahan_id=${tempahan_id}`
                         })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
                                 Swal.fire(
-                                    'Cancelled!',
-                                    'The task has been cancelled.',
+                                    'Berjaya!',
+                                    'Kerja telah berjaya dibatalkan.',
                                     'success'
                                 ).then(() => {
-                                    location.reload(); 
+                                    location.reload();
                                 });
                             } else {
                                 Swal.fire(
-                                    'Error!',
+                                    'Ralat!',
                                     data.message,
                                     'error'
                                 );
                             }
                         })
                         .catch(error => {
-                            console.error('Error:', error);
+                            console.error('Ralat:', error);
                             Swal.fire(
-                                'Error!',
-                                'There was a problem processing your request.',
+                                'Ralat!',
+                                'Terdapat masalah memproses permintaan anda.',
                                 'error'
                             );
                         });

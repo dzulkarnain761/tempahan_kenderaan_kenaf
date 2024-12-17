@@ -1,25 +1,26 @@
 <?php
 
-require_once __DIR__ . '/../Models/Database.php';
-$conn = Database::getConnection();
+require_once __DIR__ . '/../Models/Penyewa.php';
+require_once __DIR__ . '/../Models/Tempahan.php';
+require_once __DIR__ . '/../Models/Quotation.php';
+require_once __DIR__ . '/../Models/Kerja.php';
 
+
+$quotation_id = $_GET['quotation_id'];
 $tempahan_id = $_GET['tempahan_id'];
 
 
-// Ensure you escape the ID to prevent SQL injection
-$id = mysqli_real_escape_string($conn, $tempahan_id);
+$bookings = new Tempahan();
+$tempahan = $bookings->findByTempahanId($tempahan_id);
 
-$sqlTempahan = "SELECT * FROM `tempahan` WHERE tempahan_id = $tempahan_id";
-$resultTempahan = mysqli_query($conn, $sqlTempahan);
+$penyewa_id = $tempahan['penyewa_id'];
 
-// Fetch the Pemandu member's data
-if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
-  $tempahan = mysqli_fetch_assoc($resultTempahan);
-} else {
-  // Handle the case where no Pemandu member is found
-  echo "Tiada Tempahan Dijumpai";
-  exit;
-}
+$quotation = new Quotation();
+$sebut_harga = $quotation->getDetail($quotation_id);
+
+$imagePath = __DIR__ . '/../assets/images/logo/logo_tempahan_kenderaan_black.png'; // Path to your PNG file
+$imageData = base64_encode(file_get_contents($imagePath)); // Encode the image
+$imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
 
 
 ?>
@@ -197,14 +198,14 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
                           <tr>
                             <td>
                               <div style="font-family: helvetica">
-                                <span style="color: #333"><strong> Tempahan ID:</strong></span>
-                                <span style="color: #555; white-space: nowrap"><?php echo sprintf('%05d', $tempahan['tempahan_id']); ?></span>
+                                <span style="color: #333"><strong> Reference No:</strong></span>
+                                <span style="color: #555; white-space: nowrap"><?php echo $sebut_harga['reference_number'] ?></span>
                               </div>
                             </td>
                             <td width="50%">
                               <div style="font-family: helvetica">
                                 <span style="color: #333"><strong>Tarikh Dikeluarkan:</strong></span>
-                                <span style="color: #555; white-space: nowrap"><?php echo date('d/m/Y', strtotime($tempahan['updated_at'])); ?></span>
+                                <span style="color: #555; white-space: nowrap"><?php echo date('d/m/Y', strtotime($sebut_harga['created_at'])); ?></span>
                               </div>
                             </td>
                           </tr>
@@ -266,18 +267,8 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
                         <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22px; table-layout: auto; width: 100%; border: none">
                           <tr>
                             <?php
-                            $penyewaID = $tempahan['penyewa_id'];
-                            $sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewaID";
-                            $resultPenyewa = mysqli_query($conn, $sqlPenyewa);
-
-                            // Fetch the Pemandu member's data
-                            if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
-                              $penyewa = mysqli_fetch_assoc($resultPenyewa);
-                            } else {
-                              // Handle the case where no Pemandu member is found
-                              echo "Tiada Penyewa Dijumpai";
-                              exit;
-                            }
+                            $penyewas = new Penyewa();
+                            $penyewa = $penyewas->findById($penyewa_id);
                             ?>
                             <td style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Bil Kepada:</strong></div>
@@ -348,13 +339,11 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
                             <td style="border-bottom: 1px solid #777; padding: 0 0 10px 0; color: #333; font-family: helvetica; white-space: nowrap" align="right"><strong>HARGA</strong></td>
                           </tr>
                           <?php
-                          // SQL query to select all tasks for the booking
-                          $sqlKerja = "SELECT * FROM `tempahan_kerja` 
-                                      WHERE tempahan_id = $tempahan_id ";
-                          $resultKerja = mysqli_query($conn, $sqlKerja);
+                          $kerja = new Kerja();
+                          $kerjas = $kerja->findByTempahanId($tempahan_id);
 
                           // Loop through the result set
-                          while ($rowKerja = mysqli_fetch_assoc($resultKerja)) {
+                          foreach ($kerjas as $rowKerja) {
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
@@ -389,8 +378,6 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
                             <td></td>
                             <td style="border-top: 1px solid #555; color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap" align="right">RM <?php echo number_format($tempahan['total_baki'], 2) ?></td>
                           </tr>
-
-
                         </table>
 
                       </td>
@@ -406,7 +393,7 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
       </table>
     </div>
 
-    
+
     <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     <div style="margin: 0px auto; max-width: 600px">
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width: 100%">
@@ -423,7 +410,7 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
 
                           <span style="color: #333"><strong>Tarikh Tamat Tempoh : </strong></span>
                           <span style="color: #555; white-space: nowrap">
-                            <?php echo date('d/m/Y', strtotime($tempahan['updated_at'] . ' +7 days')); ?>
+                            <?php echo date('d/m/Y', strtotime($sebut_harga['created_at'] . ' +7 days')); ?>
                           </span>
                         </div>
                       </td>

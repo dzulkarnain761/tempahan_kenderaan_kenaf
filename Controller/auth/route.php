@@ -3,7 +3,6 @@
 
 session_start();
 
-
 $kumpulan = $_SESSION['kumpulan'];
 
 switch ($kumpulan) {
@@ -42,6 +41,10 @@ switch ($kumpulan) {
     case 'Z':
         // Redirect to SUPER ADMIN
         header('Location: ../../Dashboard/SUPER_ADMIN/index.php');
+        break;
+    case 'penyewa':
+        // Redirect to SUPER ADMIN
+        header('Location: ../../Dashboard/PENYEWA/homepage.php');
         break;
     default:
         header('Location: ../../Dashboard/PENYEWA/homepage.php');

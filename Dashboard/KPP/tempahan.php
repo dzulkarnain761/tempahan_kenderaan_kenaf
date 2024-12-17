@@ -45,7 +45,7 @@
                                                     <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Cadangan Tarikh Kerja</th>
+                                                    
                                                     <th>Tugasan</th>
                                                     <th>Disahkan Oleh</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
@@ -53,16 +53,16 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tempahan.php';
-                                                $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('pengesahan kpp');
+                                                require_once '../../Models/Quotation.php';
+                                                $quotation = new Quotation();
+                                                $bookings = $quotation->getByJenisPembayaran('bayaran muka', 'pengesahan kpp');
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
                                                         <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        
                                                         <td><?php
                                                             require_once '../../Models/Kerja.php';
                                                             $kerja = new Kerja();
@@ -76,7 +76,7 @@
                                                             ?></td>
                                                         <td><?php echo $booking['disahkan_oleh']; ?></td>
                                                         <td class="table-action text-center">
-                                                            <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
+                                                            <a href="../../Controller/pdf/getPDF_quotation_firstpayment.php?quotation_id=<?php echo $booking['quotation_id'] ?>&tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Sebut Harga"> <i class="mdi mdi-eye"></i></a>
                                                             <a href="javascript:void(0);" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Terima Tempahan" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-check"></i></a>
                                                             <a href="javascript:void(0);" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Tolak Tempahan" onclick="rejectTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-close"></i></a>
                                                         </td>
@@ -108,16 +108,15 @@
     <?php include 'partials/script.php'; ?>
 
     <script>
-        function terimaTempahan(id) {
+        function terimaTempahan(tempahan_id) {
             Swal.fire({
-                title: "Adakah anda pasti?",
-                text: "Tempahan ini akan diterima",
+                title: "Terima Tempahan",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, terima tempahan!",
-                cancelButtonText: "Batal"
+                confirmButtonText: "Terima",
+                cancelButtonText: "Tidak"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/terima_tempahan.php', {
@@ -125,7 +124,7 @@
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `tempahan_id=${id}`
+                            body: `tempahan_id=${tempahan_id}`
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -156,7 +155,7 @@
             });
         }
 
-        function rejectTempahan(id) {
+        function rejectTempahan(tempahan_id) {
             Swal.fire({
                 title: "Adakah anda pasti?",
                 text: "Tempahan ini akan ditolak",
@@ -181,7 +180,7 @@
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `tempahan_id=${id}&sebab_ditolak=${encodeURIComponent(result.value)}`
+                            body: `tempahan_id=${tempahan_id}&sebab_ditolak=${encodeURIComponent(result.value)}`
                         })
                         .then(response => response.json())
                         .then(data => {

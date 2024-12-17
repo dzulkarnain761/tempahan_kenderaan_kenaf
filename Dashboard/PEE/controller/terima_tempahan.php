@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input_minutes = $_POST['input_minutes'];
     $input_price = $_POST['input_price'];
     $pengesahan_pee = $_POST['disahkan_oleh'];
-    $tempahan_id = $_POST['tempahan_id']; // Retrieve tempahan_id
+    $tempahan_id = $_POST['tempahan_id'];
 
     // Validate that all input hours and prices are valid
     foreach ($input_price as $price) {
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_harga_anggaran = 0;
 
     try {
-        // Prepare the update query for tempahan_kerja
+
         $updateKerjaQuery = "UPDATE tempahan_kerja SET jam_anggaran = ?, minit_anggaran = ?, harga_anggaran = ?, cadangan_tarikh_kerja = ? WHERE tempahan_kerja_id = ?";
         $stmt = $conn->prepare($updateKerjaQuery);
 
@@ -56,6 +56,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Error preparing tempahan_kerja update statement: " . $conn->error);
         }
 
+        $reference_number = 'KJBP' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
+
+        // Correct the SQL query syntax
+        $updateQuotationQuery = "INSERT INTO quotation (total, reference_number,jenis_pembayaran, tempahan_id) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($updateQuotationQuery);
+        $jenis_pembayaran = 'bayaran muka';
+
+        if ($stmt) {
+            // Bind the parameters to the statement
+            $stmt->bind_param('dssi', $total_harga_anggaran, $reference_number,$jenis_pembayaran, $tempahan_id);
+
+            // Execute the statement
+            if (!$stmt->execute()) {
+                throw new Exception("Error updating quotation: " . $stmt->error);
+            }
+            $stmt->close();
+        } else {
+            throw new Exception("Error preparing quotation update statement: " . $conn->error);
+        }
+
         // Prepare the update query for tempahan
         $updateTempahanQuery = "UPDATE tempahan SET total_harga_anggaran = ?, status_tempahan = ?, disahkan_oleh = ? WHERE tempahan_id = ?";
         $stmt = $conn->prepare($updateTempahanQuery);
@@ -77,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->commit();
         $response['success'] = true;
         $response['message'] = 'Kemaskini Berjaya';
-
     } catch (Exception $e) {
         // Rollback the transaction if any errors occur
         $conn->rollback();

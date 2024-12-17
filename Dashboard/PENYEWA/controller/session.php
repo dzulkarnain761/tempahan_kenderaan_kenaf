@@ -7,11 +7,6 @@ if (!isset($_SESSION["id"])) {
     exit();
 }
 
-if (isset($_SESSION["kumpulan"])) {
-    header("Location: ../controller/auth/routeAdmin.php");
-    exit();
-}
-
 $user_name = $_SESSION['nama_pengguna'];
 
 // Split the name by space and take the first part

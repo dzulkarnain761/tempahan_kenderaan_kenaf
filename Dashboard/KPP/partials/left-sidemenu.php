@@ -10,8 +10,6 @@
         </span>
     </a>
 
-
-
     <div class="h-100" id="leftside-menu-container" data-simplebar>
 
         <!--- Sidemenu -->
@@ -34,9 +32,7 @@
                 </a>
                 <div class="collapse" id="sidebarSejarah">
                     <ul class="side-nav-second-level">
-                        <li>
-                            <a href="sejarah_pengesahan.php">Pengesahan</a>
-                        </li>
+                        
                         <li>
                             <a href="sejarah_tempahan.php">Tempahan</a>
                         </li>
