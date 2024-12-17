@@ -1,7 +1,7 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="tempahan.php" class="logo text-center logo-light">
+    <a href="homepage.php" class="logo text-center logo-light">
         <span class="logo-lg">
             <img src="../../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
         </span>
@@ -19,9 +19,9 @@
 
 
             <li class="side-nav-item">
-                <a href="tempahan.php" class="side-nav-link">
-                    <i class="uil-clipboard-notes"></i>
-                    <span> Pengesahan </span>
+                <a href="homepage.php" class="side-nav-link">
+                    <i class="uil-home"></i>
+                    <span>LAMAN UTAMA</span>
                 </a>
             </li>
 
@@ -29,16 +29,19 @@
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSejarah" aria-expanded="false" aria-controls="sidebarSejarah" class="side-nav-link">
                     <i class="uil-history"></i>
-                    <span> Sejarah </span>
+                    <span>KHIDMAT JENTERA</span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="collapse" id="sidebarSejarah">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="sejarah_pengesahan.php">Pengesahan</a>
+                            <a href="tempah_khidmat_jentera.php">TEMPAHAN</a>
                         </li>
                         <li>
-                            <a href="sejarah_tempahan.php">Tempahan</a>
+                            <a href="tempahan_khidmat_jentera_terkini.php">TEMPAHAN TERKINI</a>
+                        </li>
+                        <li>
+                            <a href="sejarah_tempahan_khidmat_jentera.php">SEJARAH TEMPAHAN</a>
                         </li>
                     </ul>
                 </div>
@@ -46,7 +49,7 @@
             <li class="side-nav-item">
                 <a href="profil.php" class="side-nav-link">
                     <i class="uil-user"></i>
-                    <span> Profil </span>
+                    <span> PROFIL </span>
                 </a>
             </li>
 

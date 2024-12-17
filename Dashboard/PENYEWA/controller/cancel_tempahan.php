@@ -6,12 +6,12 @@ $conn = Database::getConnection();
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $id = intval($_POST['id']);
+    $tempahan_id = intval($_POST['tempahan_id']);
     $status = 'dibatalkan';
 
     // Prepare and execute the first statement
     $sql1 = $conn->prepare("UPDATE tempahan SET status_bayaran = ?, status_tempahan = ? WHERE tempahan_id = ?");
-    $sql1->bind_param("ssi", $status, $status, $id);
+    $sql1->bind_param("ssi", $status, $status, $tempahan_id);
 
     if (!$sql1->execute()) {
         echo json_encode(["success" => false, "message" => "Kemaskini tempahan gagal: " . $sql1->error]);
@@ -22,6 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql1->close();
 
     $conn->close();
-    echo json_encode(["success" => true , "id" => $id]);
+    echo json_encode(["success" => true , "tempahan_id" => $tempahan_id]);
 }
 ?>

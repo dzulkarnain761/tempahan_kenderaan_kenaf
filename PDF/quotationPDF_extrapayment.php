@@ -21,9 +21,6 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
   exit;
 }
 
-$imagePath = '../../assets/images/logo_tempahan_kenderaan_black.png'; // Path to your PNG file
-$imageData = base64_encode(file_get_contents($imagePath)); // Encode the image
-$imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
 
 ?>
 

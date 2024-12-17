@@ -4,7 +4,7 @@
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user arrow-none me-0 d-flex align-items-center" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" height="35">
+                    <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" height="35">
                 </span>
                 <span class="account-user-name ms-2"><?php echo $first_name ?></span>
             </a>

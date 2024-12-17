@@ -1,10 +1,11 @@
 <?php
 
+
 require_once '../../../Models/Database.php';
 $conn = Database::getConnection();
 
-if (isset($_POST['id'])) {
-    $tempahan_kerja_id = intval($_POST['id']);
+if (isset($_POST['tempahan_kerja_id'])) {
+    $tempahan_kerja_id = intval($_POST['tempahan_kerja_id']);
     $statusKerja = 'ditolak';
 
     // Prepare the first SQL statement to get tempahan_id
@@ -35,7 +36,7 @@ if (isset($_POST['id'])) {
 
     // Check if remaining kerja is 1
     if ($remaining_kerja == 1) {
-        echo json_encode(['success' => false, 'message' => 'Sila Tolak Tempahan Jika Mahu Tolak Semua Kerja']);
+        echo json_encode(['success' => false, 'message' => 'Sila Batal Tempahan Jika Mahu Batal Semua Kerja']);
         exit;
     }
 

@@ -24,11 +24,11 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="sejarah_pengesahan.php">Sejarah Pengesahan</a></li>
-                                        <li class="breadcrumb-item active">Butiran Tempahan</li>
+                                        <li class="breadcrumb-item"><a href="tempahan_khidmat_jentera_terkini.php">TEMPAHAN KHIDMAT JENTERA TERKINI</a></li>
+                                        <li class="breadcrumb-item active">BUTIRAN TEMPAHAN</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Butiran Tempahan</h4>
+                                <h4 class="page-title">BUTIRAN TEMPAHAN</h4>
                             </div>
                         </div>
                     </div>
@@ -44,50 +44,39 @@
                                     $booking = $tempahan->findByTempahanId($_GET['tempahan_id']);
                                     ?>
 
+
                                     <div class="row mb-3">
-                                        <label for="id" class="col-3 col-form-label">Tempahan ID</label>
+                                        <label for="lokasi_kerja" class="col-3 col-form-label">LOKASI TANAH</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="tempahan_id" name="tempahan_id" value="<?php echo $booking['tempahan_id']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="nama_penyewa" class="col-3 col-form-label">Nama Penyewa</label>
-                                        <div class="col-9">
-                                            <?php
-                                            require_once '../../Models/Penyewa.php';
-                                            $penyewa = new Penyewa();
-                                            $user = $penyewa->findById($booking['penyewa_id']);
-                                            ?>
-                                            <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="<?php echo $user['nama']; ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="luas_tanah" class="col-3 col-form-label">Keluasan Tanah</label>
+                                        <label for="luas_tanah" class="col-3 col-form-label">LUAS TANAH (HEKTAR)</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" id="luas_tanah" name="luas_tanah" value="<?php echo $booking['luas_tanah']; ?>" readonly>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="created_at" class="col-3 col-form-label">Tarikh Tempahan</label>
+                                        <label for="created_at" class="col-3 col-form-label">TARIKH TEMPAHAN</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-                                    
+
 
                                     <div class="row mb-3">
-                                        <label for="catatan" class="col-3 col-form-label">Catatan</label>
+                                        <label for="catatan" class="col-3 col-form-label">CATATAN</label>
                                         <div class="col-9">
                                             <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo $booking['catatan']; ?></textarea>
                                         </div>
                                     </div>
+
+
+
+
+
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -97,13 +86,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
-                                    </ol>
-                                </div> -->
-                                <h4 class="page-title">Butiran Kerja</h4>
+
+                                <h4 class="page-title">BUTIRAN KERJA</h4>
                             </div>
                         </div>
                     </div>
@@ -112,15 +96,16 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <form id="terimaTempahan">
+                                    
                                         <div class="table-responsive">
-                                            <table class="table table-centered w-100 dt-responsive nowrap" >
+                                            <table class="table table-centered w-100 dt-responsive nowrap">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th>Nama Kerja</th>
                                                         <th>Tarikh Kerja</th>
-                                                        <th>Harga Pengesahan</th>
-                                                        
+                                                        <?php if ($booking['status_tempahan'] == 'pengesahan pee') {
+                                                            echo '<th class="text-center">Tindakan</th>';
+                                                        } ?>
                                                     </tr>
                                                 </thead>
 
@@ -140,9 +125,13 @@
                                                             <td>
                                                                 <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                             </td>
-                                                            <td>
-                                                                RM <?php echo $work['harga_anggaran']; ?>
-                                                            </td>
+
+                                                            <?php if ($booking['status_tempahan'] == 'pengesahan pee') { ?>
+                                                                <td class="text-center">
+                                                                    <button class="btn btn-danger" onclick="batalKerja(<?php echo $work['tempahan_kerja_id'] ?>)" data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Kerja"><i class="mdi mdi-delete"></i></button>
+                                                                </td>
+                                                            <?php } ?>
+
 
                                                         </tr>
                                                     <?php } ?>
@@ -150,13 +139,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
-                                       
-
-
-
-
-                                    </form>
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -179,8 +161,56 @@
 
 
     <?php include 'partials/script.php'; ?>
+    <script>
+        function batalKerja(tempahan_kerja_id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Batal Kerja"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('controller/cancel_kerja.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `tempahan_kerja_id=${tempahan_kerja_id}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire(
+                                    'Cancelled!',
+                                    'The task has been cancelled.',
+                                    'success'
+                                ).then(() => {
+                                    location.reload(); 
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    data.message,
+                                    'error'
+                                );
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire(
+                                'Error!',
+                                'There was a problem processing your request.',
+                                'error'
+                            );
+                        });
+                }
+            });
+        }
+    </script>
 
-    
 
 </body>
 

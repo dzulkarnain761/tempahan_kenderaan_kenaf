@@ -3,11 +3,6 @@
 
 session_start();
 
-// Check if the session 'kumpulan' is set, otherwise redirect to login
-if (!isset($_SESSION['kumpulan'])) {
-    header('Location: login.php');
-    exit();
-}
 
 $kumpulan = $_SESSION['kumpulan'];
 
@@ -49,8 +44,7 @@ switch ($kumpulan) {
         header('Location: ../../Dashboard/SUPER_ADMIN/index.php');
         break;
     default:
-        // Redirect to a default page if 'kumpulan' is not recognized
-        header('Location: index.php');
+        header('Location: ../../Dashboard/PENYEWA/homepage.php');
         break;
 }
 

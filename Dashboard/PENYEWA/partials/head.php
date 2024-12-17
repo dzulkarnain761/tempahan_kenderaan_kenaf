@@ -12,7 +12,7 @@
 	<style>
 		body[data-leftbar-theme=dark] {
 			--ct-bg-leftbar: #43A6C6;
-			--ct-dark-menu-item: black;
+			--ct-dark-menu-item: #22333b;
 			--ct-dark-menu-item-hover: white;
 			--ct-dark-menu-item-active: white;
 		}

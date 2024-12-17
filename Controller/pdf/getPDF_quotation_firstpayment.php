@@ -13,7 +13,7 @@
 	$dompdf = new Dompdf($options);
 
 	ob_start();
-	require('../../PDF/quotationPDF_fullpayment.php');
+	require('../../PDF/quotationPDF_firstpayment.php');
 	$html = ob_get_clean();
 	$dompdf->loadHtml($html);
 

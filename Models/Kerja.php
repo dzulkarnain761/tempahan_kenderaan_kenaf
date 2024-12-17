@@ -27,13 +27,6 @@ class Kerja
         $this->db = Database::getConnection();
     }
 
-    // // CREATE: Method to insert a new booking (tempahan_kerja)
-    // public function create($tempahan_id, $nama_kerja)
-    // {
-    //     $stmt = $this->db->prepare("INSERT INTO tempahan_kerja (tempahan_id, nama_kerja) VALUES (?, ?)");
-    //     $stmt->bind_param("isss", $user_id, $booking_date, $luas_tanah, $catatan);
-    //     return $stmt->execute();
-    // }
 
     // READ: Method to get booking by ID
     public function findByTempahanId($tempahan_id)

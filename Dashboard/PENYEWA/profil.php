@@ -21,7 +21,7 @@
                         <div class="col-12">
                             <div class="page-title-box">
                                 
-                                <h4 class="page-title">Profil</h4>
+                                <h4 class="page-title">PROFIL</h4>
                             </div>
                         </div>
                     </div>
@@ -34,8 +34,8 @@
                                     <?php
 
                                     $user_id = $_SESSION['id'];
-                                    require_once '../../Models/Admin.php';
-                                    $user = new Admin();
+                                    require_once '../../Models/Penyewa.php';
+                                    $user = new Penyewa();
                                     $userdata = $user->findById($user_id);
                                     
                                     ?>
@@ -63,7 +63,7 @@
                                         <div class="row mb-3">
                                             <label for="email" class="col-3 col-form-label">Email</label>
                                             <div class="col-9">
-                                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $userdata['email']; ?>" required>
+                                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $userdata['email']; ?>">
                                             </div>
                                         </div>
                                         <div class="row mb-3">

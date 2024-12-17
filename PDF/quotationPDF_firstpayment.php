@@ -21,7 +21,7 @@ if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
   exit;
 }
 
-$imagePath = '../../assets/images/logo_tempahan_kenderaan_black.png'; // Path to your PNG file
+$imagePath = '../assets/images/logo/logo_tempahan_kenderaan_black.png'; // Path to your PNG file
 $imageData = base64_encode(file_get_contents($imagePath)); // Encode the image
 $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
 
@@ -71,7 +71,7 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
       margin: 13px 0;
     }
   </style>
-  <!--[if mso]>
+  <!-- [if mso]>
       <noscript>
         <xml>
           <o:OfficeDocumentSettings>
@@ -87,7 +87,7 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
           width: 100% !important;
         }
       </style>
-    <![endif]-->
+    <![endif] -->
   <style type="text/css">
     @media only screen and (min-width: 480px) {
       .mj-column-per-100 {
@@ -313,9 +313,9 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                           <tr>
                             <td style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Maklumat Tempahan :</strong></div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Lokasi : <?php echo $tempahan['lokasi_kerja'] ?></div>
+                              <div class="company-info" style="color: #555; font-family: helvetica">Lokasi : <?php echo $tempahan['lokasi_tanah'] ?></div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Keluasan : <?php echo $tempahan['luas_tanah'] ?> Hektar</div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Tarikh Kerja : <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])); ?></div>
+                             
                             </td>
                           </tr>
                         </table>
@@ -361,7 +361,7 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo date('d/m/Y', strtotime($rowKerja['tarikh_kerja_cadangan'])); ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo date('d/m/Y', strtotime($rowKerja['cadangan_tarikh_kerja'])); ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['jam_anggaran'] ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['minit_anggaran'] ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['harga_anggaran'] ?></td>

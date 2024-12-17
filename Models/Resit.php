@@ -77,11 +77,11 @@ class Resit
 
     public function getResitsWithoutProof()
     {
-        $stmt = $this->db->prepare("SELECT t.tempahan_id, t.tarikh_kerja, p.nama, r.jenis_pembayaran, r.cara_bayar,r.resit_id, r.jumlah
+        $stmt = $this->db->prepare("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.cara_bayar,r.resit_id, r.jumlah
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE r.bukti_resit_path = '' AND cara_bayar = 'tunai'");
+                WHERE r.bukti_pembayaran_tunai = '' AND cara_bayar = 'tunai'");
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
@@ -89,21 +89,21 @@ class Resit
 
     public function getAllResit()
     {
-        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.resit_id, r.created_at,r.jumlah, r.bukti_resit_path, r.created_at
+        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.resit_id, r.created_at,r.jumlah, r.created_at
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE r.status_resit = 'selesai' AND r.cara_bayar = 'tunai'");
+                WHERE r.cara_bayar = 'tunai'");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function getResitRefund()
     {
-        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.resit_id, r.created_at,r.jumlah, r.bukti_resit_path, r.created_at
+        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.resit_id, r.created_at,r.jumlah, r.created_at
                 FROM tempahan t
                 LEFT JOIN penyewa p ON p.id = t.penyewa_id
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE r.status_resit = 'selesai' AND jenis_pembayaran = 'refund'");
+                WHERE jenis_pembayaran = 'refund'");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 }

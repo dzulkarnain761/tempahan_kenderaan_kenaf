@@ -44,8 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['id'] = $pengguna_id;
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
                     $_SESSION['no_kp'] = $no_kp;
+                    $_SESSION['kumpulan'] = 'penyewa';
 
-                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'Dashboard/PENYEWA/profil.php']);
+                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'controller/auth/route.php']);
                     exit();
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $nama_pengguna = $rowAdmin['nama'];
                 $kumpulan = $rowAdmin['kumpulan'];
                 $no_kp = $rowAdmin['no_kp'];
-                
+
                 // Verify the password
                 if (password_verify($password, $hashed_password)) {
                     // ADMIN
@@ -67,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['id'] = $pengguna_id;
                     $_SESSION['nama_pengguna'] = $nama_pengguna;
                     $_SESSION['no_kp'] = $no_kp;
-                    
 
-                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'controller/auth/routeAdmin.php']);
+
+                    echo json_encode(['success' => true, 'message' => 'Log Masuk Berjaya', 'location' => 'controller/auth/route.php']);
                     exit();
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Sila Pastikan Kata Laluan Anda']);
@@ -85,5 +86,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
-
-?>

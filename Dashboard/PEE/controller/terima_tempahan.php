@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Prepare the update query for tempahan_kerja
-        $updateKerjaQuery = "UPDATE tempahan_kerja SET jam_anggaran = ?, minit_anggaran = ?, harga_anggaran = ?, tarikh_kerja_cadangan = ? WHERE tempahan_kerja_id = ?";
+        $updateKerjaQuery = "UPDATE tempahan_kerja SET jam_anggaran = ?, minit_anggaran = ?, harga_anggaran = ?, cadangan_tarikh_kerja = ? WHERE tempahan_kerja_id = ?";
         $stmt = $conn->prepare($updateKerjaQuery);
 
         if ($stmt) {
