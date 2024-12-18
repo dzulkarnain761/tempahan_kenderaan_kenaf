@@ -6,8 +6,8 @@ $conn = Database::getConnection();
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $tempahan_id = intval($_POST['tempahan_id']); 
+
+    $tempahan_id = intval($_POST['tempahan_id']);
 
     // Begin transaction
     $conn->begin_transaction();
@@ -55,6 +55,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($total_baki > 0) {
             $status_tempahan = 'bayaran penyewa';
             $status_bayaran = 'bayaran tambahan';
+
+            // Generate reference number for additional payment
+            $reference_number = 'KJBT' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
+            $jenis_pembayaran = 'bayaran tambahan';
+
+            // Insert into quotation table
+            $stmt = $conn->prepare("INSERT INTO quotation (total, reference_number, jenis_pembayaran, tempahan_id) 
+                                    VALUES (?, ?, ?, ?)");
+            $stmt->bind_param('dssi', $total_baki, $reference_number, $jenis_pembayaran, $tempahan_id);
+            if (!$stmt->execute()) {
+                throw new Exception("Gagal Menyimpan Quotation");
+            }
         } else {
             $status_tempahan = 'refund kewangan';
             $status_bayaran = 'refund';
@@ -76,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Commit transaction
         $conn->commit();
         echo json_encode(["success" => true, "message" => "Berjaya Kemaskini Tempahan"]);
-
     } catch (Exception $e) {
         // Rollback transaction if any query fails
         $conn->rollback();
@@ -91,5 +102,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Close the connection
 $conn->close();
-
-?>

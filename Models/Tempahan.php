@@ -87,7 +87,6 @@ class Tempahan
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-
     public function findByUserId($user_id)
     {
         $stmt = $this->db->prepare("SELECT * FROM tempahan WHERE penyewa_id = ?");
@@ -115,17 +114,6 @@ class Tempahan
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getAllResitWithStatusTempahan($status_tempahan)
-    {
-        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.cara_bayar, r.resit_id
-                FROM tempahan t
-                LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE t.status_tempahan = '$status_tempahan'");
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-
     public function sejarahPengesahanKPP()
     {
         $result = $this->db->query("SELECT * FROM tempahan t LEFT JOIN penyewa p ON p.id = t.penyewa_id WHERE status_tempahan NOT IN ('pengesahan pee','pengesahan kpp','selesai')");
@@ -138,6 +126,17 @@ class Tempahan
         $result = $this->db->query("SELECT COUNT(*) AS total_tempahan FROM tempahan");
         $row = $result->fetch_assoc();
         return $row['total_tempahan'];
+    }
+
+
+    public function getAllCompleteResit()
+    {
+        $result = $this->db->query("SELECT *
+                FROM tempahan t
+                LEFT JOIN penyewa p ON p.id = t.penyewa_id
+                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
+                WHERE r.cara_bayar = 'tunai'");
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
 

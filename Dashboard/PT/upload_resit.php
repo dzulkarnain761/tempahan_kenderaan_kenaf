@@ -62,9 +62,9 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Lokasi Kerja</label>
+                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -74,12 +74,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
@@ -133,7 +128,7 @@
                                                                 <?php echo $work['nama_kerja']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
+                                                                <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                             </td>
                                                             <td>
                                                                 RM <?php echo $work['harga_anggaran']; ?>
@@ -142,7 +137,6 @@
                                                                 RM <?php echo $work['total_harga']; ?>
                                                             </td>
                                                             
-
                                                         </tr>
                                                     <?php } ?>
 
@@ -151,7 +145,7 @@
                                         </div>
                                         
                                         <div class="row mb-3">
-                                        <label for="gambar_resit" class="col-3 col-form-label">Bukti Resit</label>
+                                        <label for="gambar_resit" class="col-3 col-form-label">Bukti Pembayaran</label>
                                             <div class="col-9">
                                                 <input type="file" class="form-control" name="gambar_resit" required>
                                             </div>
@@ -163,11 +157,7 @@
                                         <input type="hidden" name="tempahan_id" value="<?php echo $_GET['tempahan_id'] ?>">
 
                                         <div class="text-end">
-                                            <?php if ($booking['total_baki'] > 0) { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                            <?php } else { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                            <?php } ?>
+                                           
                                             <a href="../../Controller/pdf/getPDF_resit.php?resit_id=<?php echo $_GET['resit_id']; ?>" target="_blank" class="btn btn-info">Lihat Resit</a>
                                             <button type="submit" onclick="submitForm(event)" class="btn btn-success">Muat Naik Bukti Resit</button>
                                         </div>
@@ -225,7 +215,7 @@
                 if (result.isConfirmed) {
                     const formData = new FormData(form);
 
-                    fetch('controller/upload_bukti_resit.php', {
+                    fetch('controller/upload_bukti_pembayaran.php', {
                             method: 'POST',
                             body: formData // Send FormData directly
                         })

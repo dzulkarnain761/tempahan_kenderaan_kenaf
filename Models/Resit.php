@@ -77,25 +77,17 @@ class Resit
 
     public function getResitsWithoutProof()
     {
-        $stmt = $this->db->prepare("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.cara_bayar,r.resit_id, r.jumlah
-                FROM tempahan t
-                LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE r.bukti_pembayaran_tunai = '' AND cara_bayar = 'tunai'");
+        $stmt = $this->db->prepare("SELECT *
+                FROM resit_pembayaran r
+                LEFT JOIN tempahan t ON t.tempahan_id = r.tempahan_id
+                LEFT JOIN penyewa p ON t.penyewa_id = p.id
+                WHERE r.cara_bayar = 'tunai' AND r.bukti_pembayaran_tunai is NULL");
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getAllResit()
-    {
-        $result = $this->db->query("SELECT t.tempahan_id, p.nama, r.jenis_pembayaran, r.resit_id, r.created_at,r.jumlah, r.created_at
-                FROM tempahan t
-                LEFT JOIN penyewa p ON p.id = t.penyewa_id
-                LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
-                WHERE r.cara_bayar = 'tunai'");
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
+    
 
     public function getResitRefund()
     {
@@ -105,5 +97,27 @@ class Resit
                 LEFT JOIN resit_pembayaran r ON r.tempahan_id = t.tempahan_id
                 WHERE jenis_pembayaran = 'refund'");
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+    public function checkResitExist($tempahan_id, $jenis_pembayaran)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM resit_pembayaran WHERE tempahan_id = ? AND jenis_pembayaran = ?");
+        $stmt->bind_param("ss", $tempahan_id, $jenis_pembayaran);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+
+    public function getResitDetails($resit_id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM resit_pembayaran r
+                LEFT JOIN tempahan t ON r.tempahan_id = t.tempahan_id
+                WHERE r.resit_id = ?");
+        $stmt->bind_param("i", $resit_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 }

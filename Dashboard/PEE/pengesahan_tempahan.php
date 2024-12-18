@@ -235,7 +235,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, tolak!',
+                confirmButtonText: 'Tolak Tugasan',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -292,7 +292,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, tolak tempahan!",
+                confirmButtonText: "Tolak Tempahan",
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -372,7 +372,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, hantar!",
+                confirmButtonText: "Ya",
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {

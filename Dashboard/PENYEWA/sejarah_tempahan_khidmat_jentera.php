@@ -96,7 +96,7 @@
                                                                                 ?></td>
 
                                                         <td class="table-action text-center">
-                                                            <a href="butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
+                                                            <a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
                                                                 class="btn btn-primary"
                                                                 data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"

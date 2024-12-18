@@ -28,7 +28,7 @@ switch ($kumpulan) {
         break;
     case 'F':
         // Redirect to page for PEMBANTU TADBIR
-        header('Location: ../../Dashboard/PT/tempahan_resit.php');
+        header('Location: ../../Dashboard/PT/terima_tunai.php');
         break;
     case 'G':
         // Redirect to page for KEWANGAN

@@ -19,7 +19,7 @@
 						
 						
 						<li class="side-nav-item">
-							<a href="tempahan_resit.php" class="side-nav-link">
+							<a href="terima_tunai.php" class="side-nav-link">
 								<i class="uil-wallet"></i> <!-- Changed icon to wallet -->
 								<span> Terima Tunai </span>
 							</a>

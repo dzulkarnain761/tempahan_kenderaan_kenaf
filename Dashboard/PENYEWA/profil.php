@@ -42,9 +42,9 @@
                                     
                                     <form  method="post" id="updateProfil">
                                         <div class="row mb-3">
-                                            <label for="id" class="col-3 col-form-label">Staff ID</label>
+                                            <label for="penyewa_id" class="col-3 col-form-label">Staff ID</label>
                                             <div class="col-9">
-                                                <input type="text" class="form-control" id="id" name="staff_id" value="<?php echo $userdata['id']; ?>" readonly>
+                                                <input type="text" class="form-control" id="penyewa_id" name="penyewa_id" value="<?php echo $userdata['id']; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -84,6 +84,50 @@
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                
+                                <h4 class="page-title">INFO BANK</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    
+                                    <form  method="post" id="updateBankInfo">
+                                        <div class="row mb-3">
+                                            <label for="nama_bank" class="col-3 col-form-label">Nama Bank</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="nama_bank" name="nama_bank" value="<?php echo $userdata['nama_bank']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="no_bank" class="col-3 col-form-label">No Bank</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" id="no_bank" name="no_bank" value="<?php echo $userdata['no_bank']; ?>" >
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="penyewa_id" value="<?php echo $userdata['id']; ?>">
+                                        
+                                        <div class="justify-content-end row">
+                                            <div class="col-9">
+                                                <button type="submit" onclick="updateBankInfo()" class="btn btn-primary">Kemaskini Bank Info</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+                    </div>
+
+
 
                 </div> <!-- container -->
 
@@ -157,6 +201,64 @@
                 }
             });
         }
+
+
+        function updateBankInfo() {
+            const form = document.getElementById('updateBankInfo');
+
+            // Validate required fields
+            if (!form.checkValidity()) {
+                form.reportValidity(); // This will highlight invalid fields and show default messages
+                return; // Stop execution if the form is invalid
+            }
+            event.preventDefault();
+            Swal.fire({
+                title: "Kemaskini Bank Info",
+                text: "Adakah anda pasti?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(form);
+
+                    fetch('controller/update_bank_info.php', {
+                            method: 'POST',
+                            body: new URLSearchParams(formData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berjaya',
+                                    text: data.message || 'Berjaya Kemaskini',
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ralat',
+                                    text: data.message || 'Ralat tidak diketahui',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ralat',
+                                text: 'Ralat memproses respons pelayan',
+                            });
+                        });
+                }
+            });
+        }
+
+
 
     </script>
 

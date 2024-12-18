@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $stmt->bind_param('iidsi', $hours, $minutes, $price, $dates, $value);
 
-                // Execute the statement
                 if (!$stmt->execute()) {
                     throw new Exception("Error updating tempahan_kerja: " . $stmt->error);
                 }

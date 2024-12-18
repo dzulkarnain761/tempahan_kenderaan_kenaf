@@ -129,14 +129,12 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                     <tr>
                       <td align="left" style="font-size: 0px; padding: 10px 25px; padding-bottom: 5px; word-break: break-word">
                         <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22px; table-layout: auto; width: 100%; border: none">
-                          <tr>
-                            <td style="width: 50%">
-
-
-                              <img align="left" src="<?php echo $imgSrc ?>" width="50%" style="max-width: 160px" />
+                        <tr>
+                            <td style="width: 100%">
+                              <img align="left" src="<?php echo $imgSrc ?>" width="150px" />
                             </td>
-                            <td style="width: 50%">
-                              <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold"> SEBUT HARGA </div>
+                            <td style="width: 100%">
+                              <div class="invoice-word" style="font-family: helvetica; color: #333; font-weight: bold; font-size:medium"> SEBUT HARGA </div>
                             </td>
                           </tr>
                         </table>
@@ -279,7 +277,17 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
 
                             </td>
 
-                            <td width="50%" v-align="top" style="vertical-align: top">
+                            
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="left" style="font-size: 0px; padding: 10px 25px; word-break: break-word">
+                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color: #000000; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22px; table-layout: auto; width: 100%; border: none">
+                          <tr>
+                          <td width="50%" v-align="top" style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Bil Daripada:</strong></div>
 
                               <div class="company-info" style="color: #555; font-family: helvetica">Lembaga Kenaf dan Tembakau Negara</div>
@@ -300,9 +308,8 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                           <tr>
                             <td style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Maklumat Tempahan :</strong></div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Lokasi : <?php echo $tempahan['lokasi_kerja'] ?></div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Keluasan : <?php echo $tempahan['luas_tanah'] ?> Hektar</div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Tarikh Kerja : <?php echo date('d/m/Y', strtotime($tempahan['tarikh_kerja'])); ?></div>
+                              <div class="company-info" style="color: #555; font-family: helvetica">Lokasi Tanah : <?php echo $tempahan['lokasi_tanah'] ?></div>
+                              <div class="company-info" style="color: #555; font-family: helvetica">Luas Tanah (Hektar) : <?php echo $tempahan['luas_tanah'] ?></div>
 
                             </td>
                           </tr>
@@ -347,7 +354,7 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                           ?>
                             <tr>
                               <td class="td-line-item" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd"><?php echo $rowKerja['nama_kerja'] ?></td>
-                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo date('d/m/Y', strtotime($rowKerja['tarikh_kerja_cadangan'])); ?></td>
+                              <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo date('d/m/Y', strtotime($rowKerja['cadangan_tarikh_kerja'])); ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['total_jam'] ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap"><?php echo $rowKerja['total_minit'] ?></td>
                               <td class="td-line-item nowrap" align="right" style="color: #555; padding: 10px 0; font-family: helvetica; border-bottom: 1px solid #ddd; white-space: nowrap">RM <?php echo $rowKerja['total_harga'] ?></td>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
 
     // Set the target directory where you want to save images
-    $target_dir = "bukti_resit/";
+    $target_dir = "bukti_pembayaran_tunai/";
 
     // Get the file details
     $image = $_FILES['gambar_resit']['name'];
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // Update the image path into the database
                 $sqlResit = "UPDATE resit_pembayaran 
-                             SET bukti_resit_path = '$new_image_name'
+                             SET bukti_pembayaran_tunai = '$new_image_name'
                              WHERE resit_id = $resit_id";
 
                 if ($conn->query($sqlResit) === TRUE) {

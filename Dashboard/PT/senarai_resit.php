@@ -38,7 +38,7 @@
                                                 <tr>
                                                     <th>Resit ID</th>
                                                     <th>Nama Penyewa</th>
-                                                    <th>Tarikh Kerja</th>
+                                                    
                                                     <th>Jumlah</th>
                                                     <th>Jenis Pembayaran</th>
 
@@ -55,7 +55,7 @@
                                                     <tr>
                                                         <td><?php echo $resit['resit_id']; ?></td>
                                                         <td><?php echo $resit['nama']; ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($resit['tarikh_kerja'])); ?></td>
+                                                        
                                                         <td><?php echo $resit['jumlah']; ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
 

@@ -1,4 +1,9 @@
-<?php include 'controller/session.php'; ?>
+<?php 
+include 'controller/session.php';
+require_once '../../Models/Tempahan.php';
+require_once '../../Models/Kerja.php';
+require_once '../../Models/Quotation.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +27,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Tempahan</li>
-                                        </ol>
-                                    </div> -->
+                                
                                 <h4 class="page-title">Terima Tunai</h4>
                             </div>
                         </div>
@@ -43,8 +43,7 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Tempahan ID</th>
-                                                    <th>Nama Penyewa</th>
-                                                    
+                                                    <th>Nama Penyewa</th> 
                                                     <th>Tugasan</th>
                                                     <th>Jenis Pembayaran</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
@@ -52,16 +51,16 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tempahan.php';
-                                                $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllResitWithStatusTempahan('pengesahan pt');
+                                                
+                                                $quotation = new Quotation();
+                                                $bookings = $quotation->getQuotationDetail('pengesahan','pengesahan pt');
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
                                                         <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php
-                                                            require_once '../../Models/Kerja.php';
+                                                            
                                                             $kerja = new Kerja();
                                                             $works = $kerja->findByTempahanId($booking['tempahan_id']);
                                                             $count = 1;
@@ -74,7 +73,7 @@
                                                         <td><?php echo $booking['jenis_pembayaran']; ?></td>
 
                                                         <td class="table-action text-center">
-                                                            <a href="penerimaan_tunai.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>"
+                                                            <a href="penerimaan_tunai.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&quotation_id=<?php echo $booking['quotation_id'] ?>"
                                                                 class="btn btn-primary"
                                                                 data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"

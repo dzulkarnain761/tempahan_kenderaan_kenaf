@@ -1,41 +1,22 @@
 <?php
 
 
-require_once __DIR__ . '/../Models/Database.php';
-$conn = Database::getConnection();
+require_once __DIR__ . '/../Models/Penyewa.php';
+require_once __DIR__ . '/../Models/Tempahan.php';
+require_once __DIR__ . '/../Models/Resit.php';
+require_once __DIR__ . '/../Models/Kerja.php';
+require_once __DIR__ . '/../Models/Tugasan.php';
 
 $resit_id = $_GET['resit_id'];
 
 
-// Ensure you escape the ID to prevent SQL injection
-$resit_id = mysqli_real_escape_string($conn, $resit_id);
-
-$sqlTempahan = "SELECT r.*,t.* FROM resit_pembayaran r
-                LEFT JOIN tempahan t ON r.tempahan_id = t.tempahan_id
-                WHERE r.resit_id = $resit_id";
-$resultTempahan = mysqli_query($conn, $sqlTempahan);
-
-// Fetch the Pemandu member's data
-if ($resultTempahan && mysqli_num_rows($resultTempahan) > 0) {
-    $tempahan = mysqli_fetch_assoc($resultTempahan);
-} else {
-    // Handle the case where no Pemandu member is found
-    echo "Tiada Resit";
-    exit;
-}
+$resit = new Resit();
+$tempahan = $resit->getResitDetails($resit_id);
 
 $penyewa_id = $tempahan['penyewa_id'];
 
-$sqlPenyewa = "SELECT * FROM `penyewa` WHERE id = $penyewa_id";
-$resultPenyewa = mysqli_query($conn, $sqlPenyewa);
-
-if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
-    $penyewa = mysqli_fetch_assoc($resultPenyewa);
-} else {
-    // Handle the case where no Pemandu member is found
-    echo "Tiada Penyewa Dijumpai";
-    exit;
-}
+$penyewa_detail = new Penyewa();
+$penyewa = $penyewa_detail->findById($penyewa_id);
 
 ?>
 
@@ -90,25 +71,19 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
                 <?php
 
                 $tempahan_id = $tempahan['tempahan_id'];
-                // SQL query to select all tasks for the booking
-                $sqlKerja = "SELECT * FROM `tempahan_kerja` 
-                                        WHERE tempahan_id = $tempahan_id";
-
-                $resultKerja = mysqli_query($conn, $sqlKerja);
+                $kerja = new Kerja();
+                $task = $kerja->findByTempahanId($tempahan_id);
 
                 // Loop through the result set
-                while ($rowKerja = mysqli_fetch_assoc($resultKerja)) {
+                foreach($task as $rowKerja){
                     $nama_kerja = $rowKerja['nama_kerja'];
 
-                    $sqltugasan = "SELECT * FROM `tugasan` WHERE kerja = '$nama_kerja'";
-                    $resulttugasan = mysqli_query($conn, $sqltugasan);
+                    $tugasan = new Tugasan();
+                    $tugasans = $tugasan->getRateByName($nama_kerja);
+                    $rateharga = $tugasans['harga_per_jam'];
 
-                    if ($resulttugasan && mysqli_num_rows($resulttugasan) > 0) {
-                        $fetchTugasan = mysqli_fetch_assoc($resulttugasan);
-                        $rateharga = $fetchTugasan['harga_per_jam'];
-                    }
                 ?>
-					<?php if($tempahan['jenis_pembayaran'] == 'bayaran penuh'){ ?>
+					<?php if($tempahan['jenis_pembayaran'] == 'bayaran muka'){ ?>
                     <tr>
                         <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $rowKerja['nama_kerja'] ?></td>
                         <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><?php echo $rowKerja['jam_anggaran'] ?></td>
@@ -136,7 +111,7 @@ if ($resultPenyewa && mysqli_num_rows($resultPenyewa) > 0) {
 
         <!-- Totals Section -->
         <div style="text-align: right;">
-             <?php if($tempahan['jenis_pembayaran'] == 'bayaran penuh'){ ?> 
+             <?php if($tempahan['jenis_pembayaran'] == 'bayaran muka'){ ?> 
             <p><strong>Total : </strong> RM <?php echo $tempahan['total_harga_anggaran'] ?></p>
 			 <?php }elseif($tempahan['jenis_pembayaran'] == 'bayaran tambahan'){ ?>
 			<p><strong>Total: </strong> RM <?php echo $tempahan['total_harga_sebenar'] ?></p>

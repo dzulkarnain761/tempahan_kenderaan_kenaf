@@ -24,11 +24,11 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="sejarah_tempahan.php">Sejarah Tempahan</a></li>
-                                        <li class="breadcrumb-item active">Butiran Tempahan</li>
+                                        <li class="breadcrumb-item"><a href="sejarah_tempahan_khidmat_jentera.php">SEJARAH TEMPAHAN</a></li>
+                                        <li class="breadcrumb-item active">BUTIRAN TEMPAHAN</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Butiran Tempahan</h4>
+                                <h4 class="page-title">BUTIRAN TEMPAHAN</h4>
                             </div>
                         </div>
                     </div>
