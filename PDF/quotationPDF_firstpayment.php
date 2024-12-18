@@ -308,7 +308,7 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                             <td style="vertical-align: top">
                               <div class="company-info-header" style="color: #333; font-family: helvetica"><strong>Maklumat Tempahan :</strong></div>
                               <div class="company-info" style="color: #555; font-family: helvetica">Lokasi Tanah : <?php echo $tempahan['lokasi_tanah'] ?></div>
-                              <div class="company-info" style="color: #555; font-family: helvetica">Luas Tanah (Hektar) : <?php echo $tempahan['luas_tanah'] ?> Hektar</div>
+                              <div class="company-info" style="color: #555; font-family: helvetica">Luas Tanah (Hektar) : <?php echo $tempahan['luas_tanah'] ?></div>
 
                             </td>
                           </tr>

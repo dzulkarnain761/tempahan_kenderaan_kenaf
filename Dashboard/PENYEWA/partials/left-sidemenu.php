@@ -25,7 +25,6 @@
                 </a>
             </li>
 
-
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSejarah" aria-expanded="false" aria-controls="sidebarSejarah" class="side-nav-link">
                     <i class="uil-history"></i>
@@ -41,7 +40,7 @@
                             <a href="tempahan_khidmat_jentera_terkini.php">TEMPAHAN TERKINI</a>
                         </li>
                         <li>
-                            <a href="sejarah_tempahan_khidmat_jentera.php">SEJARAH TEMPAHAN</a>
+                            <a href="sejarah_tempahan_khidmat_jentera.php">TEMPAHAN TERDAHULU</a>
                         </li>
                     </ul>
                 </div>
@@ -49,6 +48,18 @@
             <li class="side-nav-item">
                 <a href="profil.php" class="side-nav-link">
                     <i class="uil-user"></i>
+                    <?php  
+                    
+                    require_once '../../Models/Penyewa.php';
+                    $penyewa = new Penyewa();
+
+                    $checkBankInfo = $penyewa->isBankInfoExist($_SESSION['id']);
+                    if($checkBankInfo == false){
+                        echo '<span class="badge bg-danger float-end">!</span>';
+                    }
+                    
+                    ?>
+                    
                     <span> PROFIL </span>
                 </a>
             </li>

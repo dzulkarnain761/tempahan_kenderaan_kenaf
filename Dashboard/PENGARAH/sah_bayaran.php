@@ -91,21 +91,21 @@
                                     <?php if ($booking['total_baki'] > 0) { ?>
 
                                         <div class="row mb-3">
-                                        <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                        <div class="row mb-3">
+                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
                                     <?php } ?>
 
-                                    
+
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -126,66 +126,78 @@
                             <div class="card">
                                 <div class="card-body">
 
-                                    
-                                        <div class="table-responsive">
-                                            <table class="table table-centered w-100 dt-responsive nowrap">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>Tempahan ID</th>
-                                                        <th>Nama Kerja</th>
-                                                        <th>Tarikh Kerja</th>
-                                                        <th>Harga Pengesahan</th>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-centered w-100 dt-responsive nowrap">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Tempahan ID</th>
+                                                    <th>Nama Kerja</th>
+                                                    <th>Tarikh Kerja</th>
+                                                    <th>Harga Pengesahan</th>
+
+                                                    <?php if ($booking['total_baki'] > 0) { ?>
+
                                                         <th>Harga Jobsheet</th>
-                                                    </tr>
-                                                </thead>
 
-                                                <tbody>
-                                                    <?php
-                                                    require_once '../../Models/Kerja.php';
-                                                    $tempahan_kerja = new Kerja();
-                                                    $works = $tempahan_kerja->findByTempahanId($_GET['tempahan_id']);
+                                                    <?php } ?>
+                                                    
+                                                </tr>
+                                            </thead>
 
-                                                    foreach ($works as $work) { ?>
-                                                        <tr>
-                                                            <td>
-                                                                <?php echo $work['tempahan_id']; ?>
-                                                            </td>
+                                            <tbody>
+                                                <?php
+                                                require_once '../../Models/Kerja.php';
+                                                $tempahan_kerja = new Kerja();
+                                                $works = $tempahan_kerja->findByTempahanId($_GET['tempahan_id']);
 
-                                                            <td>
-                                                                <?php echo $work['nama_kerja']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
-                                                            </td>
-                                                            <td>
-                                                                RM <?php echo $work['harga_anggaran']; ?>
-                                                            </td>
+                                                foreach ($works as $work) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $work['tempahan_id']; ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $work['nama_kerja']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
+                                                        </td>
+                                                        <td>
+                                                            RM <?php echo $work['harga_anggaran']; ?>
+                                                        </td>
+
+                                                        <?php if ($booking['total_baki'] > 0) { ?>
+
                                                             <td>
                                                                 RM <?php echo $work['total_harga']; ?>
                                                             </td>
 
-                                                        </tr>
-                                                    <?php } ?>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                        <?php } ?>
 
 
-                                        <input type="hidden" name="quotation_id" value="<?php echo $_GET['quotation_id'] ?>">
+                                                    </tr>
+                                                <?php } ?>
 
-                                        <div class="text-end">
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                            <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
-                                            <?php if ($booking['total_baki'] > 0) { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                            <?php } else { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_firstpayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                            <?php } ?>
-                                            <button type="submit" onclick="sahBayaran(<?php echo  $_GET['quotation_id'] ?>)" class="btn btn-success">Sah Bayaran</button>
-                                        </div>
 
-                                    
+                                    <input type="hidden" name="quotation_id" value="<?php echo $_GET['quotation_id'] ?>">
+
+                                    <div class="text-end">
+
+                                        <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
+                                        <?php if ($booking['total_baki'] > 0) { ?>
+                                            <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                        <?php } else { ?>
+                                            <a href="../../Controller/pdf/getPDF_quotation_firstpayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                        <?php } ?>
+                                        <button type="submit" onclick="sahBayaran(<?php echo  $_GET['quotation_id'] ?>)" class="btn btn-success">Sah Bayaran</button>
+                                    </div>
+
+
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -271,7 +283,7 @@
         }
 
         function sahBayaran(quotation_id) {
-            
+
             Swal.fire({
                 title: "Sah Bayaran",
                 icon: "warning",

@@ -52,5 +52,22 @@ class Jobsheet
         return $stmt->execute();
     }
 
+
+    public function isUnfinishedJobsheetExist($tempahan_id)
+    {
+        // Prepare the SQL query to check for the specific status
+        $stmt = $this->db->prepare("SELECT status_jobsheet FROM jobsheet WHERE status_jobsheet = 'dijalankan' AND tempahan_id = ?");
+        $stmt->bind_param("i", $tempahan_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Check if there's at least one result
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Getters and Setters for each property can be added here
 }

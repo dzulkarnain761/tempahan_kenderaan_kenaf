@@ -366,8 +366,7 @@
             event.preventDefault();
 
             Swal.fire({
-                title: "Hasilkan Sebut Harga?",
-                text: "Adakah anda pasti?",
+                title: "Hasilkan Sebut Harga",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

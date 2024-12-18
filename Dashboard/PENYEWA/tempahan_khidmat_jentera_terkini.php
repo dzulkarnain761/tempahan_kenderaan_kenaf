@@ -72,7 +72,7 @@ require_once '../../Models/Resit.php';
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td><?php echo htmlspecialchars($booking['catatan'] ?? 'Tiada Catatan'); ?></td>
+                                                        <td><?php echo !empty($booking['catatan']) ? $booking['catatan'] : 'Tiada Catatan'; ?></td>
                                                         <td class="text-center">
                                                             <?php
                                                             $badgeColors = [

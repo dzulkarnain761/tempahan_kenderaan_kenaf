@@ -69,7 +69,7 @@
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">CATATAN</label>
                                         <div class="col-9">
-                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo $booking['catatan']; ?></textarea>
+                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo !empty($booking['catatan']) ? $booking['catatan'] : 'Tiada Catatan'; ?></textarea>
                                         </div>
                                     </div>
 

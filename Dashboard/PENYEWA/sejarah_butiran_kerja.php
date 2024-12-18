@@ -24,12 +24,12 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="sejarah_tempahan.php">Sejarah Tempahan</a></li>
-                                        <li class="breadcrumb-item"><a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $_GET['tempahan_id'] ?>">Butiran Tempahan</a></li>
-                                        <li class="breadcrumb-item active">Butiran Kerja</li>
+                                        <li class="breadcrumb-item"><a href="sejarah_tempahan_khidmat_jentera.php">SEJARAH TEMPAHAN</a></li>
+                                        <li class="breadcrumb-item"><a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $_GET['tempahan_id'] ?>">SEJARAH TEMPAHAN</a></li>
+                                        <li class="breadcrumb-item active">BUTIRAN KERJA</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Butiran Kerja</h4>
+                                <h4 class="page-title">BUTIRAN KERJA</h4>
                             </div>
                         </div>
                     </div>

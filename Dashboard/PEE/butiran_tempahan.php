@@ -138,10 +138,10 @@
                                                                 <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                             </td>
                                                             <td>
-                                                                RM <?php echo $work['harga_anggaran']; ?>
+                                                                RM <?php echo $work['harga_anggaran'] ?? '0.00'; ?>
                                                             </td>
                                                             <td>
-                                                                RM <?php echo $work['total_harga']; ?>
+                                                                RM <?php echo $work['total_harga'] ?? '0.00'; ?>
                                                             </td>
                                                             <?php
                                                             require_once '../../Models/Jobsheet.php';

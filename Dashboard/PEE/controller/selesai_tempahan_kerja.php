@@ -1,54 +1,47 @@
 <?php
 
 require_once '../../../Models/Database.php';
-$conn = Database::getConnection();
+require_once '../../../Models/Jobsheet.php';
 
+$conn = Database::getConnection();
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $tempahan_id = intval($_POST['tempahan_id']);
 
-    // Begin transaction
+    // Validate tempahan_id
+    if ($tempahan_id <= 0) {
+        echo json_encode(["success" => false, "message" => "Invalid tempahan_id"]);
+        exit;
+    }
+
+    $jobsheet = new Jobsheet();
+    if ($jobsheet->isUnfinishedJobsheetExist($tempahan_id)) {
+        echo json_encode(["success" => false, "message" => "Pastikan Semua Jobsheet Selesai"]);
+        exit;
+    }
+
     $conn->begin_transaction();
 
     try {
-        // Retrieve total_harga_anggaran
-        $sqlHargaAnggaran = "
-            SELECT total_harga_anggaran
-            FROM tempahan
-            WHERE tempahan_id = ?
-        ";
-        $stmt = $conn->prepare($sqlHargaAnggaran);
-        $stmt->bind_param('i', $tempahan_id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
+        // Fetch total_harga_anggaran
+        $sqlGetAnggaran = "SELECT total_harga_anggaran FROM tempahan WHERE tempahan_id = ?";
+        $result = fetchSingleResult($conn, $sqlGetAnggaran, 'i', [$tempahan_id]);
 
-        if (!$result) {
-            throw new Exception("Gagal Mendapatkan Harga Anggaran");
-        }
+        if (!$result) throw new Exception("Failed to retrieve total_harga_anggaran");
 
         $total_harga_anggaran = $result['total_harga_anggaran'];
 
-        // Calculate the sum of actual costs
-        $sqlSums = "
-            SELECT SUM(total_harga) AS total_harga 
-            FROM tempahan_kerja 
-            WHERE tempahan_id = ?
-        ";
-        $stmt = $conn->prepare($sqlSums);
-        $stmt->bind_param('i', $tempahan_id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
+        // Fetch total_harga
+        $sqlGetSums = "SELECT SUM(total_harga) AS total_harga FROM tempahan_kerja WHERE tempahan_id = ?";
+        $result = fetchSingleResult($conn, $sqlGetSums, 'i', [$tempahan_id]);
 
-        if (!$result) {
-            throw new Exception("Gagal Mendapatkan Jumlah Harga");
-        }
+        if (!$result) throw new Exception("Failed to retrieve total_harga");
 
         $total_harga_sebenar = $result['total_harga'];
         $total_baki = $total_harga_sebenar - $total_harga_anggaran;
 
-        // Determine status based on the remaining balance
+        // Determine status
         if ($total_baki == 0) {
             $status_tempahan = 'selesai';
             $status_bayaran = 'selesai';
@@ -56,49 +49,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $status_tempahan = 'bayaran penyewa';
             $status_bayaran = 'bayaran tambahan';
 
-            // Generate reference number for additional payment
+            // Insert into quotation
             $reference_number = 'KJBT' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
             $jenis_pembayaran = 'bayaran tambahan';
 
-            // Insert into quotation table
-            $stmt = $conn->prepare("INSERT INTO quotation (total, reference_number, jenis_pembayaran, tempahan_id) 
-                                    VALUES (?, ?, ?, ?)");
-            $stmt->bind_param('dssi', $total_baki, $reference_number, $jenis_pembayaran, $tempahan_id);
-            if (!$stmt->execute()) {
-                throw new Exception("Gagal Menyimpan Quotation");
-            }
+            $sqlInsertQuotation = "INSERT INTO quotation (total, reference_number, jenis_pembayaran, tempahan_id) VALUES (?, ?, ?, ?)";
+            executeQuery($conn, $sqlInsertQuotation, 'dssi', [$total_baki, $reference_number, $jenis_pembayaran, $tempahan_id]);
         } else {
             $status_tempahan = 'refund kewangan';
             $status_bayaran = 'refund';
         }
 
-        // Update tempahan table with the actual cost, balance, and status
-        $updateTempahan = "
+        // Update tempahan
+        $sqlUpdateTempahan = "
             UPDATE tempahan
             SET total_harga_sebenar = ?, total_baki = ?, status_tempahan = ?, status_bayaran = ?
-            WHERE tempahan_id = ?
-        ";
-        $stmt = $conn->prepare($updateTempahan);
-        $stmt->bind_param('ddssi', $total_harga_sebenar, $total_baki, $status_tempahan, $status_bayaran, $tempahan_id);
+            WHERE tempahan_id = ?";
+        executeQuery($conn, $sqlUpdateTempahan, 'ddssi', [$total_harga_sebenar, $total_baki, $status_tempahan, $status_bayaran, $tempahan_id]);
 
-        if (!$stmt->execute()) {
-            throw new Exception("Gagal Kemaskini Tempahan");
-        }
+        // Delete jobsheet
+        $sqlDeleteJobsheet = "DELETE FROM jobsheet WHERE tempahan_id = ? AND status_jobsheet = 'pengesahan'";
+        executeQuery($conn, $sqlDeleteJobsheet, 'i', [$tempahan_id]);
 
-        // Commit transaction
         $conn->commit();
         echo json_encode(["success" => true, "message" => "Berjaya Kemaskini Tempahan"]);
     } catch (Exception $e) {
-        // Rollback transaction if any query fails
         $conn->rollback();
         echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    } finally {
+        $conn->close();
     }
-
-    // Close the statement
-    $stmt->close();
 } else {
     echo json_encode(["success" => false, "message" => "Invalid request method"]);
 }
 
-// Close the connection
-$conn->close();
+function fetchSingleResult($conn, $sql, $types, $params) {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return $result;
+}
+
+function executeQuery($conn, $sql, $types, $params) {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param($types, ...$params);
+    if (!$stmt->execute()) {
+        throw new Exception("Query Execution Failed");
+    }
+    $stmt->close();
+}

@@ -80,12 +80,12 @@
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-                                    
+
 
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
                                         <div class="col-9">
-                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo $booking['catatan']; ?></textarea>
+                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo !empty($booking['catatan']) ? $booking['catatan'] : 'Tiada Catatan'; ?></textarea>
                                         </div>
                                     </div>
 
@@ -97,7 +97,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                               
+
                                 <h4 class="page-title">Butiran Harga</h4>
                             </div>
                         </div>
@@ -115,9 +115,10 @@
                                                         <th>Nama Kerja</th>
                                                         <th>Tarikh Kerja</th>
                                                         <th>Harga Pengesahan</th>
-                                                        <th>Harga Jobsheet</th>
 
-
+                                                        <?php if ($booking['total_baki'] != null) { ?>
+                                                            <th>Harga Jobsheet</th>
+                                                        <?php } ?>
                                                     </tr>
                                                 </thead>
 
@@ -139,9 +140,12 @@
                                                             <td>
                                                                 RM <?php echo $work['harga_anggaran']; ?>
                                                             </td>
-                                                            <td>
-                                                                RM <?php echo $work['total_harga']; ?>
-                                                            </td>
+
+                                                            <?php if ($booking['total_baki'] > 0) { ?>
+                                                                <td>
+                                                                    RM <?php echo $work['total_harga']; ?>
+                                                                </td>
+                                                            <?php } ?>
 
                                                         </tr>
                                                     <?php } ?>
@@ -156,18 +160,23 @@
                                                 <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+
+                                        <?php if ($booking['total_baki'] > 0) { ?>
+                                            <div class="row mb-3">
+                                                <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_sebenar']; ?>" readonly>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                            <div class="row mb-3">
+                                                <label for="total_baki" class="col-3 col-form-label">Total Baki</label>
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control" value="RM <?php echo $booking['total_baki']; ?>" readonly>
+                                                </div>
                                             </div>
-                                        </div>
+
+                                        <?php } ?>
+
 
                                         <div class="text-end">
                                             <?php if ($booking['total_baki'] > 0) { ?>
@@ -194,8 +203,6 @@
             </div> <!-- content -->
 
 
-
-
             <?php include 'partials/footer.php'; ?>
 
         </div>
@@ -211,12 +218,11 @@
         function terimaTunai(tempahan_id) {
             Swal.fire({
                 title: 'Terima Tunai',
-                text: "Tindakan ini tidak boleh dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Selesai',
+                confirmButtonText: 'Terima',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
