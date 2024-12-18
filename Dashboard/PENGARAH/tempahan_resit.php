@@ -1,4 +1,9 @@
-<?php include 'controller/session.php'; ?>
+<?php 
+include 'controller/session.php';
+require_once '../../Models/Tempahan.php';
+require_once '../../Models/Kerja.php';
+require_once '../../Models/Quotation.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +44,7 @@
                                                 <tr>
                                                     <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
-                                                    <th>Tarikh Kerja</th>
+                                                    
                                                     <th>Tugasan</th>
                                                     <th>Jenis Pembayaran</th>
 
@@ -49,15 +54,14 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tempahan.php';
-                                                $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllResitWithStatusTempahan('pengesahan pengarah');
+                                                $quotation = new Quotation();
+                                                $bookings = $quotation->getQuotationDetail('pengesahan','pengesahan pengarah');
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
                                                         <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        
                                                         <td><?php
                                                             require_once '../../Models/Kerja.php';
                                                             $kerja = new Kerja();
@@ -72,7 +76,7 @@
                                                         <td><?php echo $booking['jenis_pembayaran']; ?></td>
 
                                                         <td class="table-action text-center">
-                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&resit_id=<?php echo $booking['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai"> <i class="mdi mdi-check"></i></a>
+                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&quotation_id=<?php echo $booking['quotation_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai"> <i class="mdi mdi-check"></i></a>
 
                                                         </td>
                                                     </tr>

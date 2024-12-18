@@ -3,14 +3,12 @@
     <!-- LOGO -->
     <a href="tempahan.php" class="logo text-center logo-light">
         <span class="logo-lg">
-            <img src="../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
+            <img src="../../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
         </span>
         <span class="logo-sm">
-            <img src="../assets/images/logo/logo_lktn.png" alt="" height="45">
+            <img src="../../assets/images/logo/logo_lktn.png" alt="" height="45">
         </span>
     </a>
-
-
 
     <div class="h-100" id="leftside-menu-container" data-simplebar>
 
@@ -34,9 +32,7 @@
                 </a>
                 <div class="collapse" id="sidebarSejarah">
                     <ul class="side-nav-second-level">
-                        <li>
-                            <a href="sejarah_pengesahan.php">Pengesahan</a>
-                        </li>
+                        
                         <li>
                             <a href="sejarah_tempahan.php">Tempahan</a>
                         </li>

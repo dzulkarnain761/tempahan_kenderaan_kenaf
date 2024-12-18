@@ -4,32 +4,23 @@ require_once '../../Models/Database.php';
 $conn = Database::getConnection();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nokp = trim($_POST['nokp']);
-    $fullname = trim($_POST['fullname']);
-    $contact = trim($_POST['contactno']);
+    $nokp = trim($_POST['no_kp']);
+    $fullname = trim($_POST['nama_penuh']);
+    $contact = trim($_POST['contact_no']);
     $alamat = trim($_POST['alamat']);
+    $email = trim($_POST['email']);
 
     // Convert fullname to uppercase
     $fullname = strtoupper($fullname);
 
     // Validation
     if (empty($nokp) || !ctype_digit($nokp) || strlen($nokp) !== 12) {
-        echo json_encode(["success" => false, "message" => "Sila pastikan No Kad Pengenalan Anda adalah 12 digit."]);
-        exit();
-    }
-
-    if (empty($fullname)) {
-        echo json_encode(["success" => false, "message" => "Nama penuh diperlukan."]);
+        echo json_encode(["success" => false, "message" => "Sila pastikan No Kad Pengenalan Anda"]);
         exit();
     }
 
     if (empty($contact) || !ctype_digit($contact) || strlen($contact) < 10 || strlen($contact) > 15) {
-        echo json_encode(["success" => false, "message" => "Sila pastikan No Telefon adalah antara 10 hingga 15 digit."]);
-        exit();
-    }
-
-    if (empty($alamat)) {
-        echo json_encode(["success" => false, "message" => "Alamat diperlukan."]);
+        echo json_encode(["success" => false, "message" => "Sila pastikan No Telefon adalah antara 10 hingga 13 digit sahaja."]);
         exit();
     }
 

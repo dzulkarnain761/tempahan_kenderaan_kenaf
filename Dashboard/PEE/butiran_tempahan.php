@@ -62,9 +62,9 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Lokasi Kerja</label>
+                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -80,12 +80,7 @@
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Cadangan Tarikh Kerja </label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
@@ -102,12 +97,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
-                                    </ol>
-                                </div> -->
+                                
                                 <h4 class="page-title">Butiran Kerja</h4>
                             </div>
                         </div>
@@ -145,13 +135,13 @@
                                                                 <?php echo $work['nama_kerja']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
+                                                                <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                             </td>
                                                             <td>
-                                                                RM <?php echo $work['harga_anggaran']; ?>
+                                                                RM <?php echo $work['harga_anggaran'] ?? '0.00'; ?>
                                                             </td>
                                                             <td>
-                                                                RM <?php echo $work['total_harga']; ?>
+                                                                RM <?php echo $work['total_harga'] ?? '0.00'; ?>
                                                             </td>
                                                             <?php
                                                             require_once '../../Models/Jobsheet.php';
@@ -210,7 +200,7 @@
     <script>
         function selesaiTempahan(tempahan_id){
             Swal.fire({
-                title: 'Selesai Tempahan Kerja',
+                title: 'Selesai Tempahan',
                 text: "Tindakan ini tidak boleh dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,

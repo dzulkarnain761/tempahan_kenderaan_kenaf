@@ -15,7 +15,7 @@ class FPX
 
     public function findByReferenceNo($reference_no)
     {
-        $stmt = $this->db->prepare("SELECT * FROM fpx_payments WHERE nombor_rujukan = ?");
+        $stmt = $this->db->prepare("SELECT * FROM payment WHERE rsp_orderid = ?");
         $stmt->bind_param("s", $reference_no);
         $stmt->execute();
         $result = $stmt->get_result();

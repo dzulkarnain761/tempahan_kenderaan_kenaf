@@ -45,7 +45,7 @@
                                                     <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Cadangan Tarikh Kerja</th>
+                                                    
                                                     <th>Tugasan</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
@@ -62,7 +62,7 @@
                                                         <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        
                                                         <td><?php
                                                             require_once '../../Models/Kerja.php';
                                                             $kerja = new Kerja();

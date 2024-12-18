@@ -17,7 +17,7 @@ class Penyewa extends Account
         return $stmt->execute();
     }
 
-    // UPDATE: Method to update user details
+    
     public function update($id, $nama, $no_kp, $contact_no, $alamat, $nama_bank, $no_bank, $password)
     {
         $stmt = $this->db->prepare("UPDATE penyewa SET nama = ?, no_kp = ?, contact_no = ?, alamat = ?, nama_bank = ?, no_bank = ?, password = ? WHERE id = ?");
@@ -40,7 +40,6 @@ class Penyewa extends Account
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     
-    // READ: Method to get user by ID
     public function findById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM penyewa WHERE id = ?");
@@ -48,5 +47,17 @@ class Penyewa extends Account
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc();
+    }
+
+    public function isBankInfoExist($penyewa_id)
+    {
+        $stmt = $this->db->prepare("SELECT nama_bank, no_bank FROM penyewa WHERE id = ?");
+        $stmt->bind_param("i", $penyewa_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            return !empty($row['nama_bank']) && !empty($row['no_bank']);
+        }
+        return false;
     }
 }

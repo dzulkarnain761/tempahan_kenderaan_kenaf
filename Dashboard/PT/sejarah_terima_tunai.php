@@ -1,4 +1,9 @@
-<?php include 'controller/session.php'; ?>
+<?php 
+include 'controller/session.php';
+require_once '../../Models/Tempahan.php';
+require_once '../../Models/Kerja.php';
+require_once '../../Models/Quotation.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,14 +53,14 @@
                                                     <th>Jumlah</th>
                                                     <th>Jenis Pembayaran</th>
                                                     <th>Tarikh Bayaran</th>
-                                                    <th class="non-sortable text-center">Tindakan</th>
+                                                    <!-- <th class="non-sortable text-center">Tindakan</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Resit.php';
-                                                $resit = new Resit();
-                                                $resits = $resit->getAllResit();
+                                                
+                                                $quotation = new Quotation();
+                                                $resits = $quotation->getQuotationDetail('pengesahan','pengesahan pt');
 
                                                 foreach ($resits as $resit) { ?>
                                                     <tr>
@@ -75,17 +80,7 @@
                                                         <td><?php echo $resit['jumlah']; ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($resit['created_at'])); ?></td>
-                                                        <td class="table-action text-center">
-                                                            <button
-                                                                class="btn btn-primary"
-                                                                onclick="lihatResit('<?php echo addslashes($resit['bukti_resit_path']); ?>')"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="top"
-                                                                title="Lihat Resit">
-                                                                <i class="mdi mdi-eye"></i>
-                                                            </button>
-
-                                                        </td>
+                                                        
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

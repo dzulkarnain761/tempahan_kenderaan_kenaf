@@ -53,7 +53,7 @@
                                     <div class="row mb-3">
                                         <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>" readonly>
+                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -66,7 +66,7 @@
                                     <div class="row mb-3">
                                         <label for="harga_jobsheet" class="col-3 col-form-label">Harga Jobsheet</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" value="RM <?php echo $work['total_harga']; ?>" readonly>
+                                            <input type="text" class="form-control" value="RM <?php echo $work['total_harga'] ?? '0'; ?>" readonly>
                                         </div>
                                     </div>
 
@@ -106,7 +106,7 @@
                                                     <th>Jam</th>
                                                     <th>Minit</th>
                                                     <th>Harga</th>
-                                                    <th class="non-sortable">Tindakan</th>
+                                                    <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
 
@@ -147,15 +147,15 @@
 
                                                         </td>
                                                         <td>
-                                                            <?php echo htmlspecialchars($jobs['jam']); ?>
+                                                            <?php echo htmlspecialchars($jobs['jam'] ?? '0') ; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo htmlspecialchars($jobs['minit']); ?>
+                                                            <?php echo htmlspecialchars($jobs['minit'] ?? '0') ; ?>
                                                         </td>
                                                         <td>
-                                                            RM <?php echo htmlspecialchars($jobs['harga']); ?>
+                                                            RM <?php echo htmlspecialchars($jobs['harga'] ?? '0.00') ; ?>
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <?php if ($jobs['status_jobsheet'] == 'selesai') { ?>
                                                                 Selesai
                                                             <?php } else { ?>

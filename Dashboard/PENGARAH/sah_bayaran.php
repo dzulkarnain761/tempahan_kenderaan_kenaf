@@ -62,22 +62,15 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Lokasi Kerja</label>
+                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="luas_tanah" class="col-3 col-form-label">Keluasan Tanah</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" id="luas_tanah" name="luas_tanah" value="<?php echo $booking['luas_tanah']; ?>" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
 
@@ -89,11 +82,14 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                            <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
-                                            </div>
+                                        <label for="total_harga_anggaran" class="col-3 col-form-label">Total Harga Pengesahan</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="RM <?php echo $booking['total_harga_anggaran']; ?>" readonly>
                                         </div>
+                                    </div>
+
+                                    <?php if ($booking['total_baki'] > 0) { ?>
+
                                         <div class="row mb-3">
                                             <label for="total_harga_sebenar" class="col-3 col-form-label">Total Harga Jobsheet</label>
                                             <div class="col-9">
@@ -107,6 +103,10 @@
                                             </div>
                                         </div>
 
+                                    <?php } ?>
+
+
+
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div> <!-- end col -->
@@ -115,7 +115,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                
+
                                 <h4 class="page-title">Butiran Kerja</h4>
                             </div>
                         </div>
@@ -125,69 +125,79 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    
-                                    <form id="terimaTunai">
-                                        <div class="table-responsive">
-                                            <table class="table table-centered w-100 dt-responsive nowrap">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>Tempahan ID</th>
-                                                        <th>Nama Kerja</th>
-                                                        <th>Tarikh Kerja</th>
-                                                        <th>Harga Pengesahan</th>
+
+
+                                    <div class="table-responsive">
+                                        <table class="table table-centered w-100 dt-responsive nowrap">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Tempahan ID</th>
+                                                    <th>Nama Kerja</th>
+                                                    <th>Tarikh Kerja</th>
+                                                    <th>Harga Pengesahan</th>
+
+                                                    <?php if ($booking['total_baki'] > 0) { ?>
+
                                                         <th>Harga Jobsheet</th>
 
+                                                    <?php } ?>
+                                                    
+                                                </tr>
+                                            </thead>
 
-                                                    </tr>
-                                                </thead>
+                                            <tbody>
+                                                <?php
+                                                require_once '../../Models/Kerja.php';
+                                                $tempahan_kerja = new Kerja();
+                                                $works = $tempahan_kerja->findByTempahanId($_GET['tempahan_id']);
 
-                                                <tbody>
-                                                    <?php
-                                                    require_once '../../Models/Kerja.php';
-                                                    $tempahan_kerja = new Kerja();
-                                                    $works = $tempahan_kerja->findByTempahanId($_GET['tempahan_id']);
+                                                foreach ($works as $work) { ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $work['tempahan_id']; ?>
+                                                        </td>
 
-                                                    foreach ($works as $work) { ?>
-                                                        <tr>
-                                                            <td>
-                                                                <?php echo $work['tempahan_id']; ?>
-                                                            </td>
+                                                        <td>
+                                                            <?php echo $work['nama_kerja']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
+                                                        </td>
+                                                        <td>
+                                                            RM <?php echo $work['harga_anggaran']; ?>
+                                                        </td>
 
-                                                            <td>
-                                                                <?php echo $work['nama_kerja']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
-                                                            </td>
-                                                            <td>
-                                                                RM <?php echo $work['harga_anggaran']; ?>
-                                                            </td>
+                                                        <?php if ($booking['total_baki'] > 0) { ?>
+
                                                             <td>
                                                                 RM <?php echo $work['total_harga']; ?>
                                                             </td>
 
-                                                        </tr>
-                                                    <?php } ?>
+                                                        <?php } ?>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
 
-                                        
-                                        <input type="hidden" name="resit_id" value="<?php echo $_GET['resit_id'] ?>">
+                                                    </tr>
+                                                <?php } ?>
 
-                                        <div class="text-end">
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                            <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
-                                            <?php if ($booking['total_baki'] > 0) { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                            <?php } else { ?>
-                                                <a href="../../Controller/pdf/getPDF_quotation_fullpayment.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
-                                            <?php } ?>
-                                            <button type="submit" onclick="submitForm()" class="btn btn-success">Sah Bayaran</button>
-                                        </div>
 
-                                    </form>
+                                    <input type="hidden" name="quotation_id" value="<?php echo $_GET['quotation_id'] ?>">
+
+                                    <div class="text-end">
+
+                                        <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
+                                        <?php if ($booking['total_baki'] > 0) { ?>
+                                            <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                        <?php } else { ?>
+                                            <a href="../../Controller/pdf/getPDF_quotation_firstpayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
+                                        <?php } ?>
+                                        <button type="submit" onclick="sahBayaran(<?php echo  $_GET['quotation_id'] ?>)" class="btn btn-success">Sah Bayaran</button>
+                                    </div>
+
+
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
@@ -210,8 +220,6 @@
 
 
     <?php include 'partials/script.php'; ?>
-
-
 
 
 
@@ -274,11 +282,10 @@
             });
         }
 
-        function submitForm() {
-            event.preventDefault();
+        function sahBayaran(quotation_id) {
+
             Swal.fire({
                 title: "Sah Bayaran",
-                text: "Adakah anda pasti untuk kemaskini tempahan ini?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -287,12 +294,13 @@
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const form = document.getElementById('terimaTunai');
-                    const formData = new FormData(form);
 
                     fetch('controller/sahkan_bayaran.php', {
                             method: 'POST',
-                            body: new URLSearchParams(formData)
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `quotation_id=${quotation_id}`
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -300,7 +308,7 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berjaya',
-                                    text: data.message || 'Berjaya',
+                                    // text: data.message || 'Berjaya',
                                 }).then(() => {
                                     window.location.href = 'tempahan_resit.php';
                                 });

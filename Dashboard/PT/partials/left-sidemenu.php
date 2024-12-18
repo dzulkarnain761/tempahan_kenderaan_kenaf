@@ -3,10 +3,10 @@
                 <!-- LOGO -->
                 <a href="tempahan_resit.php" class="logo text-center logo-light">
                     <span class="logo-lg">
-                        <img src="../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
+                        <img src="../../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
                     </span>
                     <span class="logo-sm">
-                        <img src="../assets/images/logo/logo_lktn.png" alt="" height="45">
+                        <img src="../../assets/images/logo/logo_lktn.png" alt="" height="45">
                     </span>
                 </a>
 
@@ -19,7 +19,7 @@
 						
 						
 						<li class="side-nav-item">
-							<a href="tempahan_resit.php" class="side-nav-link">
+							<a href="terima_tunai.php" class="side-nav-link">
 								<i class="uil-wallet"></i> <!-- Changed icon to wallet -->
 								<span> Terima Tunai </span>
 							</a>

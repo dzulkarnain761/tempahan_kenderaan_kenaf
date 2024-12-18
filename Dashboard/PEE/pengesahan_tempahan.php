@@ -22,12 +22,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
+                                <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="staff.php">Pengesahan T </a></li>
-                                        <li class="breadcrumb-item active">Kemaskini Staff</li>
+                                        <li class="breadcrumb-item"><a href="tempahan.php">Senarai Tempahan</a></li>
+                                        <li class="breadcrumb-item active">Pengesahan</li>
                                     </ol>
-                                </div> -->
+                                </div>
                                 <h4 class="page-title">Butiran Tempahan</h4>
                             </div>
                         </div>
@@ -62,9 +62,9 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Lokasi Kerja</label>
+                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -80,12 +80,7 @@
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
-                                        </div>
-                                    </div>
+                                   
 
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
@@ -146,13 +141,13 @@
                                                                 <?php echo $work['nama_kerja']; ?>
                                                             </td>
                                                             <td>
-                                                                <input type="date" class="form-control" value="<?php echo $work['tarikh_kerja_cadangan']; ?>" name="input_date[]">
+                                                                <input type="date" class="form-control" value="<?php echo $work['cadangan_tarikh_kerja']; ?>" name="input_date[]">
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control input_hours" value="<?php echo $work['jam_anggaran']; ?>" name="input_hours[]" min="0" style="min-width: 100px;">
+                                                                <input type="number" class="form-control input_hours" value="<?php echo $work['jam_anggaran'] ?? '0'; ?>" name="input_hours[]" min="0" style="min-width: 100px;">
                                                             </td>
                                                             <td>
-                                                                <input type="number" class="form-control input_minutes" value="<?php echo $work['minit_anggaran']; ?>" name="input_minutes[]" min="0" max="45" step="15" style="min-width: 100px;">
+                                                                <input type="number" class="form-control input_minutes" value="<?php echo $work['minit_anggaran'] ?? '0'; ?>" name="input_minutes[]" min="0" max="45" step="15" style="min-width: 100px;">
                                                             </td>
                                                             <?php
                                                             require_once '../../Models/Tugasan.php';
@@ -167,10 +162,10 @@
                                                             </td>
 
                                                             <td>
-                                                                <input type="text" class="form-control harga_anggaran" value="<?php echo $work['harga_anggaran']; ?>" name="input_price[]" readonly style="min-width: 100px;">
+                                                                <input type="text" class="form-control harga_anggaran" value="<?php echo $work['harga_anggaran'] ?? '0.00'; ?>" name="input_price[]" readonly style="min-width: 100px;">
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-danger" type="button" onclick="cancelButton(<?php echo $work['tempahan_kerja_id']; ?>)">Tolak</button>
+                                                                <button class="btn btn-danger" type="button" onclick="cancelKerja(<?php echo $work['tempahan_kerja_id']; ?>)">Tolak</button>
                                                             </td>
                                                         </tr>
                                                     <?php } ?>
@@ -232,7 +227,7 @@
 
 
     <script>
-        function cancelButton(id) {
+        function cancelKerja(tempahan_kerja_id) {
             Swal.fire({
                 title: 'Anda pasti?',
                 text: "Tindakan ini tidak boleh dikembalikan!",
@@ -240,7 +235,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, tolak!',
+                confirmButtonText: 'Tolak Tugasan',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -249,7 +244,7 @@
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `tempahan_kerja_id=${id}`
+                            body: `tempahan_kerja_id=${tempahan_kerja_id}`
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -281,7 +276,7 @@
         }
 
 
-        function rejectTempahan(id) {
+        function rejectTempahan(tempahan_id) {
             Swal.fire({
                 title: "Adakah anda pasti?",
                 text: "Tempahan ini akan ditolak",
@@ -297,7 +292,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, tolak tempahan!",
+                confirmButtonText: "Tolak Tempahan",
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -306,7 +301,7 @@
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `tempahan_id=${id}&sebab_ditolak=${encodeURIComponent(result.value)}`
+                            body: `tempahan_id=${tempahan_id}&sebab_ditolak=${encodeURIComponent(result.value)}`
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -371,13 +366,12 @@
             event.preventDefault();
 
             Swal.fire({
-                title: "Hasilkan Sebut Harga?",
-                text: "Adakah anda pasti?",
+                title: "Hasilkan Sebut Harga",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, hantar!",
+                confirmButtonText: "Ya",
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {

@@ -1,156 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
+    <title>eTempahan BKK</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/logo/logo2.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>eBooking</title>
-	<link rel="icon" type="image/x-icon" href="assets/images/logo2.png">
-    <link href="penyewaDashboard/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/animated.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <style>
-    </style>
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 </head>
 
-<body style="height: 100%;">
-
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Daftar Masuk</h5>
-                <img src="assets/images/logo_tempahan_kenderaan_black.png" alt="logoLKTN" style="width: auto; height: 50px;">
-            </div>
-            <div class="modal-body">
-                <form class="signupForm" novalidate>
-                    <div class="mb-3">
-                        <label for="nokp" class="form-label">No. Kad Pengenalan <span style="color: red;">*</span>  </label>
-                        <input type="text" class="form-control" id="nokp" name="nokp" placeholder="Masukkan Nombor Kad Pengenalan" minlength="12" maxlength="12" required>
-                        <div class="invalid-feedback">
-                            Sila masukkan nombor kad pengenalan yang sah.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fullname" class="form-label">Nama Penuh <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Masukkan Nama Penuh" minlength="10" required>
-                        <div class="invalid-feedback">
-                            Sila masukkan nama penuh yang sah.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="contactno" class="form-label">Nombor Telefon <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Masukkan Nombor Telefon"  minlength="10" maxlength="11" required>
-                        <div class="invalid-feedback">
-                            Sila masukkan nombor telefon yang sah.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat Rumah <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Rumah" minlength="10" required>
-                        <div class="invalid-feedback">
-                            Sila masukkan alamat yang sah.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="mail" class="form-label">Email </label>
-                        <input type="email" class="form-control" id="mail" name="mail" placeholder="Masukkan Email">
-                        <div class="invalid-feedback">
-                            Sila masukkan nama penuh yang sah.
-                        </div>
-                    </div>
-
-                    
-                    
-                    <div class="modal-footer">
-                        <button id="signupButton" type="submit" class="btn btn-primary">Daftar Masuk</button>
-                    </div>
-                    <div style="text-align:center; margin-top: 10px;">
-                        <p style="font-size:17px;"><a href="login.php">Kembali ke Log masuk</a></p>
-                    </div>
-                </form>
-            </div>
-        </div>
+<body class="d-flex flex-column align-items-center justify-content-center vh-100" style="background-color: #d8e6ff;">
+    <!-- Logo -->
+    <div class="mb-4">
+        <img src="assets/images/logo/logo_tempahan_kenderaan_black.png" alt="Logo" class="img-fluid" style="width: 200px; height:auto;">
     </div>
 
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/sweetalert2-11.12.4/package/dist/sweetalert2.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    
+    <!-- Login Form Container -->
+    <div class="container-sm border rounded p-4 bg-white shadow" style="max-width: 500px;">
+        <h3 class="text-center mb-4">Pendaftaran Penyewa</h3>
+        <form id="signupForm" action="Controller/auth/signup_penyewa_proses.php" method="post">
+            <div class="mb-3">
+                <label for="nama_penuh" class="form-label">Nama Penuh <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nama_penuh" name="nama_penuh" placeholder="Masukkan Nama Penuh"  required>
+            </div>
+            <div class="mb-3">
+                <label for="no_kp" class="form-label">No Kad Pengenalan <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="no_kp" name="no_kp" placeholder="Masukkan No Kad Pengenalan" maxlength="12" required>
+            </div>
+            <div class="mb-3">
+                <label for="contact_no" class="form-label">No Telefon <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="Masukkan No Telefon" maxlength="13" required>
+            </div>
+            <div class="mb-3">
+                <label for="alamat_rumah" class="form-label">Alamat Rumah <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="alamat_rumah" name="alamat" placeholder="Masukkan Alamat Rumah" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <p class="mt-3 text-center">Sudah Daftar? <a href="login.php">Log Masuk</a></p>
+    </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        (() => {
-            'use strict'
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.signupForm')
+            const form = e.target;
+            const formData = new FormData(form);
 
-            // Loop over them and prevent submission if validation fails
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
+            fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Success - Show a success message and redirect
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berjaya',
+                            text: data.message,
+                        }).then(() => {
+                            window.location.href = "login.php";
+                        });
+                    } else {
+                        // Failure - Show an error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ralat',
+                            text: data.message,
+                        });
                     }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-
-            
-        })()
-
-        $(document).ready(function() {
-            $('.signupForm').on('submit', function(e) {
-                e.preventDefault();
-
-                // Check if form is valid before making AJAX request
-                if (!this.checkValidity()) {
-                    e.stopPropagation();
-                    return;
-                }
-
-                // Serialize form data and make AJAX request
-                $.ajax({
-                    url: 'Controller/auth/signup_penyewa_proses.php',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        let res = JSON.parse(response);
-                        if (res.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Pendaftaran Berjaya',
-                            }).then(() => {
-                                // window.location.href = 'login.php';
-                                Swal.fire({
-                                    icon: 'info',
-                                    title: 'Kata Laluan Anda : ',
-                                    text: res.password,
-                                }).then(() => {
-                                    window.location.href = 'login.php';
-                                })
-                            });
-
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: res.message,
-                            });
-                        }
-                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Kesalahan',
+                        text: 'Kesalahan berlaku semasa menghantar borang. Sila cuba lagi.',
+                    });
                 });
-            });
         });
     </script>
 </body>

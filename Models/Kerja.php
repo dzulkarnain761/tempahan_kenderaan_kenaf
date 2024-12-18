@@ -4,20 +4,7 @@ require_once 'Database.php';
 
 class Kerja
 {
-    // Define properties that map to table columns
-    private $tempahan_kerja_id;
-    private $tempahan_id;
-    private $nama_kerja;
-    private $jam_anggaran;
-    private $minit_anggaran;
-    private $harga_anggaran;
-    private $total_jam;
-    private $total_minit;
-    private $total_harga;
-    private $tarikh_kerja_cadangan;
-    private $created_at;
-    private $updated_at;
-
+    
     // Store the database connection
     private $db;
 
@@ -27,13 +14,6 @@ class Kerja
         $this->db = Database::getConnection();
     }
 
-    // // CREATE: Method to insert a new booking (tempahan_kerja)
-    // public function create($tempahan_id, $nama_kerja)
-    // {
-    //     $stmt = $this->db->prepare("INSERT INTO tempahan_kerja (tempahan_id, nama_kerja) VALUES (?, ?)");
-    //     $stmt->bind_param("isss", $user_id, $booking_date, $luas_tanah, $catatan);
-    //     return $stmt->execute();
-    // }
 
     // READ: Method to get booking by ID
     public function findByTempahanId($tempahan_id)

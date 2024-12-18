@@ -21,13 +21,7 @@
                     <!-- start page title -->
                     <div class="row">
                         <div class="col-12">
-                            <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Tempahan</li>
-                                        </ol>
-                                    </div> -->
+                            <div class="page-title-box">                          
                                 <h4 class="page-title">Senarai Resit</h4>
                             </div>
                         </div>
@@ -44,7 +38,7 @@
                                                 <tr>
                                                     <th>Resit ID</th>
                                                     <th>Nama Penyewa</th>
-                                                    <th>Tarikh Kerja</th>
+                                                    
                                                     <th>Jumlah</th>
                                                     <th>Jenis Pembayaran</th>
 
@@ -61,7 +55,7 @@
                                                     <tr>
                                                         <td><?php echo $resit['resit_id']; ?></td>
                                                         <td><?php echo $resit['nama']; ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($resit['tarikh_kerja'])); ?></td>
+                                                        
                                                         <td><?php echo $resit['jumlah']; ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
 
