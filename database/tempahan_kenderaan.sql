@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 06:57 AM
+-- Generation Time: Dec 18, 2024 at 10:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,53 +54,6 @@ INSERT INTO `admin` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `kumpulan`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fpx_payments`
---
-
-CREATE TABLE `fpx_payments` (
-  `id` int(11) NOT NULL,
-  `fpx_id_transaksi` varchar(255) NOT NULL,
-  `fpx_id_bank` varchar(50) NOT NULL,
-  `fpx_nama_bank` varchar(255) NOT NULL,
-  `fpx_nama_pembeli` varchar(255) NOT NULL,
-  `fpx_akaun_bank_pembeli` varchar(255) NOT NULL,
-  `jumlah_bayaran` decimal(10,2) NOT NULL,
-  `fpx_masa_transaksi` datetime NOT NULL DEFAULT current_timestamp(),
-  `fpx_tandatangan` text NOT NULL,
-  `fpx_kod_respon` varchar(50) NOT NULL,
-  `nombor_rujukan` varchar(255) DEFAULT NULL,
-  `alamat_ip` varchar(50) DEFAULT NULL,
-  `tujuan` varchar(255) NOT NULL DEFAULT 'tempahan kenderaan',
-  `catatan` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `fpx_payments`
---
-
-INSERT INTO `fpx_payments` (`id`, `fpx_id_transaksi`, `fpx_id_bank`, `fpx_nama_bank`, `fpx_nama_pembeli`, `fpx_akaun_bank_pembeli`, `jumlah_bayaran`, `fpx_masa_transaksi`, `fpx_tandatangan`, `fpx_kod_respon`, `nombor_rujukan`, `alamat_ip`, `tujuan`, `catatan`, `created_at`, `updated_at`) VALUES
-(6, 'FPXTK00057', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 300.00, '2024-11-06 10:44:51', 'abc123def', '00', 'TKBP00057', NULL, 'tempahan kenderaan', 'Payment successful', '2024-11-06 02:44:51', '2024-11-06 02:44:51'),
-(7, 'FPXTK00057', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-11-10 09:57:15', 'abc123def', '00', 'TKBT00057', NULL, 'tempahan kenderaan', 'Payment successful', '2024-11-10 01:57:15', '2024-11-10 01:57:15'),
-(8, 'FPXTK00058', 'B002', 'Bank Islam', 'LKTN', '987654321', 140.00, '2024-11-10 11:57:04', 'xyz789', '00', 'TKR00058', '::1', 'tempahan kenderaan', 'Payment successful', '2024-11-10 03:57:04', '2024-11-10 03:57:04'),
-(9, 'FPXTK00060', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 25.00, '2024-11-20 16:40:47', 'abc123def', '00', 'TKBT00060', NULL, 'tempahan kenderaan', 'Payment successful', '2024-11-20 08:40:47', '2024-11-20 08:40:47'),
-(10, 'FPXTK00064', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 280.00, '2024-12-02 15:29:16', 'abc123def', '00', 'TKBP00064', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-02 07:29:16', '2024-12-02 07:29:16'),
-(11, 'FPXTK00065', 'B002', 'Bank Islam', 'LKTN', '987654321', 100.00, '2024-12-05 11:59:13', 'xyz789', '00', 'TKR00065', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-05 03:59:13', '2024-12-05 03:59:13'),
-(12, 'FPXTK00064', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 510.00, '2024-12-05 12:24:50', 'abc123def', '00', 'TKBT00064', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-05 04:24:50', '2024-12-05 04:24:50'),
-(13, 'FPXTK00068', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 450.00, '2024-12-07 20:30:16', 'abc123def', '00', 'TKBP00068', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-07 12:30:16', '2024-12-07 12:30:16'),
-(14, 'FPXTK00068', 'B002', 'Bank Islam', 'LKTN', '987654321', 250.00, '2024-12-07 20:50:19', 'xyz789', '00', 'TKR00068', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-07 12:50:19', '2024-12-07 12:50:19'),
-(15, 'FPXTK00069', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 200.00, '2024-12-07 21:00:57', 'abc123def', '00', 'TKBP00069', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-07 13:00:57', '2024-12-07 13:00:57'),
-(16, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 600.00, '2024-12-08 09:07:03', 'abc123def', '00', 'TKBP00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:07:03', '2024-12-08 01:07:03'),
-(17, 'FPXTK00070', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 400.00, '2024-12-08 09:32:50', 'abc123def', '00', 'TKBT00070', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-08 01:32:50', '2024-12-08 01:32:50'),
-(18, 'FPXTK00071', 'B002', 'Bank Islam', 'LKTN', '987654321', 200.00, '2024-12-08 17:44:13', 'xyz789', '00', 'TKR00071', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-08 09:44:13', '2024-12-08 09:44:13'),
-(19, 'FPXTK00073', 'B001', 'Maybank', 'Ali Bin Ahmad', '123456789', 550.00, '2024-12-10 14:02:36', 'abc123def', '00', 'TKBP00073', NULL, 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:02:36', '2024-12-10 06:02:36'),
-(20, 'FPXTK00073', 'B002', 'Bank Islam', 'LKTN', '987654321', 350.00, '2024-12-10 14:10:15', 'xyz789', '00', 'TKR00073', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-10 06:10:15', '2024-12-10 06:10:15'),
-(21, 'FPXTK00078', 'B002', 'Bank Islam', 'LKTN', '987654321', 200.00, '2024-12-10 17:47:16', 'xyz789', '00', 'TKR00078', '::1', 'tempahan kenderaan', 'Payment successful', '2024-12-10 09:47:16', '2024-12-10 09:47:16');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `jobsheet`
 --
 
@@ -118,6 +71,14 @@ CREATE TABLE `jobsheet` (
   `status_jobsheet` enum('pengesahan','dijalankan','selesai') NOT NULL DEFAULT 'pengesahan',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jobsheet`
+--
+
+INSERT INTO `jobsheet` (`jobsheet_id`, `tempahan_id`, `tempahan_kerja_id`, `pemandu_id`, `kenderaan_id`, `tarikh_kerja_dijalankan`, `jam`, `minit`, `harga`, `catatan`, `status_jobsheet`, `created_at`) VALUES
+(151, 91, 161, 12, 6, '2024-12-19', 1, 0, 40.00, NULL, 'selesai', '2024-12-18 08:32:03'),
+(153, 91, 162, 12, 5, '2024-12-19', 1, 0, 100.00, NULL, 'selesai', '2024-12-18 08:33:00');
 
 -- --------------------------------------------------------
 
@@ -310,6 +271,37 @@ INSERT INTO `negeri` (`id_negeri`, `nama_negeri`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `pid` int(11) NOT NULL,
+  `rsp_appln_id` varchar(3) NOT NULL,
+  `rsp_org_id` varchar(10) NOT NULL,
+  `rsp_orderid` varchar(20) DEFAULT NULL,
+  `rsp_amount` decimal(8,2) NOT NULL,
+  `rsp_trxstatus` varchar(15) NOT NULL,
+  `rsp_stcode` varchar(3) NOT NULL,
+  `rsp_bankid` varchar(15) NOT NULL,
+  `rsp_bankname` varchar(50) DEFAULT NULL,
+  `rsp_fpxid` varchar(30) NOT NULL,
+  `rsp_fpxorderno` varchar(30) NOT NULL,
+  `date_created` datetime DEFAULT current_timestamp(),
+  `type` int(11) NOT NULL DEFAULT 0 COMMENT '0 = fpx, 1 = cek, 2 = cash, 3 = EFT, 4= Kad',
+  `doc` text DEFAULT NULL,
+  `tarikh_cek` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`pid`, `rsp_appln_id`, `rsp_org_id`, `rsp_orderid`, `rsp_amount`, `rsp_trxstatus`, `rsp_stcode`, `rsp_bankid`, `rsp_bankname`, `rsp_fpxid`, `rsp_fpxorderno`, `date_created`, `type`, `doc`, `tarikh_cek`) VALUES
+(1, 'ETJ', 'LKTN', 'KJBP00090', 400.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-18 10:47:59', 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penyewa`
 --
 
@@ -330,9 +322,31 @@ CREATE TABLE `penyewa` (
 --
 
 INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `nama_bank`, `no_bank`, `password`) VALUES
-(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', NULL, 'pengkalan batu, pasir mas,', 'Maybank', '212132132', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC'),
-(3, 'AHMAD ABU BIN ALI', '010530030311', '01311112222', NULL, 'sebelah rumah ali', NULL, NULL, '$2y$10$Jbbj79TVWkg4BQl023q5J.E7uxKnUanxGgEZaWY7Y6bIlcjniIyI.'),
-(4, 'DASDASDSASDSADA', '777777777777', '77777777777', NULL, 'asdasdasdasdasd', NULL, NULL, '$2y$10$D/VIWAV5/LdxQQ1FAeJLY..61PvX5eAbqu4xUXEqyb.CuDsoovQ8S');
+(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', '', 'pengkalan batu, pasir mas,', 'Maybang', '212132132', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC'),
+(5, 'TESTING NAMA 777777777777', '777777777777', '7777777777777', NULL, 'pasir mas, kelantan', NULL, NULL, '$2y$10$3ciVjRPo/1julI7NUNayD.S0GhQtgzHNybXcSxFlgpcAzu6pvgSFu');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quotation`
+--
+
+CREATE TABLE `quotation` (
+  `quotation_id` int(11) NOT NULL,
+  `total` decimal(10,2) DEFAULT NULL,
+  `reference_number` varchar(50) DEFAULT NULL,
+  `jenis_pembayaran` enum('bayaran muka','bayaran tambahan') DEFAULT NULL,
+  `tempahan_id` int(11) DEFAULT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp(),
+  `status` enum('belum bayar','pengesahan','selesai') NOT NULL DEFAULT 'belum bayar'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quotation`
+--
+
+INSERT INTO `quotation` (`quotation_id`, `total`, `reference_number`, `jenis_pembayaran`, `tempahan_id`, `created_at`, `status`) VALUES
+(7, 280.00, 'KJBP00091', 'bayaran muka', 91, '2024-12-18', 'selesai');
 
 -- --------------------------------------------------------
 
@@ -343,14 +357,20 @@ INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `
 CREATE TABLE `resit_pembayaran` (
   `resit_id` int(11) NOT NULL,
   `tempahan_id` int(11) NOT NULL,
-  `jenis_pembayaran` enum('bayaran penuh','refund','bayaran tambahan') DEFAULT NULL,
+  `jenis_pembayaran` enum('bayaran muka','refund','bayaran tambahan') DEFAULT NULL,
   `jumlah` decimal(10,2) DEFAULT NULL,
   `cara_bayar` enum('tunai','fpx') DEFAULT NULL,
   `nombor_rujukan` varchar(255) DEFAULT NULL,
-  `bukti_resit_path` varchar(255) DEFAULT NULL,
-  `status_resit` enum('pengesahan','selesai') NOT NULL DEFAULT 'pengesahan',
+  `bukti_pembayaran_tunai` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resit_pembayaran`
+--
+
+INSERT INTO `resit_pembayaran` (`resit_id`, `tempahan_id`, `jenis_pembayaran`, `jumlah`, `cara_bayar`, `nombor_rujukan`, `bukti_pembayaran_tunai`, `created_at`) VALUES
+(70, 91, 'bayaran muka', 280.00, 'tunai', 'KJBP00091', NULL, '2024-12-18 16:30:06');
 
 -- --------------------------------------------------------
 
@@ -361,9 +381,7 @@ CREATE TABLE `resit_pembayaran` (
 CREATE TABLE `tempahan` (
   `tempahan_id` int(11) NOT NULL,
   `penyewa_id` int(11) DEFAULT NULL,
-  `tarikh_kerja` date DEFAULT NULL,
-  `negeri` varchar(100) DEFAULT NULL,
-  `lokasi_kerja` varchar(255) DEFAULT NULL,
+  `lokasi_tanah` varchar(255) DEFAULT NULL,
   `luas_tanah` decimal(10,1) DEFAULT NULL,
   `total_harga_anggaran` decimal(10,2) DEFAULT NULL,
   `total_harga_sebenar` decimal(10,2) DEFAULT NULL,
@@ -376,6 +394,13 @@ CREATE TABLE `tempahan` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tempahan`
+--
+
+INSERT INTO `tempahan` (`tempahan_id`, `penyewa_id`, `lokasi_tanah`, `luas_tanah`, `total_harga_anggaran`, `total_harga_sebenar`, `total_baki`, `catatan`, `disahkan_oleh`, `status_tempahan`, `status_bayaran`, `sebab_ditolak`, `created_at`, `updated_at`) VALUES
+(91, 2, 'pasir mas', 2.0, 280.00, 140.00, -140.00, '', 'AHMAD ABU PEE', 'refund kewangan', 'refund', NULL, '2024-12-18 08:16:26', '2024-12-18 08:59:04');
 
 -- --------------------------------------------------------
 
@@ -393,10 +418,18 @@ CREATE TABLE `tempahan_kerja` (
   `total_jam` int(5) DEFAULT NULL,
   `total_minit` int(5) DEFAULT NULL,
   `total_harga` decimal(10,2) DEFAULT NULL,
-  `tarikh_kerja_cadangan` date DEFAULT NULL,
+  `cadangan_tarikh_kerja` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tempahan_kerja`
+--
+
+INSERT INTO `tempahan_kerja` (`tempahan_kerja_id`, `tempahan_id`, `nama_kerja`, `jam_anggaran`, `minit_anggaran`, `harga_anggaran`, `total_jam`, `total_minit`, `total_harga`, `cadangan_tarikh_kerja`, `created_at`, `updated_at`) VALUES
+(161, 91, 'Parit Baru', 2, 0, 80.00, 1, 0, 40.00, '2024-12-20', '2024-12-18 08:16:26', '2024-12-18 08:32:54'),
+(162, 91, 'Piring', 2, 0, 200.00, 1, 0, 100.00, '2024-12-21', '2024-12-18 08:16:26', '2024-12-18 08:33:21');
 
 -- --------------------------------------------------------
 
@@ -433,12 +466,6 @@ INSERT INTO `tugasan` (`id`, `kerja`, `harga_per_jam`, `kategori_kenderaan`) VAL
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `fpx_payments`
---
-ALTER TABLE `fpx_payments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -485,10 +512,24 @@ ALTER TABLE `negeri`
   ADD PRIMARY KEY (`id_negeri`);
 
 --
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`pid`),
+  ADD KEY `rsp_orderid` (`rsp_orderid`);
+
+--
 -- Indexes for table `penyewa`
 --
 ALTER TABLE `penyewa`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `quotation`
+--
+ALTER TABLE `quotation`
+  ADD PRIMARY KEY (`quotation_id`),
+  ADD KEY `tempahan_id` (`tempahan_id`);
 
 --
 -- Indexes for table `resit_pembayaran`
@@ -528,16 +569,10 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `fpx_payments`
---
-ALTER TABLE `fpx_payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
 -- AUTO_INCREMENT for table `jobsheet`
 --
 ALTER TABLE `jobsheet`
-  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `kategori_kenderaan`
@@ -576,28 +611,40 @@ ALTER TABLE `negeri`
   MODIFY `id_negeri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `penyewa`
 --
 ALTER TABLE `penyewa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `quotation`
+--
+ALTER TABLE `quotation`
+  MODIFY `quotation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `resit_pembayaran`
 --
 ALTER TABLE `resit_pembayaran`
-  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 
 --
 -- AUTO_INCREMENT for table `tugasan`
@@ -614,6 +661,12 @@ ALTER TABLE `tugasan`
 --
 ALTER TABLE `jobsheet`
   ADD CONSTRAINT `fk_tempahan_kerja_id` FOREIGN KEY (`tempahan_kerja_id`) REFERENCES `tempahan_kerja` (`tempahan_kerja_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `quotation`
+--
+ALTER TABLE `quotation`
+  ADD CONSTRAINT `quotation_ibfk_1` FOREIGN KEY (`tempahan_id`) REFERENCES `tempahan` (`tempahan_id`);
 
 --
 -- Constraints for table `resit_pembayaran`
