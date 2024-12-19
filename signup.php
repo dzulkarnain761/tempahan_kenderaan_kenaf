@@ -65,7 +65,7 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Berjaya',
-                            text: data.message,
+                            text: "Password : " + data.password,
                         }).then(() => {
                             window.location.href = "login.php";
                         });
