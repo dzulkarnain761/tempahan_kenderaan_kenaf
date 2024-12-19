@@ -11,6 +11,5 @@
 <!-- third party js ends -->
 
 <script src="../../assets/js/pages/demo.products.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="../../assets/js/sweetalert2.min.js"></script>
 

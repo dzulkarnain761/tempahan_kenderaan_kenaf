@@ -8,4 +8,5 @@
 	<link href="../../assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
 	<link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 	<link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+	<link href="../../assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 </head>

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="d-flex flex-column align-items-center justify-content-center vh-100" style="background-color: #d8e6ff;">
@@ -45,7 +46,8 @@
         <p class="mt-3 text-center">Sudah Daftar? <a href="login.php">Log Masuk</a></p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/sweetalert2.min.js"></script>
+    
 
     <script>
         document.getElementById('signupForm').addEventListener('submit', function(e) {
