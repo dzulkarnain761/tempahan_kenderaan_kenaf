@@ -62,9 +62,9 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Lokasi Kerja</label>
+                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -80,12 +80,7 @@
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Cadangan Tarikh Kerja </label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
-                                        </div>
-                                    </div>
+                                   
 
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
@@ -164,7 +159,7 @@
                                                                 <?php echo $work['nama_kerja']; ?>
                                                             </td>
                                                             <td>
-                                                                <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
+                                                                <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                             </td>
                                                             <td>
                                                                 RM <?php echo $work['harga_anggaran']; ?>

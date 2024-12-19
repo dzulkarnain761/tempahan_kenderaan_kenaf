@@ -62,9 +62,9 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">Lokasi Kerja</label>
+                                        <label for="lokasi_tanah" class="col-3 col-form-label">Lokasi Tanah</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_kerja']; ?>" readonly>
+                                            <input type="text" class="form-control" id="lokasi_tanah" name="lokasi_tanah" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -78,12 +78,6 @@
                                         <label for="created_at" class="col-3 col-form-label">Tarikh Tempahan</label>
                                         <div class="col-9">
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="tarikh_kerja" class="col-3 col-form-label">Cadangan Tarikh Kerja </label>
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" id="tarikh_kerja" name="tarikh_kerja" value="<?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
 
@@ -173,11 +167,9 @@
                                                         <td>
                                                             <?php
 
-                                                            if ($resit['cara_bayar'] == 'fpx') {
-                                                                echo $resit['nombor_rujukan'];
-                                                            } else {
-                                                                echo $resit['bukti_resit_path'] ?? '---';
-                                                            }
+
+                                                            echo $resit['nombor_rujukan'];
+
 
                                                             ?>
                                                         </td>
@@ -208,7 +200,7 @@
                                                             <?php } else { ?>
                                                                 <button
                                                                     class="btn btn-primary"
-                                                                    onclick="lihatResit('<?php echo addslashes($resit['bukti_resit_path']); ?>')"
+                                                                    onclick="lihatResit('<?php echo addslashes($resit['bukti_pembayaran_tunai']); ?>')"
                                                                     data-bs-toggle="tooltip"
                                                                     data-bs-placement="top"
                                                                     title="Lihat Resit">
@@ -279,7 +271,7 @@
                                                             <?php echo $work['nama_kerja']; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>
+                                                            <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                         </td>
                                                         <td>
                                                             RM <?php echo $work['harga_anggaran']; ?>
@@ -311,9 +303,6 @@
                         </div> <!-- end col -->
                     </div>
 
-                    
-
-
                 </div> <!-- container -->
 
             </div> <!-- content -->
@@ -334,7 +323,7 @@
         function lihatResit(path) {
             if (path && path.trim() !== "") {
                 Swal.fire({
-                    imageUrl: "../../bukti_resit/" + path, // Ensure the slash is included
+                    imageUrl: "../../bukti_pembayaran_tunai/" + path, // Ensure the slash is included
 
                     imageAlt: "resit",
                 });
@@ -347,25 +336,32 @@
         }
 
         function lihatFpxDetails(fpxDetails) {
-    // Use SweetAlert2 to display FPX details in a title-data format
-    Swal.fire({
-        title: 'Butiran Transaksi FPX',
-        html: `
+            // Use SweetAlert2 to display FPX details in a title-data format
+            Swal.fire({
+                title: 'Butiran Transaksi FPX',
+                html: `
             <div style="text-align: left; font-size: 14px;">
-                <p><strong>ID Transaksi:</strong> <span style="float: right;">${fpxDetails.fpx_id_transaksi}</span></p>
-                <p><strong>Nama Pembeli:</strong> <span style="float: right;">${fpxDetails.fpx_nama_pembeli}</span></p>
-                <p><strong>Nama Bank:</strong> <span style="float: right;">${fpxDetails.fpx_nama_bank}</span></p>
-                <p><strong>Akaun Bank Pembeli:</strong> <span style="float: right;">${fpxDetails.fpx_akaun_bank_pembeli}</span></p>
-                <p><strong>Jumlah Bayaran:</strong> <span style="float: right;">RM ${fpxDetails.jumlah_bayaran}</span></p>
-                <p><strong>Tujuan:</strong> <span style="float: right;">${fpxDetails.tujuan}</span></p>
-                <p><strong>Catatan:</strong> <span style="float: right;">${fpxDetails.catatan}</span></p>
+                <p><strong>PID:</strong> <span style="float: right;">${fpxDetails.pid}</span></p>
+                <p><strong>Application ID:</strong> <span style="float: right;">${fpxDetails.rsp_appln_id}</span></p>
+                <p><strong>Organization ID:</strong> <span style="float: right;">${fpxDetails.rsp_org_id}</span></p>
+                <p><strong>Order ID:</strong> <span style="float: right;">${fpxDetails.rsp_orderid}</span></p>
+                <p><strong>Amount:</strong> <span style="float: right;">RM ${fpxDetails.rsp_amount}</span></p>
+                <p><strong>Transaction Status:</strong> <span style="float: right;">${fpxDetails.rsp_trxstatus}</span></p>
+                
+                <p><strong>Bank ID:</strong> <span style="float: right;">${fpxDetails.rsp_bankid}</span></p>
+                <p><strong>Bank Name:</strong> <span style="float: right;">${fpxDetails.rsp_bankname}</span></p>
+                <p><strong>FPX ID:</strong> <span style="float: right;">${fpxDetails.rsp_fpxid}</span></p>
+                <p><strong>FPX Order No:</strong> <span style="float: right;">${fpxDetails.rsp_fpxorderno}</span></p>
+                <p><strong>Date Created:</strong> <span style="float: right;">${fpxDetails.date_created}</span></p>
+                
+                
             </div>
-        `,
-        icon: 'info',
-        confirmButtonText: 'Tutup',
-    });
-}
 
+        `,
+                icon: 'info',
+                confirmButtonText: 'Tutup',
+            });
+        }
     </script>
 
 

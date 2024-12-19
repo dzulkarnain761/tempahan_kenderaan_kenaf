@@ -1,7 +1,7 @@
 <div class="leftside-menu">
     
                 <!-- LOGO -->
-                <a href="tempahan.php" class="logo text-center logo-light">
+                <a href="index.php" class="logo text-center logo-light">
                     <span class="logo-lg">
                         <img src="../../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
                     </span>

@@ -64,8 +64,6 @@
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-
-
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">CATATAN</label>
                                         <div class="col-9">
@@ -103,9 +101,20 @@
                                                 <tr>
                                                     <th>Nama Kerja</th>
                                                     <th>Tarikh Kerja</th>
+
+                                                    <?php if ($booking['total_harga_anggaran'] != null) {
+                                                        echo '<th>Harga Pengesahan</th>';
+                                                    } ?>
+                                                    <?php if ($booking['total_harga_sebenar'] != null) {
+                                                        echo '<th>Harga Sebenar</th>';
+                                                    } ?>
                                                     <?php if ($booking['status_tempahan'] == 'pengesahan pee') {
                                                         echo '<th class="text-center">Tindakan</th>';
                                                     } ?>
+
+
+
+
                                                 </tr>
                                             </thead>
 
@@ -126,13 +135,27 @@
                                                             <?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>
                                                         </td>
 
+                                                        <?php if ($booking['total_harga_anggaran'] != null) { ?>
+                                                            <td>
+                                                                <?php echo $work['harga_anggaran']; ?>
+                                                            </td>
+                                                        <?php } ?>
+                                                        <?php if ($booking['total_harga_sebenar'] != null) { ?>
+                                                            <td>
+                                                                <?php echo $work['total_harga']; ?>
+                                                            </td>
+                                                        <?php } ?>
+
                                                         <?php if ($booking['status_tempahan'] == 'pengesahan pee') { ?>
                                                             <td class="text-center">
                                                                 <button class="btn btn-danger" onclick="batalKerja(<?php echo $work['tempahan_kerja_id'] . ',' . $booking['tempahan_id'] ?>)"
                                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Kerja">
                                                                     <i class="mdi mdi-delete"></i>
                                                                 </button>
-                                                            <?php } ?>
+                                                            </td>
+                                                        <?php } ?>
+
+
 
                                                     </tr>
                                                 <?php } ?>
@@ -149,7 +172,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-2 text-end">
-                            
+
                             </div>
                         </div>
                     </div>

@@ -36,7 +36,7 @@ switch ($kumpulan) {
         break;
     case 'Y':
         // Redirect to page for PEMANDU
-        header('Location: ../../');
+        header('Location: ../../Dashboard/PEMANDU/jobsheet.php');
         break;
     case 'Z':
         // Redirect to SUPER ADMIN
@@ -47,7 +47,7 @@ switch ($kumpulan) {
         header('Location: ../../Dashboard/PENYEWA/homepage.php');
         break;
     default:
-        header('Location: ../../Dashboard/PENYEWA/homepage.php');
+        header('Location: ../../login.php');
         break;
 }
 

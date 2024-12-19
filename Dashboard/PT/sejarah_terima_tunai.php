@@ -98,10 +98,7 @@ require_once '../../Models/Quotation.php';
 
 
             <?php include 'partials/footer.php'; ?>
-
         </div>
-
-
     </div>
     <!-- END wrapper -->
 

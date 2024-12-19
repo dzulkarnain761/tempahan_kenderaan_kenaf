@@ -45,6 +45,13 @@ class Jobsheet
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+
+    public function getAllbyPemanduId($pemandu_id,$status_jobsheet)
+    {
+        $result = $this->db->query("SELECT * FROM jobsheet j LEFT JOIN tempahan t ON j.tempahan_id = t.tempahan_id LEFT JOIN penyewa p ON p.id = t.penyewa_id WHERE pemandu_id = '$pemandu_id' AND status_jobsheet = '$status_jobsheet'");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function createJobsheet($tempahan_id, $tempahan_kerja_id)
     {
         $stmt = $this->db->prepare("INSERT INTO jobsheet (tempahan_id, tempahan_kerja_id) VALUES (?, ?)");
@@ -67,6 +74,15 @@ class Jobsheet
         } else {
             return false;
         }
+    }
+
+    public function fetchDetail($jobsheet_id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM jobsheet j LEFT JOIN tempahan t ON t.tempahan_id = j.tempahan_id LEFT JOIN tempahan_kerja tk ON tk.tempahan_kerja_id = j.tempahan_kerja_id LEFT JOIN kenderaan k ON k.id = j.kenderaan_id LEFT JOIN penyewa p ON p.id = t.penyewa_id WHERE jobsheet_id = ?");
+        $stmt->bind_param("i", $jobsheet_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 
     // Getters and Setters for each property can be added here

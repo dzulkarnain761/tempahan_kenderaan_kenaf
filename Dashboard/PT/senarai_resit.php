@@ -38,7 +38,6 @@
                                                 <tr>
                                                     <th>Resit ID</th>
                                                     <th>Nama Penyewa</th>
-                                                    
                                                     <th>Jumlah</th>
                                                     <th>Jenis Pembayaran</th>
 
@@ -58,10 +57,8 @@
                                                         
                                                         <td><?php echo $resit['jumlah']; ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
-
-
                                                         <td class="table-action text-center">
-                                                            <a href="upload_resit.php?tempahan_id=<?php echo $resit['tempahan_id'] ?>&resit_id=<?php echo $resit['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Muat Naik Resit" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-upload"></i></a>
+                                                            <a href="upload_resit.php?tempahan_id=<?php echo $resit['tempahan_id'] ?>&resit_id=<?php echo $resit['resit_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Muat Naik Bukti" onclick="terimaTempahan(<?php echo $booking['tempahan_id']; ?>)"> <i class="mdi mdi-upload"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

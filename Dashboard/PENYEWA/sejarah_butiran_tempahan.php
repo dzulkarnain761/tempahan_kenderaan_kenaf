@@ -84,7 +84,7 @@
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
                                         <div class="col-9">
-                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo $booking['catatan']; ?></textarea>
+                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo empty($booking['catatan']) ? 'Tiada Catatan' : $booking['catatan']; ?></textarea>
                                         </div>
                                     </div>
 
@@ -117,7 +117,7 @@
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 class="page-title">Butiran Resit</h4>
+                                <h4 class="page-title">BUTIRAN RESIT</h4>
                             </div>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 class="page-title">Butiran Kerja</h4>
+                                <h4 class="page-title">BUTIRAN KERJA</h4>
                             </div>
                         </div>
                     </div>

@@ -22,12 +22,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Tempahan</li>
-                                        </ol>
-                                    </div> -->
+                                
                                 <h4 class="page-title">Sejarah Tempahan</h4>
                             </div>
                         </div>
@@ -45,7 +40,7 @@
                                                     <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
                                                     <th>Tarikh & Masa Tempahan</th>
-                                                    <th>Cadangan Tarikh kerja</th>
+                                                    
                                                     <th>Tugasan</th>
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
@@ -62,7 +57,7 @@
                                                         <td><?php echo $booking['tempahan_id']; ?></td>
                                                         <td><?php echo $booking['nama']; ?></td>
                                                         <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
-                                                        <td><?php echo date('d/m/Y', strtotime($booking['tarikh_kerja'])); ?></td>
+                                                        
                                                         <td><?php
                                                             require_once '../../Models/Kerja.php';
                                                             $kerja = new Kerja();

@@ -1,4 +1,10 @@
-<?php include 'controller/session.php'; ?>
+<?php
+include 'controller/session.php';
+require_once '../../Models/Jobsheet.php';
+require_once '../../Models/Kerja.php';
+require_once '../../Models/Kenderaan.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +28,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                
-                                <h4 class="page-title">Tempahan</h4>
+
+                                <h4 class="page-title">Jobsheet</h4>
                             </div>
                         </div>
                     </div>
@@ -37,52 +43,55 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Tempahan ID</th>
                                                     <th>Nama Penyewa</th>
-                                                    <th>Tarikh & Masa Tempahan</th>
-                                                    
+                                                    <th>Lokasi Tanah</th>
+                                                    <th>Luas Tanah</th>
                                                     <th>Tugasan</th>
+                                                    <th>Jentera</th>
+                                                    <th>Tarikh Tugasan</th>
+                                                    
+
                                                     <th class="non-sortable text-center">Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                require_once '../../Models/Tempahan.php';
-                                                $tempahan = new Tempahan();
-                                                $bookings = $tempahan->getAllWithStatusTempahan('selesai');
+                                                $pemandu_id = $_SESSION['id'];
 
+                                                $jobsheet = new Jobsheet();
+                                                $bookings = $jobsheet->getAllbyPemanduId($pemandu_id, 'dijalankan');
 
                                                 foreach ($bookings as $booking) { ?>
                                                     <tr>
-                                                        <td><?php echo $booking['tempahan_id']; ?></td>
-                                                        <td><?php
-                                                            require_once '../../Models/Penyewa.php';
-                                                            $penyewa = new Penyewa();
-                                                            $user = $penyewa->findById($booking['penyewa_id']);
-                                                            echo $user['nama'];
-                                                            ?></td>
-                                                        <td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
-                                                       
-                                                        <td><?php
-                                                            require_once '../../Models/Kerja.php';
-                                                            $kerja = new Kerja();
-                                                            $works = $kerja->findByTempahanId($booking['tempahan_id']);
-                                                            $count = 1;
 
-                                                            foreach ($works as $work) {
-                                                                echo $count . '. ' . $work['nama_kerja'] . '<br>';
-                                                                $count++;
-                                                            }
+                                                        <td><?php echo $booking['nama']; ?></td>
+                                                        <td><?php echo $booking['lokasi_tanah']; ?></td>
+                                                        <td><?php echo $booking['luas_tanah']; ?></td>
+                                                        <td><?php
+                                                            $kerja = new Kerja();
+                                                            $tugas = $kerja->findByTempahanKerjaId($booking['tempahan_kerja_id']);
+                                                            echo $tugas['nama_kerja'];
+
                                                             ?></td>
+
+                                                        <td><?php
+                                                            $kenderaan = new Kenderaan();
+                                                            $jentera = $kenderaan->findById($booking['kenderaan_id']);
+
+                                                            echo $jentera['no_pendaftaran'];
+
+                                                        ?></td>
+
+                                                        <td><?php
+
+                                                            echo date('d/m/Y', strtotime($tugas['cadangan_tarikh_kerja']));
+
+                                                        ?></td>
+
+
+
                                                         <td class="table-action text-center">
-                                                        
-                                                            <a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-                                                                class="btn btn-info"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="top"
-                                                                title="Lihat Butiran">
-                                                                <i class="mdi mdi-file-document-outline"></i>
-                                                            </a>
+                                                            <a href="butiran_jobsheet.php?jobsheet_id=<?= $booking['jobsheet_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Butiran"> <i class="mdi mdi-eye"></i></a>
 
                                                         </td>
                                                     </tr>
@@ -105,12 +114,14 @@
 
         </div>
 
-
+        <?php include 'partials/right-sidemenu.php'; ?>
     </div>
     <!-- END wrapper -->
 
 
     <?php include 'partials/script.php'; ?>
+
+  
 
 </body>
 

@@ -63,7 +63,7 @@
                                         <div class="row mb-3">
                                             <label for="email" class="col-3 col-form-label">Email</label>
                                             <div class="col-9">
-                                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $userdata['email']; ?>" >
+                                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $userdata['email']; ?>" required>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

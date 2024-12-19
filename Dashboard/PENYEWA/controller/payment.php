@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlUpdateTempahan->bind_param("ssi", $status_tempahan, $status_bayaran, $tempahan_id);
 
         $sqlUpdateQuotation = $conn->prepare("UPDATE quotation SET status = ? WHERE quotation_id = ?");
-        $sqlUpdateQuotation->bind_param("si", $status, $quotation_id);
+        $sqlUpdateQuotation->bind_param("si", $status_quotation, $quotation_id);
 
         if ($cara_bayar == 'fpx') {
 
@@ -76,15 +76,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fpx_kod_respon = '00'; // Mock response (replace with actual FPX response logic)
             if ($fpx_kod_respon == '00') {
 
-                $status = 'selesai';
+                $status_quotation = 'selesai';
 
                 $sqlResit = $conn->prepare("INSERT INTO resit_pembayaran 
                     (tempahan_id, jenis_pembayaran, jumlah, cara_bayar, nombor_rujukan) 
                     VALUES (?, ?, ?, ?, ?)");
                 $sqlResit->bind_param("isdss", $tempahan_id, $jenis_pembayaran, $total_bayaran, $cara_bayar, $reference_number);
 
-                $status_tempahan = 'pengesahan jobsheet';
-                $status_bayaran = 'selesai bayaran';
+                if ($jenis_pembayaran == 'bayaran muka') {
+                    $status_tempahan = 'pengesahan jobsheet';
+                    $status_bayaran = 'selesai bayaran';
+                }else if($jenis_pembayaran == 'bayaran tambahan'){
+                    $status_tempahan = 'selesai';
+                    $status_bayaran = 'selesai';
+                }
+
+
 
                 if (!$sqlUpdateQuotation->execute()) {
                     throw new Exception("Kemaskini quotation gagal: " . $sqlUpdateQuotation->error);
@@ -103,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
 
-            $status = 'pengesahan';
+            $status_quotation = 'pengesahan';
             if (!$sqlUpdateQuotation->execute()) {
                 throw new Exception("Kemaskini quotation gagal: " . $sqlUpdateQuotation->error);
             }

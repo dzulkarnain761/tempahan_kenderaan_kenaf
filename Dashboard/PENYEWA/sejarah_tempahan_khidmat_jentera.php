@@ -23,7 +23,7 @@
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 class="page-title">TEMPAHAN KHIDMAT JENTERA - TERKINI</h4>
+                                <h4 class="page-title">TEMPAHAN KHIDMAT JENTERA - TERDAHULU</h4>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                                             ?>
                                                         </td>
 
-                                                        <td><?php echo $booking['catatan'] ?? 'Tiada Catatan' ?></td>
+                                                        <td><?php echo empty($booking['catatan']) ? 'Tiada Catatan' : $booking['catatan'] ?></td>
                                                         <?php
 
                                                         switch ($booking['status_bayaran']) {

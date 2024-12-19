@@ -53,7 +53,7 @@
                                     <div class="row mb-3">
                                         <label for="tarikh_kerja" class="col-3 col-form-label">Tarikh Kerja</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($work['tarikh_kerja_cadangan'])); ?>" readonly>
+                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($work['cadangan_tarikh_kerja'])); ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">

@@ -203,7 +203,7 @@
                                                                     onclick="lihatResit('<?php echo addslashes($resit['bukti_pembayaran_tunai']); ?>')"
                                                                     data-bs-toggle="tooltip"
                                                                     data-bs-placement="top"
-                                                                    title="Lihat Resit">
+                                                                    title="Lihat Bukti">
                                                                     <i class="mdi mdi-eye"></i>
                                                                 </button>
 

@@ -124,7 +124,7 @@
 													<th>Nama Pelanggan</th>
 													<th>Tugasan</th>
 													<th>Tarikh Tempahan</th>
-													<th>Status Tempahan</th>
+													<th class="text-center">Status Tempahan</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -153,7 +153,21 @@
 															}
 															?></td>
 														<td><?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?></td>
-														<td><?php echo $booking['status_tempahan']; ?></td>
+														<td class="text-center">
+                                                            <?php
+                                                            $badgeColors = [
+                                                                'dalam pengesahan' => 'secondary',
+                                                                'belum bayar' => 'danger',
+                                                                'bayaran diproses' => 'primary',
+                                                                'selesai bayaran' => 'success',
+                                                                'selesai' => 'success',
+                                                                'refund' => 'warning',
+                                                                'bayaran tambahan' => 'danger'
+                                                            ];
+                                                            $badgeColor = $badgeColors[$booking['status_bayaran']] ?? 'danger';
+                                                            echo '<span class="badge bg-' . $badgeColor . '">' . strtoupper(htmlspecialchars($booking['status_bayaran'])) . '</span>';
+                                                            ?>
+                                                        </td>
 
 													</tr>
 												<?php } ?>
