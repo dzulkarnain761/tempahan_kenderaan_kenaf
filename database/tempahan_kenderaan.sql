@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2024 at 10:10 AM
+-- Generation Time: Dec 19, 2024 at 05:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -78,7 +78,15 @@ CREATE TABLE `jobsheet` (
 
 INSERT INTO `jobsheet` (`jobsheet_id`, `tempahan_id`, `tempahan_kerja_id`, `pemandu_id`, `kenderaan_id`, `tarikh_kerja_dijalankan`, `jam`, `minit`, `harga`, `catatan`, `status_jobsheet`, `created_at`) VALUES
 (151, 91, 161, 12, 6, '2024-12-19', 1, 0, 40.00, NULL, 'selesai', '2024-12-18 08:32:03'),
-(153, 91, 162, 12, 5, '2024-12-19', 1, 0, 100.00, NULL, 'selesai', '2024-12-18 08:33:00');
+(153, 91, 162, 12, 5, '2024-12-19', 1, 0, 100.00, NULL, 'selesai', '2024-12-18 08:33:00'),
+(156, 92, 163, 12, 6, '2024-12-20', 2, 15, 90.00, NULL, 'selesai', '2024-12-19 01:09:47'),
+(157, 92, 164, 14, 5, '2024-12-20', 4, 0, 400.00, NULL, 'selesai', '2024-12-19 02:13:26'),
+(158, 93, 165, 12, 5, '2024-12-19', 4, 0, 400.00, NULL, 'selesai', '2024-12-19 02:35:24'),
+(159, 93, 166, 12, 5, '2024-12-20', 4, 0, 400.00, NULL, 'selesai', '2024-12-19 02:35:54'),
+(160, 94, 167, 12, 6, '2024-12-20', 2, 0, 80.00, NULL, 'selesai', '2024-12-19 02:39:59'),
+(162, 94, 168, 12, 5, '2024-12-20', 2, 0, 200.00, NULL, 'selesai', '2024-12-19 02:40:28'),
+(163, 95, 169, 12, 5, '2024-12-20', 4, 0, 400.00, NULL, 'selesai', '2024-12-19 02:47:21'),
+(164, 95, 170, 12, 5, '2024-12-20', 3, 0, 300.00, NULL, 'selesai', '2024-12-19 02:48:02');
 
 -- --------------------------------------------------------
 
@@ -297,7 +305,13 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`pid`, `rsp_appln_id`, `rsp_org_id`, `rsp_orderid`, `rsp_amount`, `rsp_trxstatus`, `rsp_stcode`, `rsp_bankid`, `rsp_bankname`, `rsp_fpxid`, `rsp_fpxorderno`, `date_created`, `type`, `doc`, `tarikh_cek`) VALUES
-(1, 'ETJ', 'LKTN', 'KJBP00090', 400.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-18 10:47:59', 0, NULL, NULL);
+(1, 'ETJ', 'LKTN', 'KJBP00090', 400.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-18 10:47:59', 0, NULL, NULL),
+(2, 'ETJ', 'LKTN', 'KJBP00092', 280.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-19 09:09:13', 0, NULL, NULL),
+(3, 'ETJ', 'LKTN', 'KJBT00092', 210.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-19 10:25:46', 0, NULL, NULL),
+(4, 'ETJ', 'LKTN', 'KJBP00093', 400.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-19 10:35:07', 0, NULL, NULL),
+(5, 'ETJ', 'LKTN', 'KJBT00093', 400.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-19 10:36:43', 0, NULL, NULL),
+(6, 'ETJ', 'LKTN', 'KJBP00094', 560.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-19 10:39:46', 0, NULL, NULL),
+(7, 'ETJ', 'LKTN', 'KJR00094', 280.00, 'SUCCESSFUL', '0', 'MB2U0227', 'Maybank', 'FPX123456', 'FPXORD987654', '2024-12-19 10:42:26', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -322,8 +336,7 @@ CREATE TABLE `penyewa` (
 --
 
 INSERT INTO `penyewa` (`id`, `nama`, `no_kp`, `contact_no`, `email`, `alamat`, `nama_bank`, `no_bank`, `password`) VALUES
-(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', '', 'pengkalan batu, pasir mas,', 'Maybang', '212132132', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC'),
-(5, 'TESTING NAMA 777777777777', '777777777777', '7777777777777', NULL, 'pasir mas, kelantan', NULL, NULL, '$2y$10$3ciVjRPo/1julI7NUNayD.S0GhQtgzHNybXcSxFlgpcAzu6pvgSFu');
+(2, 'MUHAMMAD DZULKARNAIN', '999999999999', '99999999999', '', 'pengkalan batu, pasir mas,', 'Maybang', '212132132', '$2y$10$joT4JcenTgyly1.eGtropezk0Rt2ZEyf6kXaEwWUdXd2bfKt6zpnC');
 
 -- --------------------------------------------------------
 
@@ -346,7 +359,14 @@ CREATE TABLE `quotation` (
 --
 
 INSERT INTO `quotation` (`quotation_id`, `total`, `reference_number`, `jenis_pembayaran`, `tempahan_id`, `created_at`, `status`) VALUES
-(7, 280.00, 'KJBP00091', 'bayaran muka', 91, '2024-12-18', 'selesai');
+(7, 280.00, 'KJBP00091', 'bayaran muka', 91, '2024-12-18', 'selesai'),
+(8, 280.00, 'KJBP00092', 'bayaran muka', 92, '2024-12-19', 'selesai'),
+(9, 210.00, 'KJBT00092', 'bayaran tambahan', 92, '2024-12-19', 'selesai'),
+(10, 400.00, 'KJBP00093', 'bayaran muka', 93, '2024-12-19', 'selesai'),
+(11, 400.00, 'KJBT00093', 'bayaran tambahan', 93, '2024-12-19', 'selesai'),
+(12, 560.00, 'KJBP00094', 'bayaran muka', 94, '2024-12-19', 'selesai'),
+(13, 400.00, 'KJBP00095', 'bayaran muka', 95, '2024-12-19', 'selesai'),
+(14, 300.00, 'KJBT00095', 'bayaran tambahan', 95, '2024-12-19', 'selesai');
 
 -- --------------------------------------------------------
 
@@ -370,7 +390,16 @@ CREATE TABLE `resit_pembayaran` (
 --
 
 INSERT INTO `resit_pembayaran` (`resit_id`, `tempahan_id`, `jenis_pembayaran`, `jumlah`, `cara_bayar`, `nombor_rujukan`, `bukti_pembayaran_tunai`, `created_at`) VALUES
-(70, 91, 'bayaran muka', 280.00, 'tunai', 'KJBP00091', NULL, '2024-12-18 16:30:06');
+(70, 91, 'bayaran muka', 280.00, 'tunai', 'KJBP00091', NULL, '2024-12-18 16:30:06'),
+(71, 91, 'refund', 140.00, 'fpx', 'KJR00091', NULL, '2024-12-18 17:32:06'),
+(72, 92, 'bayaran muka', 280.00, 'fpx', 'KJBP00092', NULL, '2024-12-19 09:09:13'),
+(73, 92, 'bayaran tambahan', 210.00, 'fpx', 'KJBT00092', NULL, '2024-12-19 10:25:46'),
+(74, 93, 'bayaran muka', 400.00, 'fpx', 'KJBP00093', NULL, '2024-12-19 10:35:07'),
+(75, 93, 'bayaran tambahan', 400.00, 'fpx', 'KJBT00093', NULL, '2024-12-19 10:36:43'),
+(76, 94, 'bayaran muka', 560.00, 'fpx', 'KJBP00094', NULL, '2024-12-19 10:39:46'),
+(77, 94, 'refund', 280.00, 'fpx', 'KJR00094', NULL, '2024-12-19 10:42:26'),
+(78, 95, 'bayaran muka', 400.00, 'tunai', 'KJBP00095', NULL, '2024-12-19 10:45:58'),
+(79, 95, 'bayaran tambahan', 300.00, 'tunai', 'KJBT00095', NULL, '2024-12-19 10:49:33');
 
 -- --------------------------------------------------------
 
@@ -400,7 +429,11 @@ CREATE TABLE `tempahan` (
 --
 
 INSERT INTO `tempahan` (`tempahan_id`, `penyewa_id`, `lokasi_tanah`, `luas_tanah`, `total_harga_anggaran`, `total_harga_sebenar`, `total_baki`, `catatan`, `disahkan_oleh`, `status_tempahan`, `status_bayaran`, `sebab_ditolak`, `created_at`, `updated_at`) VALUES
-(91, 2, 'pasir mas', 2.0, 280.00, 140.00, -140.00, '', 'AHMAD ABU PEE', 'refund kewangan', 'refund', NULL, '2024-12-18 08:16:26', '2024-12-18 08:59:04');
+(91, 2, 'pasir mas', 2.0, 280.00, 140.00, -140.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', NULL, '2024-12-18 08:16:26', '2024-12-18 09:32:06'),
+(92, 2, 'ASDASDASD', 2.0, 280.00, 490.00, 210.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', NULL, '2024-12-19 00:59:46', '2024-12-19 02:33:18'),
+(93, 2, 'testing last', 4.0, 400.00, 800.00, 400.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', NULL, '2024-12-19 02:33:59', '2024-12-19 02:36:43'),
+(94, 2, 'TESTING REFUND', 1231.0, 560.00, 280.00, -280.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', NULL, '2024-12-19 02:38:44', '2024-12-19 02:42:26'),
+(95, 2, 'TESTING CASH', 2.0, 400.00, 700.00, 300.00, '', 'AHMAD ABU PEE', 'selesai', 'selesai', NULL, '2024-12-19 02:43:26', '2024-12-19 02:49:33');
 
 -- --------------------------------------------------------
 
@@ -429,7 +462,15 @@ CREATE TABLE `tempahan_kerja` (
 
 INSERT INTO `tempahan_kerja` (`tempahan_kerja_id`, `tempahan_id`, `nama_kerja`, `jam_anggaran`, `minit_anggaran`, `harga_anggaran`, `total_jam`, `total_minit`, `total_harga`, `cadangan_tarikh_kerja`, `created_at`, `updated_at`) VALUES
 (161, 91, 'Parit Baru', 2, 0, 80.00, 1, 0, 40.00, '2024-12-20', '2024-12-18 08:16:26', '2024-12-18 08:32:54'),
-(162, 91, 'Piring', 2, 0, 200.00, 1, 0, 100.00, '2024-12-21', '2024-12-18 08:16:26', '2024-12-18 08:33:21');
+(162, 91, 'Piring', 2, 0, 200.00, 1, 0, 100.00, '2024-12-21', '2024-12-18 08:16:26', '2024-12-18 08:33:21'),
+(163, 92, 'Parit Baru', 2, 0, 80.00, 2, 15, 90.00, '2024-12-21', '2024-12-19 00:59:46', '2024-12-19 02:12:01'),
+(164, 92, 'Piring Batas Besar', 2, 0, 200.00, 4, 0, 400.00, '2024-12-22', '2024-12-19 00:59:46', '2024-12-19 02:13:39'),
+(165, 93, 'Piring', 2, 0, 200.00, 4, 0, 400.00, '2024-12-20', '2024-12-19 02:33:59', '2024-12-19 02:35:37'),
+(166, 93, 'Piring Batas Besar', 2, 0, 200.00, 4, 0, 400.00, '2024-12-28', '2024-12-19 02:33:59', '2024-12-19 02:36:05'),
+(167, 94, 'Baikpulih Parit', 4, 0, 160.00, 2, 0, 80.00, '2024-12-20', '2024-12-19 02:38:44', '2024-12-19 02:40:12'),
+(168, 94, 'Piring', 4, 0, 400.00, 2, 0, 200.00, '2024-12-21', '2024-12-19 02:38:44', '2024-12-19 02:40:40'),
+(169, 95, 'Piring Batas Besar', 2, 0, 200.00, 4, 0, 400.00, '2024-12-20', '2024-12-19 02:43:26', '2024-12-19 02:47:50'),
+(170, 95, 'Rotor 1', 2, 0, 200.00, 3, 0, 300.00, '2024-12-21', '2024-12-19 02:43:26', '2024-12-19 02:48:19');
 
 -- --------------------------------------------------------
 
@@ -572,7 +613,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `jobsheet`
 --
 ALTER TABLE `jobsheet`
-  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `jobsheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `kategori_kenderaan`
@@ -614,37 +655,37 @@ ALTER TABLE `negeri`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `penyewa`
 --
 ALTER TABLE `penyewa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `quotation`
 --
 ALTER TABLE `quotation`
-  MODIFY `quotation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `quotation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `resit_pembayaran`
 --
 ALTER TABLE `resit_pembayaran`
-  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `resit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `tempahan`
 --
 ALTER TABLE `tempahan`
-  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `tempahan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `tempahan_kerja`
 --
 ALTER TABLE `tempahan_kerja`
-  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `tempahan_kerja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT for table `tugasan`
