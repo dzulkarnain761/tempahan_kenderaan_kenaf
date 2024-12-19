@@ -188,7 +188,7 @@
 
                                     <div class="text-end">
 
-                                        <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Batal Tempahan</button>
+                                        <button type="button" onclick="rejectBayaran(<?php echo $_GET['tempahan_id'] ?>, <?php echo $_GET['quotation_id'] ?> )" class="btn btn-danger">Tolak Bayaran</button>
                                         <?php if ($booking['total_baki'] > 0) { ?>
                                             <a href="../../Controller/pdf/getPDF_quotation_extrapayment.php?tempahan_id=<?php echo $_GET['tempahan_id']; ?>&quotation_id=<?php echo $_GET['quotation_id'] ?>" target="_blank" class="btn btn-primary">Lihat Sebut Harga</a>
                                         <?php } else { ?>
@@ -226,42 +226,33 @@
 
 
     <script>
-        function rejectTempahan(id) {
+        function rejectBayaran(tempahan_id,quotation_id) {
             Swal.fire({
                 title: "Adakah anda pasti?",
-                text: "Tempahan ini akan dibatalkan",
                 icon: "warning",
-                input: 'textarea',
-                inputLabel: 'Sebab Dibatalkan',
-                inputPlaceholder: 'Sila masukkan sebab dibatalkan',
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'Sila masukkan sebab dibatalkan!'
-                    }
-                },
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Ya, batal tempahan",
+                confirmButtonText: "Tolak",
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch('controller/batal_tempahan.php', {
+                    fetch('controller/tolak_bayaran.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `tempahan_id=${id}&sebab_ditolak=${encodeURIComponent(result.value)}`
+                            body: `tempahan_id=${tempahan_id}&quotation_id=${quotation_id}`
                         })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
                                 Swal.fire({
                                     title: "Berjaya",
-                                    text: "Tempahan telah ditolak",
+                                    text: "Bayaran Ditolak",
                                     icon: "success"
                                 }).then(() => {
-                                    window.location.href = 'tempahan.php';
+                                    window.location.href = 'tempahan_resit.php';
                                 });
                             } else {
                                 Swal.fire({

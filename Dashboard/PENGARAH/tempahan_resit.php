@@ -76,7 +76,7 @@ require_once '../../Models/Quotation.php';
                                                         <td><?php echo $booking['jenis_pembayaran']; ?></td>
 
                                                         <td class="table-action text-center">
-                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&quotation_id=<?php echo $booking['quotation_id'] ?>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Penerimaan Tunai"> <i class="mdi mdi-check"></i></a>
+                                                            <a href="sah_bayaran.php?tempahan_id=<?php echo $booking['tempahan_id'] ?>&quotation_id=<?php echo $booking['quotation_id'] ?>" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Sahkan Bayaran"> <i class="mdi mdi-check"></i></a>
 
                                                         </td>
                                                     </tr>
