@@ -1,6 +1,14 @@
 <?php
 
+require_once '../../../PHPMailer/src/PHPMailer.php';
+require_once '../../../PHPMailer/src/SMTP.php';
+require_once '../../../PHPMailer/src/Exception.php';
+require_once '../../../send_email.php';
+
 require_once '../../../Models/Database.php';
+require_once '../../../Models/Admin.php';
+
+
 $conn = Database::getConnection();
 
 // Check if form is submitted
@@ -56,12 +64,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        // Send email to PEE
+        $kumpulan = 'D';
+        $adminModel = new Admin();
+        $admins = $adminModel->getAdminbyKumpulan($kumpulan);
+
+        $recipients = array_filter(array_map(function($admin) {
+            return $admin['email'] ?? '';
+        }, $admins)); // Filter out empty emails
+
+        $subject = 'LKTN eTempahan Jentera';
+        $body = "<h2>eTempahan Jentera</h2>
+                            <p>1 Tempahan Baru</p>
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+        $fromEmail = 'dzulkarnain761@gmail.com';
+
+        $result = sendEmail($subject, $body, $recipients, $fromEmail);
+
+        if ($result !== true) {
+            throw new Exception("Failed to send email: " . $result);
+        }
+
         // Commit the transaction
         $conn->commit();
 
         echo json_encode(["success" => true]);
 
-        $sqlKerja->close(); // Close after loop
+        // Close prepared statements
+        $sqlKerja->close();
+        $sqlTempahan->close();
     } catch (Exception $e) {
         // Rollback the transaction on error
         $conn->rollback();
@@ -69,8 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["success" => false, "message" => $e->getMessage()]);
     }
 
-    $sqlTempahan->close();
+    // Close connection
     $conn->close();
 }
-
-?>

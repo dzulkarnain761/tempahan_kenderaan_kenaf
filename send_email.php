@@ -2,10 +2,7 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+use PHPMailer\PHPMailer\SMTP;
 
 /**
  * Send an email using PHPMailer.
@@ -17,7 +14,8 @@ require 'PHPMailer/src/SMTP.php';
  * @param string $fromName Sender's name.
  * @return bool|string True on success, error message on failure.
  */
-function sendEmail($subject, $body, $recipients, $fromEmail, $fromName = '') {
+function sendEmail($subject, $body, $recipients, $fromEmail, $fromName = '')
+{
     $mail = new PHPMailer(true);
 
     try {
@@ -25,8 +23,8 @@ function sendEmail($subject, $body, $recipients, $fromEmail, $fromName = '') {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'your-email@gmail.com'; // Replace with your email
-        $mail->Password = 'your-app-password'; // Replace with your app password
+        $mail->Username = 'dzulkarnain761@gmail.com'; // Replace with your email
+        $mail->Password = 'tdpt vwwi jsut eyvb'; // Replace with your app password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
@@ -35,9 +33,10 @@ function sendEmail($subject, $body, $recipients, $fromEmail, $fromName = '') {
 
         // Add recipients
         foreach ($recipients as $recipient) {
-            $mail->addAddress($recipient);
+            if (!empty($recipient)) { // Only add valid email addresses
+                $mail->addAddress($recipient);
+            }
         }
-
         // Email content
         $mail->isHTML(true);
         $mail->Subject = $subject;
@@ -54,3 +53,4 @@ function sendEmail($subject, $body, $recipients, $fromEmail, $fromName = '') {
 }
 
 
+?>

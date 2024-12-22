@@ -1,5 +1,7 @@
 <?php
 
+
+
 require_once '../../../Models/Database.php';
 $conn = Database::getConnection();
 
@@ -20,6 +22,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
     $sqlUpdateTempahan->close();
+
+
+    // Prepare and send email
+    $kumpulan = 'E';
+    $adminModel = new Admin();
+    $admins = $adminModel->getAdminbyKumpulan($kumpulan);
+
+    $recipients = array_filter(array_map(function ($admin) {
+        return $admin['email'] ?? '';
+    }, $admins)); // Filter out empty emails
+
+    $subject = 'LKTN eTempahan Jentera';
+    $body = "<h2>eTempahan Jentera</h2>
+                <p>1 Tempahan Baru</p>
+                <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+    $fromEmail = 'dzulkarnain761@gmail.com';
+
+    $result = sendEmail($subject, $body, $recipients, $fromEmail);
 
     // Close the connection and return success message
     $conn->close();

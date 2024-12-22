@@ -109,7 +109,10 @@
                         </div>
                         <input type="hidden" name="penyewa_id" value="<?php echo $penyewa_id; ?>">
                         <div class="text-end mb-2">
-                            <button class="btn btn-primary">Tempah Sekarang</button>
+                            <button type="submit" class="btn btn-primary" id="submitButton">
+                                <span class="spinner-border spinner-border-sm d-none" id="loadingSpinner" role="status" aria-hidden="true"></span>
+                                <span id="buttonText">Tempah Sekarang</span>
+                            </button>
 
                         </div>
 
@@ -266,6 +269,14 @@
 
             const form = e.target;
             const formData = new FormData(form);
+            const submitButton = document.getElementById('submitButton');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const buttonText = document.getElementById('buttonText');
+
+            // Show loading animation
+            submitButton.setAttribute('disabled', 'true');
+            loadingSpinner.classList.remove('d-none');
+            buttonText.textContent = 'Memproses...';
 
             fetch(form.action, {
                     method: 'POST',
@@ -274,7 +285,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Success - Show a success message and redirect
                         Swal.fire({
                             icon: 'success',
                             title: 'Berjaya',
@@ -283,7 +293,6 @@
                             window.location.href = "tempahan_khidmat_jentera_terkini.php";
                         });
                     } else {
-                        // Failure - Show an error message
                         Swal.fire({
                             icon: 'error',
                             title: 'Ralat',
@@ -298,6 +307,12 @@
                         title: 'Kesalahan',
                         text: 'Kesalahan berlaku semasa menghantar borang. Sila cuba lagi.',
                     });
+                })
+                .finally(() => {
+                    // Hide loading animation and enable button
+                    submitButton.removeAttribute('disabled');
+                    loadingSpinner.classList.add('d-none');
+                    buttonText.textContent = 'Tempah Sekarang';
                 });
         });
     </script>

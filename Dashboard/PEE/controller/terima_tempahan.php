@@ -1,6 +1,11 @@
 <?php
 // Include database connection
 
+require_once '../../../PHPMailer/src/PHPMailer.php';
+require_once '../../../PHPMailer/src/SMTP.php';
+require_once '../../../PHPMailer/src/Exception.php';
+require_once '../../../send_email.php';
+
 require_once '../../../Models/Database.php';
 $conn = Database::getConnection();
 
@@ -64,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt) {
             // Bind the parameters to the statement
-            $stmt->bind_param('dssi', $total_harga_anggaran, $reference_number,$jenis_pembayaran, $tempahan_id);
+            $stmt->bind_param('dssi', $total_harga_anggaran, $reference_number, $jenis_pembayaran, $tempahan_id);
 
             // Execute the statement
             if (!$stmt->execute()) {
@@ -90,6 +95,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         } else {
             throw new Exception("Error preparing tempahan update statement: " . $conn->error);
+        }
+
+
+        // Send email to KPP
+        $kumpulan = 'A';
+        $adminModel = new Admin();
+        $admins = $adminModel->getAdminbyKumpulan($kumpulan);
+
+        $recipients = array_filter(array_map(function($admin) {
+            return $admin['email'] ?? '';
+        }, $admins)); // Filter out empty emails
+
+        $subject = 'LKTN eTempahan Jentera';
+        $body = "<h2>eTempahan Jentera</h2>
+                            <p>1 Tempahan Baru</p>
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+        $fromEmail = 'dzulkarnain761@gmail.com';
+
+        $result = sendEmail($subject, $body, $recipients, $fromEmail);
+
+        if ($result !== true) {
+            throw new Exception("Failed to send email: " . $result);
         }
 
         // Commit the transaction if no errors
