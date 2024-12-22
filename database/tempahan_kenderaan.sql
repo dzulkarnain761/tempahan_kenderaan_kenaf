@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 19, 2024 at 08:09 AM
+-- Host: localhost:3306
+-- Generation Time: Dec 22, 2024 at 04:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -90,33 +90,6 @@ CREATE TABLE `kategori_kenderaan` (
 INSERT INTO `kategori_kenderaan` (`id`, `kategori`) VALUES
 (1, 'Jengkaut'),
 (2, 'Traktor');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kategori_lesen`
---
-
-CREATE TABLE `kategori_lesen` (
-  `id` int(11) NOT NULL,
-  `kategori` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `kategori_lesen`
---
-
-INSERT INTO `kategori_lesen` (`id`, `kategori`, `description`) VALUES
-(7, 'D', 'Motokar dengan berat tanpa muatan (BTM) tidak melebihi 3000 kg'),
-(8, 'E', 'Motokar berat dengan BTM melebihi 7500 kg'),
-(9, 'E1', 'Motokar berat dengan BTM tidak melebihi 7500 kg'),
-(10, 'E2', 'Motokar berat dengan BTM tidak melebihi 5000 kg'),
-(11, 'F', 'Traktor / Jentera bermotor ringan (beroda) dengan BTM tidak melebihi 5000 kg'),
-(12, 'G', 'Traktor / Jentera bermotor ringan (berantai) dengan BTM tidak melebihi 5000 kg'),
-(13, 'H', 'Traktor / Jentera bermotor berat (beroda) dengan BTM melebihi 5000 kg'),
-(14, 'I', 'Traktor / Jentera bermotor berat (berantai) dengan BTM tidak 5000 kg'),
-(16, 'Z', 'DSADSADSDASDASDADADASDASDDAS');
 
 -- --------------------------------------------------------
 
@@ -322,7 +295,7 @@ CREATE TABLE `quotation` (
   `jenis_pembayaran` enum('bayaran muka','bayaran tambahan') DEFAULT NULL,
   `tempahan_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
-  `status` enum('belum bayar','pengesahan','selesai') DEFAULT 'belum bayar'
+  `status` enum('belum bayar','pengesahan','selesai','dibatalkan') DEFAULT 'belum bayar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -437,12 +410,6 @@ ALTER TABLE `kategori_kenderaan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kategori_lesen`
---
-ALTER TABLE `kategori_lesen`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `kawasan`
 --
 ALTER TABLE `kawasan`
@@ -534,12 +501,6 @@ ALTER TABLE `jobsheet`
 --
 ALTER TABLE `kategori_kenderaan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `kategori_lesen`
---
-ALTER TABLE `kategori_lesen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `kawasan`

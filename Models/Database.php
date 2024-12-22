@@ -1,5 +1,6 @@
 <?php
 
+
 class Database
 {
     // Store the single instance of Database connection

@@ -70,4 +70,10 @@ class Admin extends Account
         $row = $result->fetch_assoc();
         return $row['total'];
     }
+
+    public function getAdminbyKumpulan($kumpulan)
+    {
+        $result = $this->db->query("SELECT * FROM admin WHERE kumpulan = '$kumpulan'");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

@@ -23,7 +23,6 @@
                 </a>
             </li>
 
-
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSejarah" aria-expanded="false" aria-controls="sidebarSejarah" class="side-nav-link">
                     <i class="uil-history"></i>
