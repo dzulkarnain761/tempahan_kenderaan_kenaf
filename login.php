@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,19 +9,76 @@
 
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-    <link href="assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
-    
+	<link href="assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+	<style>
+        
+	.logo-top-left {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px; 
+    z-index: 1000;
+}
+	   
+	    .logo-top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Ubah dari 'left' ke 'right' */
+    z-index: 1000;
+}
+
+	   
+	   @keyframes swing {
+    0% {
+        transform: rotate(0deg); 
+    }
+    50% {
+        transform: rotate(3deg); 
+    }
+    100% {
+        transform: rotate(0deg); 
+    }
+}
+
+.right-image img {
+    animation: swing 4s ease-in-out infinite; 
+}
+
+	  @keyframes floatScale {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05);
+    }
+}
+
+.right-image img {
+    animation: floatScale 5s ease-in-out infinite;
+}
+		
+</style>
 </head>
 
-<body class="d-flex flex-column align-items-center justify-content-center vh-100 " style="background-color: #d8e6ff;">
+<body class="background-custom" style="background-image: url(assets/images/logo/auth-bg1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
     <!-- Logo -->
-    <div class="mb-4">
-        <img src="assets/images/logo/logo_tempahan_kenderaan_black.png" alt="Logo" class="img-fluid" style="width: 200px; height:auto;">
+    <div class="mb-4 logo-top-right">
+		  <a href="index.php">
+         <img src="assets/images/logo/logo baru.png" alt="ejentera" height="100" class="responsive-img">
+		 </a>
     </div>
+	
+	<div class="logo-top-left">
+    <a href="">
+        <img src="assets/images/logo/headlktn1.png" alt="Logo LKTN" height="30" class="responsive-img">
+    </a>
+</div>
 
     <!-- Login Form Container -->
-    <div class="container-sm border rounded p-4 bg-white shadow" style="max-width: 500px;">
-        <h3 class="text-center mb-4">Log Masuk</h3>
+    <div class="container-sm border rounded p-4 bg-white shadow ms-6" style="max-width: 500px; margin-top: 100px;">
+        <h3 class="text-center mb-4">LOG MASUK SISTEM</h3>
         <form id="loginForm" action="Controller/auth/login_proses.php" method="post">
             <div class="mb-3">
                 <label for="no_kp" class="form-label">No Kad Pengenalan</label>
@@ -36,12 +91,15 @@
             <button type="submit" class="btn btn-primary w-100">Log Masuk</button>
         </form>
         <p class="mt-3 text-center">Tiada Akaun? <a href="signup.php">Daftar Sekarang</a></p>
+		
+		
     </div>
+	
+	
 
-    <script src="assets/js/sweetalert2.min.js"></script>
-    
+   
+	<script src="assets/js/sweetalert2.min.js"></script>
     <script>
-       
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
 

@@ -11,7 +11,7 @@ require_once '../../Models/Resit.php';
 
 <?php include 'partials/head.php'; ?>
 
-<body class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body style="background-image: url(../../assets/images/logo/auth-bg1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;" class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -30,7 +30,7 @@ require_once '../../Models/Resit.php';
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 class="page-title">TEMPAHAN KHIDMAT JENTERA - TERKINI</h4>
+                                <h4 style="color: white"; class="page-title">SENARAI TEMPAHAN TERKINI PERKHIDMATAN JENTERA</h4>
                             </div>
                         </div>
                     </div>
@@ -38,8 +38,8 @@ require_once '../../Models/Resit.php';
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
+                            <div class="card custom-card">
+									<div class="card-body custom-card-body">
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
@@ -148,6 +148,28 @@ require_once '../../Models/Resit.php';
                                     </div>
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
+							
+							<style>
+							.custom-card {
+								background-color: rgba(255, 255, 255, 0.8); /* Warna putih with transparency */
+								border: 1px solid #ddd; 
+								border-radius: 8px; 
+								box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow  */
+							}
+
+							.custom-card-body {
+								background-color: transparent; /* Bahagian dalam card transparent */
+							}
+								
+								.black-text {
+									color: #172c6b; 
+								}
+								
+								  tr {
+									color: #172c6b;
+									font-weight: bold; 
+								}
+							</style>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
@@ -174,21 +196,21 @@ require_once '../../Models/Resit.php';
         function batalTempahan(tempahan_id) {
             Swal.fire({
                 title: "Adakah anda pasti?",
-                text: "Tempahan ini akan ditolak",
+                text: "Tempahan ini akan dibatalkan",
                 icon: "warning",
                 input: 'textarea',
-                inputLabel: 'Sebab Penolakan',
-                inputPlaceholder: 'Sila masukkan sebab batal',
+                inputLabel: 'Sebab Pembatalan',
+                inputPlaceholder: 'Sila masukkan sebab pembatalan',
                 inputValidator: (value) => {
                     if (!value) {
-                        return 'Sila masukkan sebab batal!'
+                        return 'Sila masukkan sebab pembatalan!'
                     }
                 },
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Batal Tempahan!",
-                cancelButtonText: "Batal"
+                confirmButtonText: "Hantar Pembatalan Tempahan!",
+                cancelButtonText: "Tutup"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/cancel_tempahan.php', {

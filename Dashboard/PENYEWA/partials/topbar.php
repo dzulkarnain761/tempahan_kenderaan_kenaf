@@ -1,22 +1,40 @@
+ <style>
+
+img.responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+@media only screen and (min-width: 992px) { /* ukuran layar desktop biasanya dimulai pada 992px */
+  .header-item, .dropdown-menu {
+    font-size: 16px; /* Atau ukuran yang sesuai */
+  }
+
+  img.responsive {
+    max-height: 25px; /* Tinggi maksimum untuk logo */
+    width: auto; /* Lebar akan menyesuaikan secara otomatis */
+  }
+  
+  /* Sesuaikan elemen lain yang mungkin terlalu besar */
+  .some-other-class {
+    padding: 10px; /* Contoh, mengurangi padding */
+  }
+}
+
+
+</style>
+
+
 <div class="navbar-custom">
+	
+	
     <ul class="list-unstyled topbar-menu float-end mb-0">
-        <li class="dropdown notification-list d-lg-none">
-            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <i class="dripicons-search noti-icon"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
-                <form class="p-3">
-                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                </form>
-            </div>
-        </li>
-
-
+        
 
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user arrow-none me-0 d-flex align-items-center" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" height="35">
+                    <img src="../../assets/images/logo/profil_dark.png" alt="user-image" class="rounded-circle" height="12">
                 </span>
                 <span class="account-user-name ms-2"><?php echo $first_name ?></span>
             </a>
@@ -43,7 +61,18 @@
     </ul>
     <button class="button-menu-mobile open-left">
         <i class="mdi mdi-menu"></i>
-    </button>
+    </button> 
+	<!--<li class="list-inline-item">
+    <a href="" data-bs-toggle="tooltip" data-placement="top" >
+        <span class="d-block" style="color: white;">
+            <!-- Your text goes here 
+            -
+        </span>
+        <img src="../../assets/images/logo/headlktnhijau.png" alt="" height="25" class="responsive">
+
+    </a>
+</li>-->
+
 
 </div>
 <!-- end Topbar -->

@@ -4,7 +4,7 @@
 
 <?php include 'partials/head.php'; ?>
 
-<body class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body style="background-image: url(../../assets/images/logo/auth-bg1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;"  class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -17,6 +17,25 @@
 
                 <!-- Start Content-->
                 <div class="container-fluid">
+					
+					<style>
+						.breadcrumb {
+							color: #00C970; /* Warna teks putih */
+						}
+
+						.breadcrumb a {
+							color: #00C970; /* Warna teks putih untuk pautan */
+							text-decoration: none; /* (Pilihan) Buang garisan bawah pautan */
+						}
+
+						.breadcrumb a:hover {
+							text-decoration: underline; /* (Pilihan) Garisan bawah bila hover */
+						}
+
+						.breadcrumb-item.active {
+							color: #ooo; /* Warna teks putih untuk item aktif */
+						}
+					</style>
 
                     <!-- start page title -->
                     <div class="row">
@@ -24,11 +43,13 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="tempahan_khidmat_jentera_terkini.php">TEMPAHAN KHIDMAT JENTERA TERKINI</a></li>
-                                        <li class="breadcrumb-item active">BUTIRAN TEMPAHAN</li>
-                                    </ol>
+										<li class="breadcrumb-item">
+											<a href="tempahan_khidmat_jentera_terkini.php">TEMPAHAN KHIDMAT JENTERA TERKINI</a>
+										</li>
+										<li class="breadcrumb-item active">BUTIRAN TEMPAHAN</li>
+									</ol>
                                 </div>
-                                <h4 class="page-title">BUTIRAN TEMPAHAN</h4>
+                                <br><h4 style="color: white">BUTIRAN TEMPAHAN</h4>
                             </div>
                         </div>
                     </div>
@@ -36,8 +57,8 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
+                            <div class="card custom-card">
+									<div class="card-body custom-card-body">
                                     <?php
                                     require_once '../../Models/Tempahan.php';
                                     $tempahan = new Tempahan();
@@ -46,28 +67,28 @@
 
 
                                     <div class="row mb-3">
-                                        <label for="lokasi_kerja" class="col-3 col-form-label">LOKASI TANAH</label>
+                                        <label for="lokasi_kerja" class="col-3 col-form-label black-text ">LOKASI TANAH</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
+                                            <input type="text" class="form-control black-text" id="lokasi_kerja" name="lokasi_kerja" value="<?php echo $booking['lokasi_tanah']; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="luas_tanah" class="col-3 col-form-label">LUAS TANAH (HEKTAR)</label>
+                                        <label for="luas_tanah" class="col-3 col-form-label black-text">LUAS TANAH (HEKTAR)</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="luas_tanah" name="luas_tanah" value="<?php echo $booking['luas_tanah']; ?>" readonly>
+                                            <input type="text" class="form-control black-text" id="luas_tanah" name="luas_tanah" value="<?php echo $booking['luas_tanah']; ?>" readonly>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="created_at" class="col-3 col-form-label">TARIKH TEMPAHAN</label>
+                                        <label for="created_at" class="col-3 col-form-label black-text">TARIKH TEMPAHAN</label>
                                         <div class="col-9">
-                                            <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
+                                            <input type="text" class="form-control black-text" id="created_at" name="created_at" value="<?php echo date('d/m/Y g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="catatan" class="col-3 col-form-label">CATATAN</label>
+                                        <label for="catatan" class="col-3 col-form-label black-text">CATATAN</label>
                                         <div class="col-9">
-                                            <textarea class="form-control" id="catatan" name="catatan" rows="3" readonly><?php echo !empty($booking['catatan']) ? $booking['catatan'] : 'Tiada Catatan'; ?></textarea>
+                                            <textarea class="form-control black-text" id="catatan" name="catatan" rows="3" readonly><?php echo !empty($booking['catatan']) ? $booking['catatan'] : 'Tiada Catatan'; ?></textarea>
                                         </div>
                                     </div>
 
@@ -78,29 +99,56 @@
 
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
+							
+							<style>
+							.custom-card {
+								background-color: rgba(255, 255, 255, 0.8); /* Warna putih with transparency */
+								border: 1px solid #ddd; 
+								border-radius: 8px; 
+								box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow  */
+							}
+
+							.custom-card-body {
+								background-color: transparent; /* Bahagian dalam card transparent */
+							}
+								
+								.black-text {
+									color: #172c6b; 
+								}
+								
+								   tr {
+									color: #172c6b;
+									font-weight: bold; 
+								}
+								
+								.page-title {
+								color: #fff; /* Warna putih */
+							}
+								
+							</style>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-
-                                <h4 class="page-title">BUTIRAN KERJA</h4>
+								<br><h4 style="color: white">BUTIRAN KERJA</h4>
+                               
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
+                            <div class="card custom-card">
+									<div class="card-body custom-card-body">
 
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Nama Kerja</th>
-                                                    <th>Tarikh Kerja</th>
+                                                    <th>Cadangan Tarikh Kerja</th>
 
                                                     <?php if ($booking['total_harga_anggaran'] != null) {
                                                         echo '<th>Harga Pengesahan</th>';
