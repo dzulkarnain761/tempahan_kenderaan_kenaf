@@ -5,9 +5,10 @@ require_once '../../../PHPMailer/src/PHPMailer.php';
 require_once '../../../PHPMailer/src/SMTP.php';
 require_once '../../../PHPMailer/src/Exception.php';
 require_once '../../../send_email.php';
+require_once '../../../Models/Admin.php';
 
 require_once '../../../Models/Database.php';
-require_once '../../../Models/Admin.php';
+
 $conn = Database::getConnection();
 
 $response = array('success' => false, 'message' => ''); // Default response
@@ -81,29 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             throw new Exception("Error preparing quotation update statement: " . $conn->error);
         }
-
-        // Create event to automatically change quotation status after 7 days
-        $createEventQuery = "CREATE EVENT IF NOT EXISTS update_quotation_bayaran_muka_" . intval($tempahan_id) . "
-    ON SCHEDULE AT '$end_date'
-    DO
-    BEGIN
-        UPDATE quotation 
-        SET status = 'dibatalkan' 
-        WHERE tempahan_id = " . intval($tempahan_id) . " 
-        AND status = 'belum bayar' AND jenis_pembayaran = 'bayaran muka';
-
-        UPDATE tempahan 
-        SET status_tempahan = 'dibatalkan', 
-            status_bayaran = 'dibatalkan', 
-            catatan = 'Tidak dibayar dalam masa 7 hari'
-        WHERE tempahan_id = " . intval($tempahan_id) . ";
-    END;";
-
-        if (!$conn->query($createEventQuery)) {
-            throw new Exception("Error creating event: " . $conn->error);
-        }
-
-
 
 
         // Prepare the update query for tempahan

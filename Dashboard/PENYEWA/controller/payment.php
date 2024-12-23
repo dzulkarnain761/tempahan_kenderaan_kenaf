@@ -1,8 +1,14 @@
 <?php
 
+require_once '../../../PHPMailer/src/PHPMailer.php';
+require_once '../../../PHPMailer/src/SMTP.php';
+require_once '../../../PHPMailer/src/Exception.php';
+require_once '../../../send_email.php';
+
 require_once '../../../Models/Database.php';
 require_once '../../../Models/Tempahan.php';
 require_once '../../../Models/Quotation.php';
+require_once '../../../Models/Admin.php';
 $conn = Database::getConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -86,11 +92,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($jenis_pembayaran == 'bayaran muka') {
                     $status_tempahan = 'pengesahan jobsheet';
                     $status_bayaran = 'selesai bayaran';
-                }else if($jenis_pembayaran == 'bayaran tambahan'){
+                } else if ($jenis_pembayaran == 'bayaran tambahan') {
                     $status_tempahan = 'selesai';
                     $status_bayaran = 'selesai';
                 }
-
 
 
                 if (!$sqlUpdateQuotation->execute()) {
@@ -107,15 +112,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     throw new Exception("Resit pembayaran gagal: " . $sqlResit->error);
                 }
                 $sqlResit->close();
+
+
+                // send emai to PEE
+                $kumpulan = 'D';
+                $adminModel = new Admin();
+                $admins = $adminModel->getAdminbyKumpulan($kumpulan);
+
+                $recipients = array_filter(array_map(function ($admin) {
+                    return $admin['email'] ?? '';
+                }, $admins)); // Filter out empty emails
+
+                $subject = 'LKTN eTempahan Jentera';
+                $body = "<h2>eTempahan Jentera</h2>
+                            <p>1 Tempahan Baru</p>
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/Dashboard/PEE/jobsheet.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+                $fromEmail = 'dzulkarnain761@gmail.com';
+
+                $result = sendEmail($subject, $body, $recipients, $fromEmail);
+
+                if ($result !== true) {
+                    throw new Exception("Failed to send email: " . $result);
+                }
             }
         } else {
+
+            //send email to PT
+            $kumpulan = 'F';
+            $adminModel = new Admin();
+            $admins = $adminModel->getAdminbyKumpulan($kumpulan);
+
+            $recipients = array_filter(array_map(function ($admin) {
+                return $admin['email'] ?? '';
+            }, $admins)); // Filter out empty emails
+
+            $subject = 'LKTN eTempahan Jentera';
+            $body = "<h2>eTempahan Jentera</h2>
+                            <p>1 Bayaran Diterima</p>
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/Dashbord/PT/terima_tunai.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+            $fromEmail = 'dzulkarnain761@gmail.com';
+
+            $result = sendEmail($subject, $body, $recipients, $fromEmail);
+
+            if ($result !== true) {
+                throw new Exception("Failed to send email: " . $result);
+            }
+
 
             $status_quotation = 'pengesahan';
             if (!$sqlUpdateQuotation->execute()) {
                 throw new Exception("Kemaskini quotation gagal: " . $sqlUpdateQuotation->error);
             }
             $sqlUpdateQuotation->close();
-
 
             $status_tempahan = 'pengesahan pt';
             $status_bayaran = 'bayaran diproses';
