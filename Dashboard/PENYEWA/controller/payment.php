@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $subject = 'LKTN eTempahan Jentera';
                 $body = "<h2>eTempahan Jentera</h2>
                             <p>1 Tempahan Baru</p>
-                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/Dashboard/PEE/jobsheet.php'>eJentera</a> untuk melihat tempahan baru.</p>";
                 $fromEmail = 'dzulkarnain761@gmail.com';
 
                 $result = sendEmail($subject, $body, $recipients, $fromEmail);
@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $subject = 'LKTN eTempahan Jentera';
             $body = "<h2>eTempahan Jentera</h2>
                             <p>1 Bayaran Diterima</p>
-                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/Dashbord/PT/terima_tunai.php'>eJentera</a> untuk melihat tempahan baru.</p>";
             $fromEmail = 'dzulkarnain761@gmail.com';
 
             $result = sendEmail($subject, $body, $recipients, $fromEmail);

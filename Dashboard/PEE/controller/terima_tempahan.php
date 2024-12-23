@@ -7,6 +7,7 @@ require_once '../../../PHPMailer/src/Exception.php';
 require_once '../../../send_email.php';
 
 require_once '../../../Models/Database.php';
+require_once '../../../Models/Admin.php';
 $conn = Database::getConnection();
 
 $response = array('success' => false, 'message' => ''); // Default response
@@ -61,15 +62,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $reference_number = 'KJBP' . str_pad($tempahan_id, 5, '0', STR_PAD_LEFT);
+        $end_date = date('Y-m-d', strtotime('+7 days'));
 
         // Correct the SQL query syntax
-        $updateQuotationQuery = "INSERT INTO quotation (total, reference_number,jenis_pembayaran, tempahan_id) VALUES (?, ?, ?, ?)";
+        $updateQuotationQuery = "INSERT INTO quotation (total, reference_number, jenis_pembayaran, end_date, tempahan_id) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($updateQuotationQuery);
         $jenis_pembayaran = 'bayaran muka';
 
         if ($stmt) {
             // Bind the parameters to the statement
-            $stmt->bind_param('dssi', $total_harga_anggaran, $reference_number, $jenis_pembayaran, $tempahan_id);
+            $stmt->bind_param('dsssi', $total_harga_anggaran, $reference_number, $jenis_pembayaran, $end_date, $tempahan_id);
 
             // Execute the statement
             if (!$stmt->execute()) {
@@ -79,6 +81,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             throw new Exception("Error preparing quotation update statement: " . $conn->error);
         }
+
+        // Create event to automatically change quotation status after 7 days
+        $createEventQuery = "CREATE EVENT IF NOT EXISTS update_quotation_bayaran_muka_" . intval($tempahan_id) . "
+    ON SCHEDULE AT '$end_date'
+    DO
+    BEGIN
+        UPDATE quotation 
+        SET status = 'dibatalkan' 
+        WHERE tempahan_id = " . intval($tempahan_id) . " 
+        AND status = 'belum bayar' AND jenis_pembayaran = 'bayaran muka';
+
+        UPDATE tempahan 
+        SET status_tempahan = 'dibatalkan', 
+            status_bayaran = 'dibatalkan', 
+            catatan = 'Tidak dibayar dalam masa 7 hari'
+        WHERE tempahan_id = " . intval($tempahan_id) . ";
+    END;";
+
+        if (!$conn->query($createEventQuery)) {
+            throw new Exception("Error creating event: " . $conn->error);
+        }
+
+
+
 
         // Prepare the update query for tempahan
         $updateTempahanQuery = "UPDATE tempahan SET total_harga_anggaran = ?, status_tempahan = ?, disahkan_oleh = ? WHERE tempahan_id = ?";
@@ -103,14 +129,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $adminModel = new Admin();
         $admins = $adminModel->getAdminbyKumpulan($kumpulan);
 
-        $recipients = array_filter(array_map(function($admin) {
+        $recipients = array_filter(array_map(function ($admin) {
             return $admin['email'] ?? '';
         }, $admins)); // Filter out empty emails
 
         $subject = 'LKTN eTempahan Jentera';
         $body = "<h2>eTempahan Jentera</h2>
                             <p>1 Tempahan Baru</p>
-                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+                            <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/Dashboard/KPP/tempahan.php'>eJentera</a> untuk melihat tempahan baru.</p>";
         $fromEmail = 'dzulkarnain761@gmail.com';
 
         $result = sendEmail($subject, $body, $recipients, $fromEmail);

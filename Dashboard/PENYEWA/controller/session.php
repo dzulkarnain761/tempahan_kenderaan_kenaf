@@ -7,6 +7,12 @@ if (!isset($_SESSION["id"])) {
     exit();
 }
 
+// Optional: Check if the user has the right role for the page
+if ($_SESSION['kumpulan'] != 'penyewa') {
+    header('Location: ../../error_page_403.php');
+    exit;
+}
+
 $user_name = $_SESSION['nama_pengguna'];
 
 // Split the name by space and take the first part

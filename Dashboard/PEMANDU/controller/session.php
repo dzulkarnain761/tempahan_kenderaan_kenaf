@@ -8,7 +8,7 @@ if (!isset($_SESSION['id'])) {
 
 // Optional: Check if the user has the right role for the page
 if ($_SESSION['kumpulan'] != 'Y') {
-    echo "Access denied.";
+    header('Location: ../../error_page_403.php');
     exit;
 }
 

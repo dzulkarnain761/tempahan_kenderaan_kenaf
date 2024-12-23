@@ -101,8 +101,6 @@
                                             </tbody>
                                         </table>
 
-
-
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
                             </div> <!-- end col -->
@@ -269,6 +267,7 @@
 
             const form = e.target;
             const formData = new FormData(form);
+            
             const submitButton = document.getElementById('submitButton');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const buttonText = document.getElementById('buttonText');

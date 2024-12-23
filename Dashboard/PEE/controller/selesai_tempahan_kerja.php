@@ -60,6 +60,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $sqlInsertQuotation = "INSERT INTO quotation (total, reference_number, jenis_pembayaran, tempahan_id) VALUES (?, ?, ?, ?)";
             executeQuery($conn, $sqlInsertQuotation, 'dssi', [$total_baki, $reference_number, $jenis_pembayaran, $tempahan_id]);
+
+            // Create event to automatically change quotation status after 7 days
+            $createEventQuery = "CREATE EVENT IF NOT EXISTS update_quotation_bayaran_tambahan_" . intval($tempahan_id) . "
+        ON SCHEDULE AT '$end_date'
+        DO
+        BEGIN
+            UPDATE quotation 
+            SET status = 'dibatalkan' 
+            WHERE tempahan_id = " . intval($tempahan_id) . " 
+            AND status = 'belum bayar' AND jenis_pembayaran = 'bayaran tambahan';
+    
+            UPDATE tempahan 
+            SET status_tempahan = 'dibatalkan', 
+                status_bayaran = 'dibatalkan', 
+                catatan = 'Tidak dibayar dalam masa 7 hari'
+            WHERE tempahan_id = " . intval($tempahan_id) . ";
+        END;";
+
+            if (!$conn->query($createEventQuery)) {
+                throw new Exception("Error creating event: " . $conn->error);
+            }
         } else {
             $status_tempahan = 'refund kewangan';
             $status_bayaran = 'refund';
@@ -76,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $subject = 'LKTN eTempahan Jentera';
             $body = "<h2>eTempahan Jentera</h2>
                         <p>1 Tempahan Baru</p>
-                        <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/login.php'>eJentera</a> untuk melihat tempahan baru.</p>";
+                        <p>Sila log masuk ke <a href='https://apps.lktn.gov.my/ejentera/Dashboard/KEWANGAN/tempahan.php'>eJentera</a> untuk melihat tempahan baru.</p>";
             $fromEmail = 'dzulkarnain761@gmail.com';
 
             $result = sendEmail($subject, $body, $recipients, $fromEmail);
@@ -109,7 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(["success" => false, "message" => "Invalid request method"]);
 }
 
-function fetchSingleResult($conn, $sql, $types, $params) {
+function fetchSingleResult($conn, $sql, $types, $params)
+{
     $stmt = $conn->prepare($sql);
     $stmt->bind_param($types, ...$params);
     $stmt->execute();
@@ -118,7 +140,8 @@ function fetchSingleResult($conn, $sql, $types, $params) {
     return $result;
 }
 
-function executeQuery($conn, $sql, $types, $params) {
+function executeQuery($conn, $sql, $types, $params)
+{
     $stmt = $conn->prepare($sql);
     $stmt->bind_param($types, ...$params);
     if (!$stmt->execute()) {
