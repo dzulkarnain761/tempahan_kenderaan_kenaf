@@ -1,24 +1,23 @@
 <?php include 'controller/session.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
-	
-<style>
-button {
-    background-color: #00FF7F;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
 
-button:hover {
-    background-color: #00C970;
-}	
-	
+<style>
+    button {
+        background-color: #00FF7F;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #00C970;
+    }
 </style>
 
 <?php include 'partials/head.php'; ?>
@@ -40,7 +39,7 @@ button:hover {
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 style="color: white"; class="page-title">BORANG TEMPAHAN PERKHIDMATAN JENTERA</h4>
+                                <h4 style="color: white;" class="page-title">BORANG TEMPAHAN PERKHIDMATAN JENTERA</h4>
                             </div>
                         </div>
                     </div>
@@ -49,54 +48,57 @@ button:hover {
                         <div class="row">
                             <div class="col-12">
                                 <div class="card custom-card">
-									<div class="card-body custom-card-body">
-										<font color="red">Perhatian : Sila isikan maklumat bertanda <strong>*</strong></font>
-										<div class="mb-3">
-											<label for="lokasi_tanah" class="form-label black-text">LOKASI TANAH <font color="red"><strong>*</strong></font></label>
-											<input type="text" placeholder="Masukkan lokasi tanah..." id="lokasi_tanah" name="lokasi_tanah" class="form-control" required>
-										</div>
-										<div class="mb-3">
-											<label for="luas_tanah" class="form-label black-text">KELUASAN TANAH (HEKTAR) <font color="red"><strong>*</strong></font></label>
-											<input type="number" placeholder="Masukkan keluasan tanah..." id="luas_tanah" name="luas_tanah" class="form-control" required>
-										</div>
-										<div class="mb-3">
-											<label for="catatan" class="form-label black-text">CATATAN</label>
-											<textarea id="catatan" placeholder="Masukkan catatan..." name="catatan" class="form-control"></textarea>
-										</div>
-										<div class="mb-3">
-											<label for="bilangan_tugasan" class="form-label black-text">BILANGAN TUGASAN <font color="red"><strong>*</strong></font></label>
-											<select id="bilangan_tugasan" name="" class="form-select">
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-											</select>
-										</div>
-									</div> <!-- end card-body-->
-								</div> <!-- end card-->
+                                    <div class="card-body custom-card-body">
+                                        <font color="red">Perhatian : Sila isikan maklumat bertanda <strong>*</strong></font>
+                                        <div class="mb-3">
+                                            <label for="lokasi_tanah" class="form-label black-text">LOKASI TANAH <font color="red"><strong>*</strong></font></label>
+                                            <input type="text" placeholder="Masukkan lokasi tanah..." id="lokasi_tanah" name="lokasi_tanah" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="luas_tanah" class="form-label black-text">KELUASAN TANAH (HEKTAR) <font color="red"><strong>*</strong></font></label>
+                                            <input type="number" placeholder="Masukkan keluasan tanah..." id="luas_tanah" name="luas_tanah" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="catatan" class="form-label black-text">CATATAN</label>
+                                            <textarea id="catatan" placeholder="Masukkan catatan..." name="catatan" class="form-control"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="bilangan_tugasan" class="form-label black-text">BILANGAN TUGASAN <font color="red"><strong>*</strong></font></label>
+                                            <select id="bilangan_tugasan" name="" class="form-select">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
 
-							<style>
-							.custom-card {
-								background-color: rgba(255, 255, 255, 0.8); /* Warna putih with transparency */
-								border: 1px solid #ddd; 
-								border-radius: 8px; 
-								box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow  */
-							}
+                                <style>
+                                    .custom-card {
+                                        background-color: rgba(255, 255, 255, 0.8);
+                                        /* Warna putih with transparency */
+                                        border: 1px solid #ddd;
+                                        border-radius: 8px;
+                                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                        /* Shadow  */
+                                    }
 
-							.custom-card-body {
-								background-color: transparent; /* Bahagian dalam card transparent */
-							}
-								
-								.black-text {
-									color: #172c6b; 
-								}
-								
-								 thead td {
-									color: #172c6b;
-									font-weight: bold; 
-								}
-							</style>
+                                    .custom-card-body {
+                                        background-color: transparent;
+                                        /* Bahagian dalam card transparent */
+                                    }
+
+                                    .black-text {
+                                        color: #172c6b;
+                                    }
+
+                                    thead td {
+                                        color: #172c6b;
+                                        font-weight: bold;
+                                    }
+                                </style>
 
                             </div> <!-- end col -->
                         </div>
@@ -104,8 +106,8 @@ button:hover {
 
                         <div class="row">
                             <div class="col-12">
-                               <div class="card custom-card">
-									<div class="card-body custom-card-body">
+                                <div class="card custom-card">
+                                    <div class="card-body custom-card-body">
 
                                         <?php
 
@@ -131,8 +133,10 @@ button:hover {
                                             <thead>
                                                 <tr>
                                                     <td>#</td>
-                                                    <td>Nama Tugasan <font color="red"><strong>*</strong></font></td>
-                                                    <td>Cadangan Tarikh <font color="red"><strong>*</strong></font></td>
+                                                    <td>Nama Tugasan <font color="red"><strong>*</strong></font>
+                                                    </td>
+                                                    <td>Cadangan Tarikh <font color="red"><strong>*</strong></font>
+                                                    </td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -150,22 +154,24 @@ button:hover {
                             <button class="gradient-button">HANTAR TEMPAHAN</button>
                         </div>
 
-<style>
-.gradient-button {
-    background: linear-gradient(45deg, #98FB91, #08B118); /* Gradient */
-    border: none;
-    color: #000;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px; 
-    transition: background 0.3s ease;
-}
+                        <style>
+                            .gradient-button {
+                                background: linear-gradient(45deg, #98FB91, #08B118);
+                                /* Gradient */
+                                border: none;
+                                color: #000;
+                                padding: 10px 20px;
+                                font-size: 16px;
+                                cursor: pointer;
+                                border-radius: 5px;
+                                transition: background 0.3s ease;
+                            }
 
-.gradient-button:hover {
-    background: linear-gradient(45deg, #08B118, #98FB91); /*  bila hover */
-}
-</style>
+                            .gradient-button:hover {
+                                background: linear-gradient(45deg, #08B118, #98FB91);
+                                /*  bila hover */
+                            }
+                        </style>
                     </form>
 
                 </div> <!-- container -->

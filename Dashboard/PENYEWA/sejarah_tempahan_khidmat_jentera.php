@@ -110,10 +110,15 @@
                                                                 title="Lihat Butiran Tempahan">
                                                                 <i class="mdi mdi-eye"></i>
                                                             </a>
-                                                            <?php
-                                                            if ($booking['status_bayaran'] == 'dalam pengesahan' || $booking['status_bayaran'] == 'belum bayar') { ?>
-                                                                <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Tempahan"><i class="mdi mdi-delete"></i></button>
-                                                            <?php } ?>
+
+                                                            <a href="../../Controller/pdf/getPDF_full_detail.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
+                                                                class="btn btn-secondary"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="Lihat Borang Butiran Tempahan">
+                                                                <i class="mdi mdi-file"></i>
+                                                            </a>
+                                                           
 
                                                         </td>
                                                     </tr>
