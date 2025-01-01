@@ -82,7 +82,7 @@
                                         <div class="row mb-3">
                                             <label for="tahun_daftar" class="col-3 col-form-label">Tahun Daftar</label>
                                             <div class="col-9">
-                                                <input type="number" class="form-control" id="tahun_daftar" name="tahun_daftar" value="<?php echo $vehicle['tahun_daftar'] ?>" maxlength="4" required>
+                                                <input type="text" class="form-control" id="tahun_daftar" name="tahun_daftar" maxlength="4" value="<?php echo $vehicle['tahun_daftar'] ?>" maxlength="4" required>
                                             </div>
                                         </div>
 

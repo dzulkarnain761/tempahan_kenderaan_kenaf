@@ -21,9 +21,9 @@ if (isset($_POST['tugasan_id'])) {
 
     if ($stmt->execute()) {
         if ($stmt->affected_rows > 0) {
-            echo json_encode(['success' => 'Staf berjaya dipadamkan.']);
+            echo json_encode(['success' => 'Tugasan berjaya dipadamkan.']);
         } else {
-            echo json_encode(['error' => 'Staf tidak dijumpai.']);
+            echo json_encode(['error' => 'Tugasan tidak dijumpai.']);
         }
     } else {
         echo json_encode(['error' => 'Gagal menghapuskan staf.']);

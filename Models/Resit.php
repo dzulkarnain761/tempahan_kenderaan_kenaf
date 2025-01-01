@@ -81,7 +81,7 @@ class Resit
                 FROM resit_pembayaran r
                 LEFT JOIN tempahan t ON t.tempahan_id = r.tempahan_id
                 LEFT JOIN penyewa p ON t.penyewa_id = p.id
-                WHERE r.cara_bayar = 'tunai' AND r.bukti_pembayaran_tunai = NULL");
+                WHERE r.cara_bayar = 'tunai' AND r.bukti_pembayaran_tunai is NULL");
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);

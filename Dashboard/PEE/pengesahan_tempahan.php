@@ -80,7 +80,7 @@
                                             <input type="text" class="form-control" id="created_at" name="created_at" value="<?php echo date('d/m/Y, g:i A', strtotime($booking['created_at'])); ?>" readonly>
                                         </div>
                                     </div>
-                                   
+
 
                                     <div class="row mb-3">
                                         <label for="catatan" class="col-3 col-form-label">Catatan</label>
@@ -195,10 +195,11 @@
 
                                         <div class="text-end">
                                             <button type="button" onclick="rejectTempahan(<?php echo $_GET['tempahan_id']; ?>)" class="btn btn-danger">Tolak Tempahan</button>
-                                            <button type="submit" onclick="submitForm()" class="btn btn-success">Hasilkan Sebut Harga</button>
+                                            <button type="submit" onclick="submitForm()" class="btn btn-success" id="terimaTempahanButton">
+                                                <span class="spinner-border spinner-border-sm d-none" id="loadingSpinner" role="status" aria-hidden="true"></span>
+                                                <span id="buttonText">Hasilkan Sebut Harga</span>
+                                            </button>
                                         </div>
-
-
                                     </form>
 
                                 </div> <!-- end card-body-->
@@ -377,6 +378,17 @@
                 if (result.isConfirmed) {
                     const formData = new FormData(form);
 
+
+                    const submitButton = document.getElementById('terimaTempahanButton');
+                    const loadingSpinner = document.getElementById('loadingSpinner');
+                    const buttonText = document.getElementById('buttonText');
+
+                    // Show loading animation
+                    submitButton.setAttribute('disabled', 'true');
+                    loadingSpinner.classList.remove('d-none');
+                    buttonText.textContent = 'Memproses...';
+
+
                     fetch('controller/terima_tempahan.php', {
                             method: 'POST',
                             body: new URLSearchParams(formData)
@@ -405,6 +417,11 @@
                                 title: 'Ralat',
                                 text: 'Ralat memproses respons pelayan',
                             });
+                        }).finally(() => {
+                            // Hide loading animation and enable button
+                            submitButton.removeAttribute('disabled');
+                            loadingSpinner.classList.add('d-none');
+                            buttonText.textContent = 'Hasilkan Sebut Harga';
                         });
                 }
             });

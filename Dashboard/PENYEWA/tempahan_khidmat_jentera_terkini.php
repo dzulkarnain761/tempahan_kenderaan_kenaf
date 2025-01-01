@@ -294,7 +294,7 @@ require_once '../../Models/Resit.php';
                                         text: data.message,
                                         icon: 'success',
                                     }).then(() =>{
-                                        window.reload();
+                                        window.location.reload()
                                     });
 
                                 } else {

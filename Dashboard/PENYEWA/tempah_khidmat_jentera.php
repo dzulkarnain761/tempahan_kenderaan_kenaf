@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="luas_tanah" class="form-label">KELUASAN TANAH (HEKTAR)</label>
-                                            <input type="number" id="luas_tanah" name="luas_tanah" class="form-control" required>
+                                            <input type="text" id="luas_tanah" name="luas_tanah" class="form-control" pattern="^\d*(\.\d{0,2})?$" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="catatan" class="form-label">CATATAN</label>
@@ -89,17 +89,19 @@
                                         }
                                         ?>
 
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <td>#</td>
-                                                    <td>Nama Tugasan</td>
-                                                    <td>Tarikh</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                        <div style="overflow-y: auto;">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <td>#</td>
+                                                        <td>Nama Tugasan</td>
+                                                        <td>Tarikh</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
@@ -161,6 +163,8 @@
                     select.className = 'form-select';
                     select.name = 'tugasan[]';
                     select.required = true; // Make the select input required
+                    select.style = 'min-width: 150px';
+
 
                     // Add a default "Sila Pilih Tugasan" option
                     var defaultOption = document.createElement('option');
@@ -266,7 +270,7 @@
 
             const form = e.target;
             const formData = new FormData(form);
-            
+
             const submitButton = document.getElementById('submitButton');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const buttonText = document.getElementById('buttonText');

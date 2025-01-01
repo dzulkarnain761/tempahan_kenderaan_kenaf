@@ -131,7 +131,7 @@
                                         <table class="table table-centered w-100 dt-responsive nowrap">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Tempahan ID</th>
+                                                    
                                                     <th>Nama Kerja</th>
                                                     <th>Tarikh Kerja</th>
                                                     <th>Harga Pengesahan</th>
@@ -153,9 +153,7 @@
 
                                                 foreach ($works as $work) { ?>
                                                     <tr>
-                                                        <td>
-                                                            <?php echo $work['tempahan_id']; ?>
-                                                        </td>
+                                                        
 
                                                         <td>
                                                             <?php echo $work['nama_kerja']; ?>
