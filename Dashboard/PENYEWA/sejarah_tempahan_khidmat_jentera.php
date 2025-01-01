@@ -4,7 +4,7 @@
 
 <?php include 'partials/head.php'; ?>
 
-<body style="background-image: url(../../assets/images/logo/auth-bg1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;" class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -17,29 +17,22 @@
 
                 <!-- Start Content-->
                 <div class="container-fluid">
-					
-					<style>
-        .page-title {
-            color: #fff; /* Menjadikan teks putih */
-        }
-
-        
-    </style>
 
                     <!-- start page title -->
                     <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <br><h4 style="color: white">SENARAI TEMPAHAN PERKHIDMATAN JENTERA TERDAHULU</h4>
-            </div>
-        </div>
-    </div>
+                        <div class="col-12">
+                            <div class="page-title-box">
+
+                                <h4 class="page-title">TEMPAHAN KHIDMAT JENTERA - TERDAHULU</h4>
+                            </div>
+                        </div>
+                    </div>
                     <!-- end page title -->
 
                     <div class="row">
                         <div class="col-12">
-                              <div class="card custom-card">
-									<div class="card-body custom-card-body">
+                            <div class="card">
+                                <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
@@ -87,7 +80,7 @@
                                                         <?php
 
                                                         switch ($booking['status_bayaran']) {
-                                                            
+
                                                             case 'selesai';
                                                                 $badgecolor = 'success';
                                                                 break;
@@ -95,7 +88,7 @@
                                                                 $badgecolor = 'danger';
                                                                 break;
                                                         }
-                                                        
+
                                                         ?>
                                                         <td class="text-center"><?php
 
@@ -103,6 +96,13 @@
                                                                                 ?></td>
 
                                                         <td class="table-action text-center">
+                                                        <a href="../../Controller/pdf/getPDF_full_detail.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
+                                                                class="btn btn-secondary"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="Lihat Borang Butiran Tempahan" target="_blank">
+                                                                <i class="mdi mdi-file"></i>
+                                                            </a>
                                                             <a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
                                                                 class="btn btn-primary"
                                                                 data-bs-toggle="tooltip"
@@ -111,14 +111,12 @@
                                                                 <i class="mdi mdi-eye"></i>
                                                             </a>
 
-                                                            <a href="../../Controller/pdf/getPDF_full_detail.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
-                                                                class="btn btn-secondary"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="top"
-                                                                title="Lihat Borang Butiran Tempahan">
-                                                                <i class="mdi mdi-file"></i>
-                                                            </a>
-                                                           
+                                                            
+                                                        
+                                                            <?php
+                                                            if ($booking['status_bayaran'] == 'dalam pengesahan' || $booking['status_bayaran'] == 'belum bayar') { ?>
+                                                                <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Batal Tempahan"><i class="mdi mdi-delete"></i></button>
+                                                            <?php } ?>
 
                                                         </td>
                                                     </tr>
@@ -128,33 +126,6 @@
                                     </div>
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
-							
-							<style>
-							.custom-card {
-								background-color: rgba(255, 255, 255, 0.8); /* Warna putih with transparency */
-								border: 1px solid #ddd; 
-								border-radius: 8px; 
-								box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow  */
-							}
-
-							.custom-card-body {
-								background-color: transparent; /* Bahagian dalam card transparent */
-							}
-								
-								.black-text {
-									color: #172c6b; 
-								}
-								
-								   tr {
-									color: #172c6b;
-									font-weight: bold; 
-								}
-								
-								.page-title {
-								color: #fff; /* Warna putih */
-							}
-								
-							</style>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->

@@ -70,6 +70,13 @@
                                                             }
                                                             ?></td>
                                                         <td class="table-action text-center">
+                                                        <a href="../../Controller/pdf/getPDF_full_detail.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
+                                                                class="btn btn-secondary"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="Lihat Borang Butiran Tempahan" target="_blank">
+                                                                <i class="mdi mdi-file"></i>
+                                                            </a>
                                                         
                                                             <a href="sejarah_butiran_tempahan.php?tempahan_id=<?php echo $booking['tempahan_id']; ?>"
                                                                 class="btn btn-info"

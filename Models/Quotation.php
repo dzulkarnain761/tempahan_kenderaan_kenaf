@@ -25,6 +25,12 @@ class Quotation
         return $result->fetch_assoc();
     }
 
+    public function getDetailAfterPayment($reference_number)
+    {
+        $result = $this->db->query("SELECT * FROM quotation WHERE reference_number = '$reference_number'");
+        return $result->fetch_assoc();
+    }
+
     public function checkQuotationExist($tempahan_id, $jenis_pembayaran)
     {
         $stmt = $this->db->prepare("SELECT * FROM quotation WHERE tempahan_id = ? AND jenis_pembayaran = ?");

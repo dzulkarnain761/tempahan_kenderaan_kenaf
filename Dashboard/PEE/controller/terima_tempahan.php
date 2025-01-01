@@ -6,7 +6,6 @@ require_once '../../../PHPMailer/src/SMTP.php';
 require_once '../../../PHPMailer/src/Exception.php';
 require_once '../../../send_email.php';
 require_once '../../../Models/Admin.php';
-
 require_once '../../../Models/Database.php';
 
 $conn = Database::getConnection();

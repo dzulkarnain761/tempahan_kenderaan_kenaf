@@ -4,9 +4,11 @@ require_once '../../../PHPMailer/src/PHPMailer.php';
 require_once '../../../PHPMailer/src/SMTP.php';
 require_once '../../../PHPMailer/src/Exception.php';
 require_once '../../../send_email.php';
-require_once '../../../Models/Admin.php';
 
 require_once '../../../Models/Database.php';
+require_once '../../../Models/Admin.php';
+
+
 $conn = Database::getConnection();
 
 // Check if form is submitted

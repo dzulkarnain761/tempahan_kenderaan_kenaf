@@ -11,7 +11,7 @@ require_once '../../Models/Resit.php';
 
 <?php include 'partials/head.php'; ?>
 
-<body style="background-image: url(../../assets/images/logo/auth-bg1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;" class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body class="" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -30,7 +30,7 @@ require_once '../../Models/Resit.php';
                         <div class="col-12">
                             <div class="page-title-box">
 
-                                <h4 style="color: white" ; class="page-title">SENARAI TEMPAHAN TERKINI PERKHIDMATAN JENTERA</h4>
+                                <h4 class="page-title">TEMPAHAN KHIDMAT JENTERA - TERKINI</h4>
                             </div>
                         </div>
                     </div>
@@ -38,8 +38,8 @@ require_once '../../Models/Resit.php';
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card custom-card">
-                                <div class="card-body custom-card-body">
+                            <div class="card">
+                                <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                             <thead class="table-light">
@@ -148,31 +148,6 @@ require_once '../../Models/Resit.php';
                                     </div>
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
-
-                            <style>
-                                .custom-card {
-                                    background-color: rgba(255, 255, 255, 0.8);
-                                    /* Warna putih with transparency */
-                                    border: 1px solid #ddd;
-                                    border-radius: 8px;
-                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                                    /* Shadow  */
-                                }
-
-                                .custom-card-body {
-                                    background-color: transparent;
-                                    /* Bahagian dalam card transparent */
-                                }
-
-                                .black-text {
-                                    color: #172c6b;
-                                }
-
-                                tr {
-                                    color: #172c6b;
-                                    font-weight: bold;
-                                }
-                            </style>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->
@@ -199,21 +174,21 @@ require_once '../../Models/Resit.php';
         function batalTempahan(tempahan_id) {
             Swal.fire({
                 title: "Adakah anda pasti?",
-                text: "Tempahan ini akan dibatalkan",
+                text: "Tempahan ini akan ditolak",
                 icon: "warning",
                 input: 'textarea',
-                inputLabel: 'Sebab Pembatalan',
-                inputPlaceholder: 'Sila masukkan sebab pembatalan',
+                inputLabel: 'Sebab Penolakan',
+                inputPlaceholder: 'Sila masukkan sebab batal',
                 inputValidator: (value) => {
                     if (!value) {
-                        return 'Sila masukkan sebab pembatalan!'
+                        return 'Sila masukkan sebab batal!'
                     }
                 },
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Hantar Pembatalan Tempahan!",
-                cancelButtonText: "Tutup"
+                confirmButtonText: "Batal Tempahan!",
+                cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('controller/cancel_tempahan.php', {
@@ -275,38 +250,71 @@ require_once '../../Models/Resit.php';
                 if (result.isConfirmed) {
                     const paymentMethod = result.value;
 
+                    if (paymentMethod === 'fpx') {
+                        fetch('controller/fpx_payment.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `quotation_id=${encodeURIComponent(quotation_id)}`
+                            })
+                            .then((response) => {
+                                if (response.ok) {
+                                    // If the response is an HTML form, parse it
+                                    return response.text();
+                                } else {
+                                    throw new Error('Failed to initiate payment process.');
+                                }
+                            })
+                            .then((html) => {
+                                // Replace the current document's content with the HTML form
+                                document.open();
+                                document.write(html);
+                                document.close();
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                Swal.fire('Ralat!', 'Terdapat masalah dengan proses.', 'error');
+                            });
+                    } else if(paymentMethod === 'tunai') {
+
+                        fetch('controller/payment.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `quotation_id=${quotation_id}`
+                            })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.success) {
+
+                                    Swal.fire({
+                                        title: 'Berjaya',
+                                        text: data.message,
+                                        icon: 'success',
+                                    }).then(() =>{
+                                        window.reload();
+                                    });
+
+                                } else {
+                                    Swal.fire({
+                                        title: 'Ralat!',
+                                        text: data.message,
+                                        icon: 'error',
+                                        confirmButtonText: 'Cuba Lagi'
+                                    });
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                Swal.fire('Ralat!', 'Terdapat masalah dengan proses.', 'error');
+                            });
+
+                    }
+
                     // Send payment request to the server
-                    fetch('controller/payment.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `quotation_id=${quotation_id}&payment_method=${paymentMethod}`
-                        })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            if (data.success) {
-                                Swal.fire({
-                                    title: 'Berjaya!',
-                                    text: data.message,
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Ralat!',
-                                    text: data.message,
-                                    icon: 'error',
-                                    confirmButtonText: 'Cuba Lagi'
-                                });
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                            Swal.fire('Ralat!', 'Terdapat masalah dengan pembayaran.', 'error');
-                        });
+
                 }
             });
         }

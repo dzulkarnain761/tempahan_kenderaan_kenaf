@@ -1,10 +1,10 @@
 <footer class="footer">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6" style="color: white;">
+            <div class="col-md-6">
                 <script>
                     document.write(new Date().getFullYear())
-                </script> LEMBAGA KENAF DAN TEMBAKAU NEGARA
+                </script> LEMBAGA KENAF DAN TEMBAKAU
             </div>
         </div>
     </div>

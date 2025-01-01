@@ -1,27 +1,12 @@
-<style>
-
-.leftside-menu {
-   background-image: linear-gradient(to bottom right, #98FB91 ,  #08B118);
-    color: white; /* Untuk warna teks */
-    height: 100vh; /* Pastikan sidebar penuh ikut ketinggian viewport */
-}
-
-
-
-
-</style>
-
-
-
-<div class="leftside-menu" style="background-image: linear-gradient(to bottom right,  #98FB91 ,  #08B118); color: white; height: 100vh;">
+<div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="homepage.php" class="logo text-center" style="color: blue;">
+    <a href="homepage.php" class="logo text-center logo-light">
         <span class="logo-lg">
-            <img src="../../assets/images/logo/logo baru.png" alt="" height="70">
+            <img src="../../assets/images/logo/logo_tempahan_kenderaan_white.png" alt="" height="45">
         </span>
         <span class="logo-sm">
-            <img src="../../assets/images/logo/logo baru.png" alt="" height="45">
+            <img src="../../assets/images/logo/logo_lktn.png" alt="" height="45">
         </span>
     </a>
 
@@ -35,21 +20,20 @@
 
             <li class="side-nav-item">
                 <a href="homepage.php" class="side-nav-link">
-                   <i class="uil-home" style="color: #162a65;"></i>
-                    <span style="color: #162a65;">LAMAN UTAMA</span>
-
+                    <i class="uil-home"></i>
+                    <span>LAMAN UTAMA</span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSejarah" aria-expanded="false" aria-controls="sidebarSejarah" class="side-nav-link">
-                    <i class="uil-history"  style="color: #162a65;" ></i>
-                    <span style="color: #162a65;">KHIDMAT JENTERA</span>
+                    <i class="uil-history"></i>
+                    <span>KHIDMAT JENTERA</span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="collapse" id="sidebarSejarah">
                     <ul class="side-nav-second-level">
-                        <li style="color: #162a65;">
+                        <li>
                             <a href="tempah_khidmat_jentera.php">TEMPAHAN</a>
                         </li>
                         <li>
@@ -63,7 +47,7 @@
             </li>
             <li class="side-nav-item">
                 <a href="profil.php" class="side-nav-link">
-                    <i class="uil-user"  style="color: #162a65;"></i>
+                    <i class="uil-user"></i>
                     <?php  
                     
                     require_once '../../Models/Penyewa.php';
@@ -76,7 +60,7 @@
                     
                     ?>
                     
-                    <span style="color: #162a65;"> PROFIL </span>
+                    <span> PROFIL </span>
                 </a>
             </li>
 

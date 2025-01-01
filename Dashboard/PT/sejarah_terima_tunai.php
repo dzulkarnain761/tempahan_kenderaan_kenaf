@@ -27,12 +27,7 @@ require_once '../../Models/Quotation.php';
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <!-- <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Tempahan</li>
-                                        </ol>
-                                    </div> -->
+                                
                                 <h4 class="page-title">Sejarah Penerimaan Tunai</h4>
                             </div>
                         </div>
@@ -77,7 +72,7 @@ require_once '../../Models/Quotation.php';
                                                                 $count++;
                                                             }
                                                             ?></td>
-                                                        <td><?php echo $resit['jumlah']; ?></td>
+                                                        <td><?php echo $resit['total']; ?></td>
                                                         <td><?php echo $resit['jenis_pembayaran']; ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($resit['created_at'])); ?></td>
                                                         

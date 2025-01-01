@@ -114,22 +114,22 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
         </div>
         <div>
             <h4>MAKLUMAT TEMPAHAN</h4>
-            <p>LUAS TANAH : <span><?= $tempahan['luas_tanah'] ?></span></p>
+            <p>LUAS TANAH : <span><?= $tempahan['luas_tanah'] ?> Hektar</span></p>
             <p>LOKASI TANAH : <span><?= $tempahan['lokasi_tanah'] ?></span></p>
             <p>CATATAN : <span><?= !empty($tempahan['catatan']) ? $tempahan['catatan'] : 'Tiada Catatan' ?></span></p>
 
     </section>
 
     <section class="kerja-detail">
-        
+
         <table>
             <thead>
                 <tr>
                     <th>NAMA KERJA</th>
                     <th>CADANGAN TARIKH KERJA</th>
                     <th>HARGA (RM/JAM)</th>
-                    <th>TOTAL JAM</th>
-                    <th>TOTAL HARGA (RM)</th>
+                    <th>TOTAL MASA</th>
+                    <th>TOTAL HARGA</th>
                 </tr>
             </thead>
             <tbody>
@@ -138,21 +138,21 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                 $kerja = new Kerja();
                 $kerjas = $kerja->findByTempahanId($tempahan_id);
 
-                foreach ($kerjas as $kerja) { 
+                foreach ($kerjas as $kerja) {
 
                     $tugasan = new Tugasan();
                     $nama_kerja = $kerja['nama_kerja'];
                     $tugasans = $tugasan->getRateByName($nama_kerja);
                     $rateharga = $tugasans['harga_per_jam'];
-                    
-                    ?>
+
+                ?>
 
                     <tr>
                         <td><?= $nama_kerja ?></td>
                         <td><?= $kerja['cadangan_tarikh_kerja'] ?></td>
                         <td><?= $rateharga ?></td>
                         <td><?= $kerja['total_jam'] . ' Jam ' . $kerja['total_minit'] . ' Minit '  ?></td>
-                        <td><?= $kerja['total_harga'] ?></td>
+                        <td>RM <?= $kerja['total_harga'] ?></td>
                     </tr>
 
                 <?php } ?>
@@ -163,55 +163,52 @@ $imgSrc = 'data:image/png;base64,' . $imageData; // Add appropriate data URI
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><?= $tempahan['total_harga_sebenar'] ?></td>
+                    <td>RM <?= $tempahan['total_harga_sebenar'] ?></td>
                 </tr>
             </tfoot>
         </table>
     </section>
 
     <section class="jobsheet-detail">
-
         <h4>BUTIRAN JOBSHEET</h4>
 
-        <p><span>TARIKH KERJA</span>: <span>Jalan Tembakau 2, Kelantan</span></p>
-        <p><span>NAMA PEMANDU</span>: <span>Projek Tanaman Kenaf</span></p>
-        <p><span>NO JENTERA</span>: <span>Projek Tanaman Kenaf</span></p>
-        <table>
-            <thead>
-                <tr>
-                    <th>NAMA KERJA</th>
-                    <th>TARIKH KERJA</th>
-                    <th>HARGA (RM/JAM)</th>
-                    <th>TOTAL JAM</th>
-                    <th>TOTAL HARGA (RM)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Piring Batas Besar</td>
-                    <td>2024-01-15</td>
-                    <td>100</td>
-                    <td>5</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Rotor</td>
-                    <td>2024-01-20</td>
-                    <td>100</td>
-                    <td>3</td>
-                    <td>300</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>TOTAL</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>800</td>
-                </tr>
-            </tfoot>
-        </table>
+        <?php
+        $jobsheet = new Jobsheet();
+        $jobsheets = $jobsheet->findByTempahanId($tempahan_id);
+
+
+        foreach ($jobsheets as $job) { 
+            
+            ?>
+
+        
+
+
+            <p><span>NAMA KERJA</span>: <span><?php echo $job['nama_kerja'] ?></span></p>
+            <p><span>NAMA PEMANDU</span>: <span><?php echo $job['nama_pemandu'] ?></span></p>
+            <p><span>NO JENTERA</span>: <span><?php echo $job['no_pendaftaran'] ?></span></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>TARIKH KERJA</th>
+                        <th>JAM</th>
+                        <th>MINIT</th>
+                        <th>HARGA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $job['tarikh_kerja_dijalankan'] ?></td>
+                        <td><?php echo $job['jam'] ?></td>
+                        <td><?php echo $job['minit'] ?></td>
+                        <td>RM <?php echo $job['harga'] ?></td>
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+
+        <?php } ?>
     </section>
 </body>
 

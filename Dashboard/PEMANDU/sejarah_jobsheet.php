@@ -114,7 +114,6 @@ require_once '../../Models/Kenderaan.php';
 
         </div>
 
-        <?php include 'partials/right-sidemenu.php'; ?>
     </div>
     <!-- END wrapper -->
 

@@ -3,56 +3,27 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>eJENTERA</title>
+    <title>eTempahan BKK</title>
     <link rel="icon" type="image/x-icon" href="assets/images/logo/logo2.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-	<link href="assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
-	<style>
-		
-		 
-        
-	.logo-top-left {
-    display: flex;
-    justify-content: flex-start; 
-    align-items: center;
-    position: absolute;
-    top: 10px;
-    left: 10px; 
-    z-index: 1000;
-}
-	   
-	    .logo-top-right {
-    position: absolute;
-    top: 10px;
-    right: 10px; /* Ubah dari 'left' ke 'right' */
-    z-index: 1000;
-}
-    </style>
+    <link href="assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="background-custom" style="background-image: url(assets/images/logo/auth-bg1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+<body class="d-flex flex-column align-items-center justify-content-center vh-100" style="background-color: #d8e6ff;">
     <!-- Logo -->
-    <div class="mb-4 logo-top-right">
-		  <a href="index.php">
-         <img src="assets/images/logo/logo baru.png" alt="ejentera" height="100" class="responsive-img">
-		 </a>
+    <div class="mb-4">
+        <img src="assets/images/logo/logo_tempahan_kenderaan_black.png" alt="Logo" class="img-fluid" style="width: 200px; height:auto;">
     </div>
-	
-	<div class="logo-top-left">
-    <a href="">
-        <img src="assets/images/logo/headlktn1.png" alt="Logo LKTN" height="30" class="responsive-img">
-    </a>
-</div>
 
     <!-- Login Form Container -->
-   <div class="container-sm border rounded p-4 bg-white shadow ms-6" style="max-width: 500px; margin-top: 60px;">
-        <h3 class="text-center mb-4"><b>PENDAFTARAN PENYEWA</b></h3>
+    <div class="container-sm border rounded p-4 bg-white shadow" style="max-width: 500px;">
+        <h3 class="text-center mb-4">Pendaftaran Penyewa</h3>
         <form id="signupForm" action="Controller/auth/signup_penyewa_proses.php" method="post">
             <div class="mb-3">
                 <label for="nama_penuh" class="form-label">Nama Penuh <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="nama_penuh" name="nama_penuh" placeholder="Masukkan Nama Penuh"  required>
+                <input type="text" class="form-control" id="nama_penuh" name="nama_penuh" placeholder="Masukkan Nama Penuh" required>
             </div>
             <div class="mb-3">
                 <label for="no_kp" class="form-label">No Kad Pengenalan <span class="text-danger">*</span></label>
@@ -70,12 +41,16 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email">
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" class="btn btn-primary w-100" id="registerButton">
+                <span class="spinner-border spinner-border-sm d-none" id="loadingSpinner" role="status" aria-hidden="true"></span>
+                <span id="buttonText">Daftar Sekarang</span>
+            </button>
         </form>
         <p class="mt-3 text-center">Sudah Daftar? <a href="login.php">Log Masuk</a></p>
     </div>
 
-   <script src="assets/js/sweetalert2.min.js"></script>
+    <script src="assets/js/sweetalert2.min.js"></script>
+
 
     <script>
         document.getElementById('signupForm').addEventListener('submit', function(e) {
@@ -83,6 +58,16 @@
 
             const form = e.target;
             const formData = new FormData(form);
+
+            const submitButton = document.getElementById('registerButton');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const buttonText = document.getElementById('buttonText');
+
+             // Show loading animation
+             submitButton.setAttribute('disabled', 'true');
+            loadingSpinner.classList.remove('d-none');
+            buttonText.textContent = 'Memproses...';
+
 
             fetch(form.action, {
                     method: 'POST',
@@ -115,6 +100,11 @@
                         title: 'Kesalahan',
                         text: 'Kesalahan berlaku semasa menghantar borang. Sila cuba lagi.',
                     });
+                }).finally(() => {
+                    // Hide loading animation and enable button
+                    submitButton.removeAttribute('disabled');
+                    loadingSpinner.classList.add('d-none');
+                    buttonText.textContent = 'Daftar Sekarang';
                 });
         });
     </script>
