@@ -45,6 +45,13 @@
 								<span> Tugasan </span>
 							</a>
 						</li>
+
+						<li class="side-nav-item">
+							<a href="kategori.php" class="side-nav-link">
+								<i class="uil-tag"></i>
+								<span> Kategori </span>
+							</a>
+						</li>
                        
 						
 						

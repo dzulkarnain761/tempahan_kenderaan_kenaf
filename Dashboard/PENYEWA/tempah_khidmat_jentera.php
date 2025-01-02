@@ -89,7 +89,7 @@
                                         }
                                         ?>
 
-                                        <div style="overflow-y: auto;">
+                                        <div style="overflow: auto;">
                                             <table class="table table-bordered table-striped">
                                                 <thead>
                                                     <tr>

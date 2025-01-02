@@ -9,8 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $kategori = $_POST['kategori'];
 
-
-    // Check if nokp already exists in the database using prepared statement
     $checkSql = $conn->prepare("SELECT * FROM kategori_kenderaan WHERE kategori = ?");
     $checkSql->bind_param("s", $kategori);
     $checkSql->execute();

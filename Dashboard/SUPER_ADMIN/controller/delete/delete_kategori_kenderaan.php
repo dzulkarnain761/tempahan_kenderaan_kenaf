@@ -6,7 +6,7 @@ $conn = Database::getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the staff ID from the POST request
-    $kategoriId = $_POST['id'];
+    $kategoriId = $_POST['kategori_id'];
 
     // Check if the ID is valid
     if (empty($kategoriId) || !is_numeric($kategoriId)) {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Bind the parameter and execute the statement
     $stmt->bind_param('i', $kategoriId);
     if ($stmt->execute()) {
-        echo json_encode(['success' => 'Staff member deleted successfully']);
+        echo json_encode(['success' => 'Berjaya Padam']);
     } else {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to delete staff member']);
